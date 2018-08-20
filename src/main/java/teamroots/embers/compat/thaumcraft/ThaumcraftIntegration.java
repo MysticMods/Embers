@@ -13,7 +13,7 @@ import thaumcraft.api.aspects.AspectRegistryEvent;
 
 public class ThaumcraftIntegration {
     @SubscribeEvent(priority = EventPriority.LOW)
-    public void AspectRegistryEvent(AspectRegistryEvent event)
+    public static void AspectRegistryEvent(AspectRegistryEvent event)
     {
         registerAspects(event.register);
     }
