@@ -14,12 +14,13 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
-@Mod(modid = Embers.MODID, version = Embers.VERSION, name = Embers.NAME, dependencies = "required-after:mysticallib@[" + MysticalLib.VERSION + ",);required-after:mysticalworld@[" + MysticalWorld.VERSION + ",)")
+@Mod(modid = Embers.MODID, version = Embers.VERSION, name = Embers.NAME, dependencies = Embers.DEPENDENCIES)
 public class Embers {
   public static final String MODID = "embers-2";
   public static final String DOMAIN = "embers";
   public static final String NAME = "Embers";
   public static final String VERSION = "@VERSION@";
+  public static final String DEPENDENCIES = "required-before:mysticallib@[" + MysticalLib.VERSION + ",);required-before:mysticalworld@[" + MysticalWorld.VERSION + ",)";
 
   public static ModContainer CONTAINER = null;
 
