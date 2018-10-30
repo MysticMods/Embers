@@ -1,8 +1,6 @@
 package epicsquid.embers;
 
 import epicsquid.embers.proxy.CommonProxy;
-import epicsquid.mysticallib.MysticalLib;
-import epicsquid.mysticalworld.MysticalWorld;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
@@ -20,7 +18,7 @@ public class Embers {
   public static final String DOMAIN = "embers";
   public static final String NAME = "Embers";
   public static final String VERSION = "@VERSION@";
-  public static final String DEPENDENCIES = "required-before:mysticallib@[" + MysticalLib.VERSION + ",);required-before:mysticalworld@[" + MysticalWorld.VERSION + ",)";
+  public static final String DEPENDENCIES = "required-before:mysticallib;required-before:mysticalworld@";
 
   public static ModContainer CONTAINER = null;
 
