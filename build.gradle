@@ -101,6 +101,13 @@ dependencies {
             transitive = false
         })
     }
+    if (project(':MysticalWorld') != null) {
+        compile project(':MysticalWorld')
+    } else {
+        compile fg.deobf (project.dependencies.create("com.github.epicsquid:mysticalworld:${mysticalworld_version}") {
+            transitive = false
+        })
+    }
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..
