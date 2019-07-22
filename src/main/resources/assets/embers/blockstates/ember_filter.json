@@ -1,0 +1,5 @@
+{
+    "variants": {
+        "": { "model": "embers:block/ember_filter" }
+    }
+}
