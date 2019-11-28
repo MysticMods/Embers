@@ -1,9 +1,11 @@
 package epicsquid.embers.capability;
 
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
+import net.minecraftforge.common.util.INBTSerializable;
 
-public class EmberCapability implements IEmberCapability {
+public class EmberCapability implements IEmberCapability, INBTSerializable<CompoundNBT> {
 
     @CapabilityInject(IEmberCapability.class)
     public static Capability<IEmberCapability> EMBER_CAPABILITY = null;
@@ -63,5 +65,19 @@ public class EmberCapability implements IEmberCapability {
             ember = currentAmount;
         }
         return removed;
+    }
+
+    @Override
+    public CompoundNBT serializeNBT() {
+        CompoundNBT nbt = new CompoundNBT();
+        nbt.putInt("capacity", this.capacity);
+        nbt.putInt("ember", this.ember);
+        return nbt;
+    }
+
+    @Override
+    public void deserializeNBT(CompoundNBT nbt) {
+        this.capacity = nbt.getInt("capacity");
+        this.ember = nbt.getInt("ember");
     }
 }

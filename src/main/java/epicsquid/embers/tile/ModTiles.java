@@ -6,5 +6,5 @@ import net.minecraftforge.registries.ObjectHolder;
 
 @ObjectHolder(Embers.MODID)
 public class ModTiles {
-    public static final TileEntityType<EmberFilterTile> EMBER_FILTER = null;
+    public static final TileEntityType<EmberFilterTile> EMBER_FILTER_TILE = null;
 }

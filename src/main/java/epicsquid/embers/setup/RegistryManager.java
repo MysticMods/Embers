@@ -47,6 +47,7 @@ public class RegistryManager {
 			if(block instanceof ITile){
 				event.getRegistry().register((TileEntityType<?>) TileEntityType.Builder.create(((ITile) block).getTile(), block).build(null)
 						.setRegistryName(new ResourceLocation(Embers.MODID, Objects.requireNonNull(block.getRegistryName()).getPath() + "_tile")));
+				System.out.println("REGISTERINGNGNG");
 			}
 		}
 	}
