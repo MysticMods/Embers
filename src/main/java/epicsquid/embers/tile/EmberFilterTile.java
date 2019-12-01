@@ -12,13 +12,12 @@ import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
 import java.util.List;
 
 public class EmberFilterTile extends TileEntity implements ITickableTileEntity {
 
     public LazyOptional<EmberCapability> emberCapability = LazyOptional.of(this::createHandler);
-    private List<BlockPos> heatSources = new ArrayList<>();
+    private List<BlockPos> heatSources;
 
     public EmberFilterTile() {
         super(ModTiles.EMBER_FILTER_TILE);
@@ -28,12 +27,6 @@ public class EmberFilterTile extends TileEntity implements ITickableTileEntity {
         emberCapability.ifPresent(cap -> {
             System.out.println(cap.getEmber());
         });
-    }
-
-    @Override
-    public void onLoad() {
-        heatSources = Util.getBlocksWithinRadius(world, getPos(), 10, 5, 10, Blocks.LAVA, Blocks.FIRE, Blocks.MAGMA_BLOCK, Blocks.CAMPFIRE);
-        System.out.println(heatSources);
     }
 
     @Nonnull
@@ -67,6 +60,10 @@ public class EmberFilterTile extends TileEntity implements ITickableTileEntity {
 
     @Override
     public void tick() {
+        if(heatSources == null){
+            heatSources = Util.getBlocksWithinRadius(world, getPos(), 10, 5, 10, Blocks.LAVA, Blocks.FIRE, Blocks.MAGMA_BLOCK, Blocks.CAMPFIRE);
+        }
+
         emberCapability.ifPresent(c -> {
             c.addEmber(heatSources.size(), false);
             markDirty();
