@@ -1,15 +1,11 @@
 package epicsquid.embers;
 
 import epicsquid.embers.blocks.ModBlocks;
-import epicsquid.embers.capability.EmberCapability;
-import epicsquid.embers.capability.EmberCapabilityStorage;
-import epicsquid.embers.capability.IEmberCapability;
 import epicsquid.embers.setup.ModSetup;
 import epicsquid.mysticallib.registry.ModRegistry;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -32,6 +28,8 @@ public class Embers {
 	public Embers() {
 		IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
 		modBus.addListener(this::setup);
+		modBus.addListener(setup::gatherData);
+
 
 		ModBlocks.load();
 

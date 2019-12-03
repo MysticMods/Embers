@@ -71,4 +71,5 @@ public class RegistryManager {
 	public static void init(FMLCommonSetupEvent event) {
 		CapabilityManager.INSTANCE.register(IEmberCapability.class, new EmberCapabilityStorage(), EmberCapability::new);
 	}
+
 }
