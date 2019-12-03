@@ -1,6 +1,6 @@
 package epicsquid.embers;
 
-import epicsquid.embers.blocks.ModBlocks;
+import epicsquid.embers.setup.ModBlocks;
 import epicsquid.embers.setup.ModSetup;
 import epicsquid.mysticallib.registry.ModRegistry;
 import net.minecraft.item.ItemGroup;

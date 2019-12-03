@@ -1,6 +1,6 @@
 package epicsquid.embers.client;
 
-import epicsquid.embers.blocks.ModBlocks;
+import epicsquid.embers.setup.ModBlocks;
 import epicsquid.mysticallib.client.data.DeferredLanguageProvider;
 import epicsquid.mysticalworld.MysticalWorld;
 import net.minecraft.data.DataGenerator;

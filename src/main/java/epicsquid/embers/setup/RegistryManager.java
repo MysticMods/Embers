@@ -2,14 +2,14 @@ package epicsquid.embers.setup;
 
 import epicsquid.embers.Embers;
 import epicsquid.embers.blocks.ITile;
-import epicsquid.embers.blocks.ModBlocks;
 import epicsquid.embers.capability.EmberCapability;
 import epicsquid.embers.capability.EmberCapabilityProvider;
 import epicsquid.embers.capability.EmberCapabilityStorage;
 import epicsquid.embers.capability.IEmberCapability;
-import epicsquid.embers.entity.EntityEmber;
+import epicsquid.embers.entity.EmberEntity;
 import epicsquid.embers.tile.EmberFilterTile;
 import net.minecraft.block.Block;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.Item;
@@ -55,13 +55,21 @@ public class RegistryManager {
 	@SubscribeEvent
 	public static void registerEntityTypes(final RegistryEvent.Register<EntityType<?>> event)
 	{
-		event.getRegistry().register(EntityType.Builder.create(EntityEmber::new, EntityClassification.AMBIENT).size(0.5F, 0.5F).build("ember_entity")
+		event.getRegistry().register(EntityType.Builder.create(EmberEntity::new, EntityClassification.AMBIENT).size(0.5F, 0.5F).build("ember_entity")
 				.setRegistryName(new ResourceLocation(Embers.MODID, "ember_entity")));
 	}
 
 	@SubscribeEvent
 	public static void attachCapabilities(AttachCapabilitiesEvent<TileEntity> event) {
 		if(event.getObject() instanceof EmberFilterTile){
+			event.addCapability(EmberCapabilityProvider.IDENTIFIER, new EmberCapabilityProvider());
+		}
+
+	}
+
+	@SubscribeEvent
+	public static void attachCapabilitiesEntity(AttachCapabilitiesEvent<Entity> event) {
+		if(event.getObject() instanceof EmberEntity){
 			event.addCapability(EmberCapabilityProvider.IDENTIFIER, new EmberCapabilityProvider());
 		}
 

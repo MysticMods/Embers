@@ -1,6 +1,7 @@
-package epicsquid.embers.tile;
+package epicsquid.embers.setup;
 
 import epicsquid.embers.Embers;
+import epicsquid.embers.tile.EmberFilterTile;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.registries.ObjectHolder;
 

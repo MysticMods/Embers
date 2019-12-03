@@ -1,6 +1,7 @@
-package epicsquid.embers.blocks;
+package epicsquid.embers.setup;
 
 import epicsquid.embers.Embers;
+import epicsquid.embers.blocks.EmberFilterBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;

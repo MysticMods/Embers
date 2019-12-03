@@ -1,7 +1,7 @@
 package epicsquid.embers.client;
 
 import epicsquid.embers.Embers;
-import epicsquid.embers.blocks.ModBlocks;
+import epicsquid.embers.setup.ModBlocks;
 import epicsquid.mysticallib.client.data.DeferredBlockStateProvider;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.client.model.generators.ExistingFileHelper;

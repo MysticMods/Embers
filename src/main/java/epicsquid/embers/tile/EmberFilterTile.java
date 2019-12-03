@@ -1,11 +1,15 @@
 package epicsquid.embers.tile;
 
 import epicsquid.embers.capability.EmberCapability;
+import epicsquid.embers.entity.EmberEntity;
+import epicsquid.embers.setup.ModEntities;
+import epicsquid.embers.setup.ModTiles;
 import epicsquid.mysticallib.util.Util;
 import net.minecraft.block.Blocks;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.INBTSerializable;
@@ -16,17 +20,18 @@ import java.util.List;
 
 public class EmberFilterTile extends TileEntity implements ITickableTileEntity {
 
-    public LazyOptional<EmberCapability> emberCapability = LazyOptional.of(this::createHandler);
+    private int ticks = 0;
+    private LazyOptional<EmberCapability> emberCapability = LazyOptional.of(this::createHandler);
     private List<BlockPos> heatSources;
+    private EmberEntity emberEntity;
 
     public EmberFilterTile() {
         super(ModTiles.EMBER_FILTER_TILE);
     }
 
+
     public void onActivated(){
-        emberCapability.ifPresent(cap -> {
-            System.out.println(cap.getEmber());
-        });
+        emberCapability.ifPresent(cap -> System.out.println(cap.getEmber()));
     }
 
     @Nonnull
@@ -60,13 +65,32 @@ public class EmberFilterTile extends TileEntity implements ITickableTileEntity {
 
     @Override
     public void tick() {
-        if(heatSources == null){
-            heatSources = Util.getBlocksWithinRadius(world, getPos(), 10, 5, 10, Blocks.LAVA, Blocks.FIRE, Blocks.MAGMA_BLOCK, Blocks.CAMPFIRE);
+        //Create the ember entity on first tick
+        if(ticks == 1){
+            List<EmberEntity> emberEntities =  getWorld().getEntitiesWithinAABB(EmberEntity.class, new AxisAlignedBB(pos.getX() - 3, pos.getY(), pos.getZ() - 3, pos.getX() + 3, pos.getY() + 4, pos.getZ() + 3));
+            if(emberEntities.size() == 0){
+                EmberEntity emberEntity = ModEntities.EMBER_ENTITY.create(world);
+                emberEntity.setPosition(pos.getX(), pos.getY() + 2, pos.getZ());
+                if(!world.isRemote){
+                    world.addEntity(emberEntity);
+                }
+                this.emberEntity = emberEntity;
+            }
         }
 
-        emberCapability.ifPresent(c -> {
-            c.addEmber(heatSources.size(), false);
-            markDirty();
-        });
+        //Check if firepit exists every 2.5 seconds.
+        if(this.ticks % 50 == 0 || heatSources == null){
+            heatSources = Util.getBlocksWithinRadius(world, getPos().down(), 1, 0, 1, Blocks.LAVA, Blocks.FIRE, Blocks.MAGMA_BLOCK, Blocks.CAMPFIRE);
+        }
+
+        //Transfer heat into ember every second.
+        if(this.ticks % 20 == 0){
+            emberCapability.ifPresent(c -> {
+                c.addEmber(heatSources.size(), false);
+                markDirty();
+            });
+        }
+
+        ticks++;
     }
 }
