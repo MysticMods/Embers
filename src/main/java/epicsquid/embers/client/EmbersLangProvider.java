@@ -14,6 +14,7 @@ public class EmbersLangProvider extends DeferredLanguageProvider {
     @Override
     protected void addTranslations() {
         addBlock(ModBlocks.CAMINITE_BRICK);
+        addBlock(ModBlocks.BRAZIER);
         super.addTranslations();
     }
 }

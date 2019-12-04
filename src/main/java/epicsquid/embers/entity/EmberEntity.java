@@ -43,7 +43,7 @@ public class EmberEntity extends Entity  {
     @Override
     public void tick() {
         emberCapability.ifPresent(h -> {
-            System.out.println(h.getEmber());
+            //System.out.println(h.getEmber());
         });
         super.tick();
     }

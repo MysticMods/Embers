@@ -1,6 +1,6 @@
 {
     "variants": {
-        "lit=false": { "model": "embers:block/brazier" },
-        "lit=true": { "model": "embers:block/brazier_on" }
+        "on=false": { "model": "embers:block/brazier" },
+        "on=true": { "model": "embers:block/brazier_on" }
     }
 }

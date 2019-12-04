@@ -1,6 +1,7 @@
 package epicsquid.embers.setup;
 
 import epicsquid.embers.Embers;
+import epicsquid.embers.blocks.BrazierBlock;
 import epicsquid.embers.blocks.EmberFilterBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -15,6 +16,7 @@ public class ModBlocks {
 
     public static RegistryObject<EmberFilterBlock> EMBER_FILTER = Embers.REGISTRY.registerBlock("ember_filter", Embers.REGISTRY.block(EmberFilterBlock::new, () -> Block.Properties.create(Material.ROCK).hardnessAndResistance(2.5F).harvestTool(ToolType.PICKAXE)), SIG);
     public static RegistryObject<Block> CAMINITE_BRICK = Embers.REGISTRY.registerBlock("caminite_bricks", Embers.REGISTRY.block(Block::new, () -> Block.Properties.create(Material.ROCK).hardnessAndResistance(2.5F).harvestTool(ToolType.PICKAXE)), SIG);
+    public static RegistryObject<Block> BRAZIER = Embers.REGISTRY.registerBlock("brazier", Embers.REGISTRY.block(BrazierBlock::new, () -> Block.Properties.create(Material.IRON).hardnessAndResistance(1F).harvestTool(ToolType.PICKAXE)), SIG);
 
     public static void load() {
     }

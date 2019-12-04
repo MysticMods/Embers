@@ -35,6 +35,7 @@ public class RegistryManager {
 	@SubscribeEvent
 	public static void registerBlocks(RegistryEvent.Register<Block> event) {
 		blocks.add(ModBlocks.EMBER_FILTER.get());
+		blocks.add(ModBlocks.BRAZIER.get());
 	}
 
 	@SubscribeEvent
