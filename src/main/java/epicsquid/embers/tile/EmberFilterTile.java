@@ -97,7 +97,6 @@ public class EmberFilterTile extends TileEntity implements ITickableTileEntity {
             });
 
             if(this.emberEntity != null){
-                System.out.println(emberEntity.getCapability(EmberCapabilityProvider.EMBER_CAPABILITY).isPresent());
                 emberEntity.getCapability(EmberCapabilityProvider.EMBER_CAPABILITY).ifPresent(entityCap ->{
                     emberCapability.ifPresent(cap -> {
                         if(cap.getEmber() >= transferAmount){
