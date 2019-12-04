@@ -7,6 +7,8 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.FlyingEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
+import net.minecraft.network.play.server.SSpawnGlobalEntityPacket;
+import net.minecraft.network.play.server.SSpawnObjectPacket;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.INBTSerializable;
@@ -36,6 +38,14 @@ public class EmberEntity extends Entity  {
     @Override
     protected void registerData() {
 
+    }
+
+    @Override
+    public void tick() {
+        emberCapability.ifPresent(h -> {
+            System.out.println(h.getEmber());
+        });
+        super.tick();
     }
 
     public EmberCapability createHandler(){
@@ -71,7 +81,7 @@ public class EmberEntity extends Entity  {
 
     @Override
     public IPacket<?> createSpawnPacket() {
-        return null;
+        return new SSpawnObjectPacket(this);
     }
 
     public boolean isMaster() {

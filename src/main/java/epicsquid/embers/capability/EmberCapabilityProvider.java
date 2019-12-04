@@ -16,10 +16,10 @@ import javax.annotation.Nullable;
 public class EmberCapabilityProvider implements ICapabilityProvider, ICapabilitySerializable<LongNBT> {
     public static final ResourceLocation IDENTIFIER = new ResourceLocation(MysticalLib.MODID, "ember_capability");
 
-    @CapabilityInject(EmberCapability.class)
-    public static final Capability<EmberCapability> EMBER_CAPABILITY = injected();
+    @CapabilityInject(IEmberCapability.class)
+    public static final Capability<IEmberCapability> EMBER_CAPABILITY = injected();
 
-    private final EmberCapability instance = EMBER_CAPABILITY.getDefaultInstance();
+    private final IEmberCapability instance = EMBER_CAPABILITY.getDefaultInstance();
 
     @Override
     public LongNBT serializeNBT() {

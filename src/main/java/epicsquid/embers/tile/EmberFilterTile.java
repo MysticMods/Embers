@@ -1,6 +1,7 @@
 package epicsquid.embers.tile;
 
 import epicsquid.embers.capability.EmberCapability;
+import epicsquid.embers.capability.EmberCapabilityProvider;
 import epicsquid.embers.entity.EmberEntity;
 import epicsquid.embers.setup.ModEntities;
 import epicsquid.embers.setup.ModTiles;
@@ -21,6 +22,7 @@ import java.util.List;
 public class EmberFilterTile extends TileEntity implements ITickableTileEntity {
 
     private int ticks = 0;
+    private int transferAmount = 20;
     private LazyOptional<EmberCapability> emberCapability = LazyOptional.of(this::createHandler);
     private List<BlockPos> heatSources;
     private EmberEntity emberEntity;
@@ -63,19 +65,23 @@ public class EmberFilterTile extends TileEntity implements ITickableTileEntity {
         return super.write(tag);
     }
 
+    public void prepareEmberEntity(){
+        List<EmberEntity> emberEntities =  getWorld().getEntitiesWithinAABB(EmberEntity.class, new AxisAlignedBB(pos.getX() - 3, pos.getY(), pos.getZ() - 3, pos.getX() + 3, pos.getY() + 4, pos.getZ() + 3));
+        if(emberEntities.size() == 0){
+            EmberEntity emberEntity = ModEntities.EMBER_ENTITY.create(world);
+            emberEntity.setPosition(pos.getX(), pos.getY() + 2, pos.getZ());
+            if(!world.isRemote){
+                world.addEntity(emberEntity);
+            }
+            this.emberEntity = emberEntity;
+        }
+    }
+
     @Override
     public void tick() {
         //Create the ember entity on first tick
         if(ticks == 1){
-            List<EmberEntity> emberEntities =  getWorld().getEntitiesWithinAABB(EmberEntity.class, new AxisAlignedBB(pos.getX() - 3, pos.getY(), pos.getZ() - 3, pos.getX() + 3, pos.getY() + 4, pos.getZ() + 3));
-            if(emberEntities.size() == 0){
-                EmberEntity emberEntity = ModEntities.EMBER_ENTITY.create(world);
-                emberEntity.setPosition(pos.getX(), pos.getY() + 2, pos.getZ());
-                if(!world.isRemote){
-                    world.addEntity(emberEntity);
-                }
-                this.emberEntity = emberEntity;
-            }
+            prepareEmberEntity();
         }
 
         //Check if firepit exists every 2.5 seconds.
@@ -89,6 +95,21 @@ public class EmberFilterTile extends TileEntity implements ITickableTileEntity {
                 c.addEmber(heatSources.size(), false);
                 markDirty();
             });
+
+            if(this.emberEntity != null){
+                System.out.println(emberEntity.getCapability(EmberCapabilityProvider.EMBER_CAPABILITY).isPresent());
+                emberEntity.getCapability(EmberCapabilityProvider.EMBER_CAPABILITY).ifPresent(entityCap ->{
+                    emberCapability.ifPresent(cap -> {
+                        if(cap.getEmber() >= transferAmount){
+                            cap.removeEmber(transferAmount, false);
+                            entityCap.addEmber(transferAmount, false);
+                        }
+                    });
+                });
+            }
+            else{
+                prepareEmberEntity();
+            }
         }
 
         ticks++;
