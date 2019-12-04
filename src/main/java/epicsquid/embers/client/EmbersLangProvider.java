@@ -14,7 +14,14 @@ public class EmbersLangProvider extends DeferredLanguageProvider {
     @Override
     protected void addTranslations() {
         addBlock(ModBlocks.CAMINITE_BRICK);
-        addBlock(ModBlocks.BRAZIER);
+        addBlock(ModBlocks.CHISELED_CAMINITE_BRICK);
+        addBlock(ModBlocks.ARCAIC_BRICK);
+        addBlock(ModBlocks.CINDERSTEEL_BLOCK);
+        addBlock(ModBlocks.DAWNSTONE_BLOCK);
+        addBlock(ModBlocks.EMBER_BLOCK);
+        addBlock(ModBlocks.EMBER_ORE);
+
+        //addBlock(ModBlocks.BRAZIER);
         super.addTranslations();
     }
 }

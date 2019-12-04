@@ -15,5 +15,11 @@ public class EmbersBlockstateProvider extends DeferredBlockStateProvider {
     @Override
     protected void registerStatesAndModels() {
         simpleBlock(ModBlocks.CAMINITE_BRICK);
+        simpleBlock(ModBlocks.CHISELED_CAMINITE_BRICK);
+        simpleBlock(ModBlocks.ARCAIC_BRICK);
+        simpleBlock(ModBlocks.CINDERSTEEL_BLOCK);
+        simpleBlock(ModBlocks.DAWNSTONE_BLOCK);
+        simpleBlock(ModBlocks.EMBER_BLOCK);
+        simpleBlock(ModBlocks.EMBER_ORE);
     }
 }

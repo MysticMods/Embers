@@ -20,6 +20,13 @@ public class Embers {
 		}
 	};
 
+	public static ItemGroup METAL_GROUP = new ItemGroup(Embers.MODID + "_metals") {
+		@Override
+		public ItemStack createIcon() {
+			return new ItemStack(Items.IRON_INGOT);
+		}
+	};
+
 	public static final String MODID = "embers";
 
 	public static ModRegistry REGISTRY = new ModRegistry(MODID);

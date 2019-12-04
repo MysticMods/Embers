@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "embers:block/dawnstone_block"
+    }
+  }
+}

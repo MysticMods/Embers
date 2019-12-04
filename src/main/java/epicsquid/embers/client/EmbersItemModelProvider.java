@@ -15,5 +15,11 @@ public class EmbersItemModelProvider extends DeferredItemModelProvider {
     @Override
     protected void registerModels() {
         blockItem(ModBlocks.CAMINITE_BRICK);
+        blockItem(ModBlocks.CHISELED_CAMINITE_BRICK);
+        blockItem(ModBlocks.ARCAIC_BRICK);
+        blockItem(ModBlocks.CINDERSTEEL_BLOCK);
+        blockItem(ModBlocks.DAWNSTONE_BLOCK);
+        blockItem(ModBlocks.EMBER_BLOCK);
+        blockItem(ModBlocks.EMBER_ORE);
     }
 }

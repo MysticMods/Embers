@@ -35,6 +35,13 @@ public class RegistryManager {
 	@SubscribeEvent
 	public static void registerBlocks(RegistryEvent.Register<Block> event) {
 		blocks.add(ModBlocks.EMBER_FILTER.get());
+		blocks.add(ModBlocks.CAMINITE_BRICK.get());
+		blocks.add(ModBlocks.CHISELED_CAMINITE_BRICK.get());
+		blocks.add(ModBlocks.ARCAIC_BRICK.get());
+		blocks.add(ModBlocks.CINDERSTEEL_BLOCK.get());
+		blocks.add(ModBlocks.DAWNSTONE_BLOCK.get());
+		blocks.add(ModBlocks.EMBER_BLOCK.get());
+		blocks.add(ModBlocks.EMBER_ORE.get());
 		blocks.add(ModBlocks.BRAZIER.get());
 	}
 

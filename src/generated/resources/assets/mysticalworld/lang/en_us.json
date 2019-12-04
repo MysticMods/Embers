@@ -1,3 +1,9 @@
 {
-  "block.embers.caminite_bricks": "Caminite Bricks"
+  "block.embers.arcaic_bricks": "Arcaic Bricks",
+  "block.embers.caminite_bricks": "Caminite Bricks",
+  "block.embers.chiseled_caminite_bricks": "Chiseled Caminite Bricks",
+  "block.embers.cindersteel_block": "Cindersteel Block",
+  "block.embers.dawnstone_block": "Dawnstone Block",
+  "block.embers.ember_block": "Ember Block",
+  "block.embers.ember_ore": "Ember Ore"
 }
