@@ -1,6 +1,0 @@
-{
-    "variants": {
-        "half=bottom": { "model": "embers:ashen_brick_slab_bottom" },
-        "half=top": { "model": "embers:ashen_brick_slab_top" }
-    }
-}

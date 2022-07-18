@@ -1,6 +1,0 @@
-{
-    "variants":{
-        "top=true":{"model": "embers:boiler_top"},
-        "top=false":{"model": "embers:boiler_base"}
-    }
-}

@@ -1,7 +1,0 @@
-{
-    "parent": "block/cube_all",
-    "textures": {
-        "all": "embers:blocks/block_caminite_large_brick",
-        "particle": "embers:blocks/block_caminite_large_brick"
-    }
-}
