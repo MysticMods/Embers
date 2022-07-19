@@ -11,5 +11,13 @@
   "block.embers.cindersteel_block": "Cindersteel Block",
   "block.embers.dawnstone_block": "Dawnstone Block",
   "block.embers.ember_block": "Ember Block",
-  "block.embers.ember_ore": "Ember Ore"
+  "block.embers.ember_ore": "Ember Ore",
+  "item.embers.arcaic_brick": "Arcaic Brick",
+  "item.embers.caminite_axe": "Caminite Axe",
+  "item.embers.caminite_brick": "Caminite Brick",
+  "item.embers.caminite_hoe": "Caminite Hoe",
+  "item.embers.caminite_pickaxe": "Caminite Pickaxe",
+  "item.embers.caminite_shovel": "Caminite Shovel",
+  "item.embers.caminite_sword": "Caminite Sword",
+  "itemGroup.embers": "Embers"
 }

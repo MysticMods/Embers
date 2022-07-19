@@ -1,4 +1,4 @@
-package com.mystic.embers.blocks;
+package com.mystic.embers.init;
 
 import com.mystic.embers.Embers;
 import com.tterrag.registrate.Registrate;

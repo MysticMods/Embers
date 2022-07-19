@@ -11,5 +11,13 @@
   "block.embers.cindersteel_block": "\u029E\u0254o\u05DF\u15FA \u05DF\u01DD\u01DD\u0287s\u0279\u01DDpu\u0131\u0186",
   "block.embers.dawnstone_block": "\u029E\u0254o\u05DF\u15FA \u01DDuo\u0287su\u028D\u0250\u15E1",
   "block.embers.ember_block": "\u029E\u0254o\u05DF\u15FA \u0279\u01DDq\u026F\u018E",
-  "block.embers.ember_ore": "\u01DD\u0279O \u0279\u01DDq\u026F\u018E"
+  "block.embers.ember_ore": "\u01DD\u0279O \u0279\u01DDq\u026F\u018E",
+  "item.embers.arcaic_brick": "\u029E\u0254\u0131\u0279\u15FA \u0254\u0131\u0250\u0254\u0279\u2C6F",
+  "item.embers.caminite_axe": "\u01DDx\u2C6F \u01DD\u0287\u0131u\u0131\u026F\u0250\u0186",
+  "item.embers.caminite_brick": "\u029E\u0254\u0131\u0279\u15FA \u01DD\u0287\u0131u\u0131\u026F\u0250\u0186",
+  "item.embers.caminite_hoe": "\u01DDoH \u01DD\u0287\u0131u\u0131\u026F\u0250\u0186",
+  "item.embers.caminite_pickaxe": "\u01DDx\u0250\u029E\u0254\u0131\u0500 \u01DD\u0287\u0131u\u0131\u026F\u0250\u0186",
+  "item.embers.caminite_shovel": "\u05DF\u01DD\u028Co\u0265S \u01DD\u0287\u0131u\u0131\u026F\u0250\u0186",
+  "item.embers.caminite_sword": "p\u0279o\u028DS \u01DD\u0287\u0131u\u0131\u026F\u0250\u0186",
+  "itemGroup.embers": "s\u0279\u01DDq\u026F\u018E"
 }

@@ -1,7 +1,8 @@
 package com.mystic.embers;
 
-import com.mystic.embers.blocks.ModBlocks;
-import com.mystic.embers.item.ModItems;
+import com.mystic.embers.init.ModBlocks;
+import com.mystic.embers.init.ModItems;
+import com.mystic.embers.init.ModLang;
 import com.mystic.embers.network.NetworkHandler;
 import com.mystic.embers.setup.ModSetup;
 import com.mystic.embers.tags.ModTags;
@@ -11,17 +12,13 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.common.data.ForgeBlockTagsProvider;
 import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -54,6 +51,7 @@ public class Embers {
 
         ModBlocks.classload();
         ModItems.classload();
+        ModLang.classload();
         FMLJavaModLoadingContext.get().getModEventBus().addListener(EventPriority.LOWEST, this::gatherData);
     }
 
