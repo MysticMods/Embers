@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "embers:arcaic_bricks",
+    "embers:arcaic_bricks_stairs",
+    "embers:arcaic_bricks_slab",
+    "embers:arcaic_bricks_wall"
+  ]
+}
