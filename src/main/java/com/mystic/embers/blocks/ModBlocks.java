@@ -23,16 +23,43 @@ public class ModBlocks {
     public static final BlockEntry<Block> ARCAIC_BRICK = normalCube("arcaic_bricks", Material.STONE)
             .tag(BlockTags.MINEABLE_WITH_PICKAXE)
             .register();
+    public static final BlockEntry<Block> CAMINITE_BRICK = normalCube("caminite_bricks", Material.STONE)
+            .tag(BlockTags.MINEABLE_WITH_PICKAXE)
+            .register();
+    public static final BlockEntry<Block> CHISELED_CAMINITE_BRICK = normalCube("chiseled_caminite_bricks", Material.STONE)
+            .tag(BlockTags.MINEABLE_WITH_PICKAXE)
+            .register();
+    public static final BlockEntry<Block> CINDERSTEEL_BLOCK = normalCube("cindersteel_block", Material.METAL)
+            .tag(BlockTags.MINEABLE_WITH_PICKAXE)
+            .register();
+    public static final BlockEntry<Block> DAWNSTONE_BLOCK = normalCube("dawnstone_block", Material.METAL)
+            .tag(BlockTags.MINEABLE_WITH_PICKAXE)
+            .register();
+    public static final BlockEntry<Block> EMBER_BLOCK = normalCube("ember_block", Material.METAL)
+            .tag(BlockTags.MINEABLE_WITH_PICKAXE)
+            .register();
+    public static final BlockEntry<Block> EMBER_ORE = normalCube("ember_ore", Material.STONE)
+            .tag(BlockTags.MINEABLE_WITH_PICKAXE)
+            .register();
 
     public static BlockEntry<StairBlock> ARCAIC_STAIRS = normalStairs("arcaic_bricks", Material.STONE, ARCAIC_BRICK)
+            .tag(BlockTags.MINEABLE_WITH_PICKAXE)
+            .register();
+    public static BlockEntry<StairBlock> CAMINITE_STAIRS = normalStairs("caminite_bricks", Material.STONE, ARCAIC_BRICK)
             .tag(BlockTags.MINEABLE_WITH_PICKAXE)
             .register();
 
     public static BlockEntry<SlabBlock> ARCAIC_SLABS = normalSlab("arcaic_bricks", Material.STONE)
             .tag(BlockTags.MINEABLE_WITH_PICKAXE)
             .register();
+    public static BlockEntry<SlabBlock> CAMINITE_SLABS = normalSlab("caminite_bricks", Material.STONE)
+            .tag(BlockTags.MINEABLE_WITH_PICKAXE)
+            .register();
 
     public static BlockEntry<WallBlock> ARCAIC_WALL = normalWall("arcaic_bricks", Material.STONE)
+            .tag(BlockTags.MINEABLE_WITH_PICKAXE)
+            .register();
+    public static BlockEntry<WallBlock> CAMINITE_WALL = normalWall("caminite_bricks", Material.STONE)
             .tag(BlockTags.MINEABLE_WITH_PICKAXE)
             .register();
 

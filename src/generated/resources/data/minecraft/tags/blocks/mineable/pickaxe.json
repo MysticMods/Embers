@@ -2,8 +2,17 @@
   "replace": false,
   "values": [
     "embers:arcaic_bricks",
+    "embers:caminite_bricks",
+    "embers:chiseled_caminite_bricks",
+    "embers:cindersteel_block",
+    "embers:dawnstone_block",
+    "embers:ember_block",
+    "embers:ember_ore",
     "embers:arcaic_bricks_stairs",
+    "embers:caminite_bricks_stairs",
     "embers:arcaic_bricks_slab",
-    "embers:arcaic_bricks_wall"
+    "embers:caminite_bricks_slab",
+    "embers:arcaic_bricks_wall",
+    "embers:caminite_bricks_wall"
   ]
 }

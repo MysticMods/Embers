@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "embers:block/chiseled_caminite_bricks"
+  }
+}

@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "embers:arcaic_bricks_stairs"
+    "embers:arcaic_bricks_stairs",
+    "embers:caminite_bricks_stairs"
   ]
 }
