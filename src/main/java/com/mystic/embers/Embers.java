@@ -69,7 +69,7 @@ public class Embers {
         DataGenerator generator = event.getGenerator();
         if (event.includeServer()) {
             ForgeBlockTagsProvider b = new ForgeBlockTagsProvider(generator, event.getExistingFileHelper());
-            generator.addProvider(new ModTags(generator, b, event.getExistingFileHelper()));
+            generator.m_123914_(new ModTags(generator, b, event.getExistingFileHelper()));
         }
     }
 
