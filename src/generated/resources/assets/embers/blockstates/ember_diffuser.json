@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "embers:block/ember_diffuser"
+      "model": "embers:block/ember_diffuser_child"
     }
   }
 }

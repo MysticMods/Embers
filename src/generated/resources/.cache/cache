@@ -10,7 +10,7 @@ d0946fa6e3fba8a2b99b5ee286b181f7d1a98350 assets/embers/blockstates/chiseled_cami
 5d5809d4aa963d1da0fcbf2fbded39f4b6fe45f4 assets/embers/blockstates/cindersteel_block.json
 4009139ab7561d0efb813d077671c4fb000a58b1 assets/embers/blockstates/dawnstone_block.json
 018cb8e5e2ba57d60284b58005eb5acff898a00c assets/embers/blockstates/ember_block.json
-7fc769f005e8ef9a42025e32127a84bd2e4c3693 assets/embers/blockstates/ember_diffuser.json
+bea4fdd29c8fe8dfcf23cd61753eca85da90da3a assets/embers/blockstates/ember_diffuser.json
 ac0e310cc5afda0be1b04da1fa0e85ed87d6331c assets/embers/blockstates/ember_ore.json
 2b25a2be0e97f17a915557620512f3adb1893886 assets/embers/lang/en_ud.json
 1b484a9f49065b14f2159b98833f31709e424e9b assets/embers/lang/en_us.json
@@ -36,6 +36,7 @@ f8a852fe2c10a1d6c4bd4e8462aec77e086fe636 assets/embers/models/block/caminite_bri
 e1ff07daa93f019a1f9fad40689f24735423b84e assets/embers/models/block/cindersteel_block.json
 91855b7aff625712d70b777bb3e33f029d4996a2 assets/embers/models/block/dawnstone_block.json
 69436098da9c266d742ccd3b3adad4c2b5fc7031 assets/embers/models/block/ember_block.json
+66e46417e906044a71cb15b4ff269f7d5fc79196 assets/embers/models/block/ember_diffuser_child.json
 3e06e70df019e2b91c4d6cb5cf5ea4cc177edfce assets/embers/models/block/ember_ore.json
 bd0bf4cdf179c4c0b5e182100d5070820fbf0515 assets/embers/models/item/arcaic_brick.json
 09f076bb1f4ed5212e41313438b038b121cbd8d1 assets/embers/models/item/arcaic_bricks.json
@@ -73,7 +74,7 @@ ed5470870db1706d1f76096ebb457383647b10d0 assets/embers/models/item/dawnstone_sho
 fad5ce5b2339f8abeaa6b976c75a2ee303eff5bc assets/embers/models/item/dawnstone_sword.json
 a0b31f02bbf497465a31ef4c303750fb500e4a6c assets/embers/models/item/ember_block.json
 9bd716712cb9129ef504ce04dbf8f680f11e84e1 assets/embers/models/item/ember_crystal.json
-66e46417e906044a71cb15b4ff269f7d5fc79196 assets/embers/models/item/ember_diffuser.json
+9387f8ed9dcbe99c7516f8436d7065d147da00ca assets/embers/models/item/ember_diffuser.json
 274c33ad0e4f5d8f81e7cb5c8fda9c765e0f475c assets/embers/models/item/ember_ore.json
 10b9f6ff888540d5fcfcd5e101e834755f048b19 assets/embers/models/item/sooty_iron_axe.json
 4de3cc0f94e82916f02d8dcb9ef8517cad3811cf assets/embers/models/item/sooty_iron_dust.json
