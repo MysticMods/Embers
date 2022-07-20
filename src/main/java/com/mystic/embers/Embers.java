@@ -1,5 +1,6 @@
 package com.mystic.embers;
 
+import com.mystic.embers.init.ModBlockEntity;
 import com.mystic.embers.init.ModBlocks;
 import com.mystic.embers.init.ModItems;
 import com.mystic.embers.init.ModLang;
@@ -52,6 +53,7 @@ public class Embers {
         ModBlocks.classload();
         ModItems.classload();
         ModLang.classload();
+        ModBlockEntity.classload();
         FMLJavaModLoadingContext.get().getModEventBus().addListener(EventPriority.LOWEST, this::gatherData);
     }
 

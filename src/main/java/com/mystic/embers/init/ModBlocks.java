@@ -1,18 +1,28 @@
 package com.mystic.embers.init;
 
 import com.mystic.embers.Embers;
+import com.mystic.embers.blocks.EmberDiffuserBlock;
 import com.tterrag.registrate.Registrate;
 import com.tterrag.registrate.builders.BlockBuilder;
+import com.tterrag.registrate.util.DataIngredient;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.nullness.NonNullFunction;
+import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
+import net.minecraft.advancements.critereon.InventoryChangeTrigger;
+import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.SlabBlock;
-import net.minecraft.world.level.block.StairBlock;
-import net.minecraft.world.level.block.WallBlock;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
+import net.minecraftforge.client.model.generators.ModelFile;
+import net.minecraftforge.client.model.generators.ModelProvider;
+import net.minecraftforge.common.Tags;
+import net.minecraftforge.common.data.ExistingFileHelper;
 
 import java.util.function.Supplier;
 
@@ -20,6 +30,25 @@ public class ModBlocks {
 
     private static final Registrate REGISTRATE = Embers.registrate();
 
+    public static final NonNullUnaryOperator<BlockBehaviour.Properties> BASE_PROPERTIES = r -> r.dynamicShape().noOcclusion().strength(1.5f).sound(SoundType.STONE);
+
+    //Machines
+    public static final BlockEntry<EmberDiffuserBlock> EMBER_DIFFUSER = REGISTRATE.block("ember_diffuser", Material.STONE, EmberDiffuserBlock::new)
+            .properties(BASE_PROPERTIES)
+            .item().tab(() -> Embers.ITEM_GROUP).build()
+            .blockstate((ctx, prov) -> prov.simpleBlock(ctx.getEntry(), prov.models().getExistingFile(new ResourceLocation(Embers.MODID, "block/ember_diffuser"))))
+            .recipe((ctx, p) -> ShapedRecipeBuilder.shaped(ctx.getEntry().asItem(), 1)
+                    .pattern("CCC")
+                    .pattern("IWI")
+                    .pattern("IWI")
+                    .define('C', Tags.Items.INGOTS_COPPER)
+                    .define('I', Tags.Items.INGOTS_IRON)
+                    .define('W', Ingredient.of(Items.ACACIA_LOG, Items.BIRCH_LOG, Items.JUNGLE_LOG, Items.DARK_OAK_LOG, Items.OAK_LOG, Items.SPRUCE_LOG))
+                    .m_142284_("has_ingredient", InventoryChangeTrigger.TriggerInstance.hasItems(Items.IRON_INGOT))
+                    .save(p))
+            .register();
+
+    //Building Blocks
     public static final BlockEntry<Block> ARCAIC_BRICK = normalCube("arcaic_bricks", Material.STONE)
             .tag(BlockTags.MINEABLE_WITH_PICKAXE)
             .register();
@@ -104,7 +133,6 @@ public class ModBlocks {
         return (b) -> new StairBlock(() -> block.get().defaultBlockState(), b);
     }
 
-    public static void classload() {
-    }
+    public static void classload() { }
 
 }
