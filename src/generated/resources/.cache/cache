@@ -112,6 +112,7 @@ db4c5ae3ccd23a8e224fb47b5b1097056ebd714f data/embers/loot_tables/blocks/unfired_
 38af1b59763f4c8ee5a3ddfa0416d66b4a3b266a data/embers/recipes/caminite_brick.json
 86e115554b7004456789103baf483088ce2d1f69 data/embers/recipes/ember_diffuser.json
 1303a94cc2c4be194a4c330573a9a858fa97032e data/embers/recipes/unfired_caminite_forge.json
+beb725be018ed98165b5c4c796b463baf18eba68 data/embers/tags/blocks/heat_block.json
 9b0d1d6967873838937141190d8e7eae4c04fb02 data/minecraft/tags/blocks/mineable/pickaxe.json
 c4005e4011335ae54e2dfdbef763da7a2dea894f data/minecraft/tags/blocks/slabs.json
 05b291682be205adc138d89fe64b1bf59cd86405 data/minecraft/tags/blocks/stairs.json

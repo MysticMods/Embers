@@ -1,12 +1,8 @@
 package com.mystic.embers;
 
-import com.mystic.embers.init.ModBlockEntity;
-import com.mystic.embers.init.ModBlocks;
-import com.mystic.embers.init.ModItems;
-import com.mystic.embers.init.ModLang;
+import com.mystic.embers.init.*;
 import com.mystic.embers.network.NetworkHandler;
 import com.mystic.embers.setup.ModSetup;
-import com.mystic.embers.tags.ModTags;
 import com.tterrag.registrate.Registrate;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.world.item.CreativeModeTab;
@@ -54,7 +50,7 @@ public class Embers {
         ModItems.classload();
         ModLang.classload();
         ModBlockEntity.classload();
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(EventPriority.LOWEST, this::gatherData);
+        ModTags.classload();
     }
 
     public void setup(FMLCommonSetupEvent event) {
@@ -67,13 +63,6 @@ public class Embers {
         //event.register(IShieldCapability.class);
     }
 
-    public void gatherData(GatherDataEvent event) {
-        DataGenerator generator = event.getGenerator();
-        if (event.includeServer()) {
-            ForgeBlockTagsProvider b = new ForgeBlockTagsProvider(generator, event.getExistingFileHelper());
-            generator.addProvider(new ModTags(generator, b, event.getExistingFileHelper()));
-        }
-    }
 
     public void sendImc(InterModEnqueueEvent event) {
         ModSetup.sendImc();
