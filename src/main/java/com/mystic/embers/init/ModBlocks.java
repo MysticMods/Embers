@@ -1,10 +1,11 @@
 package com.mystic.embers.init;
 
 import com.mystic.embers.Embers;
+import com.mystic.embers.blocks.CaminiteForgeBlock;
+import com.mystic.embers.blocks.CaminiteForgeUnfiredBlock;
 import com.mystic.embers.blocks.EmberDiffuserBlock;
 import com.tterrag.registrate.Registrate;
 import com.tterrag.registrate.builders.BlockBuilder;
-import com.tterrag.registrate.util.DataIngredient;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.nullness.NonNullFunction;
 import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
@@ -15,14 +16,10 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
-import net.minecraftforge.client.model.generators.ModelFile;
-import net.minecraftforge.client.model.generators.ModelProvider;
 import net.minecraftforge.common.Tags;
-import net.minecraftforge.common.data.ExistingFileHelper;
 
 import java.util.function.Supplier;
 
@@ -44,8 +41,27 @@ public class ModBlocks {
                     .define('C', Tags.Items.INGOTS_COPPER)
                     .define('I', Tags.Items.INGOTS_IRON)
                     .define('W', Ingredient.of(Items.ACACIA_LOG, Items.BIRCH_LOG, Items.JUNGLE_LOG, Items.DARK_OAK_LOG, Items.OAK_LOG, Items.SPRUCE_LOG))
-                    .m_142284_("has_ingredient", InventoryChangeTrigger.TriggerInstance.hasItems(Items.IRON_INGOT))
+                    .unlockedBy("has_ingredient", InventoryChangeTrigger.TriggerInstance.hasItems(Items.IRON_INGOT))
                     .save(p))
+            .register();
+
+    public static final BlockEntry<CaminiteForgeUnfiredBlock> UNFIRED_CAMINITE_FORGE = REGISTRATE.block("unfired_caminite_forge", Material.STONE, CaminiteForgeUnfiredBlock::new)
+            .properties(BASE_PROPERTIES)
+            .item().tab(() -> Embers.ITEM_GROUP).build()
+            .blockstate((ctx, prov) -> prov.horizontalBlock(ctx.getEntry(), prov.models().withExistingParent("unfired_caminite_forge_model", new ResourceLocation(Embers.MODID, "block/unfired_caminite_forge"))))
+            .recipe((ctx, p) -> ShapedRecipeBuilder.shaped(ctx.getEntry().asItem(), 1)
+                    .pattern("CCC")
+                    .pattern("C C")
+                    .pattern("CCC")
+                    .define('C', ModItems.CAMINITE_BRICK.get())
+                    .unlockedBy("has_ingredient", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.CAMINITE_BRICK.get()))
+                    .save(p))
+            .register();
+
+    public static final BlockEntry<CaminiteForgeBlock> CAMINITE_FORGE = REGISTRATE.block("caminite_forge", Material.STONE, CaminiteForgeBlock::new)
+            .properties(BASE_PROPERTIES)
+            .item().tab(() -> Embers.ITEM_GROUP).build()
+            .blockstate((ctx, prov) -> prov.horizontalBlock(ctx.getEntry(), prov.models().withExistingParent("caminite_forge_model", new ResourceLocation(Embers.MODID, "block/caminite_forge"))))
             .register();
 
     //Building Blocks

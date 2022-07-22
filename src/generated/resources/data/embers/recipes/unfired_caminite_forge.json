@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "CCC",
+    "C C",
+    "CCC"
+  ],
+  "key": {
+    "C": {
+      "item": "embers:caminite_brick"
+    }
+  },
+  "result": {
+    "item": "embers:unfired_caminite_forge"
+  }
+}

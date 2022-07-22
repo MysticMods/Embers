@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SCS",
+    "CCC",
+    "SCS"
+  ],
+  "key": {
+    "S": {
+      "tag": "forge:sand"
+    },
+    "C": {
+      "item": "minecraft:clay_ball"
+    }
+  },
+  "result": {
+    "item": "embers:caminite_brick"
+  }
+}

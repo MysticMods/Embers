@@ -3,13 +3,24 @@ package com.mystic.embers.init;
 import com.mystic.embers.Embers;
 import com.tterrag.registrate.Registrate;
 import com.tterrag.registrate.util.entry.ItemEntry;
+import net.minecraft.advancements.critereon.InventoryChangeTrigger;
+import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.world.item.*;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraftforge.common.Tags;
 
 public class ModItems {
     private static final Registrate REGISTRATE = Embers.registrate();
 
     public static final ItemEntry<Item> ARCAIC_BRICK = REGISTRATE.item("arcaic_brick", Item::new).tab(() -> Embers.ITEM_GROUP).register();
-    public static final ItemEntry<Item> CAMINITE_BRICK = REGISTRATE.item("caminite_brick", Item::new).tab(() -> Embers.ITEM_GROUP).register();
+    public static final ItemEntry<Item> CAMINITE_BRICK = REGISTRATE.item("caminite_brick", Item::new).tab(() -> Embers.ITEM_GROUP).recipe((ctx, p) -> ShapedRecipeBuilder.shaped(ctx.getEntry().asItem(), 1)
+            .pattern("SCS")
+            .pattern("CCC")
+            .pattern("SCS")
+            .define('S', Tags.Items.SAND)
+            .define('C', Items.CLAY_BALL)
+            .unlockedBy("has_ingredient", InventoryChangeTrigger.TriggerInstance.hasItems(Items.CLAY_BALL))
+            .save(p)).register();
     public static final ItemEntry<Item> EMBER_CRYSTAL = REGISTRATE.item("ember_crystal", Item::new).tab(() -> Embers.ITEM_GROUP).register();
     public static final ItemEntry<Item> CINDERSTEEL_NUGGET = REGISTRATE.item("cindersteel_nugget", Item::new).tab(() -> Embers.ITEM_GROUP).register();
     public static final ItemEntry<Item> CINDERSTEEL_DUST = REGISTRATE.item("cindersteel_dust", Item::new).tab(() -> Embers.ITEM_GROUP).register();

@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "top": "embers:block/caminite_forge_top",
+    "front": "embers:block/caminite_forge_front",
+    "side": "embers:block/caminite_forge_side"
+  }
+}

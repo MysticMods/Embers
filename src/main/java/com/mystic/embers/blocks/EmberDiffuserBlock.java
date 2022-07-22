@@ -12,6 +12,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import noobanidus.libs.particleslib.init.ModParticles;
 import org.jetbrains.annotations.Nullable;
 
 public class EmberDiffuserBlock extends Block implements EntityBlock {
@@ -25,6 +26,7 @@ public class EmberDiffuserBlock extends Block implements EntityBlock {
     @Override
     public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
         return new EmberDiffuserEntity(ModBlockEntity.EMBER_DIFFUSER.get(), pPos, pState);
+
     }
 
     @Nullable
