@@ -9,6 +9,7 @@ import net.minecraft.world.level.block.Block;
 public class EmbersTags {
     public static class Blocks extends EmbersTags{
         public static TagKey<Block> EMBER_HEAT_BLOCK = modTag("heat_block");
+        public static TagKey<Block> EMBER_ACCEPTING = modTag("ember_accepting");
 
         static TagKey<Block> modTag(String name) {
             return BlockTags.create(new ResourceLocation(Embers.MODID, name));

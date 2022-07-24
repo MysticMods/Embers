@@ -1,30 +1,32 @@
 package com.mystic.embers.blockentity;
 
 import com.mystic.embers.api.BaseBlockEntity;
-import com.mystic.embers.api.EmbersTags;
 import com.mystic.embers.api.TickBlockEntity;
+import com.mystic.embers.capability.EmbersCapabilities;
+import com.mystic.embers.capability.reciever.IEmberReceiverCapability;
 import com.mystic.embers.client.particle.ParticleUtil;
+import com.mystic.embers.init.ModBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import noobanidus.libs.noobutil.util.BlockEntityUtil;
-import noobanidus.libs.particleslib.client.particle.Particles;
-import noobanidus.libs.particleslib.init.ModParticles;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import java.util.Objects;
 
 public class EmberDiffuserEntity extends BaseBlockEntity implements TickBlockEntity {
 
     public boolean state = false;
+    public List<BlockPos> emberMachines = new ArrayList<>();
 
     public EmberDiffuserEntity(BlockEntityType<?> pType, BlockPos pWorldPosition, BlockState pBlockState) {
         super(pType, pWorldPosition, pBlockState);
@@ -35,7 +37,9 @@ public class EmberDiffuserEntity extends BaseBlockEntity implements TickBlockEnt
 
         if(state){
             if(level.getGameTime() % 20 == 0){
-                ParticleUtil.spawnSpark(level, blockPos.above());
+                for(BlockPos p : this.emberMachines){
+                    ParticleUtil.spawnSpark(level, p);
+                }
             }
         }
     }
@@ -43,8 +47,15 @@ public class EmberDiffuserEntity extends BaseBlockEntity implements TickBlockEnt
     @Override
     public <T extends BlockEntity> void serverTick(Level level, BlockPos blockPos, BlockState blockState ) {
         if(level.getGameTime() % 20 == 0){
-            List<BlockPos> blockPosList = findBlocksWithTagInRadius(EmbersTags.Blocks.EMBER_HEAT_BLOCK, blockPos, level, 1, 0, 2);
-            System.out.println(blockPosList.size());
+            this.emberMachines = new ArrayList<>();
+            List<BlockPos> blockPosList = findBlocksInRadius(ModBlocks.CAMINITE_FORGE.get(), blockPos, level, 3, 2, 2);
+            for(BlockPos p : blockPosList){
+                var emberOp = EmbersCapabilities.getEmberReceiverCapability(Objects.requireNonNull(level.getBlockEntity(p))).resolve();
+                if(emberOp.isPresent()){
+                    IEmberReceiverCapability capability = emberOp.get();
+                    this.emberMachines.add(p);
+                }
+            }
             if(level.getBlockState(blockPos.below()).getBlock() == Blocks.LAVA){
                 state = true;
             } else {
@@ -70,6 +81,18 @@ public class EmberDiffuserEntity extends BaseBlockEntity implements TickBlockEnt
     protected void saveAdditional(CompoundTag pTag) {
         super.saveAdditional(pTag);
         pTag.putBoolean("state", this.state);
+        ListTag blockList = new ListTag();
+
+        for(BlockPos p : this.emberMachines){
+            CompoundTag t = new CompoundTag();
+            t.putInt("x", p.getX());
+            t.putInt("y", p.getY());
+            t.putInt("z", p.getZ());
+            blockList.add(t);
+        }
+
+        pTag.put("ember_machines", blockList);
+
         //pTag.put("heat_sources")
     }
 
@@ -77,5 +100,12 @@ public class EmberDiffuserEntity extends BaseBlockEntity implements TickBlockEnt
     public void load(CompoundTag pTag) {
         super.load(pTag);
         this.state = pTag.getBoolean("state");
+        this.emberMachines = new ArrayList<>();
+
+        ListTag emberMachinesTag = (ListTag) pTag.get("ember_machines");
+        for(Tag t : Objects.requireNonNull(emberMachinesTag)){
+            CompoundTag compoundTag = (CompoundTag) t;
+            emberMachines.add(new BlockPos(compoundTag.getInt("x"), compoundTag.getInt("y"), compoundTag.getInt("z")));
+        }
     }
 }

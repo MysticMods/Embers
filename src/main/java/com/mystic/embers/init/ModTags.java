@@ -16,6 +16,7 @@ public class ModTags {
 
         REGISTRATE.addDataGenerator(ProviderType.BLOCK_TAGS, b -> {
             b.tag(EmbersTags.Blocks.EMBER_HEAT_BLOCK).add(Blocks.LAVA);
+            b.tag(EmbersTags.Blocks.EMBER_ACCEPTING);
             // Internal mod tags
             //b.tag(EmbersTags.Blocks.EMBER_HEAT_BLOCK).addTags(Blocks.EARTH_SOIL, Blocks.AIR_SOIL, Blocks.FIRE_SOIL, Blocks.WATER_SOIL, Blocks.ELEMENTAL_SOIL);
 

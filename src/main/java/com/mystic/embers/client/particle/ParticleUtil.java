@@ -1,6 +1,7 @@
 package com.mystic.embers.client.particle;
 
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.particle.TextureSheetParticle;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import noobanidus.libs.particleslib.client.particle.Particles;
