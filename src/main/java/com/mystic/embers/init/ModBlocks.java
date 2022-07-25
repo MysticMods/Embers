@@ -1,6 +1,7 @@
 package com.mystic.embers.init;
 
 import com.mystic.embers.Embers;
+import com.mystic.embers.api.EmbersTags;
 import com.mystic.embers.blocks.CaminiteForgeBlock;
 import com.mystic.embers.blocks.CaminiteForgeUnfiredBlock;
 import com.mystic.embers.blocks.EmberDiffuserBlock;
@@ -32,6 +33,7 @@ public class ModBlocks {
     //Machines
     public static final BlockEntry<EmberDiffuserBlock> EMBER_DIFFUSER = REGISTRATE.block("ember_diffuser", Material.STONE, EmberDiffuserBlock::new)
             .properties(BASE_PROPERTIES)
+            .tag(EmbersTags.Blocks.EMBER_GENERATOR)
             .item().tab(() -> Embers.ITEM_GROUP).build()
             .blockstate((ctx, prov) -> prov.simpleBlock(ctx.getEntry(), prov.models().withExistingParent("ember_diffuser_child", new ResourceLocation(Embers.MODID, "block/ember_diffuser"))))
             .recipe((ctx, p) -> ShapedRecipeBuilder.shaped(ctx.getEntry().asItem(), 1)
@@ -51,9 +53,10 @@ public class ModBlocks {
             .blockstate((ctx, prov) -> prov.horizontalBlock(ctx.getEntry(), prov.models().withExistingParent("unfired_caminite_forge_model", new ResourceLocation(Embers.MODID, "block/unfired_caminite_forge"))))
             .recipe((ctx, p) -> ShapedRecipeBuilder.shaped(ctx.getEntry().asItem(), 1)
                     .pattern("CCC")
-                    .pattern("C C")
+                    .pattern("CFC")
                     .pattern("CCC")
                     .define('C', ModItems.CAMINITE_BRICK.get())
+                    .define('F', Ingredient.of(Blocks.FURNACE))
                     .unlockedBy("has_ingredient", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.CAMINITE_BRICK.get()))
                     .save(p))
             .register();

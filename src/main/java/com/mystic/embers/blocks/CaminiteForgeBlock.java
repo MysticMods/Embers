@@ -1,8 +1,6 @@
 package com.mystic.embers.blocks;
 
-import com.mystic.embers.api.BaseBlockEntity;
 import com.mystic.embers.blockentity.CaminiteForgeEntity;
-import com.mystic.embers.blockentity.EmberDiffuserEntity;
 import com.mystic.embers.init.ModBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
