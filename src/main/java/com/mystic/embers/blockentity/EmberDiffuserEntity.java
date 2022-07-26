@@ -1,13 +1,10 @@
 package com.mystic.embers.blockentity;
 
-import com.mystic.embers.api.BaseBlockEntity;
+import com.mystic.embers.blockentity.base.BaseBlockEntity;
 import com.mystic.embers.api.EmbersTags;
 import com.mystic.embers.api.TickBlockEntity;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.Tag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.level.Level;
@@ -19,9 +16,6 @@ import noobanidus.libs.particleslib.client.particle.Particles;
 import noobanidus.libs.particleslib.init.ModParticles;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 import java.util.Random;
 
 public class EmberDiffuserEntity extends BaseBlockEntity implements TickBlockEntity {
@@ -113,8 +107,10 @@ public class EmberDiffuserEntity extends BaseBlockEntity implements TickBlockEnt
     }
 
     public int getEmberOutputForMachine(BlockPos targetPos){
-        int distance = this.getBlockPos().distManhattan(new Vec3i(targetPos.getX(),targetPos.getY(),targetPos.getZ()));
-        int outPut = this.emberOutput - (20 * distance);
-        return outPut;
+        int xDistance = Math.abs(this.getBlockPos().getX() - targetPos.getX());
+        int zDistance = Math.abs(this.getBlockPos().getZ() - targetPos.getZ());
+        int highestDistance = Math.max(xDistance, zDistance);
+        highestDistance += Math.abs(this.getBlockPos().getY() - targetPos.getY());
+        return this.emberOutput - (20 * (highestDistance-1));
     }
 }

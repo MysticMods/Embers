@@ -1,8 +1,11 @@
 package com.mystic.embers.blockentity;
 
-import com.mystic.embers.api.BaseBlockEntity;
-import com.mystic.embers.api.EmbersTags;
 import com.mystic.embers.api.TickBlockEntity;
+import com.mystic.embers.blockentity.base.EmberRecievingBlockEntity;
+import com.mystic.embers.blocks.CaminiteForgeBlock;
+import com.mystic.embers.blocks.CaminiteForgeUnfiredBlock;
+import com.mystic.embers.client.particle.ParticleUtil;
+import com.mystic.embers.init.ModBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
@@ -13,11 +16,10 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
+public class CaminiteUnfiredForgeEntity extends EmberRecievingBlockEntity implements TickBlockEntity {
 
-public class CaminiteUnfiredForgeEntity extends BaseBlockEntity implements TickBlockEntity {
-
-    private BlockPos generatorPosition = null;
+//    private BlockPos generatorPosition = null;
+    private int progress = 0;
 
     public CaminiteUnfiredForgeEntity(BlockEntityType<?> pType, BlockPos pWorldPosition, BlockState pBlockState) {
         super(pType, pWorldPosition, pBlockState);
@@ -25,30 +27,25 @@ public class CaminiteUnfiredForgeEntity extends BaseBlockEntity implements TickB
 
     @Override
     public <T extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState) {
-
+        if(progress >= 100){
+            ParticleUtil.spawnSpark(level, blockPos.offset(0, 1, 0));
+        }
     }
 
     @Override
     public <T extends BlockEntity> void serverTick(Level level, BlockPos blockPos, BlockState blockState) {
         if (level.getGameTime() % 20 == 0) {
-            List<BlockPos> generators = findBlocksWithTagInRadius(EmbersTags.Blocks.EMBER_GENERATOR, blockPos, level, 10, 3, 3);
-            BlockPos bestGenerator = null;
-            int bestEmberSource = 0;
-            for (BlockPos pos : generators) {
-                BlockEntity blockEntity = level.getBlockEntity(pos);
-                if (blockEntity instanceof EmberDiffuserEntity entity) {
-                    int emberSource = entity.getEmberOutputForMachine(blockPos);
-                    if (emberSource > bestEmberSource) { //TODO: Add distance check for closest generator
-                        bestEmberSource = emberSource;
-                        bestGenerator = pos;
-                    }
-                }
+            findGenerator(blockPos);
+        }
+
+        int emberOutput = getGeneratorEmberOutput();
+        if(emberOutput >= 40){
+            this.progress++;
+            if(progress > 100){
+                level.setBlock(this.getBlockPos(), ModBlocks.CAMINITE_FORGE.getDefaultState()
+                        .setValue(CaminiteForgeBlock.FACING, level.getBlockState(this.getBlockPos()).getValue(CaminiteForgeUnfiredBlock.FACING)), 2);
             }
-            System.out.println(bestEmberSource);
-            if (bestGenerator != null) {
-                this.generatorPosition = bestGenerator;
-                updateViaState();
-            }
+            updateViaState();
         }
 
     }
@@ -67,23 +64,17 @@ public class CaminiteUnfiredForgeEntity extends BaseBlockEntity implements TickB
     @Override
     protected void saveAdditional(@NotNull CompoundTag pTag) {
         super.saveAdditional(pTag);
-        if (this.generatorPosition != null) {
-            CompoundTag t = new CompoundTag();
-            t.putInt("x", this.generatorPosition.getX());
-            t.putInt("y", this.generatorPosition.getY());
-            t.putInt("z", this.generatorPosition.getZ());
-            pTag.put("generator_position", t);
-        }
+        this.saveGenerator(pTag);
+        pTag.putInt("progress",this.progress);
 
     }
 
     @Override
     public void load(@NotNull CompoundTag pTag) {
         super.load(pTag);
-        CompoundTag generator_position = (CompoundTag) pTag.get("generator_position");
-        if (generator_position != null) {
-            this.generatorPosition = new BlockPos(generator_position.getInt("x"), generator_position.getInt("y"), generator_position.getInt("z"));
-        }
+        this.loadGenerator(pTag);
+
+        this.progress = pTag.getInt("progress");
 
     }
 }

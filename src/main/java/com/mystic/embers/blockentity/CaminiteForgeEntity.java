@@ -1,7 +1,8 @@
 package com.mystic.embers.blockentity;
 
-import com.mystic.embers.api.BaseBlockEntity;
 import com.mystic.embers.api.TickBlockEntity;
+import com.mystic.embers.blockentity.base.EmberRecievingBlockEntity;
+import com.mystic.embers.item.handlers.SmelterItemHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
@@ -10,9 +11,19 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemStackHandler;
+import org.jetbrains.annotations.NotNull;
 
-public class CaminiteForgeEntity extends BaseBlockEntity implements TickBlockEntity {
+public class CaminiteForgeEntity extends EmberRecievingBlockEntity implements TickBlockEntity {
 
+    private float progress = 0;
+    private boolean isLit = false;
+    private final ItemStackHandler itemHandler = new SmelterItemHandler(1, 1,this);
+    private final LazyOptional<IItemHandler> handler = LazyOptional.of(() -> itemHandler);
 
     public CaminiteForgeEntity(BlockEntityType<?> pType, BlockPos pWorldPosition, BlockState pBlockState) {
         super(pType, pWorldPosition, pBlockState);
@@ -25,8 +36,24 @@ public class CaminiteForgeEntity extends BaseBlockEntity implements TickBlockEnt
 
     @Override
     public <T extends BlockEntity> void serverTick(Level level, BlockPos blockPos, BlockState blockState ) {
+        if (level.getGameTime() % 20 == 0) {
+            findGenerator(blockPos);
+            if(getGeneratorEmberOutput() >= 40 && !this.isLit){
+                this.isLit = true;
+                updateViaState();
+            } else if(getGeneratorEmberOutput() < 40 && this.isLit){
+                this.isLit = false;
+                updateViaState();
+            }
+        }
 
-
+        if(isLit){
+            progress++;
+            if(progress >= 100){
+                progress = 0;
+            }
+            updateViaState();
+        }
     }
 
     @Override
@@ -36,17 +63,35 @@ public class CaminiteForgeEntity extends BaseBlockEntity implements TickBlockEnt
         if (tag != null) {
             load(tag);
         } else {
-
+            this.progress = 0;
+            this.isLit = false;
         }
     }
 
     @Override
-    protected void saveAdditional(CompoundTag pTag) {
-        super.saveAdditional(pTag);
+    protected void saveAdditional(@NotNull CompoundTag tag) {
+        super.saveAdditional(tag);
+        tag.putFloat("progress", this.progress);
+        tag.putBoolean("isLit", this.isLit);
     }
 
     @Override
-    public void load(CompoundTag pTag) {
-        super.load(pTag);
+    public void load(@NotNull CompoundTag tag) {
+        super.load(tag);
+        this.progress = tag.getFloat("progress");
+        this.isLit = tag.getBoolean("isLit");
+    }
+
+    @NotNull
+    @Override
+    public <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap) {
+        if(cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY){
+            return handler.cast();
+        }
+        return super.getCapability(cap);
+    }
+
+    public float getProgress() {
+        return this.progress / 100;
     }
 }

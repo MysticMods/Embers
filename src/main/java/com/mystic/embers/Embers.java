@@ -51,6 +51,7 @@ public class Embers {
         ModLang.classload();
         ModBlockEntity.classload();
         ModTags.classload();
+        ModMenus.classload();
     }
 
     public void setup(FMLCommonSetupEvent event) {
