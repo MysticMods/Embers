@@ -13,9 +13,10 @@ d0946fa6e3fba8a2b99b5ee286b181f7d1a98350 assets/embers/blockstates/chiseled_cami
 018cb8e5e2ba57d60284b58005eb5acff898a00c assets/embers/blockstates/ember_block.json
 bea4fdd29c8fe8dfcf23cd61753eca85da90da3a assets/embers/blockstates/ember_diffuser.json
 ac0e310cc5afda0be1b04da1fa0e85ed87d6331c assets/embers/blockstates/ember_ore.json
+eb66b2058bc4ff8ac9359a486a5a860f1448aa15 assets/embers/blockstates/molten_iron.json
 a61de4b6d2fbd9681f63c697b64411aaba71ad39 assets/embers/blockstates/unfired_caminite_forge.json
-c7f94e319a3822e8869f3eec451017805fdf5ee1 assets/embers/lang/en_ud.json
-10456c419f1948d8a451e562a37b188ae6ba0723 assets/embers/lang/en_us.json
+5eda84ad5559d312ab8daeef3d8626cf0d72dcf7 assets/embers/lang/en_ud.json
+e6aece284e3d7fa402619d494e0844f10dae26a5 assets/embers/lang/en_us.json
 fefa64f4c0af648075047e792b846655f2b9d12b assets/embers/models/block/arcaic_bricks.json
 489622e71201ae783350d14b76ffdb930e161510 assets/embers/models/block/arcaic_bricks_slab.json
 de8aaad57c389c23e5ac87ed1650b2313416aafb assets/embers/models/block/arcaic_bricks_slab_top.json
@@ -41,6 +42,7 @@ e1ff07daa93f019a1f9fad40689f24735423b84e assets/embers/models/block/cindersteel_
 69436098da9c266d742ccd3b3adad4c2b5fc7031 assets/embers/models/block/ember_block.json
 66e46417e906044a71cb15b4ff269f7d5fc79196 assets/embers/models/block/ember_diffuser_child.json
 3e06e70df019e2b91c4d6cb5cf5ea4cc177edfce assets/embers/models/block/ember_ore.json
+f292f382c9f0008828383862e59091ab1266312b assets/embers/models/block/molten_iron.json
 965294dc5a8e0050e20016cebbbfb0a8b714dc9d assets/embers/models/block/unfired_caminite_forge_model.json
 bd0bf4cdf179c4c0b5e182100d5070820fbf0515 assets/embers/models/item/arcaic_brick.json
 09f076bb1f4ed5212e41313438b038b121cbd8d1 assets/embers/models/item/arcaic_bricks.json
@@ -119,6 +121,7 @@ beb725be018ed98165b5c4c796b463baf18eba68 data/embers/tags/blocks/heat_block.json
 c4005e4011335ae54e2dfdbef763da7a2dea894f data/minecraft/tags/blocks/slabs.json
 05b291682be205adc138d89fe64b1bf59cd86405 data/minecraft/tags/blocks/stairs.json
 f6ef1dfaae73b9decaa31e60dcd1ce47d954912d data/minecraft/tags/blocks/walls.json
+de43d4517b1cf8c41798a6762f2ae61f91497125 data/minecraft/tags/fluids/water.json
 c4005e4011335ae54e2dfdbef763da7a2dea894f data/minecraft/tags/items/slabs.json
 05b291682be205adc138d89fe64b1bf59cd86405 data/minecraft/tags/items/stairs.json
 f6ef1dfaae73b9decaa31e60dcd1ce47d954912d data/minecraft/tags/items/walls.json

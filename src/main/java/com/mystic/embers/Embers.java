@@ -4,22 +4,16 @@ import com.mystic.embers.init.*;
 import com.mystic.embers.network.NetworkHandler;
 import com.mystic.embers.setup.ModSetup;
 import com.tterrag.registrate.Registrate;
-import net.minecraft.data.DataGenerator;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
-import net.minecraftforge.common.data.ForgeBlockTagsProvider;
 import net.minecraftforge.common.util.Lazy;
-import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
 
 import javax.annotation.Nonnull;
 import java.util.logging.LogManager;
@@ -43,7 +37,7 @@ public class Embers {
     public Embers(){
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::sendImc);
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::registerCaps);
+        //FMLJavaModLoadingContext.get().getModEventBus().addListener(this::registerCaps);
         MinecraftForge.EVENT_BUS.register(this);
 
         ModBlocks.classload();
@@ -52,18 +46,13 @@ public class Embers {
         ModBlockEntity.classload();
         ModTags.classload();
         ModMenus.classload();
+        ModFluids.classload();
     }
 
     public void setup(FMLCommonSetupEvent event) {
         MinecraftForge.EVENT_BUS.register(new EventManager());
         NetworkHandler.register();
     }
-
-    @SubscribeEvent
-    public void registerCaps(final RegisterCapabilitiesEvent event) {
-        //event.register(IShieldCapability.class);
-    }
-
 
     public void sendImc(InterModEnqueueEvent event) {
         ModSetup.sendImc();

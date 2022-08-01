@@ -10,6 +10,8 @@ public class ModLang {
 
     public static final TranslatableComponent CREATIVE_TAB = REGISTRATE.addRawLang("itemGroup." + Embers.MODID, "Embers");
 
-    public static void classload() {}
+    public static void classload() {
+
+    }
 
 }
