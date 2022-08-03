@@ -6,7 +6,6 @@ import com.mystic.embers.setup.ModSetup;
 import com.tterrag.registrate.Registrate;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.Lazy;
@@ -31,7 +30,7 @@ public class Embers {
         @Override
         @Nonnull
         public ItemStack makeIcon() {
-            return new ItemStack(Items.CARROT);
+            return new ItemStack(ModItems.EMBER_CRYSTAL.get());
         }
     };
 

@@ -36,7 +36,7 @@ public class CaminiteForgeEntity extends EmberRecievingBlockEntity implements Ti
     public CaminiteForgeEntity(BlockEntityType<?> pType, BlockPos pWorldPosition, BlockState pBlockState) {
         super(pType, pWorldPosition, pBlockState);
 
-        this.outputTank = new FluidTank(2000);
+        this.outputTank = new FluidTank(10000);
 
     }
 
@@ -64,7 +64,7 @@ public class CaminiteForgeEntity extends EmberRecievingBlockEntity implements Ti
                 updateViaState();
             }
 
-            //TODO: Check if fluid already in tank if same one
+
             if(this.outputTank.getFluidAmount() < this.outputTank.getCapacity()){
                 if(this.itemHandler.getStackInSlot(0) != ItemStack.EMPTY){
                     var smeltingRecipe = level.getRecipeManager().getRecipeFor(ModRecipes.Types.SMELTER.get(), new SimpleContainer(this.itemHandler.getStackInSlot(0)), level);
@@ -73,19 +73,27 @@ public class CaminiteForgeEntity extends EmberRecievingBlockEntity implements Ti
                     }
                 }
 
-                if(this.currentRecipe != null){
-                    progress++;
-                    if(progress >= 100){
-                        this.itemHandler.getStackInSlot(0).shrink(1);
-                        this.outputTank.fill(this.currentRecipe.getResult(), IFluidHandler.FluidAction.EXECUTE);
-                        this.progress = 0;
+                if(this.currentRecipe != null ){
+                    if(this.outputTank.getFluidInTank(0).getFluid() != this.currentRecipe.getResult().getFluid()){
+                        if(this.outputTank.getFluidAmount() == 0){
+                            this.progress++;
+                        } else {
+                            this.progress = 0;
+                        }
+                    } else{
+                        this.progress++;
                     }
                 }
+
                 updateViaState();
             }
-        }
 
-        System.out.println("Fluids: " + this.outputTank.getFluidAmount());
+            if(this.progress >= 100){
+                this.itemHandler.getStackInSlot(0).shrink(1);
+                this.outputTank.fill(this.currentRecipe.getResult(), IFluidHandler.FluidAction.EXECUTE);
+                this.progress = 0;
+            }
+        }
     }
 
     @Override
@@ -105,6 +113,7 @@ public class CaminiteForgeEntity extends EmberRecievingBlockEntity implements Ti
         super.saveAdditional(tag);
         tag.putFloat("progress", this.progress);
         tag.putBoolean("isLit", this.isLit);
+        tag.put("inventory", this.itemHandler.serializeNBT());
 
         CompoundTag fluidTankTag = new CompoundTag();
         this.outputTank.writeToNBT(fluidTankTag);
@@ -116,6 +125,7 @@ public class CaminiteForgeEntity extends EmberRecievingBlockEntity implements Ti
         super.load(tag);
         this.progress = tag.getFloat("progress");
         this.isLit = tag.getBoolean("isLit");
+        this.itemHandler.deserializeNBT(tag.getCompound("inventory"));
         this.outputTank.readFromNBT(tag.getCompound("fluidTank"));
     }
 

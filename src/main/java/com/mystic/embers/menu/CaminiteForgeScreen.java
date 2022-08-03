@@ -14,6 +14,7 @@ import net.minecraft.world.entity.player.Inventory;
 public class CaminiteForgeScreen extends AbstractContainerScreen<CaminiteForgeMenu> {
 
     private static final ResourceLocation TEXTURE = new ResourceLocation(Embers.MODID, "textures/gui/caminite_forge.png");
+    private static final ResourceLocation TEXTURE_2 = new ResourceLocation(Embers.MODID, "textures/gui/caminite_forge_2.png");
 
     public CaminiteForgeScreen(CaminiteForgeMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
         super(pMenu, pPlayerInventory, pTitle);
@@ -27,8 +28,8 @@ public class CaminiteForgeScreen extends AbstractContainerScreen<CaminiteForgeMe
     @Override
     protected void init() {
         super.init();
-        addRenderableOnly(new FluidStackWidget(this, () -> menu.getEntity().getOutputTank(), getGuiLeft() + 27 , getGuiTop() + 22, 9, 42));
         addRenderableOnly(new ProgressWidget(this, () -> menu.getEntity().getProgress(), getGuiLeft() + 79, getGuiTop() + 31, 15, 15, 176, 0, ProgressWidget.Direction.BOTTOM_UP, TEXTURE));
+        addRenderableOnly(new FluidStackWidget(this, () -> menu.getEntity().getOutputTank(), getGuiLeft() + 27 , getGuiTop() + 22, 9, 42));
     }
 
     @Override

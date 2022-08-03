@@ -82,12 +82,16 @@ public class FluidStackWidget extends AbstractWidget {
     }
 
     public void renderToolTip(PoseStack poseStack, int mouseX, int mouseY) {
-        if (isHovered) {
+        if (isHovered(mouseX, mouseY)) {
             displayOn.renderTooltip(poseStack, Arrays.asList(getFluid.get().getFluid().getDisplayName().getVisualOrderText(), new TextComponent(getFluid.get().getFluidAmount() + "mB").getVisualOrderText()), mouseX, mouseY);
         }
     }
 
     @Override
     public void updateNarration(NarrationElementOutput pNarrationElementOutput) {
+    }
+
+    protected boolean isHovered(int mouseX, int mouseY) {
+        return mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.width && mouseY < this.y + this.height;
     }
 }
