@@ -10,6 +10,7 @@ import net.minecraft.world.item.Items;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.Lazy;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
@@ -35,9 +36,10 @@ public class Embers {
     };
 
     public Embers(){
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::sendImc);
-        //FMLJavaModLoadingContext.get().getModEventBus().addListener(this::registerCaps);
+        IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+        bus.addListener(this::setup);
+        bus.addListener(this::sendImc);
+        //bus.addListener(this::registerCaps);
         MinecraftForge.EVENT_BUS.register(this);
 
         ModBlocks.classload();
@@ -47,10 +49,12 @@ public class Embers {
         ModTags.classload();
         ModMenus.classload();
         ModFluids.classload();
+        ModRecipes.Serializers.load();
+        ModRecipes.Types.register(bus);
     }
 
     public void setup(FMLCommonSetupEvent event) {
-        MinecraftForge.EVENT_BUS.register(new EventManager());
+        //MinecraftForge.EVENT_BUS.register(new EventManager());
         NetworkHandler.register();
     }
 
@@ -66,5 +70,7 @@ public class Embers {
     public static class ClientProxy {
 
     }
+
+
 
 }

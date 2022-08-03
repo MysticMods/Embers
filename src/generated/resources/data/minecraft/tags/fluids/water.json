@@ -2,6 +2,10 @@
   "replace": false,
   "values": [
     "embers:flowing_molten_iron",
-    "embers:molten_iron"
+    "embers:molten_iron",
+    "embers:flowing_molten_gold",
+    "embers:molten_gold",
+    "embers:flowing_molten_copper",
+    "embers:molten_copper"
   ]
 }

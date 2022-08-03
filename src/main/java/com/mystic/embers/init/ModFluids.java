@@ -9,13 +9,13 @@ import net.minecraftforge.fluids.ForgeFlowingFluid;
 public class ModFluids {
     private static final Registrate REGISTRATE = Embers.registrate();
 
-    public static final FluidEntry<ForgeFlowingFluid.Flowing> MOLTEN_IRON = noBucketMolten("molten_iron");
-    public static final FluidEntry<ForgeFlowingFluid.Flowing> MOLTEN_GOLD = noBucketMolten("molten_gold");
-    public static final FluidEntry<ForgeFlowingFluid.Flowing> MOLTEN_COPPER = noBucketMolten("molten_copper");
+    public static final FluidEntry<ForgeFlowingFluid.Flowing> MOLTEN_IRON = noBucketMolten("molten_iron", 0xFFC70039);
+    public static final FluidEntry<ForgeFlowingFluid.Flowing> MOLTEN_GOLD = noBucketMolten("molten_gold", 0xFFFFD700);
+    public static final FluidEntry<ForgeFlowingFluid.Flowing> MOLTEN_COPPER = noBucketMolten("molten_copper", 0xFFb87333);
 
-    private static FluidEntry<ForgeFlowingFluid.Flowing> noBucketMolten(String name){
+    private static FluidEntry<ForgeFlowingFluid.Flowing> noBucketMolten(String name, int color){
         return REGISTRATE.fluid(name,new ResourceLocation(Embers.MODID,"block/fluid/molten/flowing"), new ResourceLocation(Embers.MODID,"block/fluid/molten/still"))
-                .attributes(a -> a.luminosity(15))
+                .attributes(a -> a.luminosity(15).color(color))
                 .properties(ForgeFlowingFluid.Properties::canMultiply)
                 .noBucket()
 //            .bucket()
@@ -24,6 +24,7 @@ public class ModFluids {
 //            .removeTag(FluidTags.WATER)
                 .register();
     }
+
 
     public static void classload() { }
 }

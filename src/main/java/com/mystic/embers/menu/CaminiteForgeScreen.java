@@ -3,6 +3,7 @@ package com.mystic.embers.menu;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mystic.embers.Embers;
+import com.mystic.embers.menu.widgets.FluidStackWidget;
 import com.mystic.embers.menu.widgets.ProgressWidget;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
@@ -26,7 +27,8 @@ public class CaminiteForgeScreen extends AbstractContainerScreen<CaminiteForgeMe
     @Override
     protected void init() {
         super.init();
-        addRenderableOnly(new ProgressWidget(this, () -> menu.getEntity().getProgress(), getGuiLeft() + 79, getGuiTop() + 31, 15, 15, 176, 0, ProgressWidget.Direction.BOTTOM_UP));
+        addRenderableOnly(new FluidStackWidget(this, () -> menu.getEntity().getOutputTank(), getGuiLeft() + 27 , getGuiTop() + 22, 9, 42));
+        addRenderableOnly(new ProgressWidget(this, () -> menu.getEntity().getProgress(), getGuiLeft() + 79, getGuiTop() + 31, 15, 15, 176, 0, ProgressWidget.Direction.BOTTOM_UP, TEXTURE));
     }
 
     @Override

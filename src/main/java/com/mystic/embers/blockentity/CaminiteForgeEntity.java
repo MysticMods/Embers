@@ -2,19 +2,21 @@ package com.mystic.embers.blockentity;
 
 import com.mystic.embers.api.TickBlockEntity;
 import com.mystic.embers.blockentity.base.EmberRecievingBlockEntity;
-import com.mystic.embers.init.ModFluids;
+import com.mystic.embers.init.ModRecipes;
 import com.mystic.embers.item.handlers.SmelterItemHandler;
+import com.mystic.embers.recipe.smelter.SmelterRecipe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -29,6 +31,7 @@ public class CaminiteForgeEntity extends EmberRecievingBlockEntity implements Ti
     private final ItemStackHandler itemHandler = new SmelterItemHandler(1, 1,this);
     private final FluidTank outputTank;
     private final LazyOptional<IItemHandler> handler = LazyOptional.of(() -> itemHandler);
+    private SmelterRecipe currentRecipe = null;
 
     public CaminiteForgeEntity(BlockEntityType<?> pType, BlockPos pWorldPosition, BlockState pBlockState) {
         super(pType, pWorldPosition, pBlockState);
@@ -56,18 +59,33 @@ public class CaminiteForgeEntity extends EmberRecievingBlockEntity implements Ti
         }
 
         if(isLit){
-            progress++;
-            if(progress >= 100){
-                progress = 0;
+            if(this.itemHandler.getStackInSlot(0) == ItemStack.EMPTY && this.progress > 0){
+                this.progress = 0;
+                updateViaState();
             }
 
-            this.outputTank.fill(new FluidStack(ModFluids.MOLTEN_IRON.get().getSource(), 10), IFluidHandler.FluidAction.EXECUTE);
+            //TODO: Check if fluid already in tank if same one
+            if(this.outputTank.getFluidAmount() < this.outputTank.getCapacity()){
+                if(this.itemHandler.getStackInSlot(0) != ItemStack.EMPTY){
+                    var smeltingRecipe = level.getRecipeManager().getRecipeFor(ModRecipes.Types.SMELTER.get(), new SimpleContainer(this.itemHandler.getStackInSlot(0)), level);
+                    if(smeltingRecipe.isPresent() && this.currentRecipe != smeltingRecipe.get()){
+                        this.currentRecipe = smeltingRecipe.get();
+                    }
+                }
 
-            updateViaState();
+                if(this.currentRecipe != null){
+                    progress++;
+                    if(progress >= 100){
+                        this.itemHandler.getStackInSlot(0).shrink(1);
+                        this.outputTank.fill(this.currentRecipe.getResult(), IFluidHandler.FluidAction.EXECUTE);
+                        this.progress = 0;
+                    }
+                }
+                updateViaState();
+            }
         }
 
         System.out.println("Fluids: " + this.outputTank.getFluidAmount());
-        System.out.println("Fluids tank: " + this.outputTank.getFluidInTank(0));
     }
 
     @Override
@@ -112,5 +130,9 @@ public class CaminiteForgeEntity extends EmberRecievingBlockEntity implements Ti
 
     public float getProgress() {
         return this.progress / 100;
+    }
+
+    public FluidTank getOutputTank() {
+        return outputTank;
     }
 }

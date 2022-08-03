@@ -1,10 +1,12 @@
 package com.mystic.embers.menu.widgets;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.TextComponent;
+import net.minecraft.resources.ResourceLocation;
 
 import java.util.function.Supplier;
 
@@ -21,8 +23,9 @@ public class ProgressWidget extends AbstractWidget {
     private final int u;
     private final int v;
     private final Direction direction;
+    private final ResourceLocation textureLocation;
 
-    public ProgressWidget(Screen screen, Supplier<Float> getter, int x, int y, int width, int height, int u, int v, Direction direction) {
+    public ProgressWidget(Screen screen, Supplier<Float> getter, int x, int y, int width, int height, int u, int v, Direction direction, ResourceLocation textureLocation) {
         super(x, y, width, height, TextComponent.EMPTY);
         this.screen = screen;
         this.getter = getter;
@@ -30,6 +33,7 @@ public class ProgressWidget extends AbstractWidget {
         this.v = v;
         this.direction = direction;
         this.visible = true;
+        this.textureLocation = textureLocation;
     }
 
     // Stop the click sound
@@ -62,7 +66,7 @@ public class ProgressWidget extends AbstractWidget {
                 width = (int) (this.width * progress);
             }
         }
-
+        RenderSystem.setShaderTexture(0, this.textureLocation);
         poseStack.pushPose();
         blit(poseStack, x + xOffset, y + yOffset, u, v + yOffset, width, height);
         poseStack.popPose();
