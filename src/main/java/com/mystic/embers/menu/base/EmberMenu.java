@@ -21,7 +21,7 @@ public abstract class EmberMenu<T extends BaseBlockEntity> extends AbstractConta
         super(pMenuType, pContainerId);
         this.entity = entity;
         this.playerInventory = new InvWrapper(playerInventory);
-        layoutPlayerInventorySlots(8, 84);
+
     }
 
 
@@ -45,7 +45,7 @@ public abstract class EmberMenu<T extends BaseBlockEntity> extends AbstractConta
                 }
                 slot.onQuickCraft(stack, itemstack);
             } else {
-                if (canQuickMoveStack(player, stack)) {
+                if (canQuickMoveStack(player, stack)) { //TODO stack?
                     if (!this.moveItemStackTo(stack, 0, 1, false)) {
                         return ItemStack.EMPTY;
                     }
@@ -91,7 +91,7 @@ public abstract class EmberMenu<T extends BaseBlockEntity> extends AbstractConta
         return index;
     }
 
-    private void layoutPlayerInventorySlots(int leftCol, int topRow) {
+    protected void layoutPlayerInventorySlots(int leftCol, int topRow) {
         // Player inventory
         addSlotBox(this.playerInventory, 9, leftCol, topRow, 9, 18, 3, 18);
 

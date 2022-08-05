@@ -33,6 +33,8 @@ public class CaminiteForgeEntity extends EmberRecievingBlockEntity implements Ti
     private final LazyOptional<IItemHandler> handler = LazyOptional.of(() -> itemHandler);
     private SmelterRecipe currentRecipe = null;
 
+    public int progressTimer = 200;
+
     public CaminiteForgeEntity(BlockEntityType<?> pType, BlockPos pWorldPosition, BlockState pBlockState) {
         super(pType, pWorldPosition, pBlockState);
 
@@ -88,7 +90,7 @@ public class CaminiteForgeEntity extends EmberRecievingBlockEntity implements Ti
                 updateViaState();
             }
 
-            if(this.progress >= 100){
+            if(this.progress >= this.progressTimer){
                 this.itemHandler.getStackInSlot(0).shrink(1);
                 this.outputTank.fill(this.currentRecipe.getResult(), IFluidHandler.FluidAction.EXECUTE);
                 this.progress = 0;
@@ -139,7 +141,7 @@ public class CaminiteForgeEntity extends EmberRecievingBlockEntity implements Ti
     }
 
     public float getProgress() {
-        return this.progress / 100;
+        return this.progress / this.progressTimer;
     }
 
     public FluidTank getOutputTank() {

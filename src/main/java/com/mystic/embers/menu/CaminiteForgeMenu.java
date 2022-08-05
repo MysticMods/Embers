@@ -19,7 +19,6 @@ import org.jetbrains.annotations.Nullable;
 
 public class CaminiteForgeMenu extends EmberMenu<CaminiteForgeEntity> {
 
-
     protected CaminiteForgeMenu(@Nullable CaminiteForgeEntity entity, Inventory playerInventory, int pContainerId) {
         super(ModMenus.CAMINITE_FORGE.get(), entity, playerInventory, pContainerId);
         if(entity != null){
@@ -29,6 +28,7 @@ public class CaminiteForgeMenu extends EmberMenu<CaminiteForgeEntity> {
                 addSlot(new SlotItemHandler(c, 1, 79, 58));
             });
         }
+        layoutPlayerInventorySlots(8, 84);
     }
 
     @Override
@@ -45,6 +45,5 @@ public class CaminiteForgeMenu extends EmberMenu<CaminiteForgeEntity> {
 
     public static MenuConstructor getServerContainer(CaminiteForgeEntity entity, BlockPos pos){
         return (id, playerInv, player) -> new CaminiteForgeMenu(entity, playerInv, id);
-
     }
 }
