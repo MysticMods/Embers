@@ -4,6 +4,7 @@ import com.mystic.embers.Embers;
 import com.mystic.embers.api.EmbersTags;
 import com.mystic.embers.blocks.CaminiteForgeBlock;
 import com.mystic.embers.blocks.CaminiteForgeUnfiredBlock;
+import com.mystic.embers.blocks.EmberCrystallizerBlock;
 import com.mystic.embers.blocks.EmberDiffuserBlock;
 import com.tterrag.registrate.Registrate;
 import com.tterrag.registrate.builders.BlockBuilder;
@@ -65,6 +66,22 @@ public class ModBlocks {
             .properties(BASE_PROPERTIES)
             .item().tab(() -> Embers.ITEM_GROUP).build()
             .blockstate((ctx, prov) -> prov.horizontalBlock(ctx.getEntry(), prov.models().withExistingParent("caminite_forge_model", new ResourceLocation(Embers.MODID, "block/caminite_forge"))))
+            .register();
+
+    public static final BlockEntry<EmberCrystallizerBlock> EMBER_CRYSTALLIZER = REGISTRATE.block("ember_crystallizer", Material.STONE, EmberCrystallizerBlock::new)
+            .properties(BASE_PROPERTIES)
+            .tag(EmbersTags.Blocks.EMBER_ACCEPTING)
+            .item().tab(() -> Embers.ITEM_GROUP).build()
+            //.blockstate((ctx, prov) -> prov.simpleBlock(ctx.getEntry(), prov.models().withExistingParent("ember_crystallizer_child", new ResourceLocation(Embers.MODID, "block/ember_crystallizer"))))
+            .recipe((ctx, p) -> ShapedRecipeBuilder.shaped(ctx.getEntry().asItem(), 1)
+                    .pattern("CGC")
+                    .pattern("CDC")
+                    .pattern("CCC")
+                    .define('C', Ingredient.of(ModItems.CAMINITE_BRICK.get()))
+                    .define('G', Ingredient.of(Items.GLASS))
+                    .define('D', Ingredient.of(Items.DIAMOND))
+                    .unlockedBy("has_ingredient", InventoryChangeTrigger.TriggerInstance.hasItems(Items.DIAMOND))
+                    .save(p))
             .register();
 
     //Building Blocks

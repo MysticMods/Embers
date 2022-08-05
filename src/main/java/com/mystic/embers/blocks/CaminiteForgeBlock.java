@@ -53,7 +53,7 @@ public class CaminiteForgeBlock extends Block  implements EntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
-        return new CaminiteForgeEntity(ModBlockEntity.CAMINITE_FORGE.get(), pPos, pState);
+        return new CaminiteForgeEntity(ModBlockEntity.EMBER_CRYSTALLIZER.get(), pPos, pState);
     }
 
     @Nullable
@@ -72,7 +72,7 @@ public class CaminiteForgeBlock extends Block  implements EntityBlock {
         if (pLevel.isClientSide) {
             return InteractionResult.SUCCESS;
         } else {
-            MenuProvider menuprovider = new SimpleMenuProvider(CaminiteForgeMenu.getServerContainer((CaminiteForgeEntity) pLevel.getBlockEntity(pPos), pPos), CaminiteForgeMenu.component);
+            MenuProvider menuprovider = new SimpleMenuProvider(CaminiteForgeMenu.getServerContainer((CaminiteForgeEntity) pLevel.getBlockEntity(pPos), pPos), new TextComponent(""));
             if (menuprovider != null && pPlayer instanceof ServerPlayer serverPlayer) {
                 NetworkHooks.openGui(serverPlayer,menuprovider, buf -> buf.writeBlockPos(pPos));
             }

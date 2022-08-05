@@ -30,7 +30,7 @@ public class EmbersCapabilities {
 
     @SubscribeEvent
     public static void attachCapability (AttachCapabilitiesEvent<BlockEntity> event) {
-        if (event.getObject().getType() == ModBlockEntity.CAMINITE_FORGE.get()) {
+        if (event.getObject().getType() == ModBlockEntity.EMBER_CRYSTALLIZER.get()) {
             event.addCapability(EMBERS_RECEIVER_CAPABILITY_ID, new EmberReceiverCapabilityProvider());
         }
     }
