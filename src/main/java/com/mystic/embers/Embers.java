@@ -2,14 +2,17 @@ package com.mystic.embers;
 
 import com.mystic.embers.init.*;
 import com.mystic.embers.network.NetworkHandler;
-import com.mystic.embers.setup.ModSetup;
+import com.mystic.embers.recipe.smelter.SmelterRecipeProvider;
 import com.tterrag.registrate.Registrate;
+import net.minecraft.data.DataGenerator;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.Lazy;
+import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
@@ -37,7 +40,7 @@ public class Embers {
     public Embers(){
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
         bus.addListener(this::setup);
-        bus.addListener(this::sendImc);
+        bus.addListener(this::gatherData);
         //bus.addListener(this::registerCaps);
         MinecraftForge.EVENT_BUS.register(this);
 
@@ -53,12 +56,12 @@ public class Embers {
     }
 
     public void setup(FMLCommonSetupEvent event) {
-        //MinecraftForge.EVENT_BUS.register(new EventManager());
         NetworkHandler.register();
     }
 
-    public void sendImc(InterModEnqueueEvent event) {
-        ModSetup.sendImc();
+    public void gatherData(GatherDataEvent event) {
+        DataGenerator generator = event.getGenerator();
+        generator.addProvider(event.includeServer(), new SmelterRecipeProvider(generator));
     }
 
     public static Registrate registrate() {

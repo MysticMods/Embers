@@ -13,6 +13,7 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FastColor;
+import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 
@@ -39,7 +40,7 @@ public class FluidStackWidget extends AbstractWidget {
 		FluidTank fluidTank = getFluid.get();
 		if (!fluidTank.isEmpty()) {
 			FluidStack fluidStack = fluidTank.getFluid();
-			ResourceLocation still = fluidStack.getFluid().getAttributes().getStillTexture(fluidStack);
+			ResourceLocation still = IClientFluidTypeExtensions.of(fluidStack.getFluid()).getStillTexture(fluidStack);
 			if (still != null) {
 				AbstractTexture texture = minecraft.getTextureManager().getTexture(TextureAtlas.LOCATION_BLOCKS);
 				if (texture instanceof TextureAtlas atlas) {
@@ -47,12 +48,12 @@ public class FluidStackWidget extends AbstractWidget {
 					RenderSystem.setShaderTexture(0, TextureAtlas.LOCATION_BLOCKS);
 
 
-					int color = fluidStack.getFluid().getColor();
+					int color = IClientFluidTypeExtensions.of(fluidStack.getFluid()).getTintColor(fluidStack);
 					RenderSystem.setShaderColor(
-							FastColor.ARGB32.red(color) / 255.0F,
-							FastColor.ARGB32.green(color) / 255.0F,
-							FastColor.ARGB32.blue(color) / 255.0F,
-							FastColor.ARGB32.alpha(color) / 255.0F);
+									FastColor.ARGB32.red(color) / 255.0F,
+									FastColor.ARGB32.green(color) / 255.0F,
+									FastColor.ARGB32.blue(color) / 255.0F,
+									FastColor.ARGB32.alpha(color) / 255.0F);
 					RenderSystem.enableBlend();
 
 					int stored = fluidTank.getFluidAmount();

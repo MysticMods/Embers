@@ -23,9 +23,6 @@ public class SmelterRecipeProvider extends RecipeProvider {
 
     @Override
     protected void buildCraftingRecipes(Consumer<FinishedRecipe> pFinishedRecipeConsumer) {
-        pFinishedRecipeConsumer.accept(new SmelterFinishedRecipe(ModFluids.MOLTEN_IRON.getId(), Ingredient.of(Items.RAW_IRON), new FluidStack(ModFluids.MOLTEN_IRON.get(), 1000)));
-        pFinishedRecipeConsumer.accept(new SmelterFinishedRecipe(ModFluids.MOLTEN_GOLD.getId(), Ingredient.of(Items.RAW_GOLD), new FluidStack(ModFluids.MOLTEN_GOLD.get(), 1000)));
-        pFinishedRecipeConsumer.accept(new SmelterFinishedRecipe(ModFluids.MOLTEN_COPPER.getId(), Ingredient.of(Items.RAW_COPPER), new FluidStack(ModFluids.MOLTEN_COPPER.get(), 1000)));
         super.buildCraftingRecipes(pFinishedRecipeConsumer);
     }
 
