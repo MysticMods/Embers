@@ -177,6 +177,9 @@ dependencies {
         jarJar.pin(it, project.registrate_version)
     }
     implementation fg.deobf("com.tterrag.registrate:Registrate:${registrate_version}")
+
+    // Lodestone dependency
+    implementation fg.deobf("team.lodestar.lodestone:lodestone:${minecraft_version}-${project.lodestone_version}")
 }
 
 jar {
