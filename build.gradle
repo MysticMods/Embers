@@ -1,55 +1,255 @@
-plugins {
-    id 'com.github.johnrengelman.shadow' version '7.1.0'
+buildscript {
+    repositories {
+        // These repositories are only for Gradle plugins, put any other repositories in the repository block further below
+        maven { url = 'https://maven.minecraftforge.net' }
+        maven { url = 'https://maven.parchmentmc.org' }
+        maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
+        mavenCentral()
+    }
+    dependencies {
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
+        classpath 'org.spongepowered:mixingradle:0.7.+'
+        classpath 'org.parchmentmc:librarian:1.+'
+    }
 }
 
-apply plugin: 'java'
+apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
-apply from: 'gradle/property_helper.gradle'
-apply from: 'gradle/property_loader.gradle'
-apply from: 'https://raw.githubusercontent.com/SizableShrimp/Forge-Class-Remapper/main/classremapper.gradle'
+apply plugin: 'maven-publish'
+apply plugin: 'org.spongepowered.mixin'
+apply plugin: 'org.parchmentmc.librarian.forgegradle'
 
-// Load mod related properties
-ext.modName = getRequiredString('mod_name')
-ext.modAuthor = getRequiredString('mod_author')
-ext.modId = getRequiredString('mod_id')
-ext.modCredits = getDefaultString('mod_credits', ext.modAuthor)
-ext.modDescription = getOptionalString('mod_description')
-ext.modChangelog = getOptionalString('mod_changelog')
-ext.modHomepage = getOptionalString('mod_homepage')
-ext.modSource = getOptionalString('mod_source')
-ext.modIssues = getOptionalString('mod_issues')
-ext.modLicense = getOptionalString('mod_license')
+jarJar.enable()
 
-// Load Minecraft specific properties
-ext.mcVersion = getRequiredString('minecraft_version')
+version = "${minecraft_version}-${mod_version}"
+if (System.getenv('BUILD_NUMBER') != null) {
+    version += '-' + System.getenv('BUILD_NUMBER')
+}
+group = 'mysticmods.embers' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = 'embers'
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
-// Load build-time modules
-apply from: 'gradle/build_number.gradle'
-apply from: 'gradle/git_changelog.gradle'
-apply from: 'gradle/patreon.gradle'
-apply from: 'gradle/java.gradle'
-apply from: 'gradle/forge.gradle'
-apply from: 'gradle/dependencies.gradle'
-apply from: 'gradle/aequivaleo.gradle'
-apply from: 'gradle/api.gradle'
-apply from: 'gradle/blame.gradle'
-apply from: 'gradle/carrier_bees.gradle'
-apply from: 'gradle/curios.gradle'
-apply from: 'gradle/dynamic_trees.gradle'
-apply from: 'gradle/geckolib.gradle'
-apply from: 'gradle/jade.gradle'
-apply from: 'gradle/jei.gradle'
-apply from: 'gradle/mana_and_artifice.gradle'
-apply from: 'gradle/mysticalworld.gradle'
-apply from: 'gradle/patchouli.gradle'
-apply from: 'gradle/particleslib.gradle'
-apply from: 'gradle/shadow.gradle'
-apply from: 'gradle/stables.gradle'
-apply from: 'gradle/top.gradle'
-apply from: 'gradle/minify_jsons.gradle'
 
-// Load publishing modules
-apply from: 'gradle/maven.gradle'
-apply from: 'gradle/signing.gradle'
-apply from: 'gradle/curseforge.gradle'
-apply from: 'gradle/version_checker.gradle'
+minecraft {
+    mappings channel: 'parchment', version: "${parchment_version}-${minecraft_version}"
+
+    runs {
+        client {
+            workingDirectory project.file('run')
+
+            // Recommended logging data for a userdev environment
+            // The markers can be added/remove as needed separated by commas.
+            // "SCAN": For mods scan.
+            // "REGISTRIES": For firing of registry events.
+            // "REGISTRYDUMP": For getting the contents of all registries.
+            property 'forge.logging.markers', 'REGISTRIES'
+
+            // Recommended logging level for the console
+            // You can set various levels here.
+            // Please read: https://stackoverflow.com/questions/2031163/when-to-use-the-different-log-levels
+            property 'forge.logging.console.level', 'debug'
+
+            // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
+            property 'forge.enabledGameTestNamespaces', 'embers'
+
+            // Disable mixins for botania support in dev environment
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${buildDir}/createSrgToMcp/output.srg"
+
+            mods {
+                embers {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        server {
+            workingDirectory project.file('run')
+
+            property 'forge.logging.markers', 'REGISTRIES'
+
+            property 'forge.logging.console.level', 'debug'
+
+            // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
+            property 'forge.enabledGameTestNamespaces', 'embers'
+
+            // Disable mixins for botania support in dev environment
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${buildDir}/createSrgToMcp/output.srg"
+
+            mods {
+                embers {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        // This run config launches GameTestServer and runs all registered gametests, then exits.
+        // By default, the server will crash when no gametests are provided.
+        // The gametest system is also enabled by default for other run configs under the /test command.
+        gameTestServer {
+            workingDirectory project.file('run')
+
+            // Recommended logging data for a userdev environment
+            // The markers can be added/remove as needed separated by commas.
+            // "SCAN": For mods scan.
+            // "REGISTRIES": For firing of registry events.
+            // "REGISTRYDUMP": For getting the contents of all registries.
+            property 'forge.logging.markers', 'REGISTRIES'
+
+            // Recommended logging level for the console
+            // You can set various levels here.
+            // Please read: https://stackoverflow.com/questions/2031163/when-to-use-the-different-log-levels
+            property 'forge.logging.console.level', 'debug'
+
+            // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
+            property 'forge.enabledGameTestNamespaces', 'embers'
+
+            mods {
+                embers {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        data {
+            workingDirectory project.file('run')
+
+            property 'forge.logging.markers', 'REGISTRIES'
+
+            property 'forge.logging.console.level', 'debug'
+
+            // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
+            args '--mod', 'embers', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+
+            mods {
+                embers {
+                    source sourceSets.main
+                }
+            }
+        }
+    }
+}
+
+repositories {
+    maven {
+        // Curios
+        url = "https://maven.theillusivec4.top/"
+    }
+    maven {
+        // Registrate
+        url "https://maven.tterrag.com/"
+    }
+    maven {
+        // Botania
+        url 'https://maven.blamejared.com'
+    }
+    maven {
+        // JEI
+        name = "Progwml6 maven"
+        url = "https://dvs1.progwml6.com/files/maven/"
+    }
+    maven {
+        // Thermal
+        url 'https://maven.covers1624.net/'
+    }
+    maven {
+        url "https://cursemaven.com"
+        content {
+            includeGroup "curse.maven"
+        }
+    }
+    mavenLocal()
+}
+
+dependencies {
+    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+
+    // Curios
+    runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${minecraft_version}-${curios_version}")
+    compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:${minecraft_version}-${curios_version}:api")  \
+
+    // Dev Environment Runtimes
+    runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}:${jei_version}")
+
+    // Registrate dependency
+    jarJar(group: 'com.tterrag.registrate', name: 'Registrate', version: '[MC1.18.2-1.1.3,)') {
+        jarJar.pin(it, project.registrate_version)
+    }
+    implementation fg.deobf("com.tterrag.registrate:Registrate:${registrate_version}")
+}
+
+jar {
+    manifest {
+        attributes([
+                "Specification-Title"     : "embers",
+                "Specification-Vendor"    : "epicsquid",
+                "Specification-Version"   : "1", // We are version 1 of ourselves
+                "Implementation-Title"    : project.name,
+                "Implementation-Version"  : "${version}",
+                "Implementation-Vendor"   : "epicsquid",
+                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+        ])
+    }
+}
+
+sourceSets.main.resources { srcDir 'src/generated/resources' }
+
+tasks.withType(GenerateModuleMetadata) {
+    enabled = false
+}
+
+task jarJarRelease {
+    doLast {
+        tasks.jarJar {
+            classifier = ''
+        }
+    }
+    finalizedBy tasks.jarJar
+}
+
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
+jar.finalizedBy('reobfJar')
+tasks.jarJar.finalizedBy('reobfJarJar')
+
+publishing {
+
+    publications {
+
+        mavenJava(MavenPublication) {
+
+            groupId project.group
+            artifactId project.archivesBaseName
+            version project.version
+            from components.java
+
+            // Allows the maven pom file to be modified.
+            pom.withXml {
+
+                // Go through all the dependencies.
+                asNode().dependencies.dependency.each { dep ->
+
+                    println 'Surpressing artifact ' + dep.artifactId.last().value().last() + ' from maven dependencies.'
+                    assert dep.parent().remove(dep)
+                }
+            }
+        }
+    }
+
+    repositories {
+
+        maven {
+
+            url "file://" + System.getenv("local_maven")
+        }
+    }
+
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
+}
