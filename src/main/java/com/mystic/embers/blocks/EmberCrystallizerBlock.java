@@ -15,24 +15,24 @@ import org.jetbrains.annotations.Nullable;
 public class EmberCrystallizerBlock extends Block implements EntityBlock {
 
 
-    public EmberCrystallizerBlock(Properties pProperties) {
-        super(pProperties);
-    }
+	public EmberCrystallizerBlock(Properties pProperties) {
+		super(pProperties);
+	}
 
-    @Nullable
-    @Override
-    public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
-        return new EmberCrystallizerEntity(ModBlockEntity.EMBER_DIFFUSER.get(), pPos, pState);
+	@Nullable
+	@Override
+	public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
+		return new EmberCrystallizerEntity(ModBlockEntity.EMBER_DIFFUSER.get(), pPos, pState);
 
-    }
+	}
 
-    @Nullable
-    @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        if (level.isClientSide()) {
-            return EmberCrystallizerEntity::clientTick;
-        } else {
-            return EmberCrystallizerEntity::serverTick;
-        }
-    }
+	@Nullable
+	@Override
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+		if (level.isClientSide()) {
+			return EmberCrystallizerEntity::clientTick;
+		} else {
+			return EmberCrystallizerEntity::serverTick;
+		}
+	}
 }

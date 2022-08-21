@@ -14,39 +14,39 @@ import org.jetbrains.annotations.NotNull;
 
 public class EmberCrystallizerEntity extends BaseBlockEntity implements TickBlockEntity {
 
-    public EmberCrystallizerEntity(BlockEntityType<?> pType, BlockPos pWorldPosition, BlockState pBlockState) {
-        super(pType, pWorldPosition, pBlockState);
-    }
+	public EmberCrystallizerEntity(BlockEntityType<?> pType, BlockPos pWorldPosition, BlockState pBlockState) {
+		super(pType, pWorldPosition, pBlockState);
+	}
 
-    @Override
-    public <T extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState) {
+	@Override
+	public <T extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState) {
 
-    }
+	}
 
-    @Override
-    public <T extends BlockEntity> void serverTick(Level level, BlockPos blockPos, BlockState blockState) {
+	@Override
+	public <T extends BlockEntity> void serverTick(Level level, BlockPos blockPos, BlockState blockState) {
 
-    }
+	}
 
-    @Override
-    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-        super.onDataPacket(net, pkt);
-        CompoundTag tag = pkt.getTag();
-        if (tag != null) {
-            load(tag);
-        } else {
+	@Override
+	public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
+		super.onDataPacket(net, pkt);
+		CompoundTag tag = pkt.getTag();
+		if (tag != null) {
+			load(tag);
+		} else {
 
-        }
-    }
+		}
+	}
 
-    @Override
-    protected void saveAdditional(@NotNull CompoundTag pTag) {
-        super.saveAdditional(pTag);
-    }
+	@Override
+	protected void saveAdditional(@NotNull CompoundTag pTag) {
+		super.saveAdditional(pTag);
+	}
 
-    @Override
-    public void load(@NotNull CompoundTag pTag) {
-        super.load(pTag);
+	@Override
+	public void load(@NotNull CompoundTag pTag) {
+		super.load(pTag);
 
-    }
+	}
 }

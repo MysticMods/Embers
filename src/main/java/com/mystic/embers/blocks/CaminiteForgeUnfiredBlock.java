@@ -1,6 +1,5 @@
 package com.mystic.embers.blocks;
 
-import com.mystic.embers.blockentity.CaminiteForgeEntity;
 import com.mystic.embers.blockentity.CaminiteUnfiredForgeEntity;
 import com.mystic.embers.init.ModBlockEntity;
 import net.minecraft.core.BlockPos;
@@ -23,38 +22,38 @@ import org.jetbrains.annotations.Nullable;
 
 public class CaminiteForgeUnfiredBlock extends Block implements EntityBlock {
 
-    public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
-    public static final BooleanProperty LIT = BlockStateProperties.LIT;
+	public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
+	public static final BooleanProperty LIT = BlockStateProperties.LIT;
 
-    public CaminiteForgeUnfiredBlock(Properties p_49795_) {
-        super(p_49795_);
-        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(LIT, Boolean.FALSE));
-    }
+	public CaminiteForgeUnfiredBlock(Properties p_49795_) {
+		super(p_49795_);
+		this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(LIT, Boolean.FALSE));
+	}
 
-    @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING).add(LIT);
-    }
+	@Override
+	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+		builder.add(FACING).add(LIT);
+	}
 
-    @Nullable
-    @Override
-    public BlockEntity newBlockEntity(@NotNull BlockPos pPos, @NotNull BlockState pState) {
-        return new CaminiteUnfiredForgeEntity(ModBlockEntity.UNFIRED_CAMINITE_FORGE.get(), pPos, pState);
-    }
+	@Nullable
+	@Override
+	public BlockEntity newBlockEntity(@NotNull BlockPos pPos, @NotNull BlockState pState) {
+		return new CaminiteUnfiredForgeEntity(ModBlockEntity.UNFIRED_CAMINITE_FORGE.get(), pPos, pState);
+	}
 
-    @Nullable
-    @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, @NotNull BlockState state, @NotNull BlockEntityType<T> type) {
-        if (level.isClientSide()) {
-            return CaminiteUnfiredForgeEntity::clientTick;
-        } else {
-            return CaminiteUnfiredForgeEntity::serverTick;
-        }
-    }
+	@Nullable
+	@Override
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, @NotNull BlockState state, @NotNull BlockEntityType<T> type) {
+		if (level.isClientSide()) {
+			return CaminiteUnfiredForgeEntity::clientTick;
+		} else {
+			return CaminiteUnfiredForgeEntity::serverTick;
+		}
+	}
 
-    @Nullable
-    @Override
-    public BlockState getStateForPlacement(BlockPlaceContext pContext) {
-        return this.defaultBlockState().setValue(FACING, pContext.getHorizontalDirection().getOpposite());
-    }
+	@Nullable
+	@Override
+	public BlockState getStateForPlacement(BlockPlaceContext pContext) {
+		return this.defaultBlockState().setValue(FACING, pContext.getHorizontalDirection().getOpposite());
+	}
 }

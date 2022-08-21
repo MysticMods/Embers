@@ -7,7 +7,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public interface TickBlockEntity {
 
-    <T extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState );
+	<T extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState);
 
-    <T extends BlockEntity> void serverTick(Level level, BlockPos blockPos, BlockState blockState );
+	<T extends BlockEntity> void serverTick(Level level, BlockPos blockPos, BlockState blockState);
 }

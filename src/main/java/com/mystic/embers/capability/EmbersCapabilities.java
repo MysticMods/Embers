@@ -16,26 +16,26 @@ import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber(modid= Embers.MODID)
+@Mod.EventBusSubscriber(modid = Embers.MODID)
 public class EmbersCapabilities {
-    public static final ResourceLocation EMBERS_RECEIVER_CAPABILITY_ID = new ResourceLocation(Embers.MODID, "ember_reciever_capability");
+	public static final ResourceLocation EMBERS_RECEIVER_CAPABILITY_ID = new ResourceLocation(Embers.MODID, "ember_reciever_capability");
 
-    public static final Capability<IEmberReceiverCapability> EMBER_RECEIVER_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {
-    });
+	public static final Capability<IEmberReceiverCapability> EMBER_RECEIVER_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {
+	});
 
-    @SubscribeEvent
-    public void registerCaps(RegisterCapabilitiesEvent event) {
-        event.register(EmberReceiverCapability.class);
-    }
+	@SubscribeEvent
+	public void registerCaps(RegisterCapabilitiesEvent event) {
+		event.register(EmberReceiverCapability.class);
+	}
 
-    @SubscribeEvent
-    public static void attachCapability (AttachCapabilitiesEvent<BlockEntity> event) {
-        if (event.getObject().getType() == ModBlockEntity.EMBER_CRYSTALLIZER.get()) {
-            event.addCapability(EMBERS_RECEIVER_CAPABILITY_ID, new EmberReceiverCapabilityProvider());
-        }
-    }
+	@SubscribeEvent
+	public static void attachCapability(AttachCapabilitiesEvent<BlockEntity> event) {
+		if (event.getObject().getType() == ModBlockEntity.EMBER_CRYSTALLIZER.get()) {
+			event.addCapability(EMBERS_RECEIVER_CAPABILITY_ID, new EmberReceiverCapabilityProvider());
+		}
+	}
 
-    public static LazyOptional<IEmberReceiverCapability> getEmberReceiverCapability(final BlockEntity blockEntity) {
-        return blockEntity.getCapability(EMBER_RECEIVER_CAPABILITY);
-    }
+	public static LazyOptional<IEmberReceiverCapability> getEmberReceiverCapability(final BlockEntity blockEntity) {
+		return blockEntity.getCapability(EMBER_RECEIVER_CAPABILITY);
+	}
 }

@@ -7,20 +7,20 @@ import net.minecraftforge.network.simple.SimpleChannel;
 
 public class NetworkHandler {
 
-    private static final String PROTOCOL_VERSION = "1.0";
-    public static SimpleChannel INSTANCE;
+	private static final String PROTOCOL_VERSION = "1.0";
+	public static SimpleChannel INSTANCE;
 
-    private static int id = 0;
+	private static int id = 0;
 
-    private static int nextId() {
-        return id++;
-    }
+	private static int nextId() {
+		return id++;
+	}
 
-    public static void register() {
+	public static void register() {
 
-        INSTANCE = NetworkRegistry.newSimpleChannel(new ResourceLocation(Embers.MODID, "network"), () -> PROTOCOL_VERSION, s -> true, s -> true);
+		INSTANCE = NetworkRegistry.newSimpleChannel(new ResourceLocation(Embers.MODID, "network"), () -> PROTOCOL_VERSION, s -> true, s -> true);
 
-        // Register all packets
-        //INSTANCE.registerMessage(nextId(), PacketShieldUpdate.class, PacketShieldUpdate::encode, PacketShieldUpdate::decode, PacketShieldUpdate::handle);
-    }
+		// Register all packets
+		//INSTANCE.registerMessage(nextId(), PacketShieldUpdate.class, PacketShieldUpdate::encode, PacketShieldUpdate::decode, PacketShieldUpdate::handle);
+	}
 }

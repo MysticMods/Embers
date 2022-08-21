@@ -13,26 +13,26 @@ import javax.annotation.Nullable;
 
 public class EmberReceiverCapabilityProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
 
-    private final IEmberReceiverCapability emberReceiverCapability = new EmberReceiverCapability();
-    private final LazyOptional<IEmberReceiverCapability> op = LazyOptional.of(() -> emberReceiverCapability);
+	private final IEmberReceiverCapability emberReceiverCapability = new EmberReceiverCapability();
+	private final LazyOptional<IEmberReceiverCapability> op = LazyOptional.of(() -> emberReceiverCapability);
 
-    public void invalidate() {
-        this.op.invalidate();
-    }
+	public void invalidate() {
+		this.op.invalidate();
+	}
 
-    @Nonnull
-    @Override
-    public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction facing) {
-        return EmbersCapabilities.EMBER_RECEIVER_CAPABILITY.orEmpty(cap, op);
-    }
+	@Nonnull
+	@Override
+	public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction facing) {
+		return EmbersCapabilities.EMBER_RECEIVER_CAPABILITY.orEmpty(cap, op);
+	}
 
-    @Override
-    public CompoundTag serializeNBT() {
-        return this.emberReceiverCapability.serializeNBT();
-    }
+	@Override
+	public CompoundTag serializeNBT() {
+		return this.emberReceiverCapability.serializeNBT();
+	}
 
-    @Override
-    public void deserializeNBT(CompoundTag tag) {
-        this.emberReceiverCapability.deserializeNBT(tag);
-    }
+	@Override
+	public void deserializeNBT(CompoundTag tag) {
+		this.emberReceiverCapability.deserializeNBT(tag);
+	}
 }

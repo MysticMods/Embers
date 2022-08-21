@@ -10,12 +10,12 @@ import org.jetbrains.annotations.Nullable;
 
 public class EmberCrystallizerMenu extends EmberMenu<EmberCrystallizerEntity> {
 
-    protected EmberCrystallizerMenu(@Nullable MenuType<?> pMenuType, @Nullable EmberCrystallizerEntity entity, Inventory playerInventory, int pContainerId) {
-        super(pMenuType, entity, playerInventory, pContainerId);
-    }
+	protected EmberCrystallizerMenu(@Nullable MenuType<?> pMenuType, @Nullable EmberCrystallizerEntity entity, Inventory playerInventory, int pContainerId) {
+		super(pMenuType, entity, playerInventory, pContainerId);
+	}
 
-    @Override
-    public boolean canQuickMoveStack(Player player, ItemStack stack) {
-        return false;
-    }
+	@Override
+	public boolean canQuickMoveStack(Player player, ItemStack stack) {
+		return false;
+	}
 }

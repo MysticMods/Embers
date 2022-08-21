@@ -6,12 +6,12 @@ import net.minecraft.network.chat.MutableComponent;
 
 public class ModLang {
 
-    private static final Registrate REGISTRATE = Embers.registrate();
+	private static final Registrate REGISTRATE = Embers.registrate();
 
-    public static final MutableComponent CREATIVE_TAB = REGISTRATE.addRawLang("itemGroup." + Embers.MODID, "Embers");
+	public static final MutableComponent CREATIVE_TAB = REGISTRATE.addRawLang("itemGroup." + Embers.MODID, "Embers");
 
-    public static void classload() {
+	public static void classload() {
 
-    }
+	}
 
 }
