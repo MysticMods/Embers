@@ -1,7 +1,7 @@
 package com.mystic.embers.core.machines.forge;
 
 import com.mystic.embers.api.TickBlockEntity;
-import com.mystic.embers.core.base.EmberRecievingBlockEntity;
+import com.mystic.embers.core.base.EmberReceivingBlockEntity;
 import com.mystic.embers.init.EmbersRecipes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -22,7 +22,7 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 
-public class CaminiteForgeEntity extends EmberRecievingBlockEntity implements TickBlockEntity {
+public class CaminiteForgeEntity extends EmberReceivingBlockEntity implements TickBlockEntity {
 
 	private float progress = 0;
 	private boolean isLit = false;

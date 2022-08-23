@@ -1,6 +1,5 @@
 package com.mystic.embers.core.base;
 
-import com.mystic.embers.core.base.BaseBlockEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -10,14 +9,16 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public abstract class EmberMenu<T extends BaseBlockEntity> extends AbstractContainerMenu {
 
 	private final IItemHandler playerInventory;
 	protected T entity;
 
-	protected EmberMenu(@javax.annotation.Nullable MenuType<?> pMenuType, @Nullable T entity, Inventory playerInventory, int pContainerId) {
+	protected EmberMenu(@Nullable MenuType<?> pMenuType, @Nullable T entity, Inventory playerInventory, int pContainerId) {
 		super(pMenuType, pContainerId);
 		this.entity = entity;
 		this.playerInventory = new InvWrapper(playerInventory);
@@ -26,17 +27,18 @@ public abstract class EmberMenu<T extends BaseBlockEntity> extends AbstractConta
 
 
 	@Override
-	public boolean stillValid(Player pPlayer) {
+	public boolean stillValid(@Nonnull Player pPlayer) {
 		return true;
 	}
 
 	public abstract boolean canQuickMoveStack(Player player, ItemStack stack);
 
 	@Override
-	public ItemStack quickMoveStack(Player player, int index) {
+	@Nonnull
+	public ItemStack quickMoveStack(@Nonnull Player player, int index) {
 		ItemStack itemstack = ItemStack.EMPTY;
 		Slot slot = this.slots.get(index);
-		if (slot != null && slot.hasItem()) {
+		if (slot.hasItem()) {
 			ItemStack stack = slot.getItem();
 			itemstack = stack.copy();
 			if (index == 0) {

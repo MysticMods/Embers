@@ -16,6 +16,8 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
+import javax.annotation.Nonnull;
+
 public class EmberDiffuserBlock extends Block implements EntityBlock {
 
 	private static final VoxelShape SHAPE_DOWN = Shapes.box(0, 0, 0, 1, 0.85, 1);
@@ -27,14 +29,14 @@ public class EmberDiffuserBlock extends Block implements EntityBlock {
 
 	@Nullable
 	@Override
-	public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
+	public BlockEntity newBlockEntity(@Nonnull BlockPos pPos, @Nonnull BlockState pState) {
 		return new EmberDiffuserEntity(EmbersBlockEntities.EMBER_DIFFUSER.get(), pPos, pState);
 
 	}
 
 	@Nullable
 	@Override
-	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, @Nonnull BlockState state, @Nonnull BlockEntityType<T> type) {
 		if (level.isClientSide()) {
 			return BaseBlockEntity::clientTick;
 		} else {
@@ -43,7 +45,7 @@ public class EmberDiffuserBlock extends Block implements EntityBlock {
 	}
 
 	@Override
-	public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
+	public VoxelShape getShape(@Nonnull BlockState pState, @Nonnull BlockGetter pLevel, @Nonnull BlockPos pPos, @Nonnull CollisionContext pContext) {
 		return SHAPE_DOWN;
 	}
 }

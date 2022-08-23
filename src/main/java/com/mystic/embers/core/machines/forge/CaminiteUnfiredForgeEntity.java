@@ -1,7 +1,7 @@
 package com.mystic.embers.core.machines.forge;
 
 import com.mystic.embers.api.TickBlockEntity;
-import com.mystic.embers.core.base.EmberRecievingBlockEntity;
+import com.mystic.embers.core.base.EmberReceivingBlockEntity;
 import com.mystic.embers.client.particle.ParticleUtil;
 import com.mystic.embers.init.EmbersBlocks;
 import net.minecraft.core.BlockPos;
@@ -14,7 +14,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 
-public class CaminiteUnfiredForgeEntity extends EmberRecievingBlockEntity implements TickBlockEntity {
+public class CaminiteUnfiredForgeEntity extends EmberReceivingBlockEntity implements TickBlockEntity {
 
 	//    private BlockPos generatorPosition = null;
 	private int progress = 0;

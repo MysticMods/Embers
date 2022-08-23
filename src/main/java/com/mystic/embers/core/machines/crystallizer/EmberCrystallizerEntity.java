@@ -34,8 +34,6 @@ public class EmberCrystallizerEntity extends BaseBlockEntity implements TickBloc
 		CompoundTag tag = pkt.getTag();
 		if (tag != null) {
 			load(tag);
-		} else {
-
 		}
 	}
 

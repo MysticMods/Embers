@@ -11,6 +11,8 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
+import javax.annotation.Nonnull;
+
 public class EmberCrystallizerBlock extends Block implements EntityBlock {
 
 
@@ -20,14 +22,14 @@ public class EmberCrystallizerBlock extends Block implements EntityBlock {
 
 	@Nullable
 	@Override
-	public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
+	public BlockEntity newBlockEntity(@Nonnull BlockPos pPos, @Nonnull BlockState pState) {
 		return new EmberCrystallizerEntity(EmbersBlockEntities.EMBER_DIFFUSER.get(), pPos, pState);
 
 	}
 
 	@Nullable
 	@Override
-	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, @Nonnull BlockState state, @Nonnull BlockEntityType<T> type) {
 		if (level.isClientSide()) {
 			return EmberCrystallizerEntity::clientTick;
 		} else {

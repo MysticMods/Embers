@@ -10,15 +10,15 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.List;
 
-public class EmberRecievingBlockEntity extends BaseBlockEntity {
+public class EmberReceivingBlockEntity extends BaseBlockEntity {
 	protected BlockPos generatorPosition = null;
 
-	public EmberRecievingBlockEntity(BlockEntityType<?> pType, BlockPos pWorldPosition, BlockState pBlockState) {
+	public EmberReceivingBlockEntity(BlockEntityType<?> pType, BlockPos pWorldPosition, BlockState pBlockState) {
 		super(pType, pWorldPosition, pBlockState);
 	}
 
 	public int getGeneratorEmberOutput() {
-		if (this.generatorPosition != null) {
+		if (this.generatorPosition != null && level != null) {
 			BlockEntity blockEntity = level.getBlockEntity(this.generatorPosition);
 			if (blockEntity instanceof EmberDiffuserEntity entity) {
 				return entity.getEmberOutputForMachine(this.getBlockPos());
@@ -32,12 +32,14 @@ public class EmberRecievingBlockEntity extends BaseBlockEntity {
 		BlockPos bestGenerator = null;
 		int bestEmberSource = 0;
 		for (BlockPos pos : generators) {
-			BlockEntity blockEntity = level.getBlockEntity(pos);
-			if (blockEntity instanceof EmberDiffuserEntity entity) {
-				int emberSource = entity.getEmberOutputForMachine(blockPos);
-				if (emberSource > bestEmberSource) { //TODO: Add distance check for closest generator
-					bestEmberSource = emberSource;
-					bestGenerator = pos;
+			if (level != null) {
+				BlockEntity blockEntity = level.getBlockEntity(pos);
+				if (blockEntity instanceof EmberDiffuserEntity entity) {
+					int emberSource = entity.getEmberOutputForMachine(blockPos);
+					if (emberSource > bestEmberSource) { //TODO: Add distance check for closest generator
+						bestEmberSource = emberSource;
+						bestGenerator = pos;
+					}
 				}
 			}
 		}
