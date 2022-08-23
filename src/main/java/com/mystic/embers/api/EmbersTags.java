@@ -13,7 +13,7 @@ public class EmbersTags {
 		public static TagKey<Block> EMBER_GENERATOR = modTag("ember_generator");
 
 		static TagKey<Block> modTag(String name) {
-			return BlockTags.create(new ResourceLocation(Embers.MODID, name));
+			return BlockTags.create(new ResourceLocation(Embers.MOD_ID, name));
 		}
 	}
 }

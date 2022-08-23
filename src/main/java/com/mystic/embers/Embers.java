@@ -1,13 +1,12 @@
 package com.mystic.embers;
 
+import com.mystic.embers.core.machines.forge.SmelterRecipeProvider;
+import com.mystic.embers.core.network.NetworkHandler;
 import com.mystic.embers.init.*;
-import com.mystic.embers.network.NetworkHandler;
-import com.mystic.embers.recipe.smelter.SmelterRecipeProvider;
 import com.tterrag.registrate.Registrate;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.data.event.GatherDataEvent;
@@ -20,18 +19,18 @@ import javax.annotation.Nonnull;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
-@Mod(Embers.MODID)
+@Mod(Embers.MOD_ID)
 public class Embers {
 
-	public static final String MODID = "embers";
-	public static final Logger LOGGER = LogManager.getLogManager().getLogger(MODID);
-	private static final Lazy<Registrate> REGISTRATE = Lazy.of(() -> Registrate.create(MODID));
+	public static final String MOD_ID = "embers";
+	public static final Logger LOGGER = LogManager.getLogManager().getLogger(MOD_ID);
+	private static final Lazy<Registrate> REGISTRATE = Lazy.of(() -> Registrate.create(MOD_ID));
 
-	public static final CreativeModeTab ITEM_GROUP = new CreativeModeTab(Embers.MODID) {
+	public static final CreativeModeTab ITEM_GROUP = new CreativeModeTab(Embers.MOD_ID) {
 		@Override
 		@Nonnull
 		public ItemStack makeIcon() {
-			return new ItemStack(ModItems.EMBER_CRYSTAL.get());
+			return new ItemStack(EmbersItems.EMBER_CRYSTAL.get());
 		}
 	};
 
@@ -42,15 +41,15 @@ public class Embers {
 		//bus.addListener(this::registerCaps);
 		MinecraftForge.EVENT_BUS.register(this);
 
-		ModBlocks.classload();
-		ModItems.classload();
-		ModLang.classload();
-		ModBlockEntity.classload();
-		ModTags.classload();
-		ModMenus.classload();
-		ModFluids.classload();
-		ModRecipes.Serializers.load();
-		ModRecipes.Types.register(bus);
+		EmbersBlocks.init();
+		EmbersItems.init();
+		EmbersLang.init();
+		EmbersBlockEntities.init();
+		EmbersTags.init();
+		EmbersMenus.init();
+		EmbersFluids.init();
+		EmbersRecipes.Serializers.load();
+		EmbersRecipes.Types.register(bus);
 	}
 
 	public void setup(FMLCommonSetupEvent event) {
@@ -65,11 +64,5 @@ public class Embers {
 	public static Registrate registrate() {
 		return REGISTRATE.get();
 	}
-
-	@Mod.EventBusSubscriber(modid = MODID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
-	public static class ClientProxy {
-
-	}
-
 
 }
