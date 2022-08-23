@@ -1,31 +1,38 @@
-modLoader="javafml"
-loaderVersion="[38,)"
-license="All Rights Reserved"
-issueTrackerURL=""
-showAsResourcePack=false
+modLoader = "javafml"
+loaderVersion = "[43,)"
+license = "MIT"
+issueTrackerURL = ""
+showAsResourcePack = false
 
 [[mods]]
-    modId="embers"
-    version="0.0.1"
-    displayName="Embers"
-    updateJSONURL=""
-    displayURL="minecraftforge.net"
-    logoFile="logo.png"
-    credits="Mystic Bois"
-    authors="MEAPRITCASCQUUSID"
-    description='''
+modId = "embers"
+version = "${file.jarVersion}}"
+displayName = "Embers"
+updateJSONURL = ""
+displayURL = "minecraftforge.net"
+logoFile = "logo.png"
+credits = "Mystic Bois"
+authors = "MEAPRITCASCQUUSID"
+description = '''
       FLAAAAAAMES
         '''
-    [[dependencies.embers]]
-        modId="forge"
-        mandatory=true
-        versionRange="[38,)"
-        ordering="NONE"
-        side="BOTH"
+[[dependencies.embers]]
+modId = "forge"
+mandatory = true
+versionRange = "[43,)"
+ordering = "NONE"
+side = "BOTH"
 
-    [[dependencies.embers]]
-        modId="minecraft"
-        mandatory=true
-        versionRange="[1.18,1.19)"
-        ordering="NONE"
-        side="BOTH"
+[[dependencies.embers]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.19,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.embers]]
+modId = "lodestone"
+mandatory = true
+versionRange = "[1.19.2-2.0.0,)"
+ordering = "NONE"
+side = "BOTH"
