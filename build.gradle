@@ -178,6 +178,12 @@ dependencies {
     }
     implementation fg.deobf("com.tterrag.registrate:Registrate:${registrate_version}")
 
+    // Noobutil dependency
+    jarJar(group: 'noobanidus.libs', name: "noobutil-${minecraft_version}", version: '[0.3.13.157,)') {
+        jarJar.pin(it, project.noobutil_version)
+    }
+    implementation fg.deobf("noobanidus.libs:noobutil-${minecraft_version}:${noobutil_version}")
+
     // Lodestone dependency
     implementation fg.deobf("team.lodestar.lodestone:lodestone:${minecraft_version}-${project.lodestone_version}")
 }
