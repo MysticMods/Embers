@@ -1,8 +1,7 @@
 package com.mystic.embers.core.machines.diffuser;
 
 import com.mystic.embers.api.EmbersTags;
-import com.mystic.embers.api.TickBlockEntity;
-import com.mystic.embers.core.base.BaseBlockEntity;
+import com.mystic.embers.core.utils.TickBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
@@ -10,19 +9,26 @@ import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import noobanidus.libs.noobutil.util.BlockEntityUtil;
 import org.jetbrains.annotations.NotNull;
 import team.lodestar.lodestone.setup.LodestoneParticleRegistry;
 import team.lodestar.lodestone.systems.rendering.particle.ParticleBuilders;
 
-public class EmberDiffuserEntity extends BaseBlockEntity implements TickBlockEntity {
+public class EmberDiffuserEntity extends BlockEntity implements TickBlockEntity {
 
 	public boolean running = false;
 	private int emberOutput = 0;
 
 	public EmberDiffuserEntity(BlockEntityType<?> pType, BlockPos pWorldPosition, BlockState pBlockState) {
 		super(pType, pWorldPosition, pBlockState);
+	}
+
+	public void updateViaState() {
+		setChanged();
+		BlockEntityUtil.updateViaState(this);
 	}
 
 	@Override

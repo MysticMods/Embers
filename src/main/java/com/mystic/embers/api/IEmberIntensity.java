@@ -13,4 +13,8 @@ public interface IEmberIntensity extends INBTSerializable<IntTag> {
 	int getIntensity();
 
 	void setIntensity(int intensity);
+
+	default void onChange() {
+		// Do nothing, just for blocks to do something when the intensity changes
+	}
 }

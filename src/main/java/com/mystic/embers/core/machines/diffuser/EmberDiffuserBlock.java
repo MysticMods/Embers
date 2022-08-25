@@ -1,6 +1,6 @@
 package com.mystic.embers.core.machines.diffuser;
 
-import com.mystic.embers.core.base.BaseBlockEntity;
+import com.mystic.embers.core.utils.TickBlockEntity;
 import com.mystic.embers.init.EmbersBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
@@ -38,9 +38,9 @@ public class EmberDiffuserBlock extends Block implements EntityBlock {
 	@Override
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, @Nonnull BlockState state, @Nonnull BlockEntityType<T> type) {
 		if (level.isClientSide()) {
-			return BaseBlockEntity::clientTick;
+			return TickBlockEntity::clientTick;
 		} else {
-			return BaseBlockEntity::serverTick;
+			return TickBlockEntity::serverTick;
 		}
 	}
 

@@ -1,7 +1,9 @@
 package com.mystic.embers.core.machines.forge;
 
-import com.mystic.embers.api.TickBlockEntity;
-import com.mystic.embers.core.base.EmberReceivingBlockEntity;
+import com.mystic.embers.api.IEmberIntensity;
+import com.mystic.embers.core.base.EmberIntensityBlockEntity;
+import com.mystic.embers.core.capability.ember.EmberIntensity;
+import com.mystic.embers.core.utils.TickBlockEntity;
 import com.mystic.embers.init.EmbersRecipes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -10,30 +12,33 @@ import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 
-public class CaminiteForgeEntity extends EmberReceivingBlockEntity implements TickBlockEntity {
+import javax.annotation.Nonnull;
+
+public class CaminiteForgeEntity extends EmberIntensityBlockEntity implements TickBlockEntity {
 
 	private float progress = 0;
 	private boolean isLit = false;
 	private final ItemStackHandler itemHandler = new SmelterItemHandler(1, 1, this);
 	private final FluidTank outputTank;
 	private final LazyOptional<IItemHandler> handler = LazyOptional.of(() -> itemHandler);
+
+	private IEmberIntensity ember;
 	private SmelterRecipe currentRecipe = null;
 
 	public int progressTimer = 200;
 
-	public CaminiteForgeEntity(BlockEntityType<?> pType, BlockPos pWorldPosition, BlockState pBlockState) {
+	public CaminiteForgeEntity(BlockEntityType<? extends CaminiteForgeEntity> pType, BlockPos pWorldPosition, BlockState pBlockState) {
 		super(pType, pWorldPosition, pBlockState);
 
 		this.outputTank = new FluidTank(10000);
@@ -41,12 +46,12 @@ public class CaminiteForgeEntity extends EmberReceivingBlockEntity implements Ti
 	}
 
 	@Override
-	public <T extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState) {
+	public void clientTick(Level level, BlockPos blockPos, BlockState blockState) {
 
 	}
 
 	@Override
-	public <T extends BlockEntity> void serverTick(Level level, BlockPos blockPos, BlockState blockState) {
+	public void serverTick(Level level, BlockPos blockPos, BlockState blockState) {
 		if (level.getGameTime() % 20 == 0) {
 			findGenerator(blockPos);
 			if (getGeneratorEmberOutput() >= 40 && !this.isLit) {
@@ -132,10 +137,19 @@ public class CaminiteForgeEntity extends EmberReceivingBlockEntity implements Ti
 	@NotNull
 	@Override
 	public <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap) {
-		if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+		if (cap == ForgeCapabilities.ITEM_HANDLER) {
 			return handler.cast();
 		}
 		return super.getCapability(cap);
+	}
+
+	@Nonnull
+	@Override
+	public IEmberIntensity getEmberIntensity() {
+		if (ember == null) {
+			ember = new EmberIntensity(100, 100);
+		}
+		return ember;
 	}
 
 	public float getProgress() {

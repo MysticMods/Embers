@@ -1,7 +1,7 @@
 package com.mystic.embers.core.machines.forge;
 
-import com.mystic.embers.init.EmbersMenus;
 import com.mystic.embers.core.base.EmberMenu;
+import com.mystic.embers.init.EmbersMenus;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.SimpleContainer;
@@ -12,7 +12,7 @@ import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.SlotItemHandler;
 import org.jetbrains.annotations.Nullable;
 
@@ -22,7 +22,7 @@ public class CaminiteForgeMenu extends EmberMenu<CaminiteForgeEntity> {
 		super(EmbersMenus.CAMINITE_FORGE.get(), entity, playerInventory, pContainerId);
 		if (entity != null) {
 			this.entity = entity;
-			entity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(c -> {
+			entity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(c -> {
 				addSlot(new SlotItemHandler(c, 0, 79, 7));
 				addSlot(new SlotItemHandler(c, 1, 79, 58));
 			});

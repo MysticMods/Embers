@@ -1,20 +1,72 @@
 package com.mystic.embers.core.base;
 
 import com.mystic.embers.api.EmbersTags;
+import com.mystic.embers.api.IEmberIntensity;
+import com.mystic.embers.core.capability.ember.EmberIntensity;
 import com.mystic.embers.core.machines.diffuser.EmberDiffuserEntity;
+import com.mystic.embers.core.utils.BlockFinder;
+import com.mystic.embers.init.EmbersCaps;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.LazyOptional;
+import noobanidus.libs.noobutil.util.BlockEntityUtil;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.List;
 
-public class EmberReceivingBlockEntity extends BaseBlockEntity {
+public abstract class EmberIntensityBlockEntity extends BlockEntity {
+	private final LazyOptional<IEmberIntensity> emberIntensityOp = LazyOptional.of(this::getEmberIntensity);
 	protected BlockPos generatorPosition = null;
 
-	public EmberReceivingBlockEntity(BlockEntityType<?> pType, BlockPos pWorldPosition, BlockState pBlockState) {
-		super(pType, pWorldPosition, pBlockState);
+	public EmberIntensityBlockEntity(BlockEntityType<? extends EmberIntensityBlockEntity> type, BlockPos pos, BlockState state) {
+		super(type, pos, state);
+	}
+
+	@Override
+	@Nonnull
+	public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap) {
+		if (cap == EmbersCaps.EMBER_INTENSITY) {
+			return emberIntensityOp.cast();
+		}
+		return super.getCapability(cap);
+	}
+
+	@Override
+	public void invalidateCaps() {
+		super.invalidateCaps();
+		emberIntensityOp.invalidate();
+	}
+
+	/**
+	 * Gets the Ember Intensity capability for this entity
+	 * @return The ember intensity capability as configured. This should be a singleton.
+	 */
+	@Nonnull
+	public abstract IEmberIntensity getEmberIntensity();
+
+	public void updateViaState() {
+		setChanged();
+		BlockEntityUtil.updateViaState(this);
+	}
+
+	@Nullable
+	@Override
+	public ClientboundBlockEntityDataPacket getUpdatePacket() {
+		return ClientboundBlockEntityDataPacket.create(this);
+	}
+
+	@Nonnull
+	@Override
+	public CompoundTag getUpdateTag() {
+		CompoundTag pTag = new CompoundTag();
+		saveAdditional(pTag);
+		return pTag;
 	}
 
 	public int getGeneratorEmberOutput() {
@@ -28,7 +80,7 @@ public class EmberReceivingBlockEntity extends BaseBlockEntity {
 	}
 
 	public void findGenerator(BlockPos blockPos) {
-		List<BlockPos> generators = findBlocksWithTagInRadius(EmbersTags.Blocks.EMBER_GENERATOR, blockPos, level, 10, 3, 3);
+		List<BlockPos> generators = BlockFinder.findBlocksWithTagInRadius(EmbersTags.Blocks.EMBER_GENERATOR, blockPos, level, 10, 3, 3);
 		BlockPos bestGenerator = null;
 		int bestEmberSource = 0;
 		for (BlockPos pos : generators) {

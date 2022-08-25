@@ -1,12 +1,11 @@
 package com.mystic.embers.api;
 
-import com.google.common.collect.ImmutableList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 
-public interface EmberEmitterCap extends INBTSerializable<CompoundTag> {
+public interface IEmberEmitterCap extends INBTSerializable<CompoundTag> {
 
 	/**
 	 * Gets the Ember Intensity supplied by this emitter at the given distance away in blocks
@@ -39,7 +38,7 @@ public interface EmberEmitterCap extends INBTSerializable<CompoundTag> {
 	 * value from the other's cap being passed as otherEmitter.
 	 * @param otherEmitter The emitter triggering the update
 	 */
-	void combineEmberEmitters(LazyOptional<EmberEmitterCap> otherEmitter);
+	void combineEmberEmitters(LazyOptional<IEmberEmitterCap> otherEmitter);
 
 	/**
 	 * Sets the intensities for this Ember Emitter. This should not exceed the range of the existing intensities, which

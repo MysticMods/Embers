@@ -1,5 +1,6 @@
 package com.mystic.embers.core.machines.crystallizer;
 
+import com.mystic.embers.core.utils.TickBlockEntity;
 import com.mystic.embers.init.EmbersBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
@@ -31,9 +32,9 @@ public class EmberCrystallizerBlock extends Block implements EntityBlock {
 	@Override
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, @Nonnull BlockState state, @Nonnull BlockEntityType<T> type) {
 		if (level.isClientSide()) {
-			return EmberCrystallizerEntity::clientTick;
+			return TickBlockEntity::clientTick;
 		} else {
-			return EmberCrystallizerEntity::serverTick;
+			return TickBlockEntity::serverTick;
 		}
 	}
 }

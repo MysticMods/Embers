@@ -1,5 +1,6 @@
 package com.mystic.embers.core.machines.forge;
 
+import com.mystic.embers.core.utils.TickBlockEntity;
 import com.mystic.embers.init.EmbersBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -58,9 +59,9 @@ public class CaminiteForgeBlock extends Block implements EntityBlock {
 	@Override
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
 		if (level.isClientSide()) {
-			return CaminiteForgeEntity::clientTick;
+			return TickBlockEntity::clientTick;
 		} else {
-			return CaminiteForgeEntity::serverTick;
+			return TickBlockEntity::serverTick;
 		}
 	}
 

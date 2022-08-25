@@ -1,7 +1,9 @@
 package com.mystic.embers.core.machines.forge;
 
-import com.mystic.embers.api.TickBlockEntity;
-import com.mystic.embers.core.base.EmberReceivingBlockEntity;
+import com.mystic.embers.api.IEmberIntensity;
+import com.mystic.embers.core.base.EmberIntensityBlockEntity;
+import com.mystic.embers.core.capability.ember.EmberIntensity;
+import com.mystic.embers.core.utils.TickBlockEntity;
 import com.mystic.embers.client.particle.ParticleUtil;
 import com.mystic.embers.init.EmbersBlocks;
 import net.minecraft.core.BlockPos;
@@ -9,29 +11,31 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 
-public class CaminiteUnfiredForgeEntity extends EmberReceivingBlockEntity implements TickBlockEntity {
+import javax.annotation.Nonnull;
+
+public class CaminiteUnfiredForgeEntity extends EmberIntensityBlockEntity implements TickBlockEntity {
 
 	//    private BlockPos generatorPosition = null;
 	private int progress = 0;
+	private IEmberIntensity ember;
 
-	public CaminiteUnfiredForgeEntity(BlockEntityType<?> pType, BlockPos pWorldPosition, BlockState pBlockState) {
+	public CaminiteUnfiredForgeEntity(BlockEntityType<? extends CaminiteUnfiredForgeEntity> pType, BlockPos pWorldPosition, BlockState pBlockState) {
 		super(pType, pWorldPosition, pBlockState);
 	}
 
 	@Override
-	public <T extends BlockEntity> void clientTick(Level level, BlockPos blockPos, BlockState blockState) {
+	public void clientTick(Level level, BlockPos blockPos, BlockState blockState) {
 		if (progress >= 100) {
 			ParticleUtil.spawnSpark(level, blockPos.offset(0, 1, 0));
 		}
 	}
 
 	@Override
-	public <T extends BlockEntity> void serverTick(Level level, BlockPos blockPos, BlockState blockState) {
+	public void serverTick(Level level, BlockPos blockPos, BlockState blockState) {
 		if (level.getGameTime() % 20 == 0) {
 			findGenerator(blockPos);
 		}
@@ -74,5 +78,14 @@ public class CaminiteUnfiredForgeEntity extends EmberReceivingBlockEntity implem
 
 		this.progress = pTag.getInt("progress");
 
+	}
+
+	@Nonnull
+	@Override
+	public IEmberIntensity getEmberIntensity() {
+		if (ember == null) {
+			ember = new EmberIntensity(100, 100);
+		}
+		return ember;
 	}
 }
