@@ -1,8 +1,7 @@
 package com.mystic.embers.core.base;
 
-import com.mystic.embers.api.EmbersTags;
-import com.mystic.embers.api.IEmberIntensity;
-import com.mystic.embers.core.capability.ember.EmberIntensity;
+import com.mystic.embers.api.data.EmbersTags;
+import com.mystic.embers.api.capability.IEmberIntensity;
 import com.mystic.embers.core.machines.diffuser.EmberDiffuserEntity;
 import com.mystic.embers.core.utils.BlockFinder;
 import com.mystic.embers.init.EmbersCaps;

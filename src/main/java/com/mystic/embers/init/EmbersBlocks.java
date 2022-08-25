@@ -1,7 +1,7 @@
 package com.mystic.embers.init;
 
 import com.mystic.embers.Embers;
-import com.mystic.embers.api.EmbersTags;
+import com.mystic.embers.api.data.EmbersTags;
 import com.mystic.embers.core.machines.forge.CaminiteForgeBlock;
 import com.mystic.embers.core.machines.forge.CaminiteForgeUnfiredBlock;
 import com.mystic.embers.core.machines.crystallizer.EmberCrystallizerBlock;

@@ -1,6 +1,6 @@
 package com.mystic.embers.core.capability.ember;
 
-import com.mystic.embers.api.IEmberIntensity;
+import com.mystic.embers.api.capability.IEmberIntensity;
 import net.minecraft.nbt.IntTag;
 
 public class EmberIntensity implements IEmberIntensity {

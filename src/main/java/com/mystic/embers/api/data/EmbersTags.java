@@ -1,6 +1,6 @@
-package com.mystic.embers.api;
+package com.mystic.embers.api.data;
 
-import com.mystic.embers.Embers;
+import com.mystic.embers.api.EmbersApi;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
@@ -13,7 +13,7 @@ public class EmbersTags {
 		public static TagKey<Block> EMBER_GENERATOR = modTag("ember_generator");
 
 		static TagKey<Block> modTag(String name) {
-			return BlockTags.create(new ResourceLocation(Embers.MOD_ID, name));
+			return BlockTags.create(new ResourceLocation(EmbersApi.EMBERS_MOD_ID, name));
 		}
 	}
 }

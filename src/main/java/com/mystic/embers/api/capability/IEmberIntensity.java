@@ -1,4 +1,4 @@
-package com.mystic.embers.api;
+package com.mystic.embers.api.capability;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.IntTag;

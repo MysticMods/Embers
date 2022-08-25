@@ -1,7 +1,7 @@
 package com.mystic.embers.init;
 
 import com.mystic.embers.Embers;
-import com.mystic.embers.api.IEmberIntensity;
+import com.mystic.embers.api.capability.IEmberIntensity;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.capabilities.Capability;

@@ -195,6 +195,17 @@ task jarJarRelease {
     finalizedBy tasks.jarJar
 }
 
+task apiJar(type: Jar) {
+    archiveClassifier.set('api')
+    include 'com.mystic.embers/api/**/*'
+    from sourceSets.main.allSource
+    from sourceSets.main.output
+}
+
+artifacts {
+    archives apiJar
+}
+
 java {
     withJavadocJar()
     withSourcesJar()

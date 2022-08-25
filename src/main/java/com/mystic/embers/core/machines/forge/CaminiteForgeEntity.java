@@ -1,6 +1,6 @@
 package com.mystic.embers.core.machines.forge;
 
-import com.mystic.embers.api.IEmberIntensity;
+import com.mystic.embers.api.capability.IEmberIntensity;
 import com.mystic.embers.core.base.EmberIntensityBlockEntity;
 import com.mystic.embers.core.capability.ember.EmberIntensity;
 import com.mystic.embers.core.utils.TickBlockEntity;

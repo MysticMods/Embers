@@ -1,6 +1,6 @@
 package com.mystic.embers.core.machines.diffuser;
 
-import com.mystic.embers.api.EmbersTags;
+import com.mystic.embers.api.data.EmbersTags;
 import com.mystic.embers.core.utils.TickBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
