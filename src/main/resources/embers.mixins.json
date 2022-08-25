@@ -2,7 +2,7 @@
   "required": true,
   "package": "mysticmods.embers.mixin",
   "compatibilityLevel": "JAVA_8",
-  "refmap": "roots.refmap.json",
+  "refmap": "embers.refmap.json",
   "mixins": [
   ],
   "client": [
@@ -10,5 +10,5 @@
   "injectors": {
     "defaultRequire": 1
   },
-  "minVersion": "0.8"
+  "minVersion": "0.8.5"
 }
