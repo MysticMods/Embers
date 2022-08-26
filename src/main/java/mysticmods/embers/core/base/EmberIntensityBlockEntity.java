@@ -79,7 +79,7 @@ public abstract class EmberIntensityBlockEntity extends BlockEntity {
 	}
 
 	public void findGenerator(BlockPos blockPos) {
-		List<BlockPos> generators = BlockFinder.findBlocksWithTagInRadius(EmbersTags.Blocks.EMBER_GENERATOR, blockPos, level, 10, 3, 3);
+		List<BlockPos> generators = BlockFinder.getFirstBlockWithTagInRange(EmbersTags.Blocks.EMBER_GENERATOR, blockPos, level, 10, 3, 3);
 		BlockPos bestGenerator = null;
 		int bestEmberSource = 0;
 		for (BlockPos pos : generators) {

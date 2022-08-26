@@ -70,7 +70,7 @@ public class EmbersBlocks {
 
 	public static final BlockEntry<EmberCrystallizerBlock> EMBER_CRYSTALLIZER = REGISTRATE.block("ember_crystallizer", Material.STONE, EmberCrystallizerBlock::new)
 					.properties(BASE_PROPERTIES)
-					.tag(EmbersTags.Blocks.EMBER_ACCEPTING)
+					.tag(EmbersTags.Blocks.EMBER_USING)
 					.item().tab(() -> Embers.ITEM_GROUP).build()
 					//.blockstate((ctx, prov) -> prov.simpleBlock(ctx.getEntry(), prov.models().withExistingParent("ember_crystallizer_child", new ResourceLocation(Embers.MODID, "block/ember_crystallizer"))))
 					.recipe((ctx, p) -> ShapedRecipeBuilder.shaped(ctx.getEntry().asItem(), 1)

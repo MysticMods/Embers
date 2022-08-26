@@ -5,40 +5,26 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.annotation.Nonnull;
+import java.util.Optional;
 
 public class BlockFinder {
 
-
-
-	public static List<BlockPos> findBlocksInRadius(Block block, BlockPos startingPos, Level level, int radius, int yUp, int yDown) {
-		List<BlockPos> positions = new ArrayList<>();
-		for (int x = startingPos.getX() - radius; x < startingPos.getX() + radius; x++) {
-			for (int z = startingPos.getZ() - radius; z < startingPos.getZ() + radius; z++) {
-				for (int y = startingPos.getY() - yDown; y < startingPos.getY() + yUp; y++) {
-					if (level.getBlockState(new BlockPos(x, y, z)).getBlock() == block) {
-						positions.add(new BlockPos(x, y, z));
+	@Nonnull
+	public static Optional<BlockPos> getFirstBlockWithTagInRange(TagKey<Block> tag, BlockPos startingPos, Level level, int radius, boolean up, boolean down) {
+		// Scan each circle around the block, increasing the radius each time, so nearest is found first
+		for (int r = 0; r <= radius; ++r) {
+			for (int x = r * -1; x <= r; x++) {
+				for (int z = r * -1; z <= r; z++) {
+					for (int y = down ? r * -1 : 0; y <= (up ? r : 0); y++) {
+						var foundPos = new BlockPos(x, y, z);
+						if (level.getBlockState(foundPos).is(tag)) {
+							return Optional.of(foundPos);
+						}
 					}
 				}
 			}
 		}
-
-		return positions;
-	}
-
-	public static List<BlockPos> findBlocksWithTagInRadius(TagKey<Block> pTag, BlockPos startingPos, Level level, int radius, int yUp, int yDown) {
-		List<BlockPos> positions = new ArrayList<>();
-		for (int x = startingPos.getX() - radius; x <= startingPos.getX() + radius; x++) {
-			for (int z = startingPos.getZ() - radius; z <= startingPos.getZ() + radius; z++) {
-				for (int y = startingPos.getY() - yDown; y < startingPos.getY() + yUp; y++) {
-					if (level.getBlockState(new BlockPos(x, y, z)).is(pTag)) {
-						positions.add(new BlockPos(x, y, z));
-					}
-				}
-			}
-		}
-
-		return positions;
+		return Optional.empty();
 	}
 }

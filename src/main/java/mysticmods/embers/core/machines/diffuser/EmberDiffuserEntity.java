@@ -50,7 +50,7 @@ public class EmberDiffuserEntity extends BlockEntity implements TickBlockEntity 
 	@Override
 	public void serverTick(Level level, BlockPos blockPos, BlockState blockState) {
 		if (level.getGameTime() % 20 == 0) {
-			if (level.getBlockState(blockPos.below()).is(EmbersTags.Blocks.EMBER_HEAT_BLOCK)) {
+			if (level.getBlockState(blockPos.below()).is(EmbersTags.Blocks.EMBER_EMITTER)) {
 				if (!this.running) {
 					this.running = true;
 					updateViaState();
