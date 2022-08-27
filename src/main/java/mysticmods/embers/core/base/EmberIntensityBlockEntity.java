@@ -47,7 +47,14 @@ public abstract class EmberIntensityBlockEntity extends BlockEntity {
 	 * @return The ember intensity capability as configured. This should be a singleton.
 	 */
 	@Nonnull
-	public abstract IEmberIntensity getEmberIntensity();
+	protected abstract IEmberIntensity getEmberIntensity();
+
+	/**
+	 * Called when the block is no longer under the effect of Ember. Can be used for a drop off function or other behaviour
+	 */
+	protected void invalidateEmberIntensity() {
+		getEmberIntensity().setIntensity(0);
+	}
 
 	public void updateViaState() {
 		setChanged();
@@ -70,7 +77,10 @@ public abstract class EmberIntensityBlockEntity extends BlockEntity {
 
 	public void findEmitter(BlockPos blockPos) {
 		if (level != null) {
-			BlockFinder.getEmberEmitterWithinRange(blockPos, level, 5).ifPresent(this::getEmitterFromPos);
+			BlockFinder.getEmberEmitterWithinRange(blockPos, level, 5).ifPresentOrElse(pos -> {
+				getEmitterFromPos(pos);
+				emberEmitter.ifPresent(emitter -> getEmberIntensity().setIntensity(emitter.getIntensityFromBlockPos(this.getBlockPos())));
+			}, getEmberIntensity()::zeroIntensity);
 		}
 	}
 
@@ -111,7 +121,7 @@ public abstract class EmberIntensityBlockEntity extends BlockEntity {
 	@Override
 	protected void saveAdditional(@Nonnull CompoundTag tag) {
 		super.saveAdditional(tag);
-		emberIntensityOp.ifPresent(intensity -> tag.put("ember_intensity", intensity.serializeNBT()));
+		tag.put("ember_intensity", getEmberIntensity().serializeNBT());
 		saveEmitterToPos(tag);
 	}
 

@@ -1,10 +1,10 @@
 package mysticmods.embers.core.machines.forge;
 
 import mysticmods.embers.api.capability.IEmberIntensity;
+import mysticmods.embers.client.particle.ParticleUtil;
 import mysticmods.embers.core.base.EmberIntensityBlockEntity;
 import mysticmods.embers.core.capability.ember.EmberIntensity;
 import mysticmods.embers.core.utils.TickBlockEntity;
-import mysticmods.embers.client.particle.ParticleUtil;
 import mysticmods.embers.init.EmbersBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -27,6 +27,15 @@ public class CaminiteUnfiredForgeEntity extends EmberIntensityBlockEntity implem
 		super(pType, pWorldPosition, pBlockState);
 	}
 
+	@Nonnull
+	@Override
+	public IEmberIntensity getEmberIntensity() {
+		if (ember == null) {
+			ember = new EmberIntensity(100, 100);
+		}
+		return ember;
+	}
+
 	@Override
 	public void clientTick(Level level, BlockPos blockPos, BlockState blockState) {
 		if (progress >= 100) {
@@ -40,16 +49,14 @@ public class CaminiteUnfiredForgeEntity extends EmberIntensityBlockEntity implem
 			findEmitter(blockPos);
 		}
 
-		int emberOutput = getGeneratorEmberOutput();
-		if (emberOutput >= 40) {
+		if (getEmberIntensity().getIntensity() >= 40) {
 			this.progress++;
 			if (progress > 100) {
 				level.setBlock(this.getBlockPos(), EmbersBlocks.CAMINITE_FORGE.getDefaultState()
-								.setValue(CaminiteForgeBlock.FACING, level.getBlockState(this.getBlockPos()).getValue(CaminiteForgeUnfiredBlock.FACING)), 2);
+						.setValue(CaminiteForgeBlock.FACING, level.getBlockState(this.getBlockPos()).getValue(CaminiteForgeUnfiredBlock.FACING)), 2);
 			}
 			updateViaState();
 		}
-
 	}
 
 	@Override
@@ -58,32 +65,18 @@ public class CaminiteUnfiredForgeEntity extends EmberIntensityBlockEntity implem
 		CompoundTag tag = pkt.getTag();
 		if (tag != null) {
 			load(tag);
-		} else {
-			this.generatorPosition = null;
 		}
 	}
 
 	@Override
-	protected void saveAdditional(@NotNull CompoundTag pTag) {
+	protected void saveAdditional(@Nonnull CompoundTag pTag) {
 		super.saveAdditional(pTag);
 		pTag.putInt("progress", this.progress);
-
 	}
 
 	@Override
 	public void load(@NotNull CompoundTag pTag) {
 		super.load(pTag);
-
 		this.progress = pTag.getInt("progress");
-
-	}
-
-	@Nonnull
-	@Override
-	public IEmberIntensity getEmberIntensity() {
-		if (ember == null) {
-			ember = new EmberIntensity(100, 100);
-		}
-		return ember;
 	}
 }

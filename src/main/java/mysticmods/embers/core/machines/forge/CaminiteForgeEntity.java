@@ -54,10 +54,10 @@ public class CaminiteForgeEntity extends EmberIntensityBlockEntity implements Ti
 	public void serverTick(Level level, BlockPos blockPos, BlockState blockState) {
 		if (level.getGameTime() % 20 == 0) {
 			findEmitter(blockPos);
-			if (getGeneratorEmberOutput() >= 40 && !this.isLit) {
+			if (getEmberIntensity().getIntensity() >= 40 && !this.isLit) {
 				this.isLit = true;
 				updateViaState();
-			} else if (getGeneratorEmberOutput() < 40 && this.isLit) {
+			} else if (getEmberIntensity().getIntensity() < 40 && this.isLit) {
 				this.isLit = false;
 				updateViaState();
 			}
