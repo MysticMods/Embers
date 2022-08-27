@@ -12,12 +12,12 @@ import net.minecraftforge.common.util.LazyOptional;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class EmberCapProvider implements ICapabilityProvider, INBTSerializable<IntTag> {
+public class EmberIntensityProvider implements ICapabilityProvider, INBTSerializable<IntTag> {
 
 	private final IEmberIntensity ember;
 	private final LazyOptional<IEmberIntensity> op;
 
-	public EmberCapProvider(IEmberIntensity ember) {
+	public EmberIntensityProvider(IEmberIntensity ember) {
 		this.ember = ember;
 		this.op = LazyOptional.of(() -> this.ember);
 	}

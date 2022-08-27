@@ -2,6 +2,7 @@ package mysticmods.embers.core.base;
 
 import mysticmods.embers.api.capability.IEmberEmitter;
 import mysticmods.embers.api.capability.IEmberIntensity;
+import mysticmods.embers.core.config.EmbersConfig;
 import mysticmods.embers.core.utils.BlockFinder;
 import mysticmods.embers.init.EmbersCaps;
 import net.minecraft.core.BlockPos;
@@ -77,7 +78,7 @@ public abstract class EmberIntensityBlockEntity extends BlockEntity {
 
 	public void findEmitter(BlockPos blockPos) {
 		if (level != null) {
-			BlockFinder.getEmberEmitterWithinRange(blockPos, level, 5).ifPresentOrElse(pos -> {
+			BlockFinder.getEmberEmitterWithinRange(blockPos, level, EmbersConfig.SERVER_CONFIG.EMITTER_SEARCH_RANGE.get()).ifPresentOrElse(pos -> {
 				getEmitterFromPos(pos);
 				emberEmitter.ifPresent(emitter -> getEmberIntensity().setIntensity(emitter.getIntensityFromBlockPos(this.getBlockPos())));
 			}, this::invalidateEmberIntensity);

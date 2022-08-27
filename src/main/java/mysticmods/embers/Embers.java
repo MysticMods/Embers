@@ -1,6 +1,7 @@
 package mysticmods.embers;
 
 import com.tterrag.registrate.Registrate;
+import mysticmods.embers.core.config.EmbersConfig;
 import mysticmods.embers.core.machines.forge.SmelterRecipeProvider;
 import mysticmods.embers.core.network.NetworkHandler;
 import mysticmods.embers.init.*;
@@ -11,7 +12,9 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
@@ -35,6 +38,7 @@ public class Embers {
 	};
 
 	public Embers() {
+		ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, EmbersConfig.SERVER_CONFIG_SPEC);
 		IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
 		bus.addListener(this::setup);
 		bus.addListener(this::gatherData);
