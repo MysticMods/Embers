@@ -80,7 +80,7 @@ public abstract class EmberIntensityBlockEntity extends BlockEntity {
 			BlockFinder.getEmberEmitterWithinRange(blockPos, level, 5).ifPresentOrElse(pos -> {
 				getEmitterFromPos(pos);
 				emberEmitter.ifPresent(emitter -> getEmberIntensity().setIntensity(emitter.getIntensityFromBlockPos(this.getBlockPos())));
-			}, getEmberIntensity()::zeroIntensity);
+			}, this::invalidateEmberIntensity);
 		}
 	}
 

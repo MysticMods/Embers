@@ -31,13 +31,6 @@ public interface IEmberIntensity extends INBTSerializable<IntTag> {
 	void setIntensity(int intensity);
 
 	/**
-	 * Sets the intensity of the cap to zero
-	 */
-	default void zeroIntensity() {
-		setIntensity(0);
-	}
-
-	/**
 	 * Called when the capability is changed
 	 */
 	default void onChange() {
