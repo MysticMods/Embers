@@ -1,13 +1,13 @@
 {
   "variants": {
-    "type=top": {
-      "model": "embers:block/caminite_bricks_slab_top"
-    },
     "type=bottom": {
       "model": "embers:block/caminite_bricks_slab"
     },
     "type=double": {
       "model": "embers:block/caminite_bricks"
+    },
+    "type=top": {
+      "model": "embers:block/caminite_bricks_slab_top"
     }
   }
 }

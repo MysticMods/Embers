@@ -1,10 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "CCC",
-    "IWI",
-    "IWI"
-  ],
   "key": {
     "C": {
       "tag": "forge:ingots/copper"
@@ -33,6 +28,11 @@
       }
     ]
   },
+  "pattern": [
+    "CCC",
+    "IWI",
+    "IWI"
+  ],
   "result": {
     "item": "embers:ember_diffuser"
   }

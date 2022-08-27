@@ -34,7 +34,7 @@ public class EmbersBlocks {
 	//Machines
 	public static final BlockEntry<EmberDiffuserBlock> EMBER_DIFFUSER = REGISTRATE.block("ember_diffuser", Material.STONE, EmberDiffuserBlock::new)
 					.properties(BASE_PROPERTIES)
-					.tag(EmbersTags.Blocks.EMBER_GENERATOR)
+					.tag(EmbersTags.Blocks.EMBER_EMITTER)
 					.item().tab(() -> Embers.ITEM_GROUP).build()
 					.blockstate((ctx, prov) -> prov.simpleBlock(ctx.getEntry(), prov.models().withExistingParent("ember_diffuser_child", new ResourceLocation(Embers.MOD_ID, "block/ember_diffuser"))))
 					.recipe((ctx, p) -> ShapedRecipeBuilder.shaped(ctx.getEntry().asItem(), 1)
