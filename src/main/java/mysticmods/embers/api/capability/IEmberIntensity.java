@@ -1,6 +1,5 @@
 package mysticmods.embers.api.capability;
 
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.IntTag;
 import net.minecraftforge.common.util.INBTSerializable;
 

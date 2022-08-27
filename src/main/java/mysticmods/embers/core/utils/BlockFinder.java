@@ -18,27 +18,11 @@ public class BlockFinder {
 
 	@Nonnull
 	public static Optional<BlockPos> getFirstBlockWithTagInRange(@Nonnull TagKey<Block> tag, @Nonnull BlockPos startingPos, @Nonnull Level level, int radius) {
-		return getFirstBlockWithTagInRange(tag, startingPos, level, radius, true, true);
+		return getFirstBlockWithTagInRange(tag, startingPos, level, radius, radius);
 	}
 
 	@Nonnull
-	public static Optional<BlockPos> getFirstBlockWithTagInRange(@Nonnull TagKey<Block> tag, @Nonnull BlockPos startingPos, @Nonnull Level level, int radius, boolean up, boolean down) {
-		// Scan each circle around the block, increasing the radius each time, so nearest is found first
-		for (int r = 0; r <= radius; ++r) {
-			for (int x = r * -1; x <= r; x += r) {
-				for (int z = r * -1; z <= r; z += r) {
-					for (int y = down ? r * -1 : 0; y <= (up ? r : 0); y += r) {
-						// This ensures we only check the most outside circle
-						if (x == radius || x == radius * -1 || z == radius || z == radius * -1 || y == radius || y == radius * -1) {
-							var foundPos = startingPos.offset(x, y, z);
-							if (level.getBlockState(foundPos).is(tag)) {
-								return Optional.of(foundPos);
-							}
-						}
-					}
-				}
-			}
-		}
-		return Optional.empty();
+	public static Optional<BlockPos> getFirstBlockWithTagInRange(@Nonnull TagKey<Block> tag, @Nonnull BlockPos startingPos, @Nonnull Level level, int radius, int height) {
+		return BlockPos.findClosestMatch(startingPos, radius, height, (blockPos -> level.getBlockState(blockPos).is(tag)));
 	}
 }
