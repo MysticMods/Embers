@@ -2,10 +2,13 @@ package mysticmods.embers.api.capability;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 
-public interface IEmberEmitterCap extends INBTSerializable<CompoundTag> {
+import java.util.Optional;
+
+public interface IEmberEmitter extends INBTSerializable<CompoundTag> {
 
 	/**
 	 * Gets the Ember Intensity supplied by this emitter at the given distance away in blocks
@@ -38,7 +41,7 @@ public interface IEmberEmitterCap extends INBTSerializable<CompoundTag> {
 	 * value from the other's cap being passed as otherEmitter.
 	 * @param otherEmitter The emitter triggering the update
 	 */
-	void combineEmberEmitters(LazyOptional<IEmberEmitterCap> otherEmitter);
+	void combineEmberEmitters(LazyOptional<IEmberEmitter> otherEmitter);
 
 	/**
 	 * Sets the intensities for this Ember Emitter. This should not exceed the range of the existing intensities, which
@@ -53,4 +56,10 @@ public interface IEmberEmitterCap extends INBTSerializable<CompoundTag> {
 	 * @return True if the ember emitter is currently producing ember.
 	 */
 	boolean isActive();
+
+	/**
+	 * Returns the position of the ember emitter (if it has one)
+	 * @return The position of the ember emitter as an optional, so if it has none it will be empty.
+	 */
+	Optional<BlockPos> getPos();
 }

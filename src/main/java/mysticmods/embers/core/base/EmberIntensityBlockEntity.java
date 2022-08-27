@@ -1,8 +1,7 @@
 package mysticmods.embers.core.base;
 
-import mysticmods.embers.api.data.EmbersTags;
+import mysticmods.embers.api.capability.IEmberEmitter;
 import mysticmods.embers.api.capability.IEmberIntensity;
-import mysticmods.embers.core.machines.diffuser.EmberDiffuserEntity;
 import mysticmods.embers.core.utils.BlockFinder;
 import mysticmods.embers.init.EmbersCaps;
 import net.minecraft.core.BlockPos;
@@ -17,11 +16,11 @@ import noobanidus.libs.noobutil.util.BlockEntityUtil;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.List;
+import java.util.Objects;
 
 public abstract class EmberIntensityBlockEntity extends BlockEntity {
 	private final LazyOptional<IEmberIntensity> emberIntensityOp = LazyOptional.of(this::getEmberIntensity);
-	protected BlockPos generatorPosition = null;
+	private LazyOptional<IEmberEmitter> emberEmitter;
 
 	public EmberIntensityBlockEntity(BlockEntityType<? extends EmberIntensityBlockEntity> type, BlockPos pos, BlockState state) {
 		super(type, pos, state);
@@ -44,6 +43,7 @@ public abstract class EmberIntensityBlockEntity extends BlockEntity {
 
 	/**
 	 * Gets the Ember Intensity capability for this entity
+	 *
 	 * @return The ember intensity capability as configured. This should be a singleton.
 	 */
 	@Nonnull
@@ -63,57 +63,62 @@ public abstract class EmberIntensityBlockEntity extends BlockEntity {
 	@Nonnull
 	@Override
 	public CompoundTag getUpdateTag() {
-		CompoundTag pTag = new CompoundTag();
-		saveAdditional(pTag);
-		return pTag;
+		CompoundTag tag = new CompoundTag();
+		saveAdditional(tag);
+		return tag;
 	}
 
-	public int getGeneratorEmberOutput() {
-		if (this.generatorPosition != null && level != null) {
-			BlockEntity blockEntity = level.getBlockEntity(this.generatorPosition);
-			if (blockEntity instanceof EmberDiffuserEntity entity) {
-				return entity.getEmberOutputForMachine(this.getBlockPos());
-			}
-		}
-		return 0;
-	}
-
-	public void findGenerator(BlockPos blockPos) {
-		List<BlockPos> generators = BlockFinder.getFirstBlockWithTagInRange(EmbersTags.Blocks.EMBER_GENERATOR, blockPos, level, 10, 3, 3);
-		BlockPos bestGenerator = null;
-		int bestEmberSource = 0;
-		for (BlockPos pos : generators) {
-			if (level != null) {
-				BlockEntity blockEntity = level.getBlockEntity(pos);
-				if (blockEntity instanceof EmberDiffuserEntity entity) {
-					int emberSource = entity.getEmberOutputForMachine(blockPos);
-					if (emberSource > bestEmberSource) { //TODO: Add distance check for closest generator
-						bestEmberSource = emberSource;
-						bestGenerator = pos;
-					}
-				}
-			}
-		}
-		if (bestGenerator != null) {
-			this.generatorPosition = bestGenerator;
-			updateViaState();
+	public void findEmitter(BlockPos blockPos) {
+		if (level != null) {
+			BlockFinder.getEmberEmitterWithinRange(blockPos, level, 5).ifPresent(this::getEmitterFromPos);
 		}
 	}
 
-	public void saveGenerator(CompoundTag pTag) {
-		if (this.generatorPosition != null) {
+	private void getEmitterFromPos(BlockPos pos) {
+		if (level != null) {
+			emberEmitter = Objects.requireNonNull(level.getBlockEntity(pos)).getCapability(EmbersCaps.EMBER_EMITTER);
+			emberEmitter.addListener(this::onEmberEmitterInvalidated);
+		}
+	}
+
+	protected void onEmberEmitterInvalidated(LazyOptional<IEmberEmitter> invalidEmitter) {
+		findEmitter(getBlockPos());
+	}
+
+	protected LazyOptional<IEmberEmitter> getEmberEmitter() {
+		return emberEmitter;
+	}
+
+	private void saveEmitterToPos(CompoundTag tag) {
+		getEmberEmitter().ifPresent(e -> e.getPos().ifPresent(pos -> {
 			CompoundTag t = new CompoundTag();
-			t.putInt("x", this.generatorPosition.getX());
-			t.putInt("y", this.generatorPosition.getY());
-			t.putInt("z", this.generatorPosition.getZ());
-			pTag.put("generator_position", t);
+			t.putInt("x", pos.getX());
+			t.putInt("y", pos.getY());
+			t.putInt("z", pos.getZ());
+			tag.put("emitter_pos", t);
+		}));
+	}
+
+	private void loadEmitterFromPos(CompoundTag tag) {
+		var emitterPos = tag.getCompound("emitter_pos");
+		if (emitterPos.contains("x") && emitterPos.contains("y") && emitterPos.contains("z")) {
+			getEmitterFromPos(new BlockPos(emitterPos.getInt("x"), emitterPos.getInt("y"), emitterPos.getInt("z")));
+		} else {
+			findEmitter(getBlockPos());
 		}
 	}
 
-	public void loadGenerator(CompoundTag pTag) {
-		CompoundTag generator_position = (CompoundTag) pTag.get("generator_position");
-		if (generator_position != null) {
-			this.generatorPosition = new BlockPos(generator_position.getInt("x"), generator_position.getInt("y"), generator_position.getInt("z"));
-		}
+	@Override
+	protected void saveAdditional(@Nonnull CompoundTag tag) {
+		super.saveAdditional(tag);
+		emberIntensityOp.ifPresent(intensity -> tag.put("ember_intensity", intensity.serializeNBT()));
+		saveEmitterToPos(tag);
+	}
+
+	@Override
+	public void load(@Nonnull CompoundTag tag) {
+		super.load(tag);
+		getEmberIntensity().setIntensity(tag.getInt("ember_intensity"));
+		loadEmitterFromPos(tag);
 	}
 }

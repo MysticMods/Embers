@@ -37,7 +37,7 @@ public class CaminiteUnfiredForgeEntity extends EmberIntensityBlockEntity implem
 	@Override
 	public void serverTick(Level level, BlockPos blockPos, BlockState blockState) {
 		if (level.getGameTime() % 20 == 0) {
-			findGenerator(blockPos);
+			findEmitter(blockPos);
 		}
 
 		int emberOutput = getGeneratorEmberOutput();
@@ -66,7 +66,6 @@ public class CaminiteUnfiredForgeEntity extends EmberIntensityBlockEntity implem
 	@Override
 	protected void saveAdditional(@NotNull CompoundTag pTag) {
 		super.saveAdditional(pTag);
-		this.saveGenerator(pTag);
 		pTag.putInt("progress", this.progress);
 
 	}
@@ -74,7 +73,6 @@ public class CaminiteUnfiredForgeEntity extends EmberIntensityBlockEntity implem
 	@Override
 	public void load(@NotNull CompoundTag pTag) {
 		super.load(pTag);
-		this.loadGenerator(pTag);
 
 		this.progress = pTag.getInt("progress");
 
