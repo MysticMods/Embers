@@ -7,19 +7,17 @@ import mysticmods.embers.core.utils.BlockFinder;
 import mysticmods.embers.init.EmbersCaps;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import noobanidus.libs.noobutil.util.BlockEntityUtil;
+import team.lodestar.lodestone.systems.blockentity.LodestoneBlockEntity;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.Objects;
 
-public abstract class EmberIntensityBlockEntity extends BlockEntity {
+public abstract class EmberIntensityBlockEntity extends LodestoneBlockEntity {
 	private final LazyOptional<IEmberIntensity> emberIntensityOp = LazyOptional.of(this::getEmberIntensity);
 	private LazyOptional<IEmberEmitter> emberEmitter;
 
@@ -60,20 +58,6 @@ public abstract class EmberIntensityBlockEntity extends BlockEntity {
 	public void updateViaState() {
 		setChanged();
 		BlockEntityUtil.updateViaState(this);
-	}
-
-	@Nullable
-	@Override
-	public ClientboundBlockEntityDataPacket getUpdatePacket() {
-		return ClientboundBlockEntityDataPacket.create(this);
-	}
-
-	@Nonnull
-	@Override
-	public CompoundTag getUpdateTag() {
-		CompoundTag tag = new CompoundTag();
-		saveAdditional(tag);
-		return tag;
 	}
 
 	public void findEmitter(BlockPos blockPos) {
