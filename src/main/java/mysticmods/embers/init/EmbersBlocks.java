@@ -1,16 +1,16 @@
 package mysticmods.embers.init;
 
-import mysticmods.embers.Embers;
-import mysticmods.embers.api.data.EmbersTags;
-import mysticmods.embers.core.machines.forge.CaminiteForgeBlock;
-import mysticmods.embers.core.machines.forge.CaminiteForgeUnfiredBlock;
-import mysticmods.embers.core.machines.crystallizer.EmberCrystallizerBlock;
-import mysticmods.embers.core.machines.diffuser.EmberDiffuserBlock;
 import com.tterrag.registrate.Registrate;
 import com.tterrag.registrate.builders.BlockBuilder;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.nullness.NonNullFunction;
 import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
+import mysticmods.embers.Embers;
+import mysticmods.embers.api.data.EmbersTags;
+import mysticmods.embers.core.machines.crystallizer.EmberCrystallizerBlock;
+import mysticmods.embers.core.machines.diffuser.EmberDiffuserBlock;
+import mysticmods.embers.core.machines.forge.CaminiteForgeBlock;
+import mysticmods.embers.core.machines.forge.CaminiteForgeUnfiredBlock;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
@@ -35,7 +35,8 @@ public class EmbersBlocks {
 	public static final BlockEntry<EmberDiffuserBlock> EMBER_DIFFUSER = REGISTRATE.block("ember_diffuser", Material.STONE, EmberDiffuserBlock::new)
 					.properties(BASE_PROPERTIES)
 					.tag(EmbersTags.Blocks.EMBER_EMITTER)
-					.item().tab(() -> Embers.ITEM_GROUP).build()
+					.item()
+					.build()
 					.blockstate((ctx, prov) -> prov.simpleBlock(ctx.getEntry(), prov.models().withExistingParent("ember_diffuser_child", new ResourceLocation(Embers.MOD_ID, "block/ember_diffuser"))))
 					.recipe((ctx, p) -> ShapedRecipeBuilder.shaped(ctx.getEntry().asItem(), 1)
 									.pattern("CCC")
@@ -50,7 +51,8 @@ public class EmbersBlocks {
 
 	public static final BlockEntry<CaminiteForgeUnfiredBlock> UNFIRED_CAMINITE_FORGE = REGISTRATE.block("unfired_caminite_forge", Material.STONE, CaminiteForgeUnfiredBlock::new)
 					.properties(BASE_PROPERTIES)
-					.item().tab(() -> Embers.ITEM_GROUP).build()
+					.item()
+					.build()
 					.blockstate((ctx, prov) -> prov.horizontalBlock(ctx.getEntry(), prov.models().withExistingParent("unfired_caminite_forge_model", new ResourceLocation(Embers.MOD_ID, "block/unfired_caminite_forge"))))
 					.recipe((ctx, p) -> ShapedRecipeBuilder.shaped(ctx.getEntry().asItem(), 1)
 									.pattern("CCC")
@@ -64,14 +66,16 @@ public class EmbersBlocks {
 
 	public static final BlockEntry<CaminiteForgeBlock> CAMINITE_FORGE = REGISTRATE.block("caminite_forge", Material.STONE, CaminiteForgeBlock::new)
 					.properties(BASE_PROPERTIES)
-					.item().tab(() -> Embers.ITEM_GROUP).build()
+					.item()
+					.build()
 					.blockstate((ctx, prov) -> prov.horizontalBlock(ctx.getEntry(), prov.models().withExistingParent("caminite_forge_model", new ResourceLocation(Embers.MOD_ID, "block/caminite_forge"))))
 					.register();
 
 	public static final BlockEntry<EmberCrystallizerBlock> EMBER_CRYSTALLIZER = REGISTRATE.block("ember_crystallizer", Material.STONE, EmberCrystallizerBlock::new)
 					.properties(BASE_PROPERTIES)
 					.tag(EmbersTags.Blocks.EMBER_USING)
-					.item().tab(() -> Embers.ITEM_GROUP).build()
+					.item()
+					.build()
 					//.blockstate((ctx, prov) -> prov.simpleBlock(ctx.getEntry(), prov.models().withExistingParent("ember_crystallizer_child", new ResourceLocation(Embers.MODID, "block/ember_crystallizer"))))
 					.recipe((ctx, p) -> ShapedRecipeBuilder.shaped(ctx.getEntry().asItem(), 1)
 									.pattern("CGC")
@@ -85,58 +89,18 @@ public class EmbersBlocks {
 					.register();
 
 	//Building Blocks
-	public static final BlockEntry<Block> ARCAIC_BRICK = normalCube("arcaic_bricks", Material.STONE)
-					.tag(BlockTags.MINEABLE_WITH_PICKAXE)
-					.register();
 	public static final BlockEntry<Block> CAMINITE_BRICK = normalCube("caminite_bricks", Material.STONE)
-					.tag(BlockTags.MINEABLE_WITH_PICKAXE)
-					.register();
-	public static final BlockEntry<Block> CHISELED_CAMINITE_BRICK = normalCube("chiseled_caminite_bricks", Material.STONE)
-					.tag(BlockTags.MINEABLE_WITH_PICKAXE)
-					.register();
-	public static final BlockEntry<Block> CINDERSTEEL_BLOCK = normalCube("cindersteel_block", Material.METAL)
-					.tag(BlockTags.MINEABLE_WITH_PICKAXE)
-					.register();
-	public static final BlockEntry<Block> DAWNSTONE_BLOCK = normalCube("dawnstone_block", Material.METAL)
-					.tag(BlockTags.MINEABLE_WITH_PICKAXE)
-					.register();
-	public static final BlockEntry<Block> EMBER_BLOCK = normalCube("ember_block", Material.METAL)
-					.tag(BlockTags.MINEABLE_WITH_PICKAXE)
-					.register();
-	public static final BlockEntry<Block> EMBER_ORE = normalCube("ember_ore", Material.STONE)
-					.tag(BlockTags.MINEABLE_WITH_PICKAXE)
-					.register();
-
-	public static BlockEntry<StairBlock> ARCAIC_STAIRS = normalStairs("arcaic_bricks", Material.STONE, ARCAIC_BRICK)
-					.tag(BlockTags.MINEABLE_WITH_PICKAXE)
-					.register();
-	public static BlockEntry<StairBlock> CAMINITE_STAIRS = normalStairs("caminite_bricks", Material.STONE, ARCAIC_BRICK)
-					.tag(BlockTags.MINEABLE_WITH_PICKAXE)
-					.register();
-
-	public static BlockEntry<SlabBlock> ARCAIC_SLABS = normalSlab("arcaic_bricks", Material.STONE)
-					.tag(BlockTags.MINEABLE_WITH_PICKAXE)
-					.register();
-	public static BlockEntry<SlabBlock> CAMINITE_SLABS = normalSlab("caminite_bricks", Material.STONE)
-					.tag(BlockTags.MINEABLE_WITH_PICKAXE)
-					.register();
-
-	public static BlockEntry<WallBlock> ARCAIC_WALL = normalWall("arcaic_bricks", Material.STONE)
-					.tag(BlockTags.MINEABLE_WITH_PICKAXE)
-					.register();
-	public static BlockEntry<WallBlock> CAMINITE_WALL = normalWall("caminite_bricks", Material.STONE)
 					.tag(BlockTags.MINEABLE_WITH_PICKAXE)
 					.register();
 
 	public static BlockBuilder<Block, Registrate> normalCube(String name, Material material) {
-		return REGISTRATE.block(name, material, Block::new).item().tab(() -> Embers.ITEM_GROUP).build();
+		return REGISTRATE.block(name, material, Block::new).item().build();
 	}
 
 	public static BlockBuilder<StairBlock, Registrate> normalStairs(String name, Material material, Supplier<? extends Block> block) {
 		return REGISTRATE.block(name + "_stairs", material, stairsBlock(block))
 						.tag(BlockTags.STAIRS)
 						.item()
-						.tab(() -> Embers.ITEM_GROUP)
 						.tag(ItemTags.STAIRS)
 						.model((ctx, prov) -> prov.stairs(name + "_stairs", new ResourceLocation(Embers.MOD_ID, "block/" + name), new ResourceLocation(Embers.MOD_ID, "block/" + name), new ResourceLocation(Embers.MOD_ID, "block/" + name)))
 						.build()
@@ -147,7 +111,6 @@ public class EmbersBlocks {
 		return REGISTRATE.block(name + "_slab", material, SlabBlock::new)
 						.tag(BlockTags.SLABS)
 						.item()
-						.tab(() -> Embers.ITEM_GROUP)
 						.tag(ItemTags.SLABS)
 						.model((ctx, prov) -> prov.slab(name + "_slab", new ResourceLocation(Embers.MOD_ID, "block/" + name), new ResourceLocation(Embers.MOD_ID, "block/" + name), new ResourceLocation(Embers.MOD_ID, "block/" + name)))
 						.build()
@@ -158,7 +121,6 @@ public class EmbersBlocks {
 		return REGISTRATE.block(name + "_wall", material, WallBlock::new)
 						.tag(BlockTags.WALLS)
 						.item()
-						.tab(() -> Embers.ITEM_GROUP)
 						.tag(ItemTags.WALLS)
 						.model((ctx, prov) -> prov.wallInventory(name + "_wall", new ResourceLocation(Embers.MOD_ID, "block/" + name)))
 						.build()

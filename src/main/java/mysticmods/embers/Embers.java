@@ -45,6 +45,8 @@ public class Embers {
 		//bus.addListener(this::registerCaps);
 		MinecraftForge.EVENT_BUS.register(this);
 
+		registrate().creativeModeTab(() -> ITEM_GROUP);
+
 		EmbersBlocks.init();
 		EmbersItems.init();
 		EmbersLang.init();
