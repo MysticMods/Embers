@@ -30,11 +30,7 @@ public class EmberCrystallizerBlock extends Block implements EntityBlock {
 
 	@Nullable
 	@Override
-	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, @Nonnull BlockState state, @Nonnull BlockEntityType<T> type) {
-		if (level.isClientSide()) {
-			return TickBlockEntity::clientTick;
-		} else {
-			return TickBlockEntity::serverTick;
-		}
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@Nonnull Level level, @Nonnull BlockState state, @Nonnull BlockEntityType<T> type) {
+		return TickBlockEntity.getTicker(level);
 	}
 }

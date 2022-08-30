@@ -46,11 +46,6 @@ public class CaminiteForgeEntity extends EmberIntensityBlockEntity implements Ti
 	}
 
 	@Override
-	public void clientTick(Level level, BlockPos blockPos, BlockState blockState) {
-
-	}
-
-	@Override
 	public void serverTick(Level level, BlockPos blockPos, BlockState blockState) {
 		if (level.getGameTime() % 20 == 0) {
 			findEmitter(blockPos);

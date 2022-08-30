@@ -7,6 +7,7 @@ import mysticmods.embers.core.utils.BlockFinder;
 import mysticmods.embers.init.EmbersCaps;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
@@ -17,7 +18,7 @@ import team.lodestar.lodestone.systems.blockentity.LodestoneBlockEntity;
 import javax.annotation.Nonnull;
 import java.util.Objects;
 
-public abstract class EmberIntensityBlockEntity extends LodestoneBlockEntity {
+public abstract class EmberIntensityBlockEntity extends BlockEntity {
 	private final LazyOptional<IEmberIntensity> emberIntensityOp = LazyOptional.of(this::getEmberIntensity);
 	private LazyOptional<IEmberEmitter> emberEmitter;
 

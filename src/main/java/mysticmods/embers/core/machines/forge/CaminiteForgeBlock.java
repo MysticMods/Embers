@@ -26,15 +26,17 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.network.NetworkHooks;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public class CaminiteForgeBlock extends Block implements EntityBlock {
 
 	public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
 	public static final BooleanProperty LIT = BlockStateProperties.LIT;
 
-	public CaminiteForgeBlock(Properties p_49795_) {
-		super(p_49795_);
+	public CaminiteForgeBlock(Properties props) {
+		super(props);
 		this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(LIT, Boolean.FALSE));
 	}
 
@@ -51,23 +53,20 @@ public class CaminiteForgeBlock extends Block implements EntityBlock {
 
 	@Nullable
 	@Override
-	public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
+	public BlockEntity newBlockEntity(@Nonnull BlockPos pPos, @Nonnull BlockState pState) {
 		return new CaminiteForgeEntity(EmbersBlockEntities.CAMINITE_FORGE.get(), pPos, pState);
 	}
 
 	@Nullable
 	@Override
-	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-		if (level.isClientSide()) {
-			return TickBlockEntity::clientTick;
-		} else {
-			return TickBlockEntity::serverTick;
-		}
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@Nonnull Level level, @Nonnull BlockState state, @Nonnull BlockEntityType<T> type) {
+		return TickBlockEntity.getTicker(level);
 	}
 
 
 	@Override
-	public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
+	@Nonnull
+	public InteractionResult use(@Nonnull BlockState pState, Level pLevel, @Nonnull BlockPos pPos, @Nonnull Player pPlayer, @Nonnull InteractionHand pHand, @Nonnull BlockHitResult pHit) {
 		if (pLevel.isClientSide) {
 			return InteractionResult.SUCCESS;
 		} else {

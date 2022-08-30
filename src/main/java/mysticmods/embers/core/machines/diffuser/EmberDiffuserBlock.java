@@ -36,15 +36,12 @@ public class EmberDiffuserBlock extends Block implements EntityBlock {
 
 	@Nullable
 	@Override
-	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, @Nonnull BlockState state, @Nonnull BlockEntityType<T> type) {
-		if (level.isClientSide()) {
-			return TickBlockEntity::clientTick;
-		} else {
-			return TickBlockEntity::serverTick;
-		}
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@Nonnull Level level, @Nonnull BlockState state, @Nonnull BlockEntityType<T> type) {
+		return TickBlockEntity.getTicker(level);
 	}
 
 	@Override
+	@Nonnull
 	public VoxelShape getShape(@Nonnull BlockState pState, @Nonnull BlockGetter pLevel, @Nonnull BlockPos pPos, @Nonnull CollisionContext pContext) {
 		return SHAPE_DOWN;
 	}

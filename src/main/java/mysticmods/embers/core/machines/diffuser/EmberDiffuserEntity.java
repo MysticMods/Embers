@@ -17,6 +17,8 @@ import org.jetbrains.annotations.NotNull;
 import team.lodestar.lodestone.setup.LodestoneParticleRegistry;
 import team.lodestar.lodestone.systems.rendering.particle.ParticleBuilders;
 
+import javax.annotation.Nonnull;
+
 public class EmberDiffuserEntity extends BlockEntity implements TickBlockEntity {
 
 	public boolean running = false;
@@ -89,7 +91,7 @@ public class EmberDiffuserEntity extends BlockEntity implements TickBlockEntity 
 	}
 
 	@Override
-	protected void saveAdditional(@NotNull CompoundTag pTag) {
+	protected void saveAdditional(@Nonnull CompoundTag pTag) {
 		super.saveAdditional(pTag);
 		pTag.putBoolean("running", this.running);
 		pTag.putInt("emberOutput", this.emberOutput);
@@ -99,7 +101,7 @@ public class EmberDiffuserEntity extends BlockEntity implements TickBlockEntity 
 	}
 
 	@Override
-	public void load(@NotNull CompoundTag pTag) {
+	public void load(@Nonnull CompoundTag pTag) {
 		super.load(pTag);
 		this.running = pTag.getBoolean("running");
 		this.emberOutput = pTag.getInt("emberOutput");
