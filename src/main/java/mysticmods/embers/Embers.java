@@ -7,11 +7,17 @@ import mysticmods.embers.core.machines.forge.SmelterRecipeProvider;
 import mysticmods.embers.core.network.NetworkHandler;
 import mysticmods.embers.init.*;
 import net.minecraft.core.Holder;
+import net.minecraft.core.HolderSet;
+import net.minecraft.core.Registry;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.worldgen.features.OreFeatures;
 import net.minecraft.data.worldgen.placement.OrePlacements;
+import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
@@ -20,6 +26,7 @@ import net.minecraft.world.level.levelgen.placement.HeightRangePlacement;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.Lazy;
+import net.minecraftforge.common.world.ForgeBiomeModifiers;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -27,6 +34,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -67,6 +75,7 @@ public class Embers {
 		EmbersFluids.init();
 		EmbersRecipes.Serializers.load();
 		EmbersRecipes.Types.register(bus);
+		EmbersFeatures.PLACED_FEATURE.register(bus);
 	}
 
 	public void setup(FMLCommonSetupEvent event) {
@@ -78,17 +87,18 @@ public class Embers {
 		generator.addProvider(event.includeServer(), new SmelterRecipeProvider(generator));
 
 		// Features
-		generator.addProvider(event.includeServer(), Providers.placedFeature(Embers.MOD_ID)
-				.add("cinnabar_ore", new PlacedFeature(Holder.direct(new ConfiguredFeature<>(Feature.ORE,
-						new OreConfiguration(List.of(OreConfiguration.target(OreFeatures.STONE_ORE_REPLACEABLES, EmbersBlocks.CAMINITE_BRICK.getDefaultState())), 10))),
-						OrePlacements.commonOrePlacement(10, HeightRangePlacement.triangle(VerticalAnchor.BOTTOM, VerticalAnchor.TOP))))
-				.build(generator, event.getExistingFileHelper())
+		generator.addProvider(event.includeServer(), Providers.placedFeature(Embers.MOD_ID, generator, event.getExistingFileHelper())
+				.add("cinnabar_ore", (ctx) -> EmbersFeatures.CINNABAR_ORE.get())
+				.build()
 		);
 
 		// Biome Modifiers
-//		generator.addProvider(event.includeServer(), Providers.biomeModifer(Embers.MOD_ID)
-//				.add("cinnabar_ore", new ForgeBiomeModifiers.AddFeaturesBiomeModifier(HolderSet.direct()))
-//		);
+		generator.addProvider(event.includeServer(), Providers.biomeModifer(Embers.MOD_ID, generator, event.getExistingFileHelper())
+				.add("cinnabar_ore", (ctx) -> new ForgeBiomeModifiers.AddFeaturesBiomeModifier(ctx.getHolderSet(BiomeTags.IS_OVERWORLD),
+						ctx.getHolderSet(Registry.PLACED_FEATURE_REGISTRY, EmbersFeatures.CINNABAR_ORE.getId()),
+						GenerationStep.Decoration.UNDERGROUND_ORES))
+				.build()
+		);
 
 	}
 
