@@ -2,12 +2,22 @@ package mysticmods.embers;
 
 import com.tterrag.registrate.Registrate;
 import mysticmods.embers.core.config.EmbersConfig;
+import mysticmods.embers.core.gen.Providers;
 import mysticmods.embers.core.machines.forge.SmelterRecipeProvider;
 import mysticmods.embers.core.network.NetworkHandler;
 import mysticmods.embers.init.*;
+import net.minecraft.core.Holder;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.data.worldgen.features.OreFeatures;
+import net.minecraft.data.worldgen.placement.OrePlacements;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.levelgen.VerticalAnchor;
+import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
+import net.minecraft.world.level.levelgen.placement.HeightRangePlacement;
+import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.data.event.GatherDataEvent;
@@ -19,6 +29,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 import javax.annotation.Nonnull;
+import java.util.List;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
@@ -65,10 +76,23 @@ public class Embers {
 	public void gatherData(GatherDataEvent event) {
 		DataGenerator generator = event.getGenerator();
 		generator.addProvider(event.includeServer(), new SmelterRecipeProvider(generator));
+
+		// Features
+		generator.addProvider(event.includeServer(), Providers.placedFeature(Embers.MOD_ID)
+				.add("cinnabar_ore", new PlacedFeature(Holder.direct(new ConfiguredFeature<>(Feature.ORE,
+						new OreConfiguration(List.of(OreConfiguration.target(OreFeatures.STONE_ORE_REPLACEABLES, EmbersBlocks.CAMINITE_BRICK.getDefaultState())), 10))),
+						OrePlacements.commonOrePlacement(10, HeightRangePlacement.triangle(VerticalAnchor.BOTTOM, VerticalAnchor.TOP))))
+				.build(generator, event.getExistingFileHelper())
+		);
+
+		// Biome Modifiers
+//		generator.addProvider(event.includeServer(), Providers.biomeModifer(Embers.MOD_ID)
+//				.add("cinnabar_ore", new ForgeBiomeModifiers.AddFeaturesBiomeModifier(HolderSet.direct()))
+//		);
+
 	}
 
 	public static Registrate registrate() {
 		return REGISTRATE.get();
 	}
-
 }
