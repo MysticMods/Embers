@@ -3,7 +3,7 @@ package mysticmods.embers.init;
 import com.tterrag.registrate.Registrate;
 import com.tterrag.registrate.providers.ProviderType;
 import mysticmods.embers.Embers;
-import mysticmods.embers.api.data.Tags;
+import mysticmods.embers.api.data.EmbersApiTags;
 
 public class EmbersTags {
 	public static final Registrate REGISTRATE = Embers.registrate();
@@ -14,8 +14,8 @@ public class EmbersTags {
 		});
 
 		REGISTRATE.addDataGenerator(ProviderType.BLOCK_TAGS, b -> {
-			b.tag(Tags.Blocks.EMBER_EMITTER);
-			b.tag(Tags.Blocks.EMBER_USING);
+			b.tag(EmbersApiTags.Blocks.EMBER_EMITTER);
+			b.tag(EmbersApiTags.Blocks.EMBER_USING);
 
 		});
 

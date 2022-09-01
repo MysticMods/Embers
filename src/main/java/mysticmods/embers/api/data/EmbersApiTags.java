@@ -8,7 +8,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 
-public class Tags {
+public class EmbersApiTags {
 	public static class Blocks {
 		public static TagKey<Block> EMBER_EMITTER = modTag("ember_emitter");
 		public static TagKey<Block> EMBER_USING = modTag("ember_using");

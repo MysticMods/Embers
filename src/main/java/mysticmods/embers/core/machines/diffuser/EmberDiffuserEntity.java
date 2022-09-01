@@ -1,6 +1,6 @@
 package mysticmods.embers.core.machines.diffuser;
 
-import mysticmods.embers.api.data.Tags;
+import mysticmods.embers.api.data.EmbersApiTags;
 import mysticmods.embers.core.utils.TickBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -51,7 +51,7 @@ public class EmberDiffuserEntity extends BlockEntity implements TickBlockEntity 
 	@Override
 	public void serverTick(Level level, BlockPos blockPos, BlockState blockState) {
 		if (level.getGameTime() % 20 == 0) {
-			if (level.getBlockState(blockPos.below()).is(Tags.Blocks.EMBER_EMITTER)) {
+			if (level.getBlockState(blockPos.below()).is(EmbersApiTags.Blocks.EMBER_EMITTER)) {
 				if (!this.running) {
 					this.running = true;
 					updateViaState();

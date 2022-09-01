@@ -6,7 +6,7 @@ import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.nullness.NonNullFunction;
 import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
 import mysticmods.embers.Embers;
-import mysticmods.embers.api.data.Tags;
+import mysticmods.embers.api.data.EmbersApiTags;
 import mysticmods.embers.core.machines.crystallizer.EmberCrystallizerBlock;
 import mysticmods.embers.core.machines.diffuser.EmberDiffuserBlock;
 import mysticmods.embers.core.machines.forge.CaminiteForgeBlock;
@@ -33,7 +33,7 @@ public class EmbersBlocks {
 	//Machines
 	public static final BlockEntry<EmberDiffuserBlock> EMBER_DIFFUSER = REGISTRATE.block("ember_diffuser", Material.STONE, EmberDiffuserBlock::new)
 			.properties(BASE_PROPERTIES)
-			.tag(Tags.Blocks.EMBER_EMITTER, BlockTags.MINEABLE_WITH_PICKAXE)
+			.tag(EmbersApiTags.Blocks.EMBER_EMITTER, BlockTags.MINEABLE_WITH_PICKAXE)
 			.item()
 			.build()
 			.blockstate((ctx, prov) -> prov.simpleBlock(ctx.getEntry(), prov.models().withExistingParent("ember_diffuser_child", new ResourceLocation(Embers.MOD_ID, "block/ember_diffuser"))))
@@ -74,7 +74,7 @@ public class EmbersBlocks {
 
 	public static final BlockEntry<EmberCrystallizerBlock> EMBER_CRYSTALLIZER = REGISTRATE.block("ember_crystallizer", Material.STONE, EmberCrystallizerBlock::new)
 			.properties(BASE_PROPERTIES)
-			.tag(Tags.Blocks.EMBER_USING, BlockTags.MINEABLE_WITH_PICKAXE)
+			.tag(EmbersApiTags.Blocks.EMBER_USING, BlockTags.MINEABLE_WITH_PICKAXE)
 			.item()
 			.build()
 			//.blockstate((ctx, prov) -> prov.simpleBlock(ctx.getEntry(), prov.models().withExistingParent("ember_crystallizer_child", new ResourceLocation(Embers.MODID, "block/ember_crystallizer"))))
@@ -91,7 +91,7 @@ public class EmbersBlocks {
 
 	public static final BlockEntry<DropExperienceBlock> VERMILLIONITE_ORE = REGISTRATE.block("vermillionite_ore", Material.STONE, DropExperienceBlock::new)
 			.properties(props -> props.requiresCorrectToolForDrops().strength(3.0f, 3.0f))
-			.tag(Tags.Blocks.ORES_VERMILLIONITE, BlockTags.MINEABLE_WITH_PICKAXE)
+			.tag(EmbersApiTags.Blocks.ORES_VERMILLIONITE, BlockTags.MINEABLE_WITH_PICKAXE)
 			.item()
 			.build()
 			.loot((lt, block) -> lt.dropOther(block, EmbersItems.VERMILLIONITE_CHUNK.get()))

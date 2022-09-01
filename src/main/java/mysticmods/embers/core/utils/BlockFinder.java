@@ -1,6 +1,6 @@
 package mysticmods.embers.core.utils;
 
-import mysticmods.embers.api.data.Tags;
+import mysticmods.embers.api.data.EmbersApiTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.Level;
@@ -13,7 +13,7 @@ public class BlockFinder {
 
 	@Nonnull
 	public static Optional<BlockPos> getEmberEmitterWithinRange(@Nonnull BlockPos startingPos, @Nonnull Level level, int radius) {
-		return getFirstBlockWithTagInRange(Tags.Blocks.EMBER_EMITTER, startingPos, level, radius);
+		return getFirstBlockWithTagInRange(EmbersApiTags.Blocks.EMBER_EMITTER, startingPos, level, radius);
 	}
 
 	@Nonnull
