@@ -3,8 +3,6 @@ package mysticmods.embers;
 import com.tterrag.registrate.Registrate;
 import mysticmods.embers.core.config.EmbersConfig;
 import mysticmods.embers.core.gen.Providers;
-import mysticmods.embers.init.EmbersTags;
-import mysticmods.embers.core.machines.forge.SmelterRecipeProvider;
 import mysticmods.embers.core.network.NetworkHandler;
 import mysticmods.embers.init.*;
 import net.minecraft.core.Registry;
@@ -60,8 +58,6 @@ public class Embers {
 		EmbersTags.init();
 		EmbersMenus.init();
 		EmbersFluids.init();
-		EmbersRecipes.Serializers.load();
-		EmbersRecipes.Types.register(bus);
 		EmbersFeatures.PLACED_FEATURE.register(bus);
 	}
 
@@ -71,7 +67,7 @@ public class Embers {
 
 	public void gatherData(GatherDataEvent event) {
 		DataGenerator generator = event.getGenerator();
-		generator.addProvider(event.includeServer(), new SmelterRecipeProvider(generator));
+//		generator.addProvider(event.includeServer(), new SmelterRecipeProvider(generator));
 
 		// Features
 		generator.addProvider(event.includeServer(), Providers.placedFeature(Embers.MOD_ID, generator, event.getExistingFileHelper())
