@@ -20,8 +20,8 @@ public class EmbersFeatures {
 
 	public static final DeferredRegister<PlacedFeature> PLACED_FEATURE = DeferredRegister.create(Registry.PLACED_FEATURE_REGISTRY, Embers.MOD_ID);
 
-	public static final RegistryObject<PlacedFeature> CINNABAR_ORE = PLACED_FEATURE.register("cinnabar_ore", () -> new PlacedFeature(Holder.direct(new ConfiguredFeature<>(Feature.ORE,
-			new OreConfiguration(List.of(OreConfiguration.target(OreFeatures.STONE_ORE_REPLACEABLES, EmbersBlocks.CAMINITE_BRICK.getDefaultState())), 10))),
-			OrePlacements.commonOrePlacement(10, HeightRangePlacement.triangle(VerticalAnchor.BOTTOM, VerticalAnchor.TOP))));
+	public static final RegistryObject<PlacedFeature> VERMILLIONITE_ORE = PLACED_FEATURE.register("vermillionite_ore", () -> new PlacedFeature(Holder.direct(new ConfiguredFeature<>(Feature.ORE,
+			new OreConfiguration(List.of(OreConfiguration.target(OreFeatures.DEEPSLATE_ORE_REPLACEABLES, EmbersBlocks.VERMILLIONITE_ORE.getDefaultState())), 10))),
+			OrePlacements.commonOrePlacement(10, HeightRangePlacement.triangle(VerticalAnchor.aboveBottom(-64), VerticalAnchor.TOP))));
 
 }

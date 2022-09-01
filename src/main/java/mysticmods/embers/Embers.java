@@ -88,14 +88,14 @@ public class Embers {
 
 		// Features
 		generator.addProvider(event.includeServer(), Providers.placedFeature(Embers.MOD_ID, generator, event.getExistingFileHelper())
-				.add("cinnabar_ore", (ctx) -> EmbersFeatures.CINNABAR_ORE.get())
+				.add("vermillionite_ore", (ctx) -> EmbersFeatures.VERMILLIONITE_ORE.get())
 				.build()
 		);
 
 		// Biome Modifiers
 		generator.addProvider(event.includeServer(), Providers.biomeModifer(Embers.MOD_ID, generator, event.getExistingFileHelper())
-				.add("cinnabar_ore", (ctx) -> new ForgeBiomeModifiers.AddFeaturesBiomeModifier(ctx.getHolderSet(BiomeTags.IS_OVERWORLD),
-						ctx.getHolderSet(Registry.PLACED_FEATURE_REGISTRY, EmbersFeatures.CINNABAR_ORE.getId()),
+				.add("vermillionite_ore", (ctx) -> new ForgeBiomeModifiers.AddFeaturesBiomeModifier(ctx.getHolderSet(BiomeTags.IS_OVERWORLD),
+						ctx.getHolderSet(Registry.PLACED_FEATURE_REGISTRY, EmbersFeatures.VERMILLIONITE_ORE.getId()),
 						GenerationStep.Decoration.UNDERGROUND_ORES))
 				.build()
 		);

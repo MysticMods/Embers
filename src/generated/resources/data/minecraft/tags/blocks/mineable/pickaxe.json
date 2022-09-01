@@ -1,5 +1,10 @@
 {
   "values": [
+    "embers:ember_diffuser",
+    "embers:unfired_caminite_forge",
+    "embers:caminite_forge",
+    "embers:ember_crystallizer",
+    "embers:vermillionite_ore",
     "embers:caminite_bricks"
   ]
 }
