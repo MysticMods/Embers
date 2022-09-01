@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+// TODO Remove this and replace it with custom registrate
 public class ProviderBuilder<T> {
 
 	private final Map<ResourceLocation, T> entries = new HashMap<>();
