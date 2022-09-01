@@ -1,6 +1,6 @@
 package mysticmods.embers.core.machines.diffuser;
 
-import mysticmods.embers.api.data.EmbersTags;
+import mysticmods.embers.api.data.Tags;
 import mysticmods.embers.core.utils.TickBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -13,7 +13,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import noobanidus.libs.noobutil.util.BlockEntityUtil;
-import org.jetbrains.annotations.NotNull;
 import team.lodestar.lodestone.setup.LodestoneParticleRegistry;
 import team.lodestar.lodestone.systems.rendering.particle.ParticleBuilders;
 
@@ -52,7 +51,7 @@ public class EmberDiffuserEntity extends BlockEntity implements TickBlockEntity 
 	@Override
 	public void serverTick(Level level, BlockPos blockPos, BlockState blockState) {
 		if (level.getGameTime() % 20 == 0) {
-			if (level.getBlockState(blockPos.below()).is(EmbersTags.Blocks.EMBER_EMITTER)) {
+			if (level.getBlockState(blockPos.below()).is(Tags.Blocks.EMBER_EMITTER)) {
 				if (!this.running) {
 					this.running = true;
 					updateViaState();

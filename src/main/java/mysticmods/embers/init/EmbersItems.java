@@ -3,11 +3,8 @@ package mysticmods.embers.init;
 import mysticmods.embers.Embers;
 import com.tterrag.registrate.Registrate;
 import com.tterrag.registrate.util.entry.ItemEntry;
-import mysticmods.embers.api.data.EmbersTags;
-import net.minecraft.advancements.critereon.InventoryChangeTrigger;
-import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import mysticmods.embers.api.data.Tags;
 import net.minecraft.world.item.*;
-import net.minecraftforge.common.Tags;
 
 public class EmbersItems {
 	private static final Registrate REGISTRATE = Embers.registrate();
@@ -18,8 +15,8 @@ public class EmbersItems {
 	public static final ItemEntry<Item> DAWNSTONE_INGOT = REGISTRATE.item("dawnstone_ingot", Item::new).register();
 	public static final ItemEntry<Item> ASHEN_STEEL_INGOT = REGISTRATE.item("ashen_steel_ingot", Item::new).register();
 	public static final ItemEntry<Item> QUICKSILVER = REGISTRATE.item("quicksilver", Item::new).register();
-	public static final ItemEntry<Item> CINNABAR = REGISTRATE.item("cinnabar", Item::new).tag(EmbersTags.Items.CINNABAR).register();
-	public static final ItemEntry<Item> VERMILLIONITE_CHUNK = REGISTRATE.item("vermillionite_chunk", Item::new).tag(EmbersTags.Items.VERMILLIONITE).register();
+	public static final ItemEntry<Item> CINNABAR = REGISTRATE.item("cinnabar", Item::new).tag(Tags.Items.CINNABAR).register();
+	public static final ItemEntry<Item> VERMILLIONITE_CHUNK = REGISTRATE.item("vermillionite_chunk", Item::new).tag(Tags.Items.VERMILLIONITE).register();
 
 	public static void init() {
 	}

@@ -6,7 +6,7 @@ import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.nullness.NonNullFunction;
 import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
 import mysticmods.embers.Embers;
-import mysticmods.embers.api.data.EmbersTags;
+import mysticmods.embers.api.data.Tags;
 import mysticmods.embers.core.machines.crystallizer.EmberCrystallizerBlock;
 import mysticmods.embers.core.machines.diffuser.EmberDiffuserBlock;
 import mysticmods.embers.core.machines.forge.CaminiteForgeBlock;
@@ -21,7 +21,6 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
-import net.minecraftforge.common.Tags;
 
 import java.util.function.Supplier;
 
@@ -34,7 +33,7 @@ public class EmbersBlocks {
 	//Machines
 	public static final BlockEntry<EmberDiffuserBlock> EMBER_DIFFUSER = REGISTRATE.block("ember_diffuser", Material.STONE, EmberDiffuserBlock::new)
 			.properties(BASE_PROPERTIES)
-			.tag(EmbersTags.Blocks.EMBER_EMITTER, BlockTags.MINEABLE_WITH_PICKAXE)
+			.tag(Tags.Blocks.EMBER_EMITTER, BlockTags.MINEABLE_WITH_PICKAXE)
 			.item()
 			.build()
 			.blockstate((ctx, prov) -> prov.simpleBlock(ctx.getEntry(), prov.models().withExistingParent("ember_diffuser_child", new ResourceLocation(Embers.MOD_ID, "block/ember_diffuser"))))
@@ -42,8 +41,8 @@ public class EmbersBlocks {
 					.pattern("CCC")
 					.pattern("IWI")
 					.pattern("IWI")
-					.define('C', Tags.Items.INGOTS_COPPER)
-					.define('I', Tags.Items.INGOTS_IRON)
+					.define('C', net.minecraftforge.common.Tags.Items.INGOTS_COPPER)
+					.define('I', net.minecraftforge.common.Tags.Items.INGOTS_IRON)
 					.define('W', Ingredient.of(Items.ACACIA_LOG, Items.BIRCH_LOG, Items.JUNGLE_LOG, Items.DARK_OAK_LOG, Items.OAK_LOG, Items.SPRUCE_LOG))
 					.unlockedBy("has_ingredient", InventoryChangeTrigger.TriggerInstance.hasItems(Items.IRON_INGOT))
 					.save(p))
@@ -75,7 +74,7 @@ public class EmbersBlocks {
 
 	public static final BlockEntry<EmberCrystallizerBlock> EMBER_CRYSTALLIZER = REGISTRATE.block("ember_crystallizer", Material.STONE, EmberCrystallizerBlock::new)
 			.properties(BASE_PROPERTIES)
-			.tag(EmbersTags.Blocks.EMBER_USING, BlockTags.MINEABLE_WITH_PICKAXE)
+			.tag(Tags.Blocks.EMBER_USING, BlockTags.MINEABLE_WITH_PICKAXE)
 			.item()
 			.build()
 			//.blockstate((ctx, prov) -> prov.simpleBlock(ctx.getEntry(), prov.models().withExistingParent("ember_crystallizer_child", new ResourceLocation(Embers.MODID, "block/ember_crystallizer"))))
@@ -92,7 +91,7 @@ public class EmbersBlocks {
 
 	public static final BlockEntry<DropExperienceBlock> VERMILLIONITE_ORE = REGISTRATE.block("vermillionite_ore", Material.STONE, DropExperienceBlock::new)
 			.properties(props -> props.requiresCorrectToolForDrops().strength(3.0f, 3.0f))
-			.tag(EmbersTags.Blocks.ORES_VERMILLIONITE, BlockTags.MINEABLE_WITH_PICKAXE)
+			.tag(Tags.Blocks.ORES_VERMILLIONITE, BlockTags.MINEABLE_WITH_PICKAXE)
 			.item()
 			.build()
 			.loot((lt, block) -> lt.dropOther(block, EmbersItems.VERMILLIONITE_CHUNK.get()))
