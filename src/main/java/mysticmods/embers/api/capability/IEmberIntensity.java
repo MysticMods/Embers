@@ -28,11 +28,4 @@ public interface IEmberIntensity extends INBTSerializable<IntTag> {
 	 * @param intensity the intensity to set the block to
 	 */
 	void setIntensity(int intensity);
-
-	/**
-	 * Called when the capability is changed
-	 */
-	default void onChange() {
-		// Do nothing, just for blocks to do something when the intensity changes
-	}
 }

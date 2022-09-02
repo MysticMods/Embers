@@ -1,12 +1,11 @@
 package mysticmods.embers.init;
 
 import mysticmods.embers.Embers;
-import mysticmods.embers.api.capability.IEmber;
+import mysticmods.embers.api.capability.ILevelEmber;
 import mysticmods.embers.api.capability.IEmberEmitter;
 import mysticmods.embers.api.capability.IEmberIntensity;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.common.capabilities.CapabilityToken;
@@ -27,14 +26,14 @@ public class EmbersCaps {
 	public static final Capability<IEmberEmitter> EMBER_EMITTER = CapabilityManager.get(new CapabilityToken<>() {
 	});
 
-	public static final Capability<IEmber> EMBER = CapabilityManager.get(new CapabilityToken<>() {
+	public static final Capability<ILevelEmber> EMBER = CapabilityManager.get(new CapabilityToken<>() {
 	});
 
 	@SubscribeEvent
 	public void registerCaps(RegisterCapabilitiesEvent event) {
 		event.register(IEmberIntensity.class);
 		event.register(IEmberEmitter.class);
-		event.register(IEmber.class);
+		event.register(ILevelEmber.class);
 	}
 
 	@SubscribeEvent

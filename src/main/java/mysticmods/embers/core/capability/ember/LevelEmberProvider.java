@@ -1,26 +1,23 @@
 package mysticmods.embers.core.capability.ember;
 
-import mysticmods.embers.api.capability.IEmber;
+import mysticmods.embers.api.capability.ILevelEmber;
 import mysticmods.embers.init.EmbersCaps;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class EmberProvider implements ICapabilitySerializable<CompoundTag> {
-	private final IEmber ember;
-	private final LazyOptional<IEmber> op;
+public class LevelEmberProvider implements ICapabilitySerializable<ListTag> {
+	private final ILevelEmber ember;
+	private final LazyOptional<ILevelEmber> op;
 
-	public EmberProvider(IEmber ember) {
+	public LevelEmberProvider(ILevelEmber ember) {
 		this.ember = ember;
 		this.op = LazyOptional.of(() -> this.ember);
-	}
-
-	public void invalidate() {
-		this.op.invalidate();
 	}
 
 	@Override
@@ -29,13 +26,12 @@ public class EmberProvider implements ICapabilitySerializable<CompoundTag> {
 	}
 
 	@Override
-	public CompoundTag serializeNBT() {
-		CompoundTag rootTag = new CompoundTag();
-		return rootTag;
+	public ListTag serializeNBT() {
+		return ember.serializeNBT();
 	}
 
 	@Override
-	public void deserializeNBT(CompoundTag nbt) {
-
+	public void deserializeNBT(ListTag nbt) {
+		ember.deserializeNBT(nbt);
 	}
 }

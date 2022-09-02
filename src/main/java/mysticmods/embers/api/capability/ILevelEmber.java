@@ -2,9 +2,11 @@ package mysticmods.embers.api.capability;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraftforge.common.util.INBTSerializable;
+import net.minecraftforge.common.util.LazyOptional;
 
-public interface IEmber extends INBTSerializable<CompoundTag> {
+public interface ILevelEmber extends INBTSerializable<ListTag> {
 
 	int getEmberForPos(BlockPos pos);
 
@@ -12,9 +14,5 @@ public interface IEmber extends INBTSerializable<CompoundTag> {
 
 	void setEmberInRadius(BlockPos center, int[] emberPerRadius);
 
-	int getMaxEmberForPos(BlockPos pos);
-
-	void setMaxEmberForPos(BlockPos pos, int maxEmber);
-
-	void setMaxEmberInRadius(BlockPos center, int[] maxEmberPerRadius);
+	void addEmberListener(BlockPos pos, LazyOptional<IEmberIntensity> intensity);
 }
