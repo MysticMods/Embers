@@ -8,9 +8,8 @@ import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
 import mysticmods.embers.Embers;
 import mysticmods.embers.api.data.EmbersApiTags;
 import mysticmods.embers.core.machines.crystallizer.EmberCrystallizerBlock;
-import mysticmods.embers.core.machines.diffuser.EmberDiffuserBlock;
+import mysticmods.embers.core.machines.brazier.BrazierBlock;
 import mysticmods.embers.core.machines.forge.CaminiteForgeBlock;
-import mysticmods.embers.core.machines.forge.CaminiteForgeUnfiredBlock;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
@@ -31,12 +30,12 @@ public class EmbersBlocks {
 	public static final NonNullUnaryOperator<BlockBehaviour.Properties> BASE_PROPERTIES = r -> r.dynamicShape().noOcclusion().strength(1.5f).sound(SoundType.STONE);
 
 	//Machines
-	public static final BlockEntry<EmberDiffuserBlock> EMBER_DIFFUSER = REGISTRATE.block("ember_diffuser", Material.STONE, EmberDiffuserBlock::new)
+	public static final BlockEntry<BrazierBlock> BRAZIER = REGISTRATE.block("brazier", Material.STONE, BrazierBlock::new)
 			.properties(BASE_PROPERTIES)
 			.tag(EmbersApiTags.Blocks.EMBER_EMITTER, BlockTags.MINEABLE_WITH_PICKAXE)
 			.item()
 			.build()
-			.blockstate((ctx, prov) -> prov.simpleBlock(ctx.getEntry(), prov.models().withExistingParent("ember_diffuser_child", new ResourceLocation(Embers.MOD_ID, "block/ember_diffuser"))))
+			.blockstate((ctx, prov) -> prov.simpleBlock(ctx.getEntry(), prov.models().withExistingParent("brazier_child", new ResourceLocation(Embers.MOD_ID, "block/brazier"))))
 			.recipe((ctx, p) -> ShapedRecipeBuilder.shaped(ctx.getEntry().asItem(), 1)
 					.pattern("CCC")
 					.pattern("IWI")
@@ -48,28 +47,12 @@ public class EmbersBlocks {
 					.save(p))
 			.register();
 
-	public static final BlockEntry<CaminiteForgeUnfiredBlock> UNFIRED_CAMINITE_FORGE = REGISTRATE.block("unfired_caminite_forge", Material.STONE, CaminiteForgeUnfiredBlock::new)
-			.properties(BASE_PROPERTIES)
-			.tag(BlockTags.MINEABLE_WITH_PICKAXE)
-			.item()
-			.build()
-			.blockstate((ctx, prov) -> prov.horizontalBlock(ctx.getEntry(), prov.models().withExistingParent("unfired_caminite_forge_model", new ResourceLocation(Embers.MOD_ID, "block/unfired_caminite_forge"))))
-			.recipe((ctx, p) -> ShapedRecipeBuilder.shaped(ctx.getEntry().asItem(), 1)
-					.pattern("CCC")
-					.pattern("CFC")
-					.pattern("CCC")
-					.define('C', EmbersItems.CAMINITE_BRICK.get())
-					.define('F', Ingredient.of(Blocks.FURNACE))
-					.unlockedBy("has_ingredient", InventoryChangeTrigger.TriggerInstance.hasItems(EmbersItems.CAMINITE_BRICK.get()))
-					.save(p))
-			.register();
-
 	public static final BlockEntry<CaminiteForgeBlock> CAMINITE_FORGE = REGISTRATE.block("caminite_forge", Material.STONE, CaminiteForgeBlock::new)
 			.properties(BASE_PROPERTIES)
 			.tag(BlockTags.MINEABLE_WITH_PICKAXE)
 			.item()
 			.build()
-			.blockstate((ctx, prov) -> prov.horizontalBlock(ctx.getEntry(), prov.models().withExistingParent("caminite_forge_model", new ResourceLocation(Embers.MOD_ID, "block/caminite_forge"))))
+			.blockstate((ctx, prov) -> prov.simpleBlock(ctx.getEntry(), prov.models().withExistingParent("caminite_forge_child", new ResourceLocation(Embers.MOD_ID, "block/caminite_forge"))))
 			.register();
 
 	public static final BlockEntry<EmberCrystallizerBlock> EMBER_CRYSTALLIZER = REGISTRATE.block("ember_crystallizer", Material.STONE, EmberCrystallizerBlock::new)

@@ -17,6 +17,7 @@ public class EmbersItems {
 	public static final ItemEntry<Item> QUICKSILVER = REGISTRATE.item("quicksilver", Item::new).register();
 	public static final ItemEntry<Item> CINNABAR = REGISTRATE.item("cinnabar", Item::new).tag(EmbersApiTags.Items.CINNABAR).register();
 	public static final ItemEntry<Item> VERMILLIONITE_CHUNK = REGISTRATE.item("vermillionite_chunk", Item::new).tag(EmbersApiTags.Items.VERMILLIONITE).register();
+	public static final ItemEntry<Item> IRON_HAMMER = REGISTRATE.item("iron_hammer", Item::new).register();
 
 	public static void init() {
 	}

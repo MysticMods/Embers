@@ -1,15 +1,12 @@
 package mysticmods.embers.core.machines.forge;
 
+import mysticmods.embers.core.base.EmberBlockEntity;
 import mysticmods.embers.core.utils.TickBlockEntity;
 import mysticmods.embers.init.EmbersBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.MenuProvider;
-import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
@@ -25,7 +22,6 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.network.NetworkHooks;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -34,6 +30,7 @@ public class CaminiteForgeBlock extends Block implements EntityBlock {
 
 	public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
 	public static final BooleanProperty LIT = BlockStateProperties.LIT;
+	//private static final VoxelShape SHAPE = Shapes.box(0, 0, 0, 1, 2, 1);
 
 	public CaminiteForgeBlock(Properties props) {
 		super(props);
@@ -70,13 +67,16 @@ public class CaminiteForgeBlock extends Block implements EntityBlock {
 		if (pLevel.isClientSide) {
 			return InteractionResult.SUCCESS;
 		} else {
-			MenuProvider menuprovider = new SimpleMenuProvider(CaminiteForgeMenu.getServerContainer((CaminiteForgeEntity) pLevel.getBlockEntity(pPos), pPos), Component.empty());
-			if (pPlayer instanceof ServerPlayer serverPlayer) {
-				NetworkHooks.openScreen(serverPlayer, menuprovider, buf -> buf.writeBlockPos(pPos));
+			if(pLevel.getBlockEntity(pPos) instanceof EmberBlockEntity entity){
+				entity.use(pPlayer, pHand);
 			}
-			return InteractionResult.CONSUME;
+			return InteractionResult.SUCCESS;
 		}
 	}
 
-
+//	@Override
+//	@Nonnull
+//	public VoxelShape getShape(@Nonnull BlockState pState, @Nonnull BlockGetter pLevel, @Nonnull BlockPos pPos, @Nonnull CollisionContext pContext) {
+//		return SHAPE;
+//	}
 }

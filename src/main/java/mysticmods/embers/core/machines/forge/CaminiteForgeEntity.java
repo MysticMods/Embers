@@ -4,12 +4,12 @@ import mysticmods.embers.api.capability.IEmberIntensity;
 import mysticmods.embers.core.base.EmberIntensityBlockEntity;
 import mysticmods.embers.core.capability.ember.EmberIntensity;
 import mysticmods.embers.core.utils.TickBlockEntity;
-import mysticmods.embers.init.EmbersRecipes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -17,7 +17,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
@@ -29,71 +28,21 @@ public class CaminiteForgeEntity extends EmberIntensityBlockEntity implements Ti
 
 	private float progress = 0;
 	private boolean isLit = false;
-	private final ItemStackHandler itemHandler = new SmelterItemHandler(1, 1, this);
+	private final ItemStackHandler itemHandler = new SmelterItemHandler(1, this);
 	private final FluidTank outputTank;
 	private final LazyOptional<IItemHandler> handler = LazyOptional.of(() -> itemHandler);
+
+	private final int PROGRESS_PER_ITEM = 20 * 5;
 
 	private IEmberIntensity ember;
 	private SmelterRecipe currentRecipe = null;
 
-	public int progressTimer = 200;
+	public int progressTimer = 0;
 
 	public CaminiteForgeEntity(BlockEntityType<? extends CaminiteForgeEntity> pType, BlockPos pWorldPosition, BlockState pBlockState) {
 		super(pType, pWorldPosition, pBlockState);
 
 		this.outputTank = new FluidTank(10000);
-
-	}
-
-	@Override
-	public void serverTick(Level level, BlockPos blockPos, BlockState blockState) {
-		if (level.getGameTime() % 20 == 0) {
-			findEmitter(blockPos);
-			if (getEmberIntensity().getIntensity() >= 40 && !this.isLit) {
-				this.isLit = true;
-				updateViaState();
-			} else if (getEmberIntensity().getIntensity() < 40 && this.isLit) {
-				this.isLit = false;
-				updateViaState();
-			}
-		}
-
-		if (isLit) {
-			if (this.itemHandler.getStackInSlot(0) == ItemStack.EMPTY && this.progress > 0) {
-				this.progress = 0;
-				updateViaState();
-			}
-
-
-			if (this.outputTank.getFluidAmount() < this.outputTank.getCapacity()) {
-				if (this.itemHandler.getStackInSlot(0) != ItemStack.EMPTY) {
-					var smeltingRecipe = level.getRecipeManager().getRecipeFor(EmbersRecipes.Types.SMELTER.get(), new SimpleContainer(this.itemHandler.getStackInSlot(0)), level);
-					if (smeltingRecipe.isPresent() && this.currentRecipe != smeltingRecipe.get()) {
-						this.currentRecipe = smeltingRecipe.get();
-					}
-				}
-
-				if (this.currentRecipe != null) {
-					if (this.outputTank.getFluidInTank(0).getFluid() != this.currentRecipe.getResult().getFluid()) {
-						if (this.outputTank.getFluidAmount() == 0) {
-							this.progress++;
-						} else {
-							this.progress = 0;
-						}
-					} else {
-						this.progress++;
-					}
-				}
-
-				updateViaState();
-			}
-
-			if (this.progress >= this.progressTimer) {
-				this.itemHandler.getStackInSlot(0).shrink(1);
-				this.outputTank.fill(this.currentRecipe.getResult(), IFluidHandler.FluidAction.EXECUTE);
-				this.progress = 0;
-			}
-		}
 	}
 
 	@Override
@@ -129,6 +78,80 @@ public class CaminiteForgeEntity extends EmberIntensityBlockEntity implements Ti
 		this.outputTank.readFromNBT(tag.getCompound("fluidTank"));
 	}
 
+	@Override
+	public void serverTick(Level level, BlockPos blockPos, BlockState blockState) {
+		if (level.getGameTime() % 20 == 0) {
+//			findEmitter(blockPos);
+//			if (getEmberIntensity().getIntensity() >= 40 && !this.isLit) {
+//				this.isLit = true;
+//				updateViaState();
+//			} else if (getEmberIntensity().getIntensity() < 40 && this.isLit) {
+//				this.isLit = false;
+//				this.progress = 0;
+//				updateViaState();
+//			}
+			System.out.println(this.progress);
+		}
+
+		if (true) {
+			if (this.itemHandler.getStackInSlot(0) == ItemStack.EMPTY && this.progress > 0) {
+				this.progress = 0;
+				updateViaState();
+				return;
+			}
+
+			if (this.itemHandler.getStackInSlot(0) != ItemStack.EMPTY) {
+				if (this.progress < this.progressTimer) {
+					progress++;
+				}
+			}
+
+
+//			if (this.outputTank.getFluidAmount() < this.outputTank.getCapacity()) {
+//				if (this.itemHandler.getStackInSlot(0) != ItemStack.EMPTY) {
+//					var smeltingRecipe = level.getRecipeManager().getRecipeFor(EmbersRecipes.Types.SMELTER.get(), new SimpleContainer(this.itemHandler.getStackInSlot(0)), level);
+//					if (smeltingRecipe.isPresent() && this.currentRecipe != smeltingRecipe.get()) {
+//						this.currentRecipe = smeltingRecipe.get();
+//					}
+//				}
+//
+//				if (this.currentRecipe != null) {
+//					if (this.outputTank.getFluidInTank(0).getFluid() != this.currentRecipe.getResult().getFluid()) {
+//						if (this.outputTank.getFluidAmount() == 0) {
+//							this.progress++;
+//						} else {
+//							this.progress = 0;
+//						}
+//					} else {
+//						this.progress++;
+//					}
+//				}
+//
+//				updateViaState();
+//			}
+
+
+		}
+	}
+
+	@Override
+	public void use(Player player, InteractionHand hand){
+		ItemStack stack = player.getItemInHand(hand);
+		if(this.itemHandler.isItemValid(0, stack)){
+			ItemStack inputStack = stack.copy();
+			if(stack.getCount() > 32){
+				inputStack.setCount(32);
+				stack.setCount(stack.getCount() - 32);
+				this.itemHandler.insertItem(0, inputStack, false);
+				setProgressNeeded();
+				updateViaState();
+			} else {
+				this.itemHandler.insertItem(0, inputStack, false);
+				player.setItemInHand(hand, ItemStack.EMPTY);
+			}
+		}
+	}
+
 	@NotNull
 	@Override
 	public <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap) {
@@ -151,7 +174,12 @@ public class CaminiteForgeEntity extends EmberIntensityBlockEntity implements Ti
 		return this.progress / this.progressTimer;
 	}
 
+	public void setProgressNeeded(){
+		this.progressTimer = this.itemHandler.getStackInSlot(0).getCount() * PROGRESS_PER_ITEM;
+	}
+
 	public FluidTank getOutputTank() {
 		return outputTank;
 	}
+
 }
