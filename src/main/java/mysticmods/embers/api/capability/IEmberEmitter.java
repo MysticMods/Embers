@@ -3,6 +3,7 @@ package mysticmods.embers.api.capability;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 
@@ -31,19 +32,6 @@ public interface IEmberEmitter extends INBTSerializable<CompoundTag> {
 	int[] getIntensities();
 
 	/**
-	 * Gets the maximum intensity the Ember emitter can combine to from overlapping ember fields.
-	 * @return The maximum combined ember intensity this emitter can support.
-	 */
-	int getMaxCombinedIntensity();
-
-	/**
-	 * Forces the Ember Emitter to update from another emitter. This will allow the emitter calling this to set all new
-	 * value from the other's cap being passed as otherEmitter.
-	 * @param otherEmitter The emitter triggering the update
-	 */
-	void combineEmberEmitters(LazyOptional<IEmberEmitter> otherEmitter);
-
-	/**
 	 * Sets the intensities for this Ember Emitter. This should not exceed the range of the existing intensities, which
 	 * should instead be handled by the ember emitter increasing this range. If it does increase range, it will increase
 	 * it in all directions.
@@ -57,9 +45,5 @@ public interface IEmberEmitter extends INBTSerializable<CompoundTag> {
 	 */
 	boolean isActive();
 
-	/**
-	 * Returns the position of the ember emitter (if it has one)
-	 * @return The position of the ember emitter as an optional, so if it has none it will be empty.
-	 */
-	Optional<BlockPos> getPos();
+	BoundingBox getBoundingBox();
 }

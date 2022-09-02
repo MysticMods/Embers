@@ -1,10 +1,13 @@
 package mysticmods.embers.core.capability.ember;
 
+import mysticmods.embers.api.capability.IEmberEmitter;
 import mysticmods.embers.api.capability.IEmberIntensity;
 import mysticmods.embers.api.capability.ILevelEmber;
+import mysticmods.embers.core.utils.BlockFinder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraftforge.common.util.LazyOptional;
 
 import java.util.HashMap;
@@ -13,7 +16,7 @@ import java.util.Map;
 public class LevelEmber implements ILevelEmber {
 
 	private final Map<BlockPos, Integer> ember = new HashMap<>();
-	private final Map<BlockPos, LazyOptional<IEmberIntensity>> listeners = new HashMap<>();
+	private final Map<BlockPos, LazyOptional<IEmberIntensity>> emberListeners = new HashMap<>();
 
 	@Override
 	public int getEmberForPos(BlockPos pos) {
@@ -29,34 +32,32 @@ public class LevelEmber implements ILevelEmber {
 			ember.put(pos, validEmber);
 		}
 		// Update listeners
-		if (listeners.containsKey(pos)) {
-			listeners.get(pos).ifPresent(e -> e.setIntensity(validEmber));
+		if (emberListeners.containsKey(pos)) {
+			emberListeners.get(pos).ifPresent(e -> e.setIntensity(validEmber));
 		}
 	}
 
 	@Override
-	public void setEmberInRadius(BlockPos center, int[] emberPerRadius) {
-		int radius = emberPerRadius.length;
-		for (int r = 0; r < radius; r++) {
-			for (int x = r * -1; x <= r; x += r) {
-				for (int z = r * -1; z <= r; z += r) {
-					for (int y = r * -1; y <= r; y += r) {
-						// This ensures we only check the most outside circle
-						if (x == radius - 1 || x == radius * -1 || z == radius - 1 || z == radius * -1 || y == radius - 1 || y == radius * -1) {
-							BlockPos pos = center.offset(x, y, z);
-							setEmberForPos(pos, emberPerRadius[r]);
-						}
-					}
-				}
+	public void maxEmberForBoundingBox(BlockPos emitter, BoundingBox box, int[] emberPerRadius) {
+		BlockPos.betweenClosedStream(box).forEach(pos -> {
+			int radius = BlockFinder.distance(pos, emitter);
+			if (radius < emberPerRadius.length) {
+				ember.compute(pos, (p, e) -> e != null ? Math.max(e, emberPerRadius[radius]) : emberPerRadius[radius]);
 			}
-		}
+		});
+	}
+
+	@Override
+	public void maxEmberForRadius(BlockPos center, int[] emberPerRadius) {
+		int r = emberPerRadius.length - 1;
+		maxEmberForBoundingBox(center, BoundingBox.fromCorners(center.offset(-r, -r, -r), center.offset(r, r, r)), emberPerRadius);
 	}
 
 	@Override
 	public void addEmberListener(BlockPos pos, LazyOptional<IEmberIntensity> intensity) {
-		listeners.put(pos, intensity);
+		emberListeners.put(pos, intensity);
 		// Make sure to remove from list when we no longer have the ember intensity
-		intensity.addListener(e -> listeners.remove(pos));
+		intensity.addListener(e -> emberListeners.remove(pos));
 	}
 
 	@Override
