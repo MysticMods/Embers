@@ -1,4 +1,4 @@
-package mysticmods.embers.core.capability.ember;
+package mysticmods.embers.core.capability.intensity;
 
 import mysticmods.embers.api.capability.IEmberIntensity;
 import net.minecraft.nbt.IntTag;
