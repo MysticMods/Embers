@@ -4,6 +4,7 @@ import mysticmods.embers.Embers;
 import com.tterrag.registrate.Registrate;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import mysticmods.embers.api.data.EmbersApiTags;
+import mysticmods.embers.core.machines.forge.CaminiteForgeItemBlock;
 import net.minecraft.world.item.*;
 
 public class EmbersItems {
@@ -18,6 +19,9 @@ public class EmbersItems {
 	public static final ItemEntry<Item> CINNABAR = REGISTRATE.item("cinnabar", Item::new).tag(EmbersApiTags.Items.CINNABAR).register();
 	public static final ItemEntry<Item> VERMILLIONITE_CHUNK = REGISTRATE.item("vermillionite_chunk", Item::new).tag(EmbersApiTags.Items.VERMILLIONITE).register();
 	public static final ItemEntry<Item> IRON_HAMMER = REGISTRATE.item("iron_hammer", Item::new).register();
+
+	//Blocks
+	public static final ItemEntry<CaminiteForgeItemBlock> CAMINITE_FORGE = REGISTRATE.item("caminite_forge", CaminiteForgeItemBlock::new).register();
 
 	public static void init() {
 	}

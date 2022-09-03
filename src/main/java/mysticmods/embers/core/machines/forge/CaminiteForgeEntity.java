@@ -4,6 +4,7 @@ import mysticmods.embers.api.capability.IEmberIntensity;
 import mysticmods.embers.core.base.EmberIntensityBlockEntity;
 import mysticmods.embers.core.capability.ember.EmberIntensity;
 import mysticmods.embers.core.utils.TickBlockEntity;
+import mysticmods.embers.init.EmbersBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
@@ -17,19 +18,27 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import team.lodestar.lodestone.systems.multiblock.IMultiBlockCore;
+import team.lodestar.lodestone.systems.multiblock.MultiBlockStructure;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.function.Supplier;
 
-public class CaminiteForgeEntity extends EmberIntensityBlockEntity implements TickBlockEntity {
+public class CaminiteForgeEntity extends EmberIntensityBlockEntity implements TickBlockEntity, IMultiBlockCore {
+	public static final Supplier<MultiBlockStructure> STRUCTURE = () -> (MultiBlockStructure.of(new MultiBlockStructure.StructurePiece(0, 1, 0, EmbersBlocks.CAMINITE_FORGE_COMPONENT.get().defaultBlockState())));
+	ArrayList<BlockPos> componentPositions = new ArrayList<>();
+
+	public final MultiBlockStructure structure;
 
 	private float progress = 0;
 	private boolean isLit = false;
 	private final ItemStackHandler itemHandler = new SmelterItemHandler(1, this);
-	private final FluidTank outputTank;
+
 	private final LazyOptional<IItemHandler> handler = LazyOptional.of(() -> itemHandler);
 
 	private final int PROGRESS_PER_ITEM = 20 * 5;
@@ -39,10 +48,10 @@ public class CaminiteForgeEntity extends EmberIntensityBlockEntity implements Ti
 
 	public int progressTimer = 0;
 
-	public CaminiteForgeEntity(BlockEntityType<? extends CaminiteForgeEntity> pType, BlockPos pWorldPosition, BlockState pBlockState) {
-		super(pType, pWorldPosition, pBlockState);
-
-		this.outputTank = new FluidTank(10000);
+	public CaminiteForgeEntity(BlockEntityType<? extends CaminiteForgeEntity> type, BlockPos pos, BlockState state) {
+		super(type, pos, state);
+		this.structure = STRUCTURE.get();
+		setupMultiblock(pos);
 	}
 
 	@Override
@@ -64,9 +73,9 @@ public class CaminiteForgeEntity extends EmberIntensityBlockEntity implements Ti
 		tag.putBoolean("isLit", this.isLit);
 		tag.put("inventory", this.itemHandler.serializeNBT());
 
-		CompoundTag fluidTankTag = new CompoundTag();
-		this.outputTank.writeToNBT(fluidTankTag);
-		tag.put("fluidTank", fluidTankTag);
+		//CompoundTag fluidTankTag = new CompoundTag();
+		//this.outputTank.writeToNBT(fluidTankTag);
+		//tag.put("fluidTank", fluidTankTag);
 	}
 
 	@Override
@@ -75,7 +84,7 @@ public class CaminiteForgeEntity extends EmberIntensityBlockEntity implements Ti
 		this.progress = tag.getFloat("progress");
 		this.isLit = tag.getBoolean("isLit");
 		this.itemHandler.deserializeNBT(tag.getCompound("inventory"));
-		this.outputTank.readFromNBT(tag.getCompound("fluidTank"));
+		//this.outputTank.readFromNBT(tag.getCompound("fluidTank"));
 	}
 
 	@Override
@@ -178,8 +187,21 @@ public class CaminiteForgeEntity extends EmberIntensityBlockEntity implements Ti
 		this.progressTimer = this.itemHandler.getStackInSlot(0).getCount() * PROGRESS_PER_ITEM;
 	}
 
-	public FluidTank getOutputTank() {
-		return outputTank;
+//	public FluidTank getOutputTank() {
+//		return outputTank;
+//	}
+
+	@Override
+	public MultiBlockStructure getStructure() {
+		return structure;
 	}
 
+	@Override
+	public ArrayList<BlockPos> getComponentPositions() {
+		return componentPositions;
+	}
+
+	public void onBreak(@Nullable Player player) {
+		destroyMultiblock(player, level, worldPosition);
+	}
 }
