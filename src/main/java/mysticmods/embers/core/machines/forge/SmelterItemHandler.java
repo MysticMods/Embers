@@ -11,23 +11,16 @@ import org.jetbrains.annotations.NotNull;
 public class SmelterItemHandler extends ItemStackHandler {
 
 	private final BlockEntity entity;
-	private final int outputs;
 
-	public SmelterItemHandler(BlockEntity blockEntity, int outputs) {
-		this.entity = blockEntity;
-		this.outputs = outputs;
-	}
 
-	public SmelterItemHandler(int size, int outputs, BlockEntity blockEntity) {
-		super(size + outputs);
+	public SmelterItemHandler(int size,BlockEntity blockEntity) {
+		super(size);
 		this.entity = blockEntity;
-		this.outputs = outputs;
 	}
 
 	public SmelterItemHandler(NonNullList<ItemStack> stacks, int outputs, BlockEntity blockEntity) {
 		super(stacks);
 		this.entity = blockEntity;
-		this.outputs = outputs;
 	}
 
 	@Override
@@ -44,10 +37,7 @@ public class SmelterItemHandler extends ItemStackHandler {
 	@NotNull
 	@Override
 	public ItemStack insertItem(int slot, @NotNull ItemStack stack, boolean simulate) {
-		if (slot >= this.getSlots() - this.outputs) {
-			return stack;
-		}
-		if (entity.getLevel().getRecipeManager().getRecipeFor(RecipeType.SMELTING, new SimpleContainer(stack), entity.getLevel()).isEmpty()) {
+		if (isItemValid(0, stack)) {
 			return stack;
 		}
 		return super.insertItem(slot, stack, simulate);

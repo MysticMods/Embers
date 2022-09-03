@@ -1,10 +1,10 @@
 package mysticmods.embers.init;
 
-import mysticmods.embers.Embers;
 import com.tterrag.registrate.Registrate;
 import com.tterrag.registrate.util.entry.ItemEntry;
+import mysticmods.embers.Embers;
 import mysticmods.embers.api.data.EmbersApiTags;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.Item;
 
 public class EmbersItems {
 	private static final Registrate REGISTRATE = Embers.registrate();
@@ -17,6 +17,11 @@ public class EmbersItems {
 	public static final ItemEntry<Item> QUICKSILVER = REGISTRATE.item("quicksilver", Item::new).register();
 	public static final ItemEntry<Item> CINNABAR = REGISTRATE.item("cinnabar", Item::new).tag(EmbersApiTags.Items.CINNABAR).register();
 	public static final ItemEntry<Item> VERMILLIONITE_CHUNK = REGISTRATE.item("vermillionite_chunk", Item::new).tag(EmbersApiTags.Items.VERMILLIONITE).register();
+	public static final ItemEntry<Item> IRON_HAMMER = REGISTRATE.item("iron_hammer", Item::new).register();
+
+	//Blocks
+//	public static final ItemEntry<CaminiteForgeItemBlock> CAMINITE_FORGE = REGISTRATE.item("caminite_forge", CaminiteForgeItemBlock::new)
+//			.model((ctx, prov) -> prov.withExistingParent(ctx.getName(), new ResourceLocation("embers:block/caminite_forge"))).register();
 
 	public static void init() {
 	}
