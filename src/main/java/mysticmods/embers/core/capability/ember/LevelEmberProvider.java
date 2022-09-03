@@ -15,8 +15,8 @@ public class LevelEmberProvider implements ICapabilitySerializable<ListTag> {
 	private final ILevelEmber ember;
 	private final LazyOptional<ILevelEmber> op;
 
-	public LevelEmberProvider(ILevelEmber ember) {
-		this.ember = ember;
+	public LevelEmberProvider() {
+		this.ember = new LevelEmber();
 		this.op = LazyOptional.of(() -> this.ember);
 	}
 

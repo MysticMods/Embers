@@ -4,6 +4,7 @@ import mysticmods.embers.Embers;
 import mysticmods.embers.api.capability.ILevelEmber;
 import mysticmods.embers.api.capability.IEmberEmitter;
 import mysticmods.embers.api.capability.IEmberIntensity;
+import mysticmods.embers.core.capability.ember.LevelEmberProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.Capability;
@@ -38,6 +39,6 @@ public class EmbersCaps {
 
 	@SubscribeEvent
 	public static void attachCapability(AttachCapabilitiesEvent<Level> event) {
-		event.addCapability(EMBER_CAP_ID, );
+		event.addCapability(EMBER_CAP_ID, new LevelEmberProvider());
 	}
 }

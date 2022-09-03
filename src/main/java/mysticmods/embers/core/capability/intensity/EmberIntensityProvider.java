@@ -18,13 +18,9 @@ public class EmberIntensityProvider implements ICapabilitySerializable<IntTag> {
 	private final IEmberIntensity ember;
 	private final LazyOptional<IEmberIntensity> op;
 
-	public EmberIntensityProvider(IEmberIntensity ember) {
-		this.ember = ember;
+	public EmberIntensityProvider(int min, int max) {
+		this.ember = new EmberIntensity(min, max);
 		this.op = LazyOptional.of(() -> this.ember);
-	}
-
-	public void invalidate() {
-		this.op.invalidate();
 	}
 
 	@Nonnull
