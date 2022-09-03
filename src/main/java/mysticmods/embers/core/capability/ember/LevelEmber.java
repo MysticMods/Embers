@@ -17,6 +17,7 @@ public class LevelEmber implements ILevelEmber {
 
 	private final Map<BlockPos, Integer> ember = new HashMap<>();
 	private final Map<BlockPos, LazyOptional<IEmberIntensity>> emberListeners = new HashMap<>();
+	private final Map<BoundingBox, LazyOptional<IEmberEmitter>> emitterListeners = new HashMap<>();
 
 	@Override
 	public int getEmberForPos(BlockPos pos) {
@@ -38,7 +39,7 @@ public class LevelEmber implements ILevelEmber {
 	}
 
 	@Override
-	public void maxEmberForBoundingBox(BlockPos emitter, BoundingBox box, int[] emberPerRadius) {
+	public void setEmberForBoundingBox(BlockPos emitter, BoundingBox box, int[] emberPerRadius) {
 		BlockPos.betweenClosedStream(box).forEach(pos -> {
 			int radius = BlockFinder.distance(pos, emitter);
 			if (radius < emberPerRadius.length) {
@@ -48,9 +49,9 @@ public class LevelEmber implements ILevelEmber {
 	}
 
 	@Override
-	public void maxEmberForRadius(BlockPos center, int[] emberPerRadius) {
+	public void setEmberForRadius(BlockPos center, int[] emberPerRadius) {
 		int r = emberPerRadius.length - 1;
-		maxEmberForBoundingBox(center, BoundingBox.fromCorners(center.offset(-r, -r, -r), center.offset(r, r, r)), emberPerRadius);
+		setEmberForBoundingBox(center, BoundingBox.fromCorners(center.offset(-r, -r, -r), center.offset(r, r, r)), emberPerRadius);
 	}
 
 	@Override
@@ -58,6 +59,20 @@ public class LevelEmber implements ILevelEmber {
 		emberListeners.put(pos, intensity);
 		// Make sure to remove from list when we no longer have the ember intensity
 		intensity.addListener(e -> emberListeners.remove(pos));
+	}
+
+	@Override
+	public void addEmitterListener(BoundingBox box, LazyOptional<IEmberEmitter> emitter) {
+		emitterListeners.put(box, emitter);
+		emitter.addListener(e -> {
+			emitterListeners.remove(box);
+			clearEmberInBoundingBox(box);
+			emitterListeners.keySet().stream().filter(bb -> bb.intersects(box)).forEach(bb -> emitterListeners.get(bb).ifPresent(IEmberEmitter::initEmitter));
+		});
+	}
+
+	private void clearEmberInBoundingBox(BoundingBox box) {
+		BlockPos.betweenClosedStream(box).forEach(pos -> ember.put(pos, 0));
 	}
 
 	@Override
