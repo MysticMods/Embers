@@ -7,10 +7,9 @@ import com.tterrag.registrate.util.nullness.NonNullFunction;
 import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
 import mysticmods.embers.Embers;
 import mysticmods.embers.api.data.EmbersApiTags;
-import mysticmods.embers.core.machines.crystallizer.EmberCrystallizerBlock;
+import mysticmods.embers.core.machines.crystallizer.CrystallizerBlock;
 import mysticmods.embers.core.machines.brazier.BrazierBlock;
 import mysticmods.embers.core.machines.forge.CaminiteForgeBlock;
-import mysticmods.embers.core.machines.forge.CaminiteForgeComponentBlock;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
@@ -21,6 +20,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
+import team.lodestar.lodestone.systems.multiblock.MultiblockComponentBlock;
 
 import java.util.function.Supplier;
 
@@ -56,7 +56,7 @@ public class EmbersBlocks {
 			.blockstate((ctx, prov) -> prov.simpleBlock(ctx.getEntry(), prov.models().withExistingParent("caminite_forge_child", new ResourceLocation(Embers.MOD_ID, "block/caminite_forge"))))
 			.register();
 
-	public static final BlockEntry<CaminiteForgeComponentBlock> CAMINITE_FORGE_COMPONENT = REGISTRATE.block("caminite_forge_component", Material.STONE, CaminiteForgeComponentBlock::new)
+	public static final BlockEntry<MultiblockComponentBlock> CAMINITE_FORGE_COMPONENT = REGISTRATE.block("caminite_forge_component", Material.STONE, MultiblockComponentBlock::new)
 			.properties(BASE_PROPERTIES)
 			.tag(BlockTags.MINEABLE_WITH_PICKAXE)
 			.item()
@@ -64,7 +64,7 @@ public class EmbersBlocks {
 			.blockstate((ctx, prov) -> prov.simpleBlock(ctx.getEntry(), prov.models().withExistingParent("caminite_forge_component_child", new ResourceLocation(Embers.MOD_ID, "block/caminite_forge_component"))))
 			.register();
 
-	public static final BlockEntry<EmberCrystallizerBlock> EMBER_CRYSTALLIZER = REGISTRATE.block("ember_crystallizer", Material.STONE, EmberCrystallizerBlock::new)
+	public static final BlockEntry<CrystallizerBlock> CRYSTALLIZER = REGISTRATE.block("ember_crystallizer", Material.STONE, CrystallizerBlock::new)
 			.properties(BASE_PROPERTIES)
 			.tag(EmbersApiTags.Blocks.EMBER_USING, BlockTags.MINEABLE_WITH_PICKAXE)
 			.item()
