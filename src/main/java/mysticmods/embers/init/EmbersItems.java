@@ -20,8 +20,6 @@ public class EmbersItems {
 	public static final ItemEntry<Item> IRON_HAMMER = REGISTRATE.item("iron_hammer", Item::new).register();
 
 	//Blocks
-//	public static final ItemEntry<CaminiteForgeItemBlock> CAMINITE_FORGE = REGISTRATE.item("caminite_forge", CaminiteForgeItemBlock::new)
-//			.model((ctx, prov) -> prov.withExistingParent(ctx.getName(), new ResourceLocation("embers:block/caminite_forge"))).register();
 
 	public static void init() {
 	}

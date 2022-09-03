@@ -10,6 +10,7 @@ import mysticmods.embers.api.data.EmbersApiTags;
 import mysticmods.embers.core.machines.crystallizer.CrystallizerBlock;
 import mysticmods.embers.core.machines.brazier.BrazierBlock;
 import mysticmods.embers.core.machines.forge.CaminiteForgeBlock;
+import mysticmods.embers.core.machines.forge.CaminiteForgeItemBlock;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
@@ -51,16 +52,14 @@ public class EmbersBlocks {
 	public static final BlockEntry<CaminiteForgeBlock> CAMINITE_FORGE = REGISTRATE.block("caminite_forge", Material.STONE, CaminiteForgeBlock::new)
 			.properties(BASE_PROPERTIES)
 			.tag(BlockTags.MINEABLE_WITH_PICKAXE)
-			//.item()
-			//.build()
+			.item(CaminiteForgeItemBlock::new)
+			.build()
 			.blockstate((ctx, prov) -> prov.simpleBlock(ctx.getEntry(), prov.models().withExistingParent("caminite_forge_child", new ResourceLocation(Embers.MOD_ID, "block/caminite_forge"))))
 			.register();
 
 	public static final BlockEntry<MultiblockComponentBlock> CAMINITE_FORGE_COMPONENT = REGISTRATE.block("caminite_forge_component", Material.STONE, MultiblockComponentBlock::new)
 			.properties(BASE_PROPERTIES)
 			.tag(BlockTags.MINEABLE_WITH_PICKAXE)
-			.item()
-			.build()
 			.blockstate((ctx, prov) -> prov.simpleBlock(ctx.getEntry(), prov.models().withExistingParent("caminite_forge_component_child", new ResourceLocation(Embers.MOD_ID, "block/caminite_forge_component"))))
 			.register();
 

@@ -87,20 +87,11 @@ public class CaminiteForgeEntity extends EmberIntensityBlockEntity implements IM
 	@Override
 	@NotNull
 	public InteractionResult onUse(Player player, @NotNull InteractionHand hand) {
+		System.out.println(level.getBlockEntity(getBlockPos().above()));
+		System.out.println(hand);
 		ItemStack stack = player.getItemInHand(hand);
-		if (this.itemHandler.isItemValid(0, stack)) {
-			ItemStack inputStack = stack.copy();
-			if (stack.getCount() > 32) {
-				inputStack.setCount(32);
-				stack.setCount(stack.getCount() - 32);
-				this.itemHandler.insertItem(0, inputStack, false);
-				setProgressNeeded();
-				updateViaState();
-			} else {
-				this.itemHandler.insertItem(0, inputStack, false);
-				player.setItemInHand(hand, ItemStack.EMPTY);
-			}
-		}
+		ItemStack returnStack = this.itemHandler.insertItem(0, stack, false);
+		player.setItemInHand(hand, returnStack);
 		return InteractionResult.SUCCESS;
 	}
 

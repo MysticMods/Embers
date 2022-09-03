@@ -22,6 +22,7 @@ public class LevelEmber implements ILevelEmber {
 
 	@Override
 	public int getEmberForPos(@NotNull BlockPos pos) {
+		if(ember.get(pos) == null) return 0;
 		return ember.get(pos);
 	}
 
