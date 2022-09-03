@@ -1,30 +1,76 @@
-package mysticmods.embers.core.machines.diffuser;
+package mysticmods.embers.core.machines.brazier;
 
-import mysticmods.embers.api.data.EmbersApiTags;
+import mysticmods.embers.core.base.EmberBlockEntity;
 import mysticmods.embers.core.utils.TickBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.items.ItemStackHandler;
 import noobanidus.libs.noobutil.util.BlockEntityUtil;
+import org.jetbrains.annotations.NotNull;
 import team.lodestar.lodestone.setup.LodestoneParticleRegistry;
 import team.lodestar.lodestone.systems.rendering.particle.ParticleBuilders;
 
 import javax.annotation.Nonnull;
 
-public class EmberDiffuserEntity extends BlockEntity implements TickBlockEntity {
+public class BrazierEntity extends EmberBlockEntity implements TickBlockEntity {
 
 	public boolean running = false;
 	private int emberOutput = 0;
 
-	public EmberDiffuserEntity(BlockEntityType<?> pType, BlockPos pWorldPosition, BlockState pBlockState) {
+	private final ItemStackHandler itemHandler;
+
+	public BrazierEntity(BlockEntityType<?> pType, BlockPos pWorldPosition, BlockState pBlockState) {
 		super(pType, pWorldPosition, pBlockState);
+
+		itemHandler =  new ItemStackHandler(1){
+			@Override
+			public int getSlotLimit(int slot) {
+				return 16;
+			}
+
+			@Override
+			public boolean isItemValid(int slot, @NotNull ItemStack stack) {
+				return stack.getItem() == Items.COAL;
+			}
+		};
+	}
+
+	@Override
+	public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
+		super.onDataPacket(net, pkt);
+		CompoundTag tag = pkt.getTag();
+		if (tag != null) {
+			load(tag);
+		} else {
+			running = false;
+			emberOutput = 0;
+		}
+	}
+
+	@Override
+	protected void saveAdditional(@Nonnull CompoundTag pTag) {
+		super.saveAdditional(pTag);
+		pTag.putBoolean("running", this.running);
+		pTag.putInt("emberOutput", this.emberOutput);
+		pTag.put("inventory", this.itemHandler.serializeNBT());
+	}
+
+	@Override
+	public void load(@Nonnull CompoundTag pTag) {
+		super.load(pTag);
+		this.running = pTag.getBoolean("running");
+		this.emberOutput = pTag.getInt("emberOutput");
+		this.itemHandler.deserializeNBT(pTag.getCompound("inventory"));
+
 	}
 
 	public void updateViaState() {
@@ -51,60 +97,32 @@ public class EmberDiffuserEntity extends BlockEntity implements TickBlockEntity 
 	@Override
 	public void serverTick(Level level, BlockPos blockPos, BlockState blockState) {
 		if (level.getGameTime() % 20 == 0) {
-			if (level.getBlockState(blockPos.below()).is(EmbersApiTags.Blocks.EMBER_EMITTER)) {
+			if (!this.itemHandler.getStackInSlot(0).isEmpty()) {
 				if (!this.running) {
 					this.running = true;
-					updateViaState();
 				}
 			} else {
 				if (this.running) {
 					running = false;
-					updateViaState();
 				}
 			}
 
 			if (running) {
-				int newEmberOutput = 0;
-				Block block = level.getBlockState(blockPos.below()).getBlock();
-				if (block == Blocks.LAVA) {
-					newEmberOutput = 100;
-				}
-				if (this.emberOutput != newEmberOutput) {
-					this.emberOutput = newEmberOutput;
-					updateViaState();
-				}
+				this.emberOutput = 100;
 			}
+			updateViaState();
 		}
 	}
 
 	@Override
-	public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-		super.onDataPacket(net, pkt);
-		CompoundTag tag = pkt.getTag();
-		if (tag != null) {
-			load(tag);
-		} else {
-			running = false;
-			emberOutput = 0;
+	public void use(Player player, InteractionHand hand) {
+		System.out.println(this.running);
+		ItemStack playerStack = player.getItemInHand(hand);
+		if(this.itemHandler.isItemValid(0, playerStack)){
+			ItemStack returnStack = this.itemHandler.insertItem(0, playerStack, false);
+			player.setItemInHand(hand, returnStack);
+			updateViaState();
 		}
-	}
-
-	@Override
-	protected void saveAdditional(@Nonnull CompoundTag pTag) {
-		super.saveAdditional(pTag);
-		pTag.putBoolean("running", this.running);
-		pTag.putInt("emberOutput", this.emberOutput);
-
-
-		//pTag.put("heat_sources")
-	}
-
-	@Override
-	public void load(@Nonnull CompoundTag pTag) {
-		super.load(pTag);
-		this.running = pTag.getBoolean("running");
-		this.emberOutput = pTag.getInt("emberOutput");
-
 	}
 
 	public int getEmberOutputForMachine(BlockPos targetPos) {

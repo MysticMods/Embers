@@ -11,7 +11,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "embers:caminite_forge"
+          "name": "minecraft:air"
         }
       ],
       "rolls": 1.0

@@ -1,9 +1,9 @@
 {
+  "block.embers.brazier": "ɹǝızɐɹᗺ",
   "block.embers.caminite_bricks": "sʞɔıɹᗺ ǝʇıuıɯɐƆ",
   "block.embers.caminite_forge": "ǝbɹoℲ ǝʇıuıɯɐƆ",
+  "block.embers.caminite_forge_component": "ʇuǝuodɯoƆ ǝbɹoℲ ǝʇıuıɯɐƆ",
   "block.embers.ember_crystallizer": "ɹǝzıןןɐʇsʎɹƆ ɹǝqɯƎ",
-  "block.embers.ember_diffuser": "ɹǝsnɟɟıᗡ ɹǝqɯƎ",
-  "block.embers.unfired_caminite_forge": "ǝbɹoℲ ǝʇıuıɯɐƆ pǝɹıɟu∩",
   "block.embers.vermillionite_ore": "ǝɹO ǝʇıuoıןןıɯɹǝΛ",
   "item.embers.ashen_steel_ingot": "ʇobuI ןǝǝʇS uǝɥsⱯ",
   "item.embers.caminite_blend": "puǝןᗺ ǝʇıuıɯɐƆ",
@@ -12,6 +12,7 @@
   "item.embers.cinnabar": "ɹɐqɐuuıƆ",
   "item.embers.dawnstone_ingot": "ʇobuI ǝuoʇsuʍɐᗡ",
   "item.embers.ember_crystal": "ןɐʇsʎɹƆ ɹǝqɯƎ",
+  "item.embers.iron_hammer": "ɹǝɯɯɐH uoɹI",
   "item.embers.quicksilver": "ɹǝʌןısʞɔınὉ",
   "item.embers.vermillionite_chunk": "ʞunɥƆ ǝʇıuoıןןıɯɹǝΛ",
   "itemGroup.embers": "sɹǝqɯƎ"

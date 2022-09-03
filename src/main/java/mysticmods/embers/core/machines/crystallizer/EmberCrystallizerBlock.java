@@ -24,7 +24,7 @@ public class EmberCrystallizerBlock extends Block implements EntityBlock {
 	@Nullable
 	@Override
 	public BlockEntity newBlockEntity(@Nonnull BlockPos pPos, @Nonnull BlockState pState) {
-		return new EmberCrystallizerEntity(EmbersBlockEntities.EMBER_DIFFUSER.get(), pPos, pState);
+		return new EmberCrystallizerEntity(EmbersBlockEntities.BRAZIER.get(), pPos, pState);
 
 	}
 

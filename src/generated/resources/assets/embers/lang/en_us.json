@@ -1,9 +1,9 @@
 {
+  "block.embers.brazier": "Brazier",
   "block.embers.caminite_bricks": "Caminite Bricks",
   "block.embers.caminite_forge": "Caminite Forge",
+  "block.embers.caminite_forge_component": "Caminite Forge Component",
   "block.embers.ember_crystallizer": "Ember Crystallizer",
-  "block.embers.ember_diffuser": "Ember Diffuser",
-  "block.embers.unfired_caminite_forge": "Unfired Caminite Forge",
   "block.embers.vermillionite_ore": "Vermillionite Ore",
   "item.embers.ashen_steel_ingot": "Ashen Steel Ingot",
   "item.embers.caminite_blend": "Caminite Blend",
@@ -12,6 +12,7 @@
   "item.embers.cinnabar": "Cinnabar",
   "item.embers.dawnstone_ingot": "Dawnstone Ingot",
   "item.embers.ember_crystal": "Ember Crystal",
+  "item.embers.iron_hammer": "Iron Hammer",
   "item.embers.quicksilver": "Quicksilver",
   "item.embers.vermillionite_chunk": "Vermillionite Chunk",
   "itemGroup.embers": "Embers"
