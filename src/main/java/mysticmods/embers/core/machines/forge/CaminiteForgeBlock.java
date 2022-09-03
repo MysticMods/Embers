@@ -24,6 +24,7 @@ public class CaminiteForgeBlock extends LodestoneEntityBlock<CaminiteForgeEntity
 
 	public CaminiteForgeBlock(Properties props) {
 		super(props);
+		setBlockEntity(EmbersBlockEntities.CAMINITE_FORGE);
 		this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(LIT, Boolean.FALSE));
 	}
 
@@ -36,11 +37,5 @@ public class CaminiteForgeBlock extends LodestoneEntityBlock<CaminiteForgeEntity
 	@Override
 	public BlockState getStateForPlacement(BlockPlaceContext pContext) {
 		return this.defaultBlockState().setValue(FACING, pContext.getHorizontalDirection().getOpposite());
-	}
-
-	@Nullable
-	@Override
-	public BlockEntity newBlockEntity(@NotNull BlockPos pPos, @NotNull BlockState pState) {
-		return new CaminiteForgeEntity(EmbersBlockEntities.CAMINITE_FORGE.get(), pPos, pState);
 	}
 }

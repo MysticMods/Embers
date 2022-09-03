@@ -7,7 +7,7 @@ import com.tterrag.registrate.util.nullness.NonNullFunction;
 import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
 import mysticmods.embers.Embers;
 import mysticmods.embers.api.data.EmbersApiTags;
-import mysticmods.embers.core.machines.crystallizer.EmberCrystallizerBlock;
+import mysticmods.embers.core.machines.crystallizer.CrystallizerBlock;
 import mysticmods.embers.core.machines.brazier.BrazierBlock;
 import mysticmods.embers.core.machines.forge.CaminiteForgeBlock;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
@@ -64,7 +64,7 @@ public class EmbersBlocks {
 			.blockstate((ctx, prov) -> prov.simpleBlock(ctx.getEntry(), prov.models().withExistingParent("caminite_forge_component_child", new ResourceLocation(Embers.MOD_ID, "block/caminite_forge_component"))))
 			.register();
 
-	public static final BlockEntry<EmberCrystallizerBlock> EMBER_CRYSTALLIZER = REGISTRATE.block("ember_crystallizer", Material.STONE, EmberCrystallizerBlock::new)
+	public static final BlockEntry<CrystallizerBlock> EMBER_CRYSTALLIZER = REGISTRATE.block("ember_crystallizer", Material.STONE, CrystallizerBlock::new)
 			.properties(BASE_PROPERTIES)
 			.tag(EmbersApiTags.Blocks.EMBER_USING, BlockTags.MINEABLE_WITH_PICKAXE)
 			.item()
