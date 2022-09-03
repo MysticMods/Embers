@@ -3,7 +3,7 @@ package mysticmods.embers.core.machines.forge;
 import mysticmods.embers.api.capability.IEmberIntensity;
 import mysticmods.embers.client.particle.ParticleUtil;
 import mysticmods.embers.core.base.EmberIntensityBlockEntity;
-import mysticmods.embers.core.capability.ember.EmberIntensity;
+import mysticmods.embers.core.capability.intensity.EmberIntensity;
 import mysticmods.embers.core.utils.TickBlockEntity;
 import mysticmods.embers.init.EmbersBlocks;
 import net.minecraft.core.BlockPos;

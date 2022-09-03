@@ -1,5 +1,6 @@
 package mysticmods.embers.api.capability;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraftforge.common.util.INBTSerializable;
@@ -14,16 +15,11 @@ public interface IEmberEmitter extends INBTSerializable<CompoundTag> {
 	int[] getIntensities();
 
 	/**
-	 * Checks if the ember emitter is currently producing ember.
-	 * @return True if the ember emitter is currently producing ember.
-	 */
-	boolean isActive();
-
-	/**
 	 * Called to force the emitter to init. This should happen whenever the capability is initialised or when
 	 * ILevelEmitter cap calls it
+	 * @param ember The ember level to update for
 	 */
-	void initEmitter();
+	void initEmitter(@NotNull ILevelEmber ember);
 
 	/**
 	 * Gets the area the emitter effects. Note this will always be checked with the intensities being centered around
@@ -32,4 +28,7 @@ public interface IEmberEmitter extends INBTSerializable<CompoundTag> {
 	 */
 	@NotNull
 	BoundingBox getBoundingBox();
+
+	@NotNull
+	BlockPos getPos();
 }

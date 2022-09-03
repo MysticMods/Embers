@@ -67,7 +67,7 @@ public class LevelEmber implements ILevelEmber {
 		emitter.addListener(e -> {
 			emitterListeners.remove(box);
 			clearEmberInBoundingBox(box);
-			emitterListeners.keySet().stream().filter(bb -> bb.intersects(box)).forEach(bb -> emitterListeners.get(bb).ifPresent(IEmberEmitter::initEmitter));
+			emitterListeners.keySet().stream().filter(bb -> bb.intersects(box)).forEach(bb -> emitterListeners.get(bb).ifPresent(emit -> emit.initEmitter(this)));
 		});
 	}
 
