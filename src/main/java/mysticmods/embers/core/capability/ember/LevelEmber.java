@@ -27,15 +27,16 @@ public class LevelEmber implements ILevelEmber {
 
 	@Override
 	public void setEmberForPos(@NotNull BlockPos pos, int emberIn) {
+		BlockPos immutablePos = pos.immutable(); // Always make sure its immutable first
 		int validEmber = Math.max(emberIn, 0);
 		if (validEmber == 0) {
-			ember.remove(pos);
+			ember.remove(immutablePos);
 		} else {
-			ember.put(pos, validEmber);
+			ember.compute(immutablePos, (p, e) -> e != null ? Math.max(e, validEmber) : validEmber);
 		}
 		// Update listeners
-		if (emberListeners.containsKey(pos)) {
-			emberListeners.get(pos).ifPresent(e -> e.setIntensity(validEmber));
+		if (emberListeners.containsKey(immutablePos)) {
+			emberListeners.get(immutablePos).ifPresent(e -> e.setIntensity(validEmber));
 		}
 	}
 
@@ -44,7 +45,7 @@ public class LevelEmber implements ILevelEmber {
 		BlockPos.betweenClosedStream(box).forEach(pos -> {
 			int radius = BlockFinder.distance(pos, emitter);
 			if (radius < emberPerRadius.length) {
-				ember.compute(pos, (p, e) -> e != null ? Math.max(e, emberPerRadius[radius]) : emberPerRadius[radius]);
+				setEmberForPos(pos, emberPerRadius[radius]);
 			}
 		});
 	}
@@ -73,7 +74,7 @@ public class LevelEmber implements ILevelEmber {
 	}
 
 	private void clearEmberInBoundingBox(BoundingBox box) {
-		BlockPos.betweenClosedStream(box).forEach(pos -> ember.put(pos, 0));
+		BlockPos.betweenClosedStream(box).forEach(pos -> setEmberForPos(pos, 0));
 	}
 
 	@Override

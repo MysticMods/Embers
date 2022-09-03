@@ -66,10 +66,7 @@ public abstract class EmberEmitterBlockEntity extends LodestoneBlockEntity {
 	public void onPlace(@Nullable LivingEntity placer, ItemStack stack) {
 		super.onPlace(placer, stack);
 		if (level != null) {
-			level.getCapability(EmbersCaps.EMBER).ifPresent(ember -> {
-				getEmitter().initEmitter(ember);
-				ember.addEmitterListener(getEmitter().getBoundingBox(), emitterOp);
-			});
+			level.getCapability(EmbersCaps.EMBER).ifPresent(ember -> ember.addEmitterListener(getEmitter().getBoundingBox(), emitterOp));
 		}
 		updateViaState();
 	}
