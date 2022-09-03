@@ -1,5 +1,6 @@
 package mysticmods.embers.core.capability.ember;
 
+import mysticmods.embers.Embers;
 import mysticmods.embers.api.capability.IEmberEmitter;
 import mysticmods.embers.api.capability.IEmberIntensity;
 import mysticmods.embers.api.capability.ILevelEmber;
@@ -7,12 +8,14 @@ import mysticmods.embers.core.utils.BlockFinder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.NbtOps;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraftforge.common.util.LazyOptional;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
 
 public class LevelEmber implements ILevelEmber {
 
@@ -82,7 +85,7 @@ public class LevelEmber implements ILevelEmber {
 		ListTag tag = new ListTag();
 		tag.addAll(ember.keySet().stream().map(p -> {
 			CompoundTag emberPos = new CompoundTag();
-			emberPos.putLong("pos", p.asLong());
+			emberPos.put("pos", BlockPos.CODEC.encodeStart(NbtOps.INSTANCE, p).getOrThrow(false, s -> Embers.LOGGER.log(Level.SEVERE, s)));
 			emberPos.putInt("ember", ember.get(p));
 			return emberPos;
 		}).toList());
@@ -93,7 +96,7 @@ public class LevelEmber implements ILevelEmber {
 	public void deserializeNBT(ListTag nbt) {
 		nbt.forEach(t -> {
 			if (t instanceof CompoundTag tag) {
-				ember.put(BlockPos.of(tag.getLong("pos")), tag.getInt("ember"));
+				ember.put(BlockPos.CODEC.parse(NbtOps.INSTANCE, tag.get("ember")).getOrThrow(false, s -> Embers.LOGGER.log(Level.SEVERE, s)), tag.getInt("ember"));
 			}
 		});
 	}
