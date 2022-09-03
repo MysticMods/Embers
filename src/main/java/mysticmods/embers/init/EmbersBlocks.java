@@ -64,7 +64,7 @@ public class EmbersBlocks {
 			.blockstate((ctx, prov) -> prov.simpleBlock(ctx.getEntry(), prov.models().withExistingParent("caminite_forge_component_child", new ResourceLocation(Embers.MOD_ID, "block/caminite_forge_component"))))
 			.register();
 
-	public static final BlockEntry<CrystallizerBlock> EMBER_CRYSTALLIZER = REGISTRATE.block("ember_crystallizer", Material.STONE, CrystallizerBlock::new)
+	public static final BlockEntry<CrystallizerBlock> CRYSTALLIZER = REGISTRATE.block("ember_crystallizer", Material.STONE, CrystallizerBlock::new)
 			.properties(BASE_PROPERTIES)
 			.tag(EmbersApiTags.Blocks.EMBER_USING, BlockTags.MINEABLE_WITH_PICKAXE)
 			.item()

@@ -106,14 +106,14 @@ public class CaminiteForgeEntity extends EmberIntensityBlockEntity implements IM
 
 	@Override
 	public void serverTick() {
-		if (this.itemHandler.getStackInSlot(0) == ItemStack.EMPTY && this.progress > 0) {
+		if (this.itemHandler.getStackInSlot(0).isEmpty() && this.progress > 0) {
 			this.progress = 0;
 			updateViaState();
 			return;
 		}
 
-		if (this.itemHandler.getStackInSlot(0) != ItemStack.EMPTY) {
-			if (this.progress < this.progressTimer) {
+		if (!this.itemHandler.getStackInSlot(0).isEmpty()) {
+			if (hasEmberForOperation() && progress < PROGRESS_PER_ITEM) {
 				progress++;
 			}
 		}

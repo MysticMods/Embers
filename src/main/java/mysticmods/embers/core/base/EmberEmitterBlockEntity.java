@@ -1,6 +1,6 @@
 package mysticmods.embers.core.base;
 
-import mysticmods.embers.api.capability.IEmberIntensity;
+import mysticmods.embers.api.capability.IEmberEmitter;
 import mysticmods.embers.init.EmbersCaps;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -15,18 +15,18 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import team.lodestar.lodestone.systems.blockentity.LodestoneBlockEntity;
 
-public abstract class EmberIntensityBlockEntity extends LodestoneBlockEntity {
-	private final LazyOptional<IEmberIntensity> emberIntensityOp = LazyOptional.of(this::getEmberIntensity);
+public abstract class EmberEmitterBlockEntity extends LodestoneBlockEntity {
+	private final LazyOptional<IEmberEmitter> emitterOp = LazyOptional.of(this::getEmitter);
 
-	public EmberIntensityBlockEntity(BlockEntityType<? extends EmberIntensityBlockEntity> type, BlockPos pos, BlockState state) {
+	public EmberEmitterBlockEntity(BlockEntityType<? extends EmberEmitterBlockEntity> type, BlockPos pos, BlockState state) {
 		super(type, pos, state);
 	}
 
 	@Override
 	@NotNull
 	public <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap) {
-		if (cap == EmbersCaps.EMBER_INTENSITY) {
-			return emberIntensityOp.cast();
+		if (cap == EmbersCaps.EMBER_EMITTER) {
+			return emitterOp.cast();
 		}
 		return super.getCapability(cap);
 	}
@@ -34,16 +34,16 @@ public abstract class EmberIntensityBlockEntity extends LodestoneBlockEntity {
 	@Override
 	public void invalidateCaps() {
 		super.invalidateCaps();
-		emberIntensityOp.invalidate();
+		emitterOp.invalidate();
 	}
 
 	/**
-	 * Gets the Ember Intensity capability for this entity
+	 * Gets the Ember Emitter capability for this entity
 	 *
-	 * @return The ember intensity capability as configured. This should be a singleton.
+	 * @return The ember emitter capability as configured. This should be a singleton.
 	 */
 	@NotNull
-	protected abstract IEmberIntensity getEmberIntensity();
+	protected abstract IEmberEmitter getEmitter();
 
 	public void updateViaState() {
 		setChanged();
@@ -53,13 +53,13 @@ public abstract class EmberIntensityBlockEntity extends LodestoneBlockEntity {
 	@Override
 	protected void saveAdditional(@NotNull CompoundTag tag) {
 		super.saveAdditional(tag);
-		tag.put("ember", getEmberIntensity().serializeNBT());
+		tag.put("emitter", getEmitter().serializeNBT());
 	}
 
 	@Override
 	public void load(@NotNull CompoundTag tag) {
 		super.load(tag);
-		getEmberIntensity().setIntensity(tag.getInt("ember"));
+		getEmitter().deserializeNBT(tag.getCompound("emitter"));
 	}
 
 	@Override
@@ -67,18 +67,10 @@ public abstract class EmberIntensityBlockEntity extends LodestoneBlockEntity {
 		super.onPlace(placer, stack);
 		if (level != null) {
 			level.getCapability(EmbersCaps.EMBER).ifPresent(ember -> {
-				getEmberIntensity().setIntensity(ember.getEmberForPos(getBlockPos()));
-				ember.addEmberListener(getBlockPos(), emberIntensityOp);
+				getEmitter().initEmitter(ember);
+				ember.addEmitterListener(getEmitter().getBoundingBox(), emitterOp);
 			});
 		}
 		updateViaState();
-	}
-
-	/**
-	 * Checks to make sure the current intensity is above the minimum
-	 * @return true if the intensity is above the minimum threshold
-	 */
-	protected boolean hasEmberForOperation() {
-		return getEmberIntensity().getIntensity() > getEmberIntensity().getMinIntensity();
 	}
 }
