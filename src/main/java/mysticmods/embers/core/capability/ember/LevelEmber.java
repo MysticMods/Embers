@@ -9,6 +9,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraftforge.common.util.LazyOptional;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,12 +21,12 @@ public class LevelEmber implements ILevelEmber {
 	private final Map<BoundingBox, LazyOptional<IEmberEmitter>> emitterListeners = new HashMap<>();
 
 	@Override
-	public int getEmberForPos(BlockPos pos) {
+	public int getEmberForPos(@NotNull BlockPos pos) {
 		return ember.get(pos);
 	}
 
 	@Override
-	public void setEmberForPos(BlockPos pos, int emberIn) {
+	public void setEmberForPos(@NotNull BlockPos pos, int emberIn) {
 		int validEmber = Math.max(emberIn, 0);
 		if (validEmber == 0) {
 			ember.remove(pos);
@@ -39,7 +40,7 @@ public class LevelEmber implements ILevelEmber {
 	}
 
 	@Override
-	public void setEmberForBoundingBox(BlockPos emitter, BoundingBox box, int[] emberPerRadius) {
+	public void setEmberForBoundingBox(@NotNull BlockPos emitter, @NotNull BoundingBox box, int[] emberPerRadius) {
 		BlockPos.betweenClosedStream(box).forEach(pos -> {
 			int radius = BlockFinder.distance(pos, emitter);
 			if (radius < emberPerRadius.length) {
@@ -49,20 +50,20 @@ public class LevelEmber implements ILevelEmber {
 	}
 
 	@Override
-	public void setEmberForRadius(BlockPos center, int[] emberPerRadius) {
+	public void setEmberForRadius(@NotNull BlockPos center, int[] emberPerRadius) {
 		int r = emberPerRadius.length - 1;
 		setEmberForBoundingBox(center, BoundingBox.fromCorners(center.offset(-r, -r, -r), center.offset(r, r, r)), emberPerRadius);
 	}
 
 	@Override
-	public void addEmberListener(BlockPos pos, LazyOptional<IEmberIntensity> intensity) {
+	public void addEmberListener(@NotNull BlockPos pos, @NotNull LazyOptional<IEmberIntensity> intensity) {
 		emberListeners.put(pos, intensity);
 		// Make sure to remove from list when we no longer have the ember intensity
 		intensity.addListener(e -> emberListeners.remove(pos));
 	}
 
 	@Override
-	public void addEmitterListener(BoundingBox box, LazyOptional<IEmberEmitter> emitter) {
+	public void addEmitterListener(@NotNull BoundingBox box, @NotNull LazyOptional<IEmberEmitter> emitter) {
 		emitterListeners.put(box, emitter);
 		emitter.addListener(e -> {
 			emitterListeners.remove(box);
