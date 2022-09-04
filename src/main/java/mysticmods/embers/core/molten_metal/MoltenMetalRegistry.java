@@ -16,7 +16,7 @@ import java.util.function.Supplier;
 @Mod.EventBusSubscriber(modid = Embers.MOD_ID, bus= Mod.EventBusSubscriber.Bus.MOD)
 public class MoltenMetalRegistry {
     private static final ResourceLocation NAME = new ResourceLocation(Embers.MOD_ID, "molten_metal");
-    private static final ResourceKey<Registry<MoltenMetal>> RESOURCE_KEY = ResourceKey.createRegistryKey(NAME);
+    public static final ResourceKey<Registry<MoltenMetal>> RESOURCE_KEY = ResourceKey.createRegistryKey(NAME);
     private static final DeferredRegister<MoltenMetal> DEFERRED_REGISTRY = DeferredRegister.create(RESOURCE_KEY, RESOURCE_KEY.location().getNamespace());
     private static final RegistryBuilder<MoltenMetal> MOLTEN_METAL = new RegistryBuilder<MoltenMetal>().setName(NAME);
     public static final Supplier<IForgeRegistry<MoltenMetal>> REGISTRY = DEFERRED_REGISTRY.makeRegistry(() -> MOLTEN_METAL);
