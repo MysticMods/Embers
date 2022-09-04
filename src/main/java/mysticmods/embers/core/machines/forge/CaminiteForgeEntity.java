@@ -4,6 +4,7 @@ import mysticmods.embers.api.capability.IEmberIntensity;
 import mysticmods.embers.core.base.EmberIntensityBlockEntity;
 import mysticmods.embers.core.capability.intensity.EmberIntensity;
 import mysticmods.embers.init.EmbersBlocks;
+import mysticmods.embers.init.EmbersItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
@@ -21,8 +22,10 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import team.lodestar.lodestone.setup.LodestoneParticleRegistry;
 import team.lodestar.lodestone.systems.multiblock.IMultiBlockCore;
 import team.lodestar.lodestone.systems.multiblock.MultiBlockStructure;
+import team.lodestar.lodestone.systems.rendering.particle.ParticleBuilders;
 
 import java.util.ArrayList;
 import java.util.function.Supplier;
@@ -35,20 +38,25 @@ public class CaminiteForgeEntity extends EmberIntensityBlockEntity implements IM
 
 	private float progress = 0;
 	private boolean isLit = false;
-	private final ItemStackHandler itemHandler = new SmelterItemHandler(1, this);
-
-	private final LazyOptional<IItemHandler> handler = LazyOptional.of(() -> itemHandler);
-
+	private boolean hasHotMetals = false;
 	private final int PROGRESS_PER_ITEM = 20 * 5;
+	public int progressTimer = 0;
 
 	private final IEmberIntensity ember = new EmberIntensity(100, 100);
+	private final ItemStackHandler itemHandler = new SmelterItemHandler(1, this){
+		@Override
+		protected int getStackLimit(int slot, @NotNull ItemStack stack) {
+			return 32;
+		}
+	};
+	private final LazyOptional<IItemHandler> handler = LazyOptional.of(() -> itemHandler);
 
-	public int progressTimer = 0;
 
 	public CaminiteForgeEntity(BlockEntityType<? extends CaminiteForgeEntity> type, BlockPos pos, BlockState state) {
 		super(type, pos, state);
 		this.structure = STRUCTURE.get();
 		setupMultiblock(pos);
+
 	}
 
 	@Override
@@ -60,6 +68,7 @@ public class CaminiteForgeEntity extends EmberIntensityBlockEntity implements IM
 		} else {
 			this.progress = 0;
 			this.isLit = false;
+			this.hasHotMetals = false;
 		}
 	}
 
@@ -68,11 +77,8 @@ public class CaminiteForgeEntity extends EmberIntensityBlockEntity implements IM
 		super.saveAdditional(tag);
 		tag.putFloat("progress", this.progress);
 		tag.putBoolean("isLit", this.isLit);
+		tag.putBoolean("hasHotMetals", this.hasHotMetals);
 		tag.put("inventory", this.itemHandler.serializeNBT());
-
-		//CompoundTag fluidTankTag = new CompoundTag();
-		//this.outputTank.writeToNBT(fluidTankTag);
-		//tag.put("fluidTank", fluidTankTag);
 	}
 
 	@Override
@@ -80,18 +86,23 @@ public class CaminiteForgeEntity extends EmberIntensityBlockEntity implements IM
 		super.load(tag);
 		this.progress = tag.getFloat("progress");
 		this.isLit = tag.getBoolean("isLit");
+		this.hasHotMetals = tag.getBoolean("hasHotMetals");
 		this.itemHandler.deserializeNBT(tag.getCompound("inventory"));
-		//this.outputTank.readFromNBT(tag.getCompound("fluidTank"));
 	}
 
 	@Override
 	@NotNull
 	public InteractionResult onUse(Player player, @NotNull InteractionHand hand) {
-		System.out.println(level.getBlockEntity(getBlockPos().above()));
-		System.out.println(hand);
-		ItemStack stack = player.getItemInHand(hand);
-		ItemStack returnStack = this.itemHandler.insertItem(0, stack, false);
-		player.setItemInHand(hand, returnStack);
+		ItemStack playerStack = player.getItemInHand(hand);
+		if (this.itemHandler.isItemValid(0, playerStack)) {
+			ItemStack returnStack = this.itemHandler.insertItem(0, playerStack, false);
+			player.setItemInHand(hand, returnStack);
+			setProgressNeeded();
+			updateViaState();
+		} else {
+			if(playerStack.getItem() == EmbersItems.FORGING_GLOVE.get() && this.hasHotMetals){
+			}
+		}
 		return InteractionResult.SUCCESS;
 	}
 
@@ -104,9 +115,32 @@ public class CaminiteForgeEntity extends EmberIntensityBlockEntity implements IM
 		}
 
 		if (!this.itemHandler.getStackInSlot(0).isEmpty()) {
-			if (hasEmberForOperation() && progress < PROGRESS_PER_ITEM) {
+			//hasEmberForOperation() &&
+			if (progress < this.progressTimer) {
 				progress++;
 			}
+
+			if(progress >= this.progressTimer){
+				progress = 0;
+				this.hasHotMetals = true;
+				updateViaState();
+			}
+		}
+	}
+
+	@Override
+	public void clientTick() {
+		if (this.hasHotMetals && this.level != null) {
+			var random = this.level.getRandom();
+			ParticleBuilders.create(LodestoneParticleRegistry.WISP_PARTICLE)
+					.addMotion(0, 0.0525d * (random.nextDouble() * 0.1d), 0)
+					.setAlpha(0.5f, 0.2f)
+					.setScale(0.1f)
+					.setColor(230 / 255.0f, 55 / 255.0f, 16 / 255.0f, 230 / 255.0f, 83 / 255.0f, 16 / 255.0f)
+					.setLifetime(Math.round(random.nextFloat() * 100))
+					.disableForcedMotion()
+					.setSpin(0)
+					.spawn(this.level, getBlockPos().getX() + (random.nextFloat()), getBlockPos().getY() + 2, getBlockPos().getZ() + random.nextFloat());
 		}
 	}
 

@@ -4,6 +4,7 @@ import com.tterrag.registrate.Registrate;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import mysticmods.embers.Embers;
 import mysticmods.embers.api.data.EmbersApiTags;
+import mysticmods.embers.core.items.tools.ForgingGloveItem;
 import net.minecraft.world.item.Item;
 
 public class EmbersItems {
@@ -17,7 +18,10 @@ public class EmbersItems {
 	public static final ItemEntry<Item> QUICKSILVER = REGISTRATE.item("quicksilver", Item::new).register();
 	public static final ItemEntry<Item> CINNABAR = REGISTRATE.item("cinnabar", Item::new).tag(EmbersApiTags.Items.CINNABAR).register();
 	public static final ItemEntry<Item> VERMILLIONITE_CHUNK = REGISTRATE.item("vermillionite_chunk", Item::new).tag(EmbersApiTags.Items.VERMILLIONITE).register();
+
+	//Tools
 	public static final ItemEntry<Item> IRON_HAMMER = REGISTRATE.item("iron_hammer", Item::new).register();
+	public static final ItemEntry<ForgingGloveItem> FORGING_GLOVE = REGISTRATE.item("forging_glove", ForgingGloveItem::new).register();
 
 	//Blocks
 
