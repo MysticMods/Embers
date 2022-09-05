@@ -1,9 +1,11 @@
 package mysticmods.embers.core.machines.forge;
 
 import mysticmods.embers.api.capability.IEmberIntensity;
+import mysticmods.embers.api.capability.IHeatedMetal;
 import mysticmods.embers.core.base.EmberIntensityBlockEntity;
 import mysticmods.embers.core.capability.intensity.EmberIntensity;
 import mysticmods.embers.init.EmbersBlocks;
+import mysticmods.embers.init.EmbersCaps;
 import mysticmods.embers.init.EmbersItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -43,7 +45,7 @@ public class CaminiteForgeEntity extends EmberIntensityBlockEntity implements IM
 	public int progressTimer = 0;
 
 	private final IEmberIntensity ember = new EmberIntensity(100, 100);
-	private final ItemStackHandler itemHandler = new SmelterItemHandler(1, this){
+	private final ItemStackHandler itemHandler = new SmelterItemHandler(2, this){
 		@Override
 		protected int getStackLimit(int slot, @NotNull ItemStack stack) {
 			return 32;
@@ -101,9 +103,26 @@ public class CaminiteForgeEntity extends EmberIntensityBlockEntity implements IM
 			updateViaState();
 		} else {
 			if(playerStack.getItem() == EmbersItems.FORGING_GLOVE.get() && this.hasHotMetals){
+				playerStack.getCapability(EmbersCaps.HEATED_METAL).ifPresent(this::transferHeatedMetal);
+			} else if(playerStack.getItem() == EmbersItems.FORGING_GLOVE.get()){
+				playerStack.getCapability(EmbersCaps.HEATED_METAL).ifPresent(cap -> System.out.println(cap.getMetal().getItem()));
 			}
 		}
 		return InteractionResult.SUCCESS;
+	}
+
+	public void transferHeatedMetal(IHeatedMetal cap){
+		if(!cap.getMetal().isEmpty()){
+			return;
+		}
+
+		cap.setMetalStack(this.itemHandler.getStackInSlot(1));
+		cap.setMaxHeat(100 * cap.getMetal().getCount());
+		cap.setStackHeat(100 * cap.getMetal().getCount());
+		this.itemHandler.setStackInSlot(1, ItemStack.EMPTY);
+		this.hasHotMetals = false;
+
+		updateViaState();
 	}
 
 	@Override
@@ -116,11 +135,16 @@ public class CaminiteForgeEntity extends EmberIntensityBlockEntity implements IM
 
 		if (!this.itemHandler.getStackInSlot(0).isEmpty()) {
 			//hasEmberForOperation() &&
-			if (progress < this.progressTimer) {
-				progress++;
-			}
+			progress++;
 
-			if(progress >= this.progressTimer){
+			if(progress >= this.PROGRESS_PER_ITEM){
+				ItemStack hotMetalStack = this.itemHandler.getStackInSlot(1);
+				if(!hotMetalStack.isEmpty()){
+					hotMetalStack.setCount(hotMetalStack.getCount() + 1);
+				} else {
+					this.itemHandler.setStackInSlot(1, new ItemStack(this.itemHandler.getStackInSlot(0).getItem(), 1));
+				}
+				this.itemHandler.getStackInSlot(0).shrink(1);
 				progress = 0;
 				this.hasHotMetals = true;
 				updateViaState();

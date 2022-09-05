@@ -22,13 +22,28 @@ public class HeatedMetal implements IHeatedMetal {
     }
 
     @Override
+    public void setStackHeat(int stackHeat) {
+        this.stackHeat = stackHeat;
+    }
+
+    @Override
     public int getMaxHeat() {
         return this.maximumStackHeat;
     }
 
     @Override
+    public void setMaxHeat(int maxHeat) {
+        this.maximumStackHeat = maxHeat;
+    }
+
+    @Override
     public ItemStack getMetal() {
         return this.stack;
+    }
+
+    @Override
+    public void setMetalStack(ItemStack stack) {
+        this.stack = stack;
     }
 
     @Override
@@ -39,7 +54,7 @@ public class HeatedMetal implements IHeatedMetal {
         CompoundTag stackTag = new CompoundTag();
         this.stack.save(stackTag);
         tag.put("itemStack", stackTag);
-        return null;
+        return tag;
     }
 
     @Override

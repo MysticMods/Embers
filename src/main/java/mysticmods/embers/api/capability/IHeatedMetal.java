@@ -11,17 +11,20 @@ public interface IHeatedMetal extends INBTSerializable<CompoundTag> {
      * @return heat amount of the stack.
      */
     int getStackHeat();
+    void setStackHeat(int stackHeat);
 
     /**
      * Gets the max heat of the ItemStack
      * @return the maximum heat of the current metal in the ItemStack
      */
     int getMaxHeat();
+    void setMaxHeat(int maxHeat);
 
     /**
      * Gets the item stack that is tied to the heat
      * @return an ItemStack with a metal.
      */
     ItemStack getMetal();
+    void setMetalStack(ItemStack stack);
 
 }

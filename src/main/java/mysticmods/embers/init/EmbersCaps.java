@@ -23,7 +23,7 @@ public class EmbersCaps {
 	public static final ResourceLocation EMBER_INTENSITY_CAP_ID = new ResourceLocation(Embers.MOD_ID, "ember_intensity");
 	public static final ResourceLocation EMBER_EMITTER_CAP_ID = new ResourceLocation(Embers.MOD_ID, "ember_emitter");
 	public static final ResourceLocation EMBER_CAP_ID = new ResourceLocation(Embers.MOD_ID, "ember");
-	public static final ResourceLocation HEATED_METAL_ID = new ResourceLocation(Embers.MOD_ID, "heatedMetal");
+	public static final ResourceLocation HEATED_METAL_ID = new ResourceLocation(Embers.MOD_ID, "heated_metal");
 
 	public static final Capability<IEmberIntensity> EMBER_INTENSITY = CapabilityManager.get(new CapabilityToken<>() {
 	});
