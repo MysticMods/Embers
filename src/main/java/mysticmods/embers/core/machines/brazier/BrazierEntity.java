@@ -41,6 +41,7 @@ public class BrazierEntity extends EmberEmitterBlockEntity {
 				return stack.getItem() == Items.COAL;
 			}
 		};
+
 		// TODO make a helper method for this
 		BlockPos lowerBound = getBlockPos().offset(-3, -3, -3);
 		BlockPos upperBound = getBlockPos().offset(3, 3, 3);
