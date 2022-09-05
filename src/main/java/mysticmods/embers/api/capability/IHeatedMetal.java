@@ -27,4 +27,6 @@ public interface IHeatedMetal extends INBTSerializable<CompoundTag> {
     ItemStack getMetal();
     void setMetalStack(ItemStack stack);
 
+    void copyFromCapability(IHeatedMetal cap);
+
 }

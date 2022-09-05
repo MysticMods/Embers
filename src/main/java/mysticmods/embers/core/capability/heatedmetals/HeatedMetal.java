@@ -47,6 +47,12 @@ public class HeatedMetal implements IHeatedMetal {
     }
 
     @Override
+    public void copyFromCapability(IHeatedMetal cap) {
+        this.stackHeat = cap.getStackHeat();
+        this.maximumStackHeat = cap.getMaxHeat();
+    }
+
+    @Override
     public CompoundTag serializeNBT() {
         CompoundTag tag = new CompoundTag();
         tag.putInt("stackHeat", this.stackHeat);
