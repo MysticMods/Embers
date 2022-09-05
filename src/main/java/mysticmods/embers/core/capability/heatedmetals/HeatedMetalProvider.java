@@ -1,6 +1,7 @@
 package mysticmods.embers.core.capability.heatedmetals;
 
 import mysticmods.embers.api.capability.IHeatedMetal;
+import mysticmods.embers.init.EmbersCaps;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
@@ -26,16 +27,16 @@ public class HeatedMetalProvider implements ICapabilitySerializable<CompoundTag>
 
     @Override
     public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-        return null;
+        return EmbersCaps.HEATED_METAL.orEmpty(cap, op);
     }
 
     @Override
     public CompoundTag serializeNBT() {
-        return null;
+        return heatedMetal.serializeNBT();
     }
 
     @Override
     public void deserializeNBT(CompoundTag nbt) {
-
+        heatedMetal.deserializeNBT(nbt);
     }
 }
