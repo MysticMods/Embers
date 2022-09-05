@@ -65,13 +65,19 @@ public abstract class EmberIntensityBlockEntity extends LodestoneBlockEntity {
 	@Override
 	public void onPlace(@Nullable LivingEntity placer, ItemStack stack) {
 		super.onPlace(placer, stack);
-		if (level != null) {
-			level.getCapability(EmbersCaps.EMBER).ifPresent(ember -> {
-				getEmberIntensity().setIntensity(ember.getEmberForPos(getBlockPos()));
-				ember.addEmberListener(getBlockPos(), emberIntensityOp);
-			});
+		if (level != null && !level.isClientSide) {
+			level.getCapability(EmbersCaps.EMBER).ifPresent(ember -> getEmberIntensity().setIntensity(ember.getEmberForPos(getBlockPos())));
+			updateViaState();
 		}
-		updateViaState();
+	}
+
+	@Override
+	public void init() {
+		super.init();
+		if (level != null && !level.isClientSide) {
+			level.getCapability(EmbersCaps.EMBER).ifPresent(ember -> ember.addEmberListener(getBlockPos(), emberIntensityOp));
+			updateViaState();
+		}
 	}
 
 	/**

@@ -3,6 +3,7 @@ package mysticmods.embers.core.machines.brazier;
 import mysticmods.embers.api.capability.IEmberEmitter;
 import mysticmods.embers.core.base.EmberEmitterBlockEntity;
 import mysticmods.embers.core.capability.emitter.EmberEmitter;
+import mysticmods.embers.init.EmbersCaps;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.InteractionHand;
@@ -45,7 +46,7 @@ public class BrazierEntity extends EmberEmitterBlockEntity {
 		// TODO make a helper method for this
 		BlockPos lowerBound = getBlockPos().offset(-3, -3, -3);
 		BlockPos upperBound = getBlockPos().offset(3, 3, 3);
-		emitter = new EmberEmitter(new int[]{100, 100, 50}, getBlockPos(), new BoundingBox(lowerBound.getX(), lowerBound.getY(), lowerBound.getZ(), upperBound.getX(), upperBound.getY(), upperBound.getZ()));
+		emitter = new EmberEmitter(new int[]{100, 100, 100, 50}, getBlockPos(), new BoundingBox(lowerBound.getX(), lowerBound.getY(), lowerBound.getZ(), upperBound.getX(), upperBound.getY(), upperBound.getZ()));
 	}
 
 	@Override
@@ -95,10 +96,7 @@ public class BrazierEntity extends EmberEmitterBlockEntity {
 			if (!this.itemHandler.getStackInSlot(0).isEmpty()) {
 				if (!this.running) {
 					this.running = true;
-				}
-			} else {
-				if (this.running) {
-					running = false;
+					level.getCapability(EmbersCaps.EMBER).ifPresent(emitter::initEmitter);
 				}
 			}
 			updateViaState();

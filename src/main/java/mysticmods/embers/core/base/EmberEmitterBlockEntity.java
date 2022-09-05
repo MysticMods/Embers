@@ -5,6 +5,7 @@ import mysticmods.embers.init.EmbersCaps;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -62,15 +63,24 @@ public abstract class EmberEmitterBlockEntity extends LodestoneBlockEntity {
 		getEmitter().deserializeNBT(tag.getCompound("emitter"));
 	}
 
-	@Override
-	public void onPlace(@Nullable LivingEntity placer, ItemStack stack) {
-		super.onPlace(placer, stack);
-		if (level != null) {
-			level.getCapability(EmbersCaps.EMBER).ifPresent(ember -> {
-				getEmitter().initEmitter(ember);
-				ember.addEmitterListener(getEmitter().getBoundingBox(), emitterOp);
-			});
+	protected void clearEmber() {
+		if (level != null && !level.isClientSide) {
+			level.getCapability(EmbersCaps.EMBER).ifPresent(ember -> ember.clearEmberInBoundingBox(getEmitter().getBoundingBox()));
 		}
-		updateViaState();
+	}
+
+	@Override
+	public void onBreak(@Nullable Player player) {
+		super.onBreak(player);
+		clearEmber();
+	}
+
+	@Override
+	public void init() {
+		super.init();
+		if (level != null && !level.isClientSide) {
+			level.getCapability(EmbersCaps.EMBER).ifPresent(ember -> ember.addEmitterListener(getEmitter().getBoundingBox(), emitterOp));
+			setChanged();
+		}
 	}
 }
