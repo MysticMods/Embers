@@ -69,15 +69,14 @@ public class LevelEmber implements ILevelEmber {
 	@Override
 	public void addEmitterListener(@NotNull BoundingBox box, @NotNull LazyOptional<IEmberEmitter> emitter) {
 		emitterListeners.put(box, emitter);
-		emitter.addListener(e -> {
-			emitterListeners.remove(box);
-			clearEmberInBoundingBox(box);
-			emitterListeners.keySet().stream().filter(bb -> bb.intersects(box)).forEach(bb -> emitterListeners.get(bb).ifPresent(emit -> emit.initEmitter(this)));
-		});
+		emitter.addListener(e -> emitterListeners.remove(box));
 	}
 
-	private void clearEmberInBoundingBox(BoundingBox box) {
+	@Override
+	public void clearEmberInBoundingBox(@NotNull BoundingBox box) {
 		BlockPos.betweenClosedStream(box).forEach(pos -> setEmberForPos(pos, 0));
+		// Update all remaining emitters
+		emitterListeners.keySet().stream().filter(bb -> bb.intersects(box)).forEach(bb -> emitterListeners.get(bb).ifPresent(emit -> emit.initEmitter(this)));
 	}
 
 	@Override
