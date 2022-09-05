@@ -6,6 +6,8 @@ import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraftforge.common.util.INBTSerializable;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.function.Supplier;
+
 public interface IEmberEmitter extends INBTSerializable<CompoundTag> {
 
 	/**
@@ -31,4 +33,12 @@ public interface IEmberEmitter extends INBTSerializable<CompoundTag> {
 
 	@NotNull
 	BlockPos getPos();
+
+	/**
+	 * Determines if a given Ember Emitter is currently active, which controls the initEmitter function
+	 * @return true if the current emitter is active.
+	 */
+	default boolean isActive() {
+		return true;
+	}
 }

@@ -45,7 +45,7 @@ public class BrazierEntity extends EmberEmitterBlockEntity {
 		// TODO make a helper method for this
 		BlockPos lowerBound = getBlockPos().offset(-3, -3, -3);
 		BlockPos upperBound = getBlockPos().offset(3, 3, 3);
-		emitter = new EmberEmitter(new int[]{100, 100, 100, 50}, getBlockPos(), new BoundingBox(lowerBound.getX(), lowerBound.getY(), lowerBound.getZ(), upperBound.getX(), upperBound.getY(), upperBound.getZ()));
+		emitter = new EmberEmitter(new int[]{100, 100, 100, 50}, getBlockPos(), new BoundingBox(lowerBound.getX(), lowerBound.getY(), lowerBound.getZ(), upperBound.getX(), upperBound.getY(), upperBound.getZ()), () -> running);
 	}
 
 	@Override
