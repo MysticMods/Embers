@@ -102,26 +102,24 @@ public class CaminiteForgeEntity extends EmberIntensityBlockEntity implements IM
 			setProgressNeeded();
 			updateViaState();
 		} else {
-			if(playerStack.getItem() == EmbersItems.FORGING_GLOVE.get() && this.hasHotMetals){
-				playerStack.getCapability(EmbersCaps.HEATED_METAL).ifPresent(this::transferHeatedMetal);
-			} else if(playerStack.getItem() == EmbersItems.FORGING_GLOVE.get()){
-				playerStack.getCapability(EmbersCaps.HEATED_METAL).ifPresent(cap -> System.out.println(cap.getMetal().getItem()));
+			if(this.hasHotMetals){
+				ItemStack hotMetal = this.itemHandler.getStackInSlot(1).copy();
+				hotMetal.getCapability(EmbersCaps.HEATED_METAL).ifPresent(cap -> transferHeatedMetal(cap, player, hotMetal));
 			}
 		}
 		return InteractionResult.SUCCESS;
 	}
 
-	public void transferHeatedMetal(IHeatedMetal cap){
-		if(!cap.getMetal().isEmpty()){
-			return;
-		}
+	public void transferHeatedMetal(IHeatedMetal cap, Player player, ItemStack stack){
+		System.out.println("transfer");
+		System.out.println(cap.getMetal());
 
-		cap.setMetalStack(this.itemHandler.getStackInSlot(1));
-		cap.setMaxHeat(100 * cap.getMetal().getCount());
-		cap.setStackHeat(100 * cap.getMetal().getCount());
+		cap.setMaxHeat(100 * stack.getCount());
+		cap.setStackHeat(100 * stack.getCount());
 		this.itemHandler.setStackInSlot(1, ItemStack.EMPTY);
 		this.hasHotMetals = false;
 
+		player.addItem(stack);
 		updateViaState();
 	}
 
@@ -142,7 +140,8 @@ public class CaminiteForgeEntity extends EmberIntensityBlockEntity implements IM
 				if(!hotMetalStack.isEmpty()){
 					hotMetalStack.setCount(hotMetalStack.getCount() + 1);
 				} else {
-					this.itemHandler.setStackInSlot(1, new ItemStack(this.itemHandler.getStackInSlot(0).getItem(), 1));
+					this.itemHandler.setStackInSlot(1, new ItemStack(EmbersItems.HEATED_METAL.get(), 1));
+					this.itemHandler.getStackInSlot(1).getCapability(EmbersCaps.HEATED_METAL).ifPresent(cap -> cap.setMetalStack(new ItemStack(this.itemHandler.getStackInSlot(0).getItem(), 1)));
 				}
 				this.itemHandler.getStackInSlot(0).shrink(1);
 				progress = 0;

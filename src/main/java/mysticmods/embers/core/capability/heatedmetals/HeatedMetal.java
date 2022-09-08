@@ -27,6 +27,17 @@ public class HeatedMetal implements IHeatedMetal {
     }
 
     @Override
+    public void removeStackHeat(int amount) {
+        if(this.stackHeat == 0){
+            return;
+        } else if(amount < 0){
+            this.stackHeat = 0;
+            return;
+        }
+        this.stackHeat -= amount;
+    }
+
+    @Override
     public int getMaxHeat() {
         return this.maximumStackHeat;
     }
@@ -44,6 +55,7 @@ public class HeatedMetal implements IHeatedMetal {
     @Override
     public void setMetalStack(ItemStack stack) {
         this.stack = stack;
+
     }
 
     @Override
@@ -68,5 +80,12 @@ public class HeatedMetal implements IHeatedMetal {
         this.stackHeat = nbt.getInt("stackHeat");
         this.maximumStackHeat = nbt.getInt("maximumStackHeat");
         this.stack = ItemStack.of(nbt.getCompound("itemStack"));
+    }
+
+    @Override
+    public void clearCap() {
+        this.stackHeat = 0;
+        this.maximumStackHeat = 0;
+        this.stack = ItemStack.EMPTY;
     }
 }

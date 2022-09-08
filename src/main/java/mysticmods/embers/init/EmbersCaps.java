@@ -10,7 +10,6 @@ import mysticmods.embers.core.capability.heatedmetals.HeatedMetalProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.common.capabilities.CapabilityToken;
@@ -52,7 +51,7 @@ public class EmbersCaps {
 
 	@SubscribeEvent
 	public static void attachItemCapability(AttachCapabilitiesEvent<ItemStack> event) {
-		if(event.getObject().getItem() == EmbersItems.FORGING_GLOVE.get() || event.getObject().is(Tags.Items.RAW_MATERIALS)){
+		if(event.getObject().getItem() == EmbersItems.FORGING_GLOVE.get() || event.getObject().getItem() == EmbersItems.HEATED_METAL.get()){
 			event.addCapability(HEATED_METAL_ID, new HeatedMetalProvider());
 		}
 	}

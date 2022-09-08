@@ -28,4 +28,14 @@ public class AnvilItemHandler extends ItemStackHandler {
         return stack;
     }
 
+    public int getFilledSlotAmount(){
+        int filledStacks = 0;
+        for(int i = 0; i < this.getSlots(); i++){
+            if(!this.getStackInSlot(i).isEmpty()){
+                filledStacks++;
+            }
+        }
+        return filledStacks;
+    }
+
 }
