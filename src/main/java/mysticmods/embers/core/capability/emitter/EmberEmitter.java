@@ -9,6 +9,7 @@ import net.minecraft.nbt.NbtOps;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.function.Supplier;
 import java.util.logging.Level;
 
 public class EmberEmitter implements IEmberEmitter {
@@ -17,10 +18,17 @@ public class EmberEmitter implements IEmberEmitter {
 	private BlockPos pos;
 	private BoundingBox box;
 
+	private final Supplier<Boolean> checkIsActive;
+
 	public EmberEmitter(int[] intensities, BlockPos pos, BoundingBox box) {
+		this(intensities, pos, box, () -> true);
+	}
+
+	public EmberEmitter(int[] intensities, BlockPos pos, BoundingBox box, Supplier<Boolean> checkIsActive) {
 		this.intensities = intensities;
 		this.pos = pos;
 		this.box = box;
+		this.checkIsActive = checkIsActive;
 	}
 
 	@Override
@@ -30,7 +38,9 @@ public class EmberEmitter implements IEmberEmitter {
 
 	@Override
 	public void initEmitter(@NotNull ILevelEmber levelEmber) {
-		levelEmber.setEmberForBoundingBox(pos, box, intensities);
+		if (isActive()) {
+			levelEmber.setEmberForBoundingBox(pos, box, intensities);
+		}
 	}
 
 	@Override
@@ -43,6 +53,11 @@ public class EmberEmitter implements IEmberEmitter {
 	@NotNull
 	public BlockPos getPos() {
 		return pos;
+	}
+
+	@Override
+	public boolean isActive() {
+		return checkIsActive.get();
 	}
 
 	@Override
