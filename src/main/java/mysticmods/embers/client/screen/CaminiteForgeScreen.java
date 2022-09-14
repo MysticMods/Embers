@@ -13,7 +13,7 @@ import net.minecraft.world.entity.player.Inventory;
 
 public class CaminiteForgeScreen extends AbstractContainerScreen<CaminiteForgeMenu> {
 
-	private static final ResourceLocation TEXTURE = new ResourceLocation(Embers.MOD_ID, "textures/gui/caminite_forge.png");
+	private static final ResourceLocation TEXTURE = new ResourceLocation(Embers.MOD_ID, "textures/gui/caminite_forge_item.png");
 	private static final ResourceLocation TEXTURE_2 = new ResourceLocation(Embers.MOD_ID, "textures/gui/caminite_forge_2.png");
 
 	public CaminiteForgeScreen(CaminiteForgeMenu pMenu, Inventory pPlayerInventory, Component pTitle) {

@@ -1,9 +1,12 @@
 package mysticmods.embers.core.machines.forge;
 
 import mysticmods.embers.api.capability.IEmberIntensity;
+import mysticmods.embers.api.capability.IHeatedMetal;
 import mysticmods.embers.core.base.EmberIntensityBlockEntity;
 import mysticmods.embers.core.capability.intensity.EmberIntensity;
 import mysticmods.embers.init.EmbersBlocks;
+import mysticmods.embers.init.EmbersCaps;
+import mysticmods.embers.init.EmbersItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
@@ -21,8 +24,10 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import team.lodestar.lodestone.setup.LodestoneParticleRegistry;
 import team.lodestar.lodestone.systems.multiblock.IMultiBlockCore;
 import team.lodestar.lodestone.systems.multiblock.MultiBlockStructure;
+import team.lodestar.lodestone.systems.rendering.particle.ParticleBuilders;
 
 import java.util.ArrayList;
 import java.util.function.Supplier;
@@ -35,20 +40,25 @@ public class CaminiteForgeEntity extends EmberIntensityBlockEntity implements IM
 
 	private float progress = 0;
 	private boolean isLit = false;
-	private final ItemStackHandler itemHandler = new SmelterItemHandler(1, this);
-
-	private final LazyOptional<IItemHandler> handler = LazyOptional.of(() -> itemHandler);
-
+	private boolean hasHotMetals = false;
 	private final int PROGRESS_PER_ITEM = 20 * 5;
+	public int progressTimer = 0;
 
 	private final IEmberIntensity ember = new EmberIntensity(100, 100);
+	private final ItemStackHandler itemHandler = new SmelterItemHandler(2, this){
+		@Override
+		protected int getStackLimit(int slot, @NotNull ItemStack stack) {
+			return 32;
+		}
+	};
+	private final LazyOptional<IItemHandler> handler = LazyOptional.of(() -> itemHandler);
 
-	public int progressTimer = 0;
 
 	public CaminiteForgeEntity(BlockEntityType<? extends CaminiteForgeEntity> type, BlockPos pos, BlockState state) {
 		super(type, pos, state);
 		this.structure = STRUCTURE.get();
 		setupMultiblock(pos);
+
 	}
 
 	@Override
@@ -60,6 +70,7 @@ public class CaminiteForgeEntity extends EmberIntensityBlockEntity implements IM
 		} else {
 			this.progress = 0;
 			this.isLit = false;
+			this.hasHotMetals = false;
 		}
 	}
 
@@ -68,11 +79,8 @@ public class CaminiteForgeEntity extends EmberIntensityBlockEntity implements IM
 		super.saveAdditional(tag);
 		tag.putFloat("progress", this.progress);
 		tag.putBoolean("isLit", this.isLit);
+		tag.putBoolean("hasHotMetals", this.hasHotMetals);
 		tag.put("inventory", this.itemHandler.serializeNBT());
-
-		//CompoundTag fluidTankTag = new CompoundTag();
-		//this.outputTank.writeToNBT(fluidTankTag);
-		//tag.put("fluidTank", fluidTankTag);
 	}
 
 	@Override
@@ -80,28 +88,39 @@ public class CaminiteForgeEntity extends EmberIntensityBlockEntity implements IM
 		super.load(tag);
 		this.progress = tag.getFloat("progress");
 		this.isLit = tag.getBoolean("isLit");
+		this.hasHotMetals = tag.getBoolean("hasHotMetals");
 		this.itemHandler.deserializeNBT(tag.getCompound("inventory"));
-		//this.outputTank.readFromNBT(tag.getCompound("fluidTank"));
 	}
 
 	@Override
 	@NotNull
 	public InteractionResult onUse(Player player, @NotNull InteractionHand hand) {
-		ItemStack stack = player.getItemInHand(hand);
-		if (this.itemHandler.isItemValid(0, stack)) {
-			ItemStack inputStack = stack.copy();
-			if (stack.getCount() > 32) {
-				inputStack.setCount(32);
-				stack.setCount(stack.getCount() - 32);
-				this.itemHandler.insertItem(0, inputStack, false);
-				setProgressNeeded();
-				updateViaState();
-			} else {
-				this.itemHandler.insertItem(0, inputStack, false);
-				player.setItemInHand(hand, ItemStack.EMPTY);
+		ItemStack playerStack = player.getItemInHand(hand);
+		if (this.itemHandler.isItemValid(0, playerStack)) {
+			ItemStack returnStack = this.itemHandler.insertItem(0, playerStack, false);
+			player.setItemInHand(hand, returnStack);
+			setProgressNeeded();
+			updateViaState();
+		} else {
+			if(this.hasHotMetals){
+				ItemStack hotMetal = this.itemHandler.getStackInSlot(1).copy();
+				hotMetal.getCapability(EmbersCaps.HEATED_METAL).ifPresent(cap -> transferHeatedMetal(cap, player, hotMetal));
 			}
 		}
 		return InteractionResult.SUCCESS;
+	}
+
+	public void transferHeatedMetal(IHeatedMetal cap, Player player, ItemStack stack){
+		System.out.println("transfer");
+		System.out.println(cap.getMetal());
+
+		cap.setMaxHeat(100 * stack.getCount());
+		cap.setStackHeat(100 * stack.getCount());
+		this.itemHandler.setStackInSlot(1, ItemStack.EMPTY);
+		this.hasHotMetals = false;
+
+		player.addItem(stack);
+		updateViaState();
 	}
 
 	@Override
@@ -113,9 +132,38 @@ public class CaminiteForgeEntity extends EmberIntensityBlockEntity implements IM
 		}
 
 		if (!this.itemHandler.getStackInSlot(0).isEmpty()) {
-			if (hasEmberForOperation() && progress < PROGRESS_PER_ITEM) {
-				progress++;
+			//hasEmberForOperation() &&
+			progress++;
+
+			if(progress >= this.PROGRESS_PER_ITEM){
+				ItemStack hotMetalStack = this.itemHandler.getStackInSlot(1);
+				if(!hotMetalStack.isEmpty()){
+					hotMetalStack.setCount(hotMetalStack.getCount() + 1);
+				} else {
+					this.itemHandler.setStackInSlot(1, new ItemStack(EmbersItems.HEATED_METAL.get(), 1));
+					this.itemHandler.getStackInSlot(1).getCapability(EmbersCaps.HEATED_METAL).ifPresent(cap -> cap.setMetalStack(new ItemStack(this.itemHandler.getStackInSlot(0).getItem(), 1)));
+				}
+				this.itemHandler.getStackInSlot(0).shrink(1);
+				progress = 0;
+				this.hasHotMetals = true;
+				updateViaState();
 			}
+		}
+	}
+
+	@Override
+	public void clientTick() {
+		if (this.hasHotMetals && this.level != null) {
+			var random = this.level.getRandom();
+			ParticleBuilders.create(LodestoneParticleRegistry.WISP_PARTICLE)
+					.addMotion(0, 0.0525d * (random.nextDouble() * 0.1d), 0)
+					.setAlpha(0.5f, 0.2f)
+					.setScale(0.1f)
+					.setColor(230 / 255.0f, 55 / 255.0f, 16 / 255.0f, 230 / 255.0f, 83 / 255.0f, 16 / 255.0f)
+					.setLifetime(Math.round(random.nextFloat() * 100))
+					.disableForcedMotion()
+					.setSpin(0)
+					.spawn(this.level, getBlockPos().getX() + (random.nextFloat()), getBlockPos().getY() + 2, getBlockPos().getZ() + random.nextFloat());
 		}
 	}
 

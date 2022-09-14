@@ -42,6 +42,7 @@ public class BrazierEntity extends EmberEmitterBlockEntity {
 				return stack.getItem() == Items.COAL;
 			}
 		};
+
 		// TODO make a helper method for this
 		BlockPos lowerBound = getBlockPos().offset(-3, -3, -3);
 		BlockPos upperBound = getBlockPos().offset(3, 3, 3);
@@ -104,7 +105,6 @@ public class BrazierEntity extends EmberEmitterBlockEntity {
 
 	@Override
 	public InteractionResult onUse(Player player, @NotNull InteractionHand hand) {
-		System.out.println(this.running);
 		ItemStack playerStack = player.getItemInHand(hand);
 		if (this.itemHandler.isItemValid(0, playerStack)) {
 			ItemStack returnStack = this.itemHandler.insertItem(0, playerStack, false);

@@ -7,9 +7,11 @@ import com.tterrag.registrate.util.nullness.NonNullFunction;
 import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
 import mysticmods.embers.Embers;
 import mysticmods.embers.api.data.EmbersApiTags;
-import mysticmods.embers.core.machines.crystallizer.CrystallizerBlock;
+import mysticmods.embers.core.machines.anvil.copper.CopperAnvilBlock;
 import mysticmods.embers.core.machines.brazier.BrazierBlock;
+import mysticmods.embers.core.machines.crystallizer.CrystallizerBlock;
 import mysticmods.embers.core.machines.forge.CaminiteForgeBlock;
+import mysticmods.embers.core.machines.forge.CaminiteForgeItemBlock;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
@@ -51,16 +53,14 @@ public class EmbersBlocks {
 	public static final BlockEntry<CaminiteForgeBlock> CAMINITE_FORGE = REGISTRATE.block("caminite_forge", Material.STONE, CaminiteForgeBlock::new)
 			.properties(BASE_PROPERTIES)
 			.tag(BlockTags.MINEABLE_WITH_PICKAXE)
-			//.item()
-			//.build()
+			.item(CaminiteForgeItemBlock::new)
+			.build()
 			.blockstate((ctx, prov) -> prov.simpleBlock(ctx.getEntry(), prov.models().withExistingParent("caminite_forge_child", new ResourceLocation(Embers.MOD_ID, "block/caminite_forge"))))
 			.register();
 
 	public static final BlockEntry<MultiblockComponentBlock> CAMINITE_FORGE_COMPONENT = REGISTRATE.block("caminite_forge_component", Material.STONE, MultiblockComponentBlock::new)
 			.properties(BASE_PROPERTIES)
 			.tag(BlockTags.MINEABLE_WITH_PICKAXE)
-			.item()
-			.build()
 			.blockstate((ctx, prov) -> prov.simpleBlock(ctx.getEntry(), prov.models().withExistingParent("caminite_forge_component_child", new ResourceLocation(Embers.MOD_ID, "block/caminite_forge_component"))))
 			.register();
 
@@ -87,6 +87,14 @@ public class EmbersBlocks {
 			.item()
 			.build()
 			.loot((lt, block) -> lt.dropOther(block, EmbersItems.VERMILLIONITE_CHUNK.get()))
+			.register();
+
+	public static final BlockEntry<CopperAnvilBlock> COPPER_ANVIL = REGISTRATE.block("copper_anvil", Material.STONE, CopperAnvilBlock::new)
+			.properties(BASE_PROPERTIES)
+			.tag(BlockTags.MINEABLE_WITH_PICKAXE)
+			.item()
+			.build()
+			.blockstate((ctx, prov) -> prov.simpleBlock(ctx.getEntry(), prov.models().withExistingParent("copper_anvil_child", new ResourceLocation(Embers.MOD_ID, "block/copper_anvil"))))
 			.register();
 
 	//Building Blocks

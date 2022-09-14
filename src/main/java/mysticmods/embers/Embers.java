@@ -3,7 +3,6 @@ package mysticmods.embers;
 import com.tterrag.registrate.Registrate;
 import mysticmods.embers.core.config.EmbersConfig;
 import mysticmods.embers.core.gen.Providers;
-import mysticmods.embers.init.EmbersTags;
 import mysticmods.embers.core.machines.forge.SmelterRecipeProvider;
 import mysticmods.embers.core.network.NetworkHandler;
 import mysticmods.embers.init.*;
@@ -63,6 +62,7 @@ public class Embers {
 		EmbersRecipes.Serializers.load();
 		EmbersRecipes.Types.register(bus);
 		EmbersFeatures.PLACED_FEATURE.register(bus);
+		EmbersMoltenMetals.MOLTEN_METALS.register(bus);
 	}
 
 	public void setup(FMLCommonSetupEvent event) {
