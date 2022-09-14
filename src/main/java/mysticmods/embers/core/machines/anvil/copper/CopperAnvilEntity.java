@@ -43,16 +43,6 @@ public class CopperAnvilEntity extends EmberIntensityBlockEntity {
 	}
 
 	@Override
-	public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
-		super.onDataPacket(net, pkt);
-		CompoundTag tag = pkt.getTag();
-		if (tag != null) {
-			load(tag);
-		} else {
-		}
-	}
-
-	@Override
 	protected void saveAdditional(@NotNull CompoundTag tag) {
 		super.saveAdditional(tag);
 		tag.put("inventory", this.itemHandler.serializeNBT());
@@ -110,19 +100,6 @@ public class CopperAnvilEntity extends EmberIntensityBlockEntity {
 			level.addFreshEntity(entity);
 
 			this.itemHandler.getStackInSlot(0).shrink(1);
-		}
-	}
-
-	@Override
-	public void serverTick() {
-		for (int i = 0; i < this.itemHandler.getFilledSlotAmount(); i++) {
-		}
-	}
-
-	@Override
-	public void clientTick() {
-		for (int i = 0; i < this.itemHandler.getFilledSlotAmount(); i++) {
-
 		}
 	}
 

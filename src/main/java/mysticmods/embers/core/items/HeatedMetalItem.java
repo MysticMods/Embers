@@ -19,7 +19,6 @@ public class HeatedMetalItem extends Item {
 	@Override
 	public void inventoryTick(ItemStack pStack, Level pLevel, Entity pEntity, int pSlotId, boolean pIsSelected) {
 		pStack.getCapability(EmbersCaps.HEATED_METAL).ifPresent(cap -> cap.removeStackHeat(1));
-		pStack.getCapability(EmbersCaps.HEATED_METAL).ifPresent(cap -> System.out.println(cap.getStackHeat()));
 
 		super.inventoryTick(pStack, pLevel, pEntity, pSlotId, pIsSelected);
 	}
