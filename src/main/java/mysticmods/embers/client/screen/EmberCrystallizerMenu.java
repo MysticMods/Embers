@@ -1,7 +1,7 @@
 package mysticmods.embers.client.screen;
 
-import mysticmods.embers.core.machines.crystallizer.CrystallizerEntity;
 import mysticmods.embers.core.base.EmberMenu;
+import mysticmods.embers.core.machines.crystallizer.CrystallizerEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.MenuType;

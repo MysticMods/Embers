@@ -1,10 +1,10 @@
 package mysticmods.embers.init;
 
-import mysticmods.embers.Embers;
-import mysticmods.embers.core.machines.forge.CaminiteForgeMenu;
-import mysticmods.embers.client.screen.CaminiteForgeScreen;
 import com.tterrag.registrate.Registrate;
 import com.tterrag.registrate.util.entry.MenuEntry;
+import mysticmods.embers.Embers;
+import mysticmods.embers.client.screen.CaminiteForgeScreen;
+import mysticmods.embers.core.machines.forge.CaminiteForgeMenu;
 
 public class EmbersMenus {
 	private static final Registrate REGISTRATE = Embers.registrate();

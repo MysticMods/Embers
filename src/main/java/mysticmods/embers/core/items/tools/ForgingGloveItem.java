@@ -11,17 +11,17 @@ import org.jetbrains.annotations.Nullable;
 
 public class ForgingGloveItem extends Item {
 
-    public ForgingGloveItem(Properties pProperties) {
-        super(pProperties.stacksTo(1));
-    }
+	public ForgingGloveItem(Properties pProperties) {
+		super(pProperties.stacksTo(1));
+	}
 
-    @Override
-    public void inventoryTick(ItemStack pStack, Level pLevel, Entity pEntity, int pSlotId, boolean pIsSelected) {
-        super.inventoryTick(pStack, pLevel, pEntity, pSlotId, pIsSelected);
-    }
+	@Override
+	public void inventoryTick(ItemStack pStack, Level pLevel, Entity pEntity, int pSlotId, boolean pIsSelected) {
+		super.inventoryTick(pStack, pLevel, pEntity, pSlotId, pIsSelected);
+	}
 
-    @Override
-    public @Nullable ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundTag nbt) {
-        return new HeatedMetalProvider(0, 0, ItemStack.EMPTY);
-    }
+	@Override
+	public @Nullable ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundTag nbt) {
+		return new HeatedMetalProvider(0, 0, ItemStack.EMPTY);
+	}
 }

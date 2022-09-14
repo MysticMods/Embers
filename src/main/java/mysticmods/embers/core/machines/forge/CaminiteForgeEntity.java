@@ -45,7 +45,7 @@ public class CaminiteForgeEntity extends EmberIntensityBlockEntity implements IM
 	public int progressTimer = 0;
 
 	private final IEmberIntensity ember = new EmberIntensity(100, 100);
-	private final ItemStackHandler itemHandler = new SmelterItemHandler(2, this){
+	private final ItemStackHandler itemHandler = new SmelterItemHandler(2, this) {
 		@Override
 		protected int getStackLimit(int slot, @NotNull ItemStack stack) {
 			return 32;
@@ -102,7 +102,7 @@ public class CaminiteForgeEntity extends EmberIntensityBlockEntity implements IM
 			setProgressNeeded();
 			updateViaState();
 		} else {
-			if(this.hasHotMetals){
+			if (this.hasHotMetals) {
 				ItemStack hotMetal = this.itemHandler.getStackInSlot(1).copy();
 				hotMetal.getCapability(EmbersCaps.HEATED_METAL).ifPresent(cap -> transferHeatedMetal(cap, player, hotMetal));
 			}
@@ -110,7 +110,7 @@ public class CaminiteForgeEntity extends EmberIntensityBlockEntity implements IM
 		return InteractionResult.SUCCESS;
 	}
 
-	public void transferHeatedMetal(IHeatedMetal cap, Player player, ItemStack stack){
+	public void transferHeatedMetal(IHeatedMetal cap, Player player, ItemStack stack) {
 		System.out.println("transfer");
 		System.out.println(cap.getMetal());
 
@@ -135,9 +135,9 @@ public class CaminiteForgeEntity extends EmberIntensityBlockEntity implements IM
 			//hasEmberForOperation() &&
 			progress++;
 
-			if(progress >= this.PROGRESS_PER_ITEM){
+			if (progress >= this.PROGRESS_PER_ITEM) {
 				ItemStack hotMetalStack = this.itemHandler.getStackInSlot(1);
-				if(!hotMetalStack.isEmpty()){
+				if (!hotMetalStack.isEmpty()) {
 					hotMetalStack.setCount(hotMetalStack.getCount() + 1);
 				} else {
 					this.itemHandler.setStackInSlot(1, new ItemStack(EmbersItems.HEATED_METAL.get(), 1));

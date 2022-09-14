@@ -27,10 +27,10 @@ public class ModProvider<T> extends JsonCodecProvider<T> {
 		return ((RegistryOps<JsonElement>) dynamicOps).registry(tag.registry()).orElseThrow().getOrCreateTag(tag);
 	}
 
-	public <U> HolderSet<U> getHolderSet(ResourceKey<Registry<U>> registry, ResourceLocation ... names) {
+	public <U> HolderSet<U> getHolderSet(ResourceKey<Registry<U>> registry, ResourceLocation... names) {
 		var reg = ((RegistryOps<JsonElement>) dynamicOps).registry(registry).orElseThrow();
 		return HolderSet.direct(Arrays.stream(names)
-						.map(n -> reg.getOrCreateHolderOrThrow(ResourceKey.create(registry, n)))
-						.toList());
+				.map(n -> reg.getOrCreateHolderOrThrow(ResourceKey.create(registry, n)))
+				.toList());
 	}
 }

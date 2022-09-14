@@ -50,10 +50,10 @@ public class FluidStackWidget extends AbstractWidget {
 
 					int color = IClientFluidTypeExtensions.of(fluidStack.getFluid()).getTintColor(fluidStack);
 					RenderSystem.setShaderColor(
-									FastColor.ARGB32.red(color) / 255.0F,
-									FastColor.ARGB32.green(color) / 255.0F,
-									FastColor.ARGB32.blue(color) / 255.0F,
-									FastColor.ARGB32.alpha(color) / 255.0F);
+							FastColor.ARGB32.red(color) / 255.0F,
+							FastColor.ARGB32.green(color) / 255.0F,
+							FastColor.ARGB32.blue(color) / 255.0F,
+							FastColor.ARGB32.alpha(color) / 255.0F);
 					RenderSystem.enableBlend();
 
 					int stored = fluidTank.getFluidAmount();

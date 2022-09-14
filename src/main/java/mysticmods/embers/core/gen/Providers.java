@@ -21,7 +21,7 @@ public class Providers {
 	}
 
 	static String getProviderDirectory(ResourceKey<? extends Registry<?>> registry) {
-		return registry.location().getNamespace().equals("minecraft") ? registry.location().getPath()  : registry.location().getNamespace() + "/" + registry.location().getPath();
+		return registry.location().getNamespace().equals("minecraft") ? registry.location().getPath() : registry.location().getNamespace() + "/" + registry.location().getPath();
 	}
 
 	@SuppressWarnings("unchecked")

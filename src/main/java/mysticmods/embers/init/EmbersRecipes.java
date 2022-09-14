@@ -1,10 +1,10 @@
 package mysticmods.embers.init;
 
+import com.tterrag.registrate.Registrate;
+import com.tterrag.registrate.util.entry.RegistryEntry;
 import mysticmods.embers.Embers;
 import mysticmods.embers.core.machines.forge.SmelterRecipe;
 import mysticmods.embers.core.machines.forge.SmelterSerializer;
-import com.tterrag.registrate.Registrate;
-import com.tterrag.registrate.util.entry.RegistryEntry;
 import net.minecraft.core.Registry;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraftforge.eventbus.api.IEventBus;
