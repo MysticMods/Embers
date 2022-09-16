@@ -2,7 +2,6 @@ package mysticmods.embers;
 
 import com.tterrag.registrate.Registrate;
 import mysticmods.embers.core.config.EmbersConfig;
-import mysticmods.embers.core.gen.Providers;
 import mysticmods.embers.core.machines.forge.SmelterRecipeProvider;
 import mysticmods.embers.core.network.NetworkHandler;
 import mysticmods.embers.init.*;
@@ -22,6 +21,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import noobanidus.libs.noobutil.data.provider.Providers;
 
 import javax.annotation.Nonnull;
 import java.util.logging.LogManager;
