@@ -6,7 +6,7 @@ import mysticmods.embers.Embers;
 import mysticmods.embers.api.data.EmbersApiTags;
 import mysticmods.embers.core.items.HeatedMetalItem;
 import mysticmods.embers.core.items.tools.ForgingGloveItem;
-import mysticmods.embers.core.items.tools.IronHammerItem;
+import mysticmods.embers.core.items.tools.HammerItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Tiers;
 
@@ -24,7 +24,7 @@ public class EmbersItems {
 	public static final ItemEntry<HeatedMetalItem> HEATED_METAL = REGISTRATE.item("heated_metal", HeatedMetalItem::new).register();
 
 	//Tools
-	public static final ItemEntry<IronHammerItem> IRON_HAMMER = REGISTRATE.item("iron_hammer", (prop) -> new IronHammerItem(Tiers.IRON, 3.0f, -1.4f, prop)).register();
+	public static final ItemEntry<HammerItem> IRON_HAMMER = REGISTRATE.item("iron_hammer", (prop) -> new HammerItem(Tiers.IRON, 3.0f, -1.4f, prop)).register();
 	public static final ItemEntry<ForgingGloveItem> FORGING_GLOVE = REGISTRATE.item("forging_glove", ForgingGloveItem::new).register();
 
 	//Blocks
