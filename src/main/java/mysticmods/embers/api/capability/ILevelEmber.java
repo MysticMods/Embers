@@ -16,6 +16,7 @@ public interface ILevelEmber extends INBTSerializable<ListTag> {
 	void setEmberForRadius(@NotNull BlockPos center, int[] emberPerRadius);
 
 	void addEmberListener(@NotNull BlockPos pos, @NotNull LazyOptional<IEmberIntensity> intensity);
+
 	void addEmitterListener(@NotNull BoundingBox box, @NotNull LazyOptional<IEmberEmitter> emitter);
 
 	void setEmberForBoundingBox(@NotNull BlockPos center, @NotNull BoundingBox box, int[] emberPerRadius);

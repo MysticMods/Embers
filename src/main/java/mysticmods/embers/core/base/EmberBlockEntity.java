@@ -9,9 +9,9 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public abstract class EmberBlockEntity extends BlockEntity {
 
-    public EmberBlockEntity(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState) {
-        super(pType, pPos, pBlockState);
-    }
+	public EmberBlockEntity(BlockEntityType<?> pType, BlockPos pPos, BlockState pBlockState) {
+		super(pType, pPos, pBlockState);
+	}
 
-    public abstract void use(Player player, InteractionHand hand);
+	public abstract void use(Player player, InteractionHand hand);
 }

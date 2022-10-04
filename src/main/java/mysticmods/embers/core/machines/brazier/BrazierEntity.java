@@ -6,6 +6,7 @@ import mysticmods.embers.core.capability.emitter.EmberEmitter;
 import mysticmods.embers.init.EmbersCaps;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -29,6 +30,9 @@ public class BrazierEntity extends EmberEmitterBlockEntity {
 	private final ItemStackHandler itemHandler;
 	private final IEmberEmitter emitter;
 
+	private int nextFireParticle = 0;
+	private int nextSmokeParticle = 0;
+
 	public BrazierEntity(BlockEntityType<? extends EmberEmitterBlockEntity> pType, BlockPos pWorldPosition, BlockState pBlockState) {
 		super(pType, pWorldPosition, pBlockState);
 		itemHandler = new ItemStackHandler(1) {
@@ -46,7 +50,7 @@ public class BrazierEntity extends EmberEmitterBlockEntity {
 		// TODO make a helper method for this
 		BlockPos lowerBound = getBlockPos().offset(-3, -3, -3);
 		BlockPos upperBound = getBlockPos().offset(3, 3, 3);
-		emitter = new EmberEmitter(new int[]{100, 100, 100, 50}, getBlockPos(), new BoundingBox(lowerBound.getX(), lowerBound.getY(), lowerBound.getZ(), upperBound.getX(), upperBound.getY(), upperBound.getZ()));
+		emitter = new EmberEmitter(new int[]{100, 100, 100, 50}, getBlockPos(), new BoundingBox(lowerBound.getX(), lowerBound.getY(), lowerBound.getZ(), upperBound.getX(), upperBound.getY(), upperBound.getZ()), () -> running);
 	}
 
 	@Override
@@ -78,15 +82,31 @@ public class BrazierEntity extends EmberEmitterBlockEntity {
 	public void clientTick() {
 		if (running && level != null) {
 			var random = level.getRandom();
-			ParticleBuilders.create(LodestoneParticleRegistry.WISP_PARTICLE)
-					.addMotion(0, 0.0525d * (random.nextDouble() * 0.1d), 0)
-					.setAlpha(0.5f, 0.2f)
-					.setScale(0.1f)
-					.setColor(230 / 255.0f, 55 / 255.0f, 16 / 255.0f, 230 / 255.0f, 83 / 255.0f, 16 / 255.0f)
-					.setLifetime(Math.round(random.nextFloat() * 100))
-					.disableForcedMotion()
-					.setSpin(0)
-					.spawn(level, getBlockPos().getX() + (random.nextFloat()), getBlockPos().getY() + 1, getBlockPos().getZ() + random.nextFloat());
+			if (--nextSmokeParticle <= 0) {
+				nextSmokeParticle = random.nextInt(6, 12);
+				ParticleBuilders.create(LodestoneParticleRegistry.SOOTY_SMOKE_PARTICLE)
+						.addMotion(0, 0.25d * (random.nextDouble() * 0.25d), 0)
+						.setAlpha(0.8f, 0.6f, 0.0f)
+						.setScale(0.8f)
+//					.setColor(230 / 255.0f, 55 / 255.0f, 16 / 255.0f, 230 / 255.0f, 83 / 255.0f, 16 / 255.0f)
+						.setColor(40 / 255.0f, 40 / 255.0f, 40 / 255.0f, 30 / 255.0f, 30 / 255.0f, 30 / 255.0f)
+						.setLifetime(random.nextInt(60, 100))
+						.disableForcedMotion()
+						.setSpin(0)
+						.spawn(level, getBlockPos().getX() + 0.5f + Mth.nextFloat(random, -0.3f, 0.3f), getBlockPos().getY(), getBlockPos().getZ() + 0.5f + Mth.nextFloat(random, -0.3f, 0.3f));
+			}
+			if (--nextFireParticle <= 0) {
+				nextFireParticle = random.nextInt(1, 4);
+				ParticleBuilders.create(LodestoneParticleRegistry.WISP_PARTICLE)
+						.addMotion(0, 0.65 * (random.nextDouble() * 0.1), 0)
+						.setAlpha(0.6f, 0.4f)
+						.setScale(0.4f)
+						.setColor(230 / 255.0f, 55 / 255.0f, 16 / 255.0f, 230 / 255.0f, 83 / 255.0f, 16 / 255.0f)
+						.setLifetime(random.nextInt(10, 12))
+						.disableForcedMotion()
+						.setSpin(0)
+						.spawn(level, getBlockPos().getX() + 0.5f + Mth.nextFloat(random, -0.2f, 0.2f), getBlockPos().getY(), getBlockPos().getZ() + 0.5f + Mth.nextFloat(random, -0.2f, 0.2f));
+			}
 		}
 	}
 

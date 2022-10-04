@@ -6,16 +6,16 @@ showAsResourcePack = false
 
 [[mods]]
 modId = "embers"
-version = "${file.jarVersion}}"
+version = "${file.jarVersion}"
 displayName = "Embers"
-updateJSONURL = ""
-displayURL = "minecraftforge.net"
+#updateJSONURL = ""
+#displayURL = "minecraftforge.net"
 logoFile = "logo.png"
-credits = "Mystic Bois"
-authors = "MEAPRITCASCQUUSID"
+credits = "Mystic Modding Team"
+authors = "Martacus & EpicSquid"
 description = '''
-      FLAAAAAAMES
-        '''
+Embers is a mod focused around ancient dwarven magi-tech, utilising the fire of the forge to craft wonders.
+'''
 [[dependencies.embers]]
 modId = "forge"
 mandatory = true

@@ -4,13 +4,13 @@ import net.minecraft.resources.ResourceLocation;
 
 public class MoltenMetal {
 
-    private final ResourceLocation id;
+	private final ResourceLocation id;
 
-    public MoltenMetal(ResourceLocation id) {
-        this.id = id;
-    }
+	public MoltenMetal(ResourceLocation id) {
+		this.id = id;
+	}
 
-    public ResourceLocation getId() {
-        return id;
-    }
+	public ResourceLocation getId() {
+		return id;
+	}
 }

@@ -6,6 +6,7 @@ public class ServerConfig {
 
 
 	public final ForgeConfigSpec.ConfigValue<Integer> EMITTER_SEARCH_RANGE;
+
 	public ServerConfig(ForgeConfigSpec.Builder builder) {
 		builder.push("Search Ranges");
 		builder.comment("Contains the configuration for the search radius of various machines");

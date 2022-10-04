@@ -28,6 +28,7 @@ public class EmbersApiTags {
 
 		public static TagKey<Item> CINNABAR = forgeTag("cinnabar");
 		public static TagKey<Item> VERMILLIONITE = forgeTag("raw/vermillionite");
+
 		static TagKey<Item> modTag(String name) {
 			return ItemTags.create(new ResourceLocation(EmbersApi.EMBERS_MOD_ID, name));
 		}

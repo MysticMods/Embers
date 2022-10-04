@@ -82,6 +82,7 @@ public abstract class EmberIntensityBlockEntity extends LodestoneBlockEntity {
 
 	/**
 	 * Checks to make sure the current intensity is above the minimum
+	 *
 	 * @return true if the intensity is above the minimum threshold
 	 */
 	protected boolean hasEmberForOperation() {

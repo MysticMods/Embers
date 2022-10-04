@@ -1,7 +1,7 @@
 package mysticmods.embers.init;
 
-import mysticmods.embers.Embers;
 import com.tterrag.registrate.Registrate;
+import mysticmods.embers.Embers;
 import net.minecraft.network.chat.MutableComponent;
 
 public class EmbersLang {

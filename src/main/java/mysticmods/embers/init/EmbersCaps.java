@@ -51,7 +51,7 @@ public class EmbersCaps {
 
 	@SubscribeEvent
 	public static void attachItemCapability(AttachCapabilitiesEvent<ItemStack> event) {
-		if(event.getObject().getItem() == EmbersItems.FORGING_GLOVE.get() || event.getObject().getItem() == EmbersItems.HEATED_METAL.get()){
+		if (event.getObject().getItem() == EmbersItems.FORGING_GLOVE.get() || event.getObject().getItem() == EmbersItems.HEATED_METAL.get()) {
 			event.addCapability(HEATED_METAL_ID, new HeatedMetalProvider());
 		}
 	}

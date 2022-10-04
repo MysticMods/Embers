@@ -6,7 +6,7 @@ import team.lodestar.lodestone.systems.multiblock.MultiBlockItem;
 
 public class CaminiteForgeItemBlock extends MultiBlockItem {
 
-    public CaminiteForgeItemBlock(Block pBlock, Properties properties) {
-        super(EmbersBlocks.CAMINITE_FORGE.get(), properties, CaminiteForgeEntity.STRUCTURE);
-    }
+	public CaminiteForgeItemBlock(Block pBlock, Properties properties) {
+		super(EmbersBlocks.CAMINITE_FORGE.get(), properties, CaminiteForgeEntity.STRUCTURE);
+	}
 }

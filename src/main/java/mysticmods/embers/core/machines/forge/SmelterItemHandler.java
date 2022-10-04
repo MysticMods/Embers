@@ -13,7 +13,7 @@ public class SmelterItemHandler extends ItemStackHandler {
 	private final BlockEntity entity;
 
 
-	public SmelterItemHandler(int size,BlockEntity blockEntity) {
+	public SmelterItemHandler(int size, BlockEntity blockEntity) {
 		super(size);
 		this.entity = blockEntity;
 	}
