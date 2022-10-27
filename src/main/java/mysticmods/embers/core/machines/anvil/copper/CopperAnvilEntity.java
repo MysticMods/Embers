@@ -33,6 +33,7 @@ public class CopperAnvilEntity extends EmberIntensityBlockEntity {
 		}
 	};
 	private final LazyOptional<IItemHandler> handler = LazyOptional.of(() -> itemHandler);
+	private long lastForgedTick = 0;
 
 	public CopperAnvilEntity(BlockEntityType<? extends EmberIntensityBlockEntity> type, BlockPos pos, BlockState state) {
 		super(type, pos, state);
@@ -58,17 +59,11 @@ public class CopperAnvilEntity extends EmberIntensityBlockEntity {
 
 		if (playerStack.getItem() == EmbersItems.IRON_HAMMER.get()) {
 			if (this.itemHandler.getFilledSlotAmount() == 1 && this.itemHandler.getStackInSlot(0).getCapability(EmbersCaps.HEATED_METAL).isPresent()) {
-				this.itemHandler.getStackInSlot(0).getCapability(EmbersCaps.HEATED_METAL).ifPresent(cap -> smithIngot(cap, level));
-				return InteractionResult.SUCCESS;
+				this.itemHandler.getStackInSlot(0).getCapability(EmbersCaps.HEATED_METAL).ifPresent(cap -> smithIngot(cap, level, player));
 			}
-		}
 
-        if(playerStack.getItem() == EmbersItems.IRON_HAMMER.get()){
-            if(this.itemHandler.getFilledSlotAmount() == 1 && this.itemHandler.getStackInSlot(0).getCapability(EmbersCaps.HEATED_METAL).isPresent()){
-                this.itemHandler.getStackInSlot(0).getCapability(EmbersCaps.HEATED_METAL).ifPresent(cap -> smithIngot(cap, level));
-            }
-            return InteractionResult.SUCCESS;
-        }
+			return InteractionResult.SUCCESS;
+		}
 
         if(playerStack.isEmpty()){
 			player.addItem(this.itemHandler.getLastFilledSlot());
@@ -78,15 +73,20 @@ public class CopperAnvilEntity extends EmberIntensityBlockEntity {
         return InteractionResult.SUCCESS;
     }
 
-    public void smithIngot(IHeatedMetal cap, Level level){
+    public void smithIngot(IHeatedMetal cap, Level level, Player player){
         if(MetalFamilyRegistry.getInstance().getByRaw(cap.getMetal().getItem()).isPresent()){
             MetalFamilyRegistry.MetalFamily family = MetalFamilyRegistry.getInstance().getByRaw(cap.getMetal().getItem()).get();
-            int nuggets = 0;
             float f = EntityType.ITEM.getHeight() / 2.0F;
             int heatProcentage = cap.getStackHeat() / (cap.getMaxHeat() / 100);
-            for(int i= heatProcentage; i > 25; i -= 25 ){
-                nuggets++;
-            }
+
+			//Calculate nuggets
+			int nuggets = 0;
+			if(player.getAttackStrengthScale(0.0F) == 1.0F){
+				for(int i= heatProcentage; i > 25; i -= 25 ){
+					nuggets++;
+				}
+			}
+			this.lastForgedTick = this.level.getGameTime();
             for(int i = nuggets; i > 0; i--){
                 ItemStack nuggetStack = new ItemStack(family.nugget);
                 double d0 = (double)((float)getBlockPos().getX() + 0.5F) + Mth.nextDouble(level.random, -0.25D, 0.25D);
@@ -97,7 +97,15 @@ public class CopperAnvilEntity extends EmberIntensityBlockEntity {
                 level.addFreshEntity(entity);
             }
 
+			double d0 = (double)((float)getBlockPos().getX() + 0.5F) + Mth.nextDouble(level.random, -0.25D, 0.25D);
+			double d1 = (double)((float)getBlockPos().getY() + 1.1F) + Mth.nextDouble(level.random, -0.25D, 0.25D) - (double)f;
+			double d2 = (double)((float)getBlockPos().getZ() + 0.5F) + Mth.nextDouble(level.random, -0.25D, 0.25D);
+			ItemEntity entity = new ItemEntity(level, d0, d1, d2, new ItemStack(family.ingot));
+			entity.setDefaultPickUpDelay();
+			level.addFreshEntity(entity);
+
 			this.itemHandler.getStackInSlot(0).shrink(1);
+			player.resetAttackStrengthTicker();
 			//todo:Spawn spark particles
 		}
 	}
