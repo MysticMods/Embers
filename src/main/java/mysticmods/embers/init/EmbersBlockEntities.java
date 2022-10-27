@@ -3,6 +3,7 @@ package mysticmods.embers.init;
 import com.tterrag.registrate.Registrate;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
 import mysticmods.embers.Embers;
+import mysticmods.embers.client.renderer.blocks.CaminiteForgeRenderer;
 import mysticmods.embers.client.renderer.blocks.CopperAnvilRenderer;
 import mysticmods.embers.core.machines.anvil.copper.CopperAnvilEntity;
 import mysticmods.embers.core.machines.brazier.BrazierEntity;
@@ -29,6 +30,7 @@ public class EmbersBlockEntities {
 		@SubscribeEvent
 		public static void registerRenderer(EntityRenderersEvent.RegisterRenderers event) {
 			event.registerBlockEntityRenderer(COPPER_ANVIL.get(), CopperAnvilRenderer::new);
+			event.registerBlockEntityRenderer(CAMINITE_FORGE.get(), CaminiteForgeRenderer::new);
 		}
 	}
 }

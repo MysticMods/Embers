@@ -21,7 +21,6 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import team.lodestar.lodestone.setup.LodestoneParticleRegistry;
@@ -45,7 +44,7 @@ public class CaminiteForgeEntity extends EmberIntensityBlockEntity implements IM
 	public int progressTimer = 0;
 
 	private final IEmberIntensity ember = new EmberIntensity(100, 100);
-	private final ItemStackHandler itemHandler = new SmelterItemHandler(2, this) {
+	private final SmelterItemHandler itemHandler = new SmelterItemHandler(2, this) {
 		@Override
 		protected int getStackLimit(int slot, @NotNull ItemStack stack) {
 			return 32;
@@ -202,5 +201,9 @@ public class CaminiteForgeEntity extends EmberIntensityBlockEntity implements IM
 
 	public void onBreak(@Nullable Player player) {
 		destroyMultiblock(player, level, worldPosition);
+	}
+
+	public SmelterItemHandler getItemHandler() {
+		return itemHandler;
 	}
 }

@@ -71,7 +71,7 @@ public class CopperAnvilEntity extends EmberIntensityBlockEntity {
         }
 
         if(playerStack.isEmpty()){
-            //todo: return item
+			player.addItem(this.itemHandler.getLastFilledSlot());
         }
 
         player.setItemInHand(hand, this.itemHandler.addItemStack(playerStack));
