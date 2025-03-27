@@ -1,6 +1,7 @@
 package mysticmods.embers;
 
 import mysticmods.embers.client.EmbersModelProvider;
+import mysticmods.embers.client.EmbersRecipeProvider;
 import mysticmods.embers.init.EmbersItems;
 import mysticmods.embers.init.EmbersTabs;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
@@ -97,6 +98,7 @@ public class EmbersMod
         @SubscribeEvent
         public static void gatherData(GatherDataEvent.Client event) {
             event.createProvider(EmbersModelProvider::new);
+            event.createProvider(EmbersRecipeProvider.Runner::new);
         }
     }
 }

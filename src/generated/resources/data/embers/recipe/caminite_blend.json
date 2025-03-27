@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "minecraft:clay_ball",
+    "minecraft:sand"
+  ],
+  "result": {
+    "count": 1,
+    "id": "embers:caminite_blend"
+  }
+}

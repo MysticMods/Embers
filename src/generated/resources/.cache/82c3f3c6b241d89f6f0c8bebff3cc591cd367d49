@@ -1,13 +1,16 @@
-// 1.21.4	2025-03-27T22:27:05.2351735	Model Definitions - embers
+// 1.21.4	2025-03-27T23:40:58.0780813	Model Definitions - embers
+ace42d0aa0968fb561690e4732c125b427910256 assets/embers/blockstates/caminite_bricks.json
 93d8a3e43bc0a0fc123a4de4fdff53a99cc096be assets/embers/items/ashen_steel_ingot.json
 e94ccb90eae43cb3e408973cdf69aee592485c50 assets/embers/items/caminite_blend.json
 018c0dc5988b832e7f372d11162ceefca4d441f2 assets/embers/items/caminite_brick.json
+1bbb0c84f34e4058dc204af3f954ef5cffa0a979 assets/embers/items/caminite_bricks.json
 8512cab956d2c28c5a3f3e60fa7523fbb56b7a70 assets/embers/items/cindersteel_ingot.json
 d1315e517ddfef48b1de97a95d24d45404b8e418 assets/embers/items/cinnabar.json
 331ed72c2b7a2672143512923fc0e25fc8a86bed assets/embers/items/dawnstone_ingot.json
 d64f7008203cbee7d7700e0e94b45f389938fceb assets/embers/items/ember_crystal.json
 ee2eb227de0c5ce7011f3ffeefca93d22c64ad6e assets/embers/items/quicksilver.json
 30187c7031758d41c8626cdcf22750a543fcd08a assets/embers/items/vermillionite_chunk.json
+fed6ee3430257052e07c671e582eac9b33e4fa7a assets/embers/models/block/caminite_bricks.json
 f48e0c39961096aacbf2b851af87760bd63edf3e assets/embers/models/item/ashen_steel_ingot.json
 6d2d64485336d17ab30ac735fa6abcc29222735b assets/embers/models/item/caminite_blend.json
 8647b58288ec3dca45097692ee2aaceca1d97d3a assets/embers/models/item/caminite_brick.json

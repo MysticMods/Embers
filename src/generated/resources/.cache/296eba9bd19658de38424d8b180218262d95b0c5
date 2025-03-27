@@ -1,0 +1,7 @@
+// 1.21.4	2025-03-27T23:48:38.1048438	embers_recipe_provider
+d556b0b2e9f131ed043febae4c63a367b1661501 data/embers/advancement/recipes/building_blocks/caminite_bricks.json
+a8c33b743d416bba5f715dc3a6d7bc382b905393 data/embers/advancement/recipes/misc/caminite_blend.json
+8ed77edae9575c1ba35fc57df7499bcb6a0b9e36 data/embers/recipe/caminite_blend.json
+962a496fa63fabe7f81736c5d1234f06e0f0baf1 data/embers/recipe/caminite_bricks.json
+bce85bf23704e991a647a7f4905647c462611c52 data/minecraft/advancement/recipes/misc/caminite_brick_smelting.json
+b264a7251583ac8176cdcc8207140e2c8d663fd8 data/minecraft/recipe/caminite_brick_smelting.json
