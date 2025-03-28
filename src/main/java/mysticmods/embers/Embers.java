@@ -51,6 +51,7 @@ public class Embers
         EmbersBlocks.init();
         EmbersItems.init();
         EmbersBlockEntities.init();
+        EmbersCapabilities.init();
         EmbersTabs.init();
 
         BLOCKS.register(modEventBus);
