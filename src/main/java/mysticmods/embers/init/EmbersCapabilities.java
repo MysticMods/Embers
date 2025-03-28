@@ -5,6 +5,7 @@ import mysticmods.embers.core.capabilities.emberemitter.IEmberEmitter;
 import mysticmods.embers.core.capabilities.emberintensity.IEmberIntensity;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.capabilities.BlockCapability;
+import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 
 public class EmbersCapabilities {
@@ -22,10 +23,18 @@ public class EmbersCapabilities {
 
 
     public static void register(RegisterCapabilitiesEvent event) {
+        //Brazier Ember Emitter
         event.registerBlockEntity(
                 EmbersCapabilities.EMBER_EMITTER,
                 EmbersBlockEntities.BRAZIER.get(),
                 (be, o) -> be.getEmitter()
+        );
+
+        //Brazier ItemHandler
+        event.registerBlockEntity(
+                Capabilities.ItemHandler.BLOCK,
+                EmbersBlockEntities.BRAZIER.get(),
+                (myBlockEntity, side) -> myBlockEntity.getItemHandler()
         );
     }
 
