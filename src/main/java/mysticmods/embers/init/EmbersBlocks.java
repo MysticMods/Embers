@@ -8,7 +8,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.neoforged.neoforge.registries.DeferredBlock;
 
-import static mysticmods.embers.EmbersMod.BLOCKS;
+import static mysticmods.embers.Embers.BLOCKS;
 
 public class EmbersBlocks {
 

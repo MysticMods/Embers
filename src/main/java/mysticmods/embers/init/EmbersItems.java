@@ -7,7 +7,7 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.registries.DeferredItem;
 
-import static mysticmods.embers.EmbersMod.ITEMS;
+import static mysticmods.embers.Embers.ITEMS;
 
 public class EmbersItems {
 

@@ -5,7 +5,7 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.neoforged.neoforge.registries.DeferredHolder;
 
-import static mysticmods.embers.EmbersMod.CREATIVE_MODE_TABS;
+import static mysticmods.embers.Embers.CREATIVE_MODE_TABS;
 
 public class EmbersTabs {
 
