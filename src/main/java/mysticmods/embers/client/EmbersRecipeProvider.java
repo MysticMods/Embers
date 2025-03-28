@@ -38,9 +38,21 @@ public class EmbersRecipeProvider extends RecipeProvider {
                 .pattern("##")
                 .define('#', EmbersItems.CAMINITE_BRICK)
                 .unlockedBy("has_caminite_brick", has(EmbersItems.CAMINITE_BRICK))
-                .save(this.output);;
+                .save(this.output);
 
-        // ## Blocks ## //
+        //Brazier
+        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.MISC, EmbersItems.BRAZIER_BLOCK_ITEM)
+                .pattern("CFC")
+                .pattern("C#C")
+                .define('#', EmbersItems.CAMINITE_BRICK_BLOCK_ITEM)
+                .define('C', Items.COPPER_INGOT)
+                .define('F', Items.CAMPFIRE)
+                .unlockedBy("has_caminite_bricks", has(EmbersItems.CAMINITE_BRICK_BLOCK_ITEM))
+                .unlockedBy("has_copper_ingot", has(Items.COPPER_INGOT))
+                .unlockedBy("has_campfire", has(Items.CAMPFIRE))
+                .save(this.output);
+
+        // ## Smelting ## //
 
         //Caminite Brick
         SimpleCookingRecipeBuilder.smelting(

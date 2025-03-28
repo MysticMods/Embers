@@ -1,8 +1,10 @@
 package mysticmods.embers.init;
 
+import mysticmods.embers.core.machines.brazier.BrazierBlock;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.neoforged.neoforge.registries.DeferredBlock;
 
@@ -15,6 +17,13 @@ public class EmbersBlocks {
                     BlockBehaviour.Properties.of()
                             .setId(ResourceKey.create(Registries.BLOCK, registryName))
                             .requiresCorrectToolForDrops().strength(1.5F, 6.0F)
+            )
+    );
+
+    public static final DeferredBlock<Block> BRAZIER = BLOCKS.register(
+            "brazier", registryName -> new BrazierBlock(
+                    BlockBehaviour.Properties.ofFullCopy(Blocks.BRICKS)
+                            .setId(ResourceKey.create(Registries.BLOCK, registryName))
 
             )
     );

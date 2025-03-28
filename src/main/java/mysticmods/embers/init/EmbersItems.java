@@ -26,6 +26,10 @@ public class EmbersItems {
     //todo: CINNABAR tag
 
     //Blocks
+    public static final DeferredItem<BlockItem> BRAZIER_BLOCK_ITEM = ITEMS.registerSimpleBlockItem(
+            EmbersBlocks.BRAZIER
+    );
+
     public static final DeferredItem<BlockItem> CAMINITE_BRICK_BLOCK_ITEM = ITEMS.registerSimpleBlockItem(
             EmbersBlocks.CAMINITE_BRICK
     );
@@ -45,6 +49,7 @@ public class EmbersItems {
 
         //Blocks
         blockModels.createTrivialCube(EmbersBlocks.CAMINITE_BRICK.get());
+        blockModels.createNonTemplateModelBlock(EmbersBlocks.BRAZIER.get());
     }
 
     public static void init() {

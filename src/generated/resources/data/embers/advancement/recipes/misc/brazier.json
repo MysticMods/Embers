@@ -1,0 +1,54 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_caminite_bricks": {
+      "conditions": {
+        "items": [
+          {
+            "items": "embers:caminite_bricks"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_campfire": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:campfire"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_copper_ingot": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:copper_ingot"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "embers:brazier"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_caminite_bricks",
+      "has_copper_ingot",
+      "has_campfire"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "embers:brazier"
+    ]
+  }
+}

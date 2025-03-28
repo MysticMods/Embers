@@ -27,6 +27,7 @@ public class EmbersTabs {
 
                 //Blocks
                 output.accept(EmbersItems.CAMINITE_BRICK_BLOCK_ITEM.get());
+                output.accept(EmbersItems.BRAZIER_BLOCK_ITEM.get());
             }).build());
 
     public static void init() {
