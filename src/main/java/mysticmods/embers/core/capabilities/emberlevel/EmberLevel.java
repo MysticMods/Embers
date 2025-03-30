@@ -68,7 +68,7 @@ public class EmberLevel extends SavedData implements IEmberLevel{
 
     @Override
     public void addEmitterListener(@NotNull BoundingBox box, @NotNull IEmberEmitter emitter) {
-        emitterListeners.put(box, emitter);
+        emitterListeners.putIfAbsent(box, emitter);
     }
 
     @Override

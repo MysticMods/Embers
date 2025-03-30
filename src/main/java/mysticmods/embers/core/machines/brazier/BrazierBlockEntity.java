@@ -10,6 +10,8 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.neoforged.neoforge.items.ItemStackHandler;
@@ -41,7 +43,21 @@ public class BrazierBlockEntity extends EmberEmitterBlockEntity {
         BlockPos lowerBound = getBlockPos().offset(-3, -3, -3);
         BlockPos upperBound = getBlockPos().offset(3, 3, 3);
         emitter = new EmberEmitter(new int[]{100, 100, 100, 50}, getBlockPos(), new BoundingBox(lowerBound.getX(), lowerBound.getY(), lowerBound.getZ(), upperBound.getX(), upperBound.getY(), upperBound.getZ()), () -> running);
+    }
 
+    public static void tick(Level level, BlockPos pos, BlockState state, BrazierBlockEntity blockEntity) {
+        if(!level.isClientSide()) {
+            if (level.getGameTime() % 20 == 0) {
+                if (!blockEntity.itemHandler.getStackInSlot(0).isEmpty()) {
+                    if (!blockEntity.running) {
+                        blockEntity.running = true;
+                        level.setBlock(blockEntity.getBlockPos(), state.setValue(BrazierBlock.LIT, true), Block.UPDATE_ALL);
+                        //level.getCapability(EmbersCaps.EMBER).ifPresent(emitter::initEmitter);
+                    }
+                }
+                blockEntity.updateViaState();
+            }
+        }
     }
 
     public void updateViaState() {

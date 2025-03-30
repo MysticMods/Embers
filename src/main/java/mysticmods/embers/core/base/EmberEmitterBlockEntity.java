@@ -16,7 +16,6 @@ public abstract class EmberEmitterBlockEntity extends BlockEntity {
         super(type, pos, state);
     }
 
-
     /**
      * Gets the Ember Emitter capability for this entity
      *
@@ -35,6 +34,13 @@ public abstract class EmberEmitterBlockEntity extends BlockEntity {
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
         getEmitter().deserializeNBT(registries, tag.getCompound("emitter"));
+    }
+
+    public void init() {
+        if (level != null && !level.isClientSide) {
+            //level.getCapability(EmbersCaps.EMBER).ifPresent(ember -> ember.addEmitterListener(getEmitter().getBoundingBox(), emitterOp));
+            setChanged();
+        }
     }
 
     //    @Override
@@ -60,13 +66,6 @@ public abstract class EmberEmitterBlockEntity extends BlockEntity {
 //        clearEmber();
 //    }
 
-//    @Override
-//    public void init() {
-//        super.init();
-//        if (level != null && !level.isClientSide) {
-//            level.getCapability(EmbersCaps.EMBER).ifPresent(ember -> ember.addEmitterListener(getEmitter().getBoundingBox(), emitterOp));
-//            setChanged();
-//        }
-//    }
+
 
 }

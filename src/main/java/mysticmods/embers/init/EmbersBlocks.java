@@ -6,6 +6,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.neoforge.registries.DeferredBlock;
 
 import static mysticmods.embers.Embers.BLOCKS;
@@ -24,6 +25,7 @@ public class EmbersBlocks {
             "brazier", registryName -> new BrazierBlock(
                     BlockBehaviour.Properties.ofFullCopy(Blocks.BRICKS)
                             .setId(ResourceKey.create(Registries.BLOCK, registryName))
+                            .lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 15 : 0)
 
             )
     );
