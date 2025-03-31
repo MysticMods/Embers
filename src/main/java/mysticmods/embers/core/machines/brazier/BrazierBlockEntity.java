@@ -2,7 +2,9 @@ package mysticmods.embers.core.machines.brazier;
 
 import mysticmods.embers.core.base.EmberEmitterBlockEntity;
 import mysticmods.embers.core.capabilities.emberemitter.EmberEmitter;
+import mysticmods.embers.core.capabilities.emberlevel.EmberLevel;
 import mysticmods.embers.core.utils.BlockEntityUtil;
+import mysticmods.embers.core.utils.SDUtil;
 import mysticmods.embers.init.EmbersBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
@@ -45,6 +47,16 @@ public class BrazierBlockEntity extends EmberEmitterBlockEntity {
         emitter = new EmberEmitter(new int[]{100, 100, 100, 50}, getBlockPos(), new BoundingBox(lowerBound.getX(), lowerBound.getY(), lowerBound.getZ(), upperBound.getX(), upperBound.getY(), upperBound.getZ()), () -> running);
     }
 
+    @Override
+    public void onLoad() {
+        super.onLoad();
+
+        EmberLevel emberLevel = SDUtil.getLevelEmbersData(level);
+        if(emberLevel != null){
+            emitter.initEmitter(emberLevel);
+        }
+    }
+
     public static void tick(Level level, BlockPos pos, BlockState state, BrazierBlockEntity blockEntity) {
         if(!level.isClientSide()) {
             if (level.getGameTime() % 20 == 0) {
@@ -52,10 +64,12 @@ public class BrazierBlockEntity extends EmberEmitterBlockEntity {
                     if (!blockEntity.running) {
                         blockEntity.running = true;
                         level.setBlock(blockEntity.getBlockPos(), state.setValue(BrazierBlock.LIT, true), Block.UPDATE_ALL);
-                        //level.getCapability(EmbersCaps.EMBER).ifPresent(emitter::initEmitter);
+                        blockEntity.updateViaState();
                     }
+                } else {
+                    blockEntity.running = false;
+                    blockEntity.updateViaState();
                 }
-                blockEntity.updateViaState();
             }
         }
     }
@@ -90,5 +104,12 @@ public class BrazierBlockEntity extends EmberEmitterBlockEntity {
 
     public ItemStackHandler getItemHandler() {
         return itemHandler;
+    }
+
+    public void onBlockBroken() {
+        EmberLevel emberLevel = SDUtil.getLevelEmbersData(level);
+        if(emberLevel != null){
+            emberLevel.removeEmitterListener(this.emitter);
+        }
     }
 }

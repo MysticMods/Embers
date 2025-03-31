@@ -15,7 +15,11 @@ public interface IEmberLevel {
 
     void addEmberListener(@NotNull BlockPos pos, @NotNull IEmberIntensity intensity);
 
+    void removeEmberListener(@NotNull BlockPos pos, @NotNull IEmberIntensity intensity);
+
     void addEmitterListener(@NotNull BoundingBox box, @NotNull IEmberEmitter emitter);
+
+    void removeEmitterListener(@NotNull IEmberEmitter emitter);
 
     void setEmberForBoundingBox(@NotNull BlockPos center, @NotNull BoundingBox box, int[] emberPerRadius);
 

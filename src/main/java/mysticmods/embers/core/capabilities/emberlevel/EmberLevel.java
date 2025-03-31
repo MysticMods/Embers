@@ -42,6 +42,7 @@ public class EmberLevel extends SavedData implements IEmberLevel{
         if (emberListeners.containsKey(immutablePos)) {
             emberListeners.get(immutablePos).setIntensity(validEmber);
         }
+        this.setDirty();
     }
 
     @Override
@@ -52,6 +53,7 @@ public class EmberLevel extends SavedData implements IEmberLevel{
                 setEmberForPos(pos, emberPerRadius[radius]);
             }
         });
+        this.setDirty();
     }
 
     @Override
@@ -63,12 +65,25 @@ public class EmberLevel extends SavedData implements IEmberLevel{
     @Override
     public void addEmberListener(@NotNull BlockPos pos, @NotNull IEmberIntensity intensity) {
         emberListeners.put(pos, intensity);
+        this.setDirty();
 
+    }
+
+    @Override
+    public void removeEmberListener(@NotNull BlockPos pos, @NotNull IEmberIntensity intensity) {
+        //todo
     }
 
     @Override
     public void addEmitterListener(@NotNull BoundingBox box, @NotNull IEmberEmitter emitter) {
         emitterListeners.putIfAbsent(box, emitter);
+        this.setDirty();
+    }
+
+    @Override
+    public void removeEmitterListener( @NotNull IEmberEmitter emitter) {
+        emitterListeners.remove(emitter.getBoundingBox());
+        this.setDirty();
     }
 
     @Override
@@ -76,6 +91,7 @@ public class EmberLevel extends SavedData implements IEmberLevel{
         BlockPos.betweenClosedStream(box).forEach(pos -> setEmberForPos(pos, 0));
         // Update all remaining emitters
         emitterListeners.keySet().stream().filter(bb -> bb.intersects(box)).forEach(bb -> emitterListeners.get(bb).initEmitter(this));
+        this.setDirty();
     }
 
 
@@ -119,5 +135,9 @@ public class EmberLevel extends SavedData implements IEmberLevel{
     public @UnknownNullability CompoundTag save(CompoundTag tag, HolderLookup.Provider registries) {
         tag.put("embers", serializeNBT(registries));
         return tag;
+    }
+
+    public static EmberLevel create(){
+        return new EmberLevel();
     }
 }
