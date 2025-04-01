@@ -6,6 +6,7 @@ import mysticmods.embers.core.capabilities.emberlevel.EmberLevel;
 import mysticmods.embers.core.utils.BlockEntityUtil;
 import mysticmods.embers.core.utils.SDUtil;
 import mysticmods.embers.init.EmbersBlockEntities;
+import mysticmods.embers.init.EmbersParticleTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -71,7 +72,15 @@ public class BrazierBlockEntity extends EmberEmitterBlockEntity {
                     blockEntity.updateViaState();
                 }
             }
+        } else {
+            level.addParticle(EmbersParticleTypes.PARTICLE_GLOW.get(),
+                    blockEntity.getBlockPos().getX() + 0.5,
+                    blockEntity.getBlockPos().getY() + 1,
+                    blockEntity.getBlockPos().getZ() + 0.5,
+                    0, 0.03, 0);
         }
+
+
     }
 
     public void updateViaState() {

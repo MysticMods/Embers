@@ -1,4 +1,4 @@
-package mysticmods.embers.client;
+package mysticmods.embers.datagen;
 
 import mysticmods.embers.init.EmbersItems;
 import net.minecraft.core.HolderLookup;

@@ -1,10 +1,14 @@
 package mysticmods.embers;
 
-import mysticmods.embers.client.EmbersModelProvider;
-import mysticmods.embers.client.EmbersRecipeProvider;
+import mysticmods.embers.datagen.EmbersModelProvider;
+import mysticmods.embers.datagen.EmbersParticleDescriptionProvider;
+import mysticmods.embers.datagen.EmbersRecipeProvider;
+import mysticmods.embers.core.particles.GlowParticleProvider;
 import mysticmods.embers.init.*;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
+import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import org.slf4j.Logger;
 
@@ -53,11 +57,13 @@ public class Embers
         EmbersBlockEntities.init();
         EmbersCapabilities.init();
         EmbersTabs.init();
+        EmbersParticleTypes.init();
 
         BLOCKS.register(modEventBus);
         ITEMS.register(modEventBus);
         BLOCK_ENTITY_TYPES.register(modEventBus);
         CREATIVE_MODE_TABS.register(modEventBus);
+        EmbersParticleTypes.PARTICLE_TYPES.register(modEventBus);
 
         NeoForge.EVENT_BUS.register(this);
 
@@ -105,11 +111,17 @@ public class Embers
         public static void gatherData(GatherDataEvent.Client event) {
             event.createProvider(EmbersModelProvider::new);
             event.createProvider(EmbersRecipeProvider.Runner::new);
+            event.createProvider(EmbersParticleDescriptionProvider::new);
         }
 
         @SubscribeEvent
         private static void registerCapabilities(RegisterCapabilitiesEvent event) {
             EmbersCapabilities.register(event);
+        }
+
+        @SubscribeEvent
+        public static void registerParticleProviders(RegisterParticleProvidersEvent event) {
+            event.registerSpriteSet(EmbersParticleTypes.PARTICLE_GLOW.get(), GlowParticleProvider::new);
         }
     }
 }
