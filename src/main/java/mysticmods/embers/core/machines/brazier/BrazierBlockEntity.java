@@ -3,11 +3,16 @@ package mysticmods.embers.core.machines.brazier;
 import mysticmods.embers.core.base.EmberEmitterBlockEntity;
 import mysticmods.embers.core.capabilities.emberemitter.EmberEmitter;
 import mysticmods.embers.core.capabilities.emberlevel.EmberLevel;
+import mysticmods.embers.core.particles.options.EmbersParticleOptions;
 import mysticmods.embers.core.utils.BlockEntityUtil;
 import mysticmods.embers.core.utils.SDUtil;
 import mysticmods.embers.init.EmbersBlockEntities;
-import mysticmods.embers.init.EmbersParticleTypes;
+import mysticmods.embers.init.EmbersParticles;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -20,10 +25,13 @@ import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Random;
+
 public class BrazierBlockEntity extends EmberEmitterBlockEntity {
 
     private final EmberEmitter emitter;
     private final ItemStackHandler itemHandler;
+    private static final RandomSource random = RandomSource.create();
 
     public boolean running = false;
 
@@ -37,7 +45,7 @@ public class BrazierBlockEntity extends EmberEmitterBlockEntity {
             }
             @Override
             public boolean isItemValid(int slot, @NotNull ItemStack stack) {
-                return stack.getItem() == Items.COAL;
+                return stack.getItem() == Items.COAL || stack.getItem() == Items.CHARCOAL;
             }
         };
 
@@ -73,14 +81,14 @@ public class BrazierBlockEntity extends EmberEmitterBlockEntity {
                 }
             }
         } else {
-            level.addParticle(EmbersParticleTypes.PARTICLE_GLOW.get(),
-                    blockEntity.getBlockPos().getX() + 0.5,
-                    blockEntity.getBlockPos().getY() + 1,
-                    blockEntity.getBlockPos().getZ() + 0.5,
-                    0, 0.03, 0);
+            if (level.getGameTime() % 40 == 0) {
+                level.addParticle(new EmbersParticleOptions(1, 0.5f, 0),
+                        blockEntity.getBlockPos().getX()  + 0.5f + Mth.nextFloat(random, -0.3f, 0.3f),
+                        blockEntity.getBlockPos().getY() + 0.6f,
+                        blockEntity.getBlockPos().getZ() + 0.5f + Mth.nextFloat(random, -0.3f, 0.3f),
+                        0, 0.25d * (random.nextDouble() * 0.1d), 0);
+            }
         }
-
-
     }
 
     public void updateViaState() {
@@ -98,6 +106,8 @@ public class BrazierBlockEntity extends EmberEmitterBlockEntity {
 
     public InteractionResult onUseWithItem(Player player, ItemStack stack, InteractionHand hand) {
         ItemStack playerStack = player.getItemInHand(hand);
+        //sys out itemstack name and size first
+        System.out.println("ItemStack: " + this.itemHandler.getStackInSlot(0).getItem().getName(playerStack).getString() + " Size: " + this.itemHandler.getStackInSlot(0).getCount());
         if (this.itemHandler.isItemValid(0, playerStack)) {
             ItemStack returnStack = this.itemHandler.insertItem(0, playerStack, false);
             player.setItemInHand(hand, returnStack);
@@ -121,4 +131,29 @@ public class BrazierBlockEntity extends EmberEmitterBlockEntity {
             emberLevel.removeEmitterListener(this.emitter);
         }
     }
+
+
+    @Override
+    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        running = tag.getBoolean("running");
+        if(tag.contains("inventory")){
+            itemHandler.deserializeNBT(registries, tag.getCompound("inventory"));
+        }
+        super.loadAdditional(tag, registries);
+    }
+
+    @Override
+    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        tag.putBoolean("running", running);
+        tag.put("inventory", itemHandler.serializeNBT(registries));
+        super.saveAdditional(tag, registries);
+    }
+
+    @Override
+    public @NotNull CompoundTag getUpdateTag(HolderLookup.@NotNull Provider registries) {
+        CompoundTag tag = super.getUpdateTag(registries);
+        this.saveAdditional(tag, registries);
+        return tag;
+    }
+
 }

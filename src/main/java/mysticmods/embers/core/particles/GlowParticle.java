@@ -1,5 +1,6 @@
 package mysticmods.embers.core.particles;
 
+import mysticmods.embers.core.particles.options.EmbersParticleOptions;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.ParticleRenderType;
 import net.minecraft.client.particle.SpriteSet;
@@ -9,10 +10,18 @@ import org.jetbrains.annotations.NotNull;
 public class GlowParticle extends TextureSheetParticle {
     private final SpriteSet spriteSet;
 
-    public GlowParticle(ClientLevel level, double x, double y, double z, SpriteSet spriteSet) {
+    public GlowParticle(ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, SpriteSet spriteSet, EmbersParticleOptions options) {
         super(level, x, y, z);
         this.spriteSet = spriteSet;
-        this.gravity = -1;
+        this.gravity = 0;
+
+        this.lifetime = 100;
+        this.scale(0.6f);
+
+        this.setColor(options.getRed(), options.getGreen(), options.getBlue());
+        this.xd = xSpeed;
+        this.yd = ySpeed;
+        this.zd = zSpeed;
 
         this.setSpriteFromAge(spriteSet);
     }
