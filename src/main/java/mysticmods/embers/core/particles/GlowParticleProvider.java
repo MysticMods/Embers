@@ -20,4 +20,6 @@ public class GlowParticleProvider implements ParticleProvider<EmbersParticleOpti
         // We don't use the type and speed, and pass in everything else. You may of course use them if needed.
         return new GlowParticle(level, x, y, z, xSpeed, ySpeed, zSpeed, spriteSet, options);
     }
+
+
 }

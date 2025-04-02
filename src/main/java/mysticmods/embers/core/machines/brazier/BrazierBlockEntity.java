@@ -79,7 +79,7 @@ public class BrazierBlockEntity extends EmberEmitterBlockEntity {
                 }
             }
         } else {
-            if (level.getGameTime() % 40 == 0 && blockEntity.running) {
+            if (blockEntity.running) {
                 level.addParticle(new EmbersParticleOptions(1, 0.5f, 0),
                         blockEntity.getBlockPos().getX()  + 0.5f + Mth.nextFloat(random, -0.3f, 0.3f),
                         blockEntity.getBlockPos().getY() + 0.6f,
