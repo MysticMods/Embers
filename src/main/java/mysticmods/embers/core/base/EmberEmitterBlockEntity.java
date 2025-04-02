@@ -1,5 +1,6 @@
 package mysticmods.embers.core.base;
 
+import mysticmods.embers.api.blocks.EmbersBlockEntity;
 import mysticmods.embers.core.capabilities.emberemitter.EmberEmitter;
 import mysticmods.embers.core.capabilities.emberemitter.IEmberEmitter;
 import net.minecraft.core.BlockPos;
@@ -10,7 +11,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 
-public abstract class EmberEmitterBlockEntity extends BlockEntity {
+public abstract class EmberEmitterBlockEntity extends EmbersBlockEntity {
 
     public EmberEmitterBlockEntity(BlockEntityType<? extends EmberEmitterBlockEntity> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
@@ -36,12 +37,6 @@ public abstract class EmberEmitterBlockEntity extends BlockEntity {
         getEmitter().deserializeNBT(registries, tag.getCompound("emitter"));
     }
 
-    public void init() {
-        if (level != null && !level.isClientSide) {
-            //level.getCapability(EmbersCaps.EMBER).ifPresent(ember -> ember.addEmitterListener(getEmitter().getBoundingBox(), emitterOp));
-            setChanged();
-        }
-    }
 
     //    @Override
 //    public void invalidateCaps() {

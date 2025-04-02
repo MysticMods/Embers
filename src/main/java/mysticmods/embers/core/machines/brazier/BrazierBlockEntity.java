@@ -4,10 +4,8 @@ import mysticmods.embers.core.base.EmberEmitterBlockEntity;
 import mysticmods.embers.core.capabilities.emberemitter.EmberEmitter;
 import mysticmods.embers.core.capabilities.emberlevel.EmberLevel;
 import mysticmods.embers.core.particles.options.EmbersParticleOptions;
-import mysticmods.embers.core.utils.BlockEntityUtil;
 import mysticmods.embers.core.utils.SDUtil;
 import mysticmods.embers.init.EmbersBlockEntities;
-import mysticmods.embers.init.EmbersParticles;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -25,8 +23,6 @@ import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Random;
-
 public class BrazierBlockEntity extends EmberEmitterBlockEntity {
 
     private final EmberEmitter emitter;
@@ -34,6 +30,8 @@ public class BrazierBlockEntity extends EmberEmitterBlockEntity {
     private static final RandomSource random = RandomSource.create();
 
     public boolean running = false;
+    public final int maxBurnTime = 100;
+    public int ticksToBurn = 0;
 
     public BrazierBlockEntity(BlockPos pos, BlockState blockState) {
         super(EmbersBlockEntities.BRAZIER.get(), pos, blockState);
@@ -49,8 +47,6 @@ public class BrazierBlockEntity extends EmberEmitterBlockEntity {
             }
         };
 
-
-        // TODO make a helper method for this
         BlockPos lowerBound = getBlockPos().offset(-3, -3, -3);
         BlockPos upperBound = getBlockPos().offset(3, 3, 3);
         emitter = new EmberEmitter(new int[]{100, 100, 100, 50}, getBlockPos(), new BoundingBox(lowerBound.getX(), lowerBound.getY(), lowerBound.getZ(), upperBound.getX(), upperBound.getY(), upperBound.getZ()), () -> running);
@@ -66,22 +62,24 @@ public class BrazierBlockEntity extends EmberEmitterBlockEntity {
         }
     }
 
-    public static void tick(Level level, BlockPos pos, BlockState state, BrazierBlockEntity blockEntity) {
+    @Override
+    public void tick(Level level, BlockPos pos, BlockState state, BrazierBlockEntity blockEntity) {
         if(!level.isClientSide()) {
-            if (level.getGameTime() % 20 == 0) {
-                if (!blockEntity.itemHandler.getStackInSlot(0).isEmpty()) {
-                    if (!blockEntity.running) {
-                        blockEntity.running = true;
-                        level.setBlock(blockEntity.getBlockPos(), state.setValue(BrazierBlock.LIT, true), Block.UPDATE_ALL);
+            if(blockEntity.running){
+                blockEntity.ticksToBurn++;
+                if (blockEntity.ticksToBurn >= blockEntity.maxBurnTime) {
+                    blockEntity.ticksToBurn = 0;
+                    ItemStack stack = blockEntity.itemHandler.getStackInSlot(0);
+                    if (!stack.isEmpty()) {
+                        stack.shrink(1);
                         blockEntity.updateViaState();
+                    } else {
+                        onFuelChange();
                     }
-                } else {
-                    blockEntity.running = false;
-                    blockEntity.updateViaState();
                 }
             }
         } else {
-            if (level.getGameTime() % 40 == 0) {
+            if (level.getGameTime() % 40 == 0 && blockEntity.running) {
                 level.addParticle(new EmbersParticleOptions(1, 0.5f, 0),
                         blockEntity.getBlockPos().getX()  + 0.5f + Mth.nextFloat(random, -0.3f, 0.3f),
                         blockEntity.getBlockPos().getY() + 0.6f,
@@ -91,53 +89,62 @@ public class BrazierBlockEntity extends EmberEmitterBlockEntity {
         }
     }
 
-    public void updateViaState() {
-        setChanged();
-        BlockEntityUtil.updateViaState(this);
-    }
-
-    public InteractionResult onUse(Player pPlayer, InteractionHand pHand) {
-        return InteractionResult.PASS;
-    }
-
-    public InteractionResult onUseWithoutItem(Player pPlayer) {
-        return InteractionResult.PASS;
-    }
-
+    @Override
     public InteractionResult onUseWithItem(Player player, ItemStack stack, InteractionHand hand) {
         ItemStack playerStack = player.getItemInHand(hand);
-        //sys out itemstack name and size first
-        System.out.println("ItemStack: " + this.itemHandler.getStackInSlot(0).getItem().getName(playerStack).getString() + " Size: " + this.itemHandler.getStackInSlot(0).getCount());
+
         if (this.itemHandler.isItemValid(0, playerStack)) {
             ItemStack returnStack = this.itemHandler.insertItem(0, playerStack, false);
             player.setItemInHand(hand, returnStack);
             updateViaState();
         }
+
+        onFuelChange();
         return InteractionResult.CONSUME;
     }
 
     @Override
-    public @NotNull EmberEmitter getEmitter() {
-        return emitter;
-    }
-
-    public ItemStackHandler getItemHandler() {
-        return itemHandler;
-    }
-
     public void onBlockBroken() {
         EmberLevel emberLevel = SDUtil.getLevelEmbersData(level);
         if(emberLevel != null){
             emberLevel.removeEmitterListener(this.emitter);
         }
+        dropItemHandler(itemHandler);
     }
 
+    /*
+     * This method is called when the item handler is changed. It checks if the item handler is empty or not and sets the running state accordingly.
+     */
+    private void onFuelChange(){
+        //If the item handler is empty and we are running, stop running
+        if (this.itemHandler.getStackInSlot(0).isEmpty() && running) {
+            this.running = false;
+            level.setBlock(getBlockPos(), getBlockState().setValue(BrazierBlock.LIT, false), Block.UPDATE_ALL);
+            updateViaState();
+        }
+        //If the item handler is not empty and we are not running, start running
+        else if(!this.itemHandler.getStackInSlot(0).isEmpty() && !running){
+            this.running = true;
+            level.setBlock(getBlockPos(), getBlockState().setValue(BrazierBlock.LIT, true), Block.UPDATE_ALL);
 
+            //Remove one item from the item handler
+            ItemStack stack = itemHandler.getStackInSlot(0);
+            if (!stack.isEmpty()) {
+                stack.shrink(1);
+            }
+            updateViaState();
+        }
+    }
+
+    //Loading and saving
     @Override
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         running = tag.getBoolean("running");
         if(tag.contains("inventory")){
             itemHandler.deserializeNBT(registries, tag.getCompound("inventory"));
+        }
+        if(tag.contains("ticksToBurn")){
+            ticksToBurn = tag.getInt("ticksToBurn");
         }
         super.loadAdditional(tag, registries);
     }
@@ -146,6 +153,7 @@ public class BrazierBlockEntity extends EmberEmitterBlockEntity {
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         tag.putBoolean("running", running);
         tag.put("inventory", itemHandler.serializeNBT(registries));
+        tag.putInt("ticksToBurn", ticksToBurn);
         super.saveAdditional(tag, registries);
     }
 
@@ -156,4 +164,13 @@ public class BrazierBlockEntity extends EmberEmitterBlockEntity {
         return tag;
     }
 
+    //Emitters
+    @Override
+    public @NotNull EmberEmitter getEmitter() {
+        return emitter;
+    }
+
+    public ItemStackHandler getItemHandler() {
+        return itemHandler;
+    }
 }

@@ -54,7 +54,7 @@ public class BrazierBlock extends Block implements EntityBlock {
         if (type == EmbersBlockEntities.BRAZIER.get()) {
             return (lvl, pos, st, be) -> {
                 if (be instanceof BrazierBlockEntity brazier) {
-                    BrazierBlockEntity.tick(lvl, pos, st, brazier);
+                    brazier.tick(lvl, pos, st, brazier);
                 }
             };
         }
