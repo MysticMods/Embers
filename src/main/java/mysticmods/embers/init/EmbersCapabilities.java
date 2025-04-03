@@ -1,8 +1,8 @@
 package mysticmods.embers.init;
 
 import mysticmods.embers.Embers;
-import mysticmods.embers.core.capabilities.emberemitter.IEmberEmitter;
-import mysticmods.embers.core.capabilities.emberintensity.IEmberIntensity;
+import mysticmods.embers.capabilities.emberemitter.IEmberEmitter;
+import mysticmods.embers.capabilities.emberintensity.IEmberIntensity;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.capabilities.BlockCapability;
 import net.neoforged.neoforge.capabilities.Capabilities;

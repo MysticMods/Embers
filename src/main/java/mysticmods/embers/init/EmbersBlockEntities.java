@@ -1,8 +1,8 @@
 package mysticmods.embers.init;
 
 import mysticmods.embers.Embers;
-import mysticmods.embers.core.machines.brazier.BrazierBlockEntity;
-import mysticmods.embers.core.machines.caminiteforge.CaminiteForgeBlockEntity;
+import mysticmods.embers.machines.brazier.BrazierBlockEntity;
+import mysticmods.embers.machines.caminite_forge.CaminiteForgeBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 
 import java.util.function.Supplier;

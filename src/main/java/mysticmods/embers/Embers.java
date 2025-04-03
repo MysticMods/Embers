@@ -1,28 +1,21 @@
 package mysticmods.embers;
 
+import com.mojang.logging.LogUtils;
 import mysticmods.embers.datagen.EmbersBlockStateProvider;
 import mysticmods.embers.datagen.EmbersItemModelProvider;
 import mysticmods.embers.datagen.EmbersParticleDescriptionProvider;
-import mysticmods.embers.core.particles.GlowParticleProvider;
 import mysticmods.embers.datagen.EmbersRecipeProvider;
 import mysticmods.embers.init.*;
+import mysticmods.embers.particles.GlowParticleProvider;
+import mysticmods.embers.registries.MalleableMetalRegistry;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.data.DataGenerator;
-import net.minecraft.data.PackOutput;
-import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
-import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
-import net.neoforged.neoforge.data.event.GatherDataEvent;
-import org.slf4j.Logger;
-
-import com.mojang.logging.LogUtils;
-
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -32,10 +25,16 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
+import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import net.neoforged.neoforge.registries.NewRegistryEvent;
+import org.slf4j.Logger;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -153,6 +152,11 @@ public class Embers
         @SubscribeEvent
         public static void registerParticleProviders(RegisterParticleProvidersEvent event) {
             event.registerSpriteSet(EmbersParticles.PARTICLE_GLOW.get(), GlowParticleProvider::new);
+        }
+
+        @SubscribeEvent
+        static void registerRegistries(NewRegistryEvent event) {
+            event.register(MalleableMetalRegistry.MALLEABLE_METAL_REGISTRY);
         }
     }
 }

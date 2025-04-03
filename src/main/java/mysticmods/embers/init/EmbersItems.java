@@ -1,6 +1,6 @@
 package mysticmods.embers.init;
 
-import mysticmods.embers.core.machines.caminiteforge.CaminiteForgeItemBlock;
+import mysticmods.embers.machines.caminite_forge.CaminiteForgeItemBlock;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.registries.DeferredItem;

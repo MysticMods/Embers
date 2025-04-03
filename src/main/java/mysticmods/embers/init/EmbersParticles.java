@@ -1,7 +1,7 @@
 package mysticmods.embers.init;
 
 import mysticmods.embers.Embers;
-import mysticmods.embers.core.particles.types.EmbersParticleType;
+import mysticmods.embers.particles.types.EmbersParticleType;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.neoforged.neoforge.registries.DeferredRegister;

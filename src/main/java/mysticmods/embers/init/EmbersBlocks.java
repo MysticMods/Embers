@@ -1,7 +1,7 @@
 package mysticmods.embers.init;
 
-import mysticmods.embers.core.machines.brazier.BrazierBlock;
-import mysticmods.embers.core.machines.caminiteforge.CaminiteForgeBlock;
+import mysticmods.embers.machines.brazier.BrazierBlock;
+import mysticmods.embers.machines.caminite_forge.CaminiteForgeBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
