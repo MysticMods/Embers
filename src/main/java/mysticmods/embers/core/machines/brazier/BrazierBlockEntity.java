@@ -1,6 +1,6 @@
 package mysticmods.embers.core.machines.brazier;
 
-import mysticmods.embers.core.base.EmberEmitterBlockEntity;
+import mysticmods.embers.core.base.IEmberEmitterEntity;
 import mysticmods.embers.core.capabilities.emberemitter.EmberEmitter;
 import mysticmods.embers.core.capabilities.emberlevel.EmberLevel;
 import mysticmods.embers.core.particles.options.EmbersParticleOptions;
@@ -22,18 +22,19 @@ import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import team.lodestar.lodestone.systems.blockentity.LodestoneBlockEntity;
 
 import static mysticmods.embers.core.utils.BEUtil.dropItemHandler;
 import static mysticmods.embers.core.utils.BEUtil.updateViaState;
 
-public class BrazierBlockEntity extends EmberEmitterBlockEntity {
+public class BrazierBlockEntity extends LodestoneBlockEntity implements IEmberEmitterEntity {
 
     private final EmberEmitter emitter;
     private final ItemStackHandler itemHandler;
     private static final RandomSource random = RandomSource.create();
 
     public boolean running = false;
-    public final int maxBurnTime = 100;
+    public final int maxBurnTime = 1200;
     public int ticksToBurn = 0;
 
     public BrazierBlockEntity(BlockPos pos, BlockState blockState) {
@@ -144,20 +145,18 @@ public class BrazierBlockEntity extends EmberEmitterBlockEntity {
     @Override
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         running = tag.getBoolean("running");
-        if(tag.contains("inventory")){
-            itemHandler.deserializeNBT(registries, tag.getCompound("inventory"));
-        }
-        if(tag.contains("ticksToBurn")){
-            ticksToBurn = tag.getInt("ticksToBurn");
-        }
+        ticksToBurn = tag.getInt("ticksToBurn");
+        itemHandler.deserializeNBT(registries, tag.getCompound("inventory"));
+        emitter.deserializeNBT(registries, tag.getCompound("emitter"));
         super.loadAdditional(tag, registries);
     }
 
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         tag.putBoolean("running", running);
-        tag.put("inventory", itemHandler.serializeNBT(registries));
         tag.putInt("ticksToBurn", ticksToBurn);
+        tag.put("inventory", itemHandler.serializeNBT(registries));
+        tag.put("emitter", emitter.serializeNBT(registries));
         super.saveAdditional(tag, registries);
     }
 
