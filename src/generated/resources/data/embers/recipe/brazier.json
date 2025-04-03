@@ -2,9 +2,15 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "#": "embers:caminite_bricks",
-    "C": "minecraft:copper_ingot",
-    "F": "minecraft:campfire"
+    "#": {
+      "item": "embers:caminite_bricks"
+    },
+    "C": {
+      "item": "minecraft:copper_ingot"
+    },
+    "F": {
+      "item": "minecraft:campfire"
+    }
   },
   "pattern": [
     "CFC",

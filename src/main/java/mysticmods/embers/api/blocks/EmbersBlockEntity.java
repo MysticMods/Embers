@@ -9,6 +9,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -27,16 +28,16 @@ public class EmbersBlockEntity extends BlockEntity {
     public void tick(Level level, BlockPos pos, BlockState state, BrazierBlockEntity blockEntity) {
     }
 
-    public InteractionResult onUse(Player pPlayer, InteractionHand pHand) {
-        return InteractionResult.PASS;
+    public ItemInteractionResult onUse(Player pPlayer, InteractionHand pHand) {
+        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
 
     public InteractionResult onUseWithoutItem(Player pPlayer) {
         return InteractionResult.PASS;
     }
 
-    public InteractionResult onUseWithItem(Player player, ItemStack stack, InteractionHand hand) {
-        return InteractionResult.PASS;
+    public ItemInteractionResult onUseWithItem(Player player, ItemStack stack, InteractionHand hand) {
+        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
 
     public void onBlockBroken() {

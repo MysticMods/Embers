@@ -2,7 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "#": "embers:caminite_brick"
+    "#": {
+      "item": "embers:caminite_brick"
+    }
   },
   "pattern": [
     "##",

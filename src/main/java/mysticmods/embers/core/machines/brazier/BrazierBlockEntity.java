@@ -13,6 +13,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -79,7 +80,7 @@ public class BrazierBlockEntity extends EmberEmitterBlockEntity {
                 }
             }
         } else {
-            if (blockEntity.running) {
+            if (level.getGameTime() % 40 == 0 && blockEntity.running) {
                 level.addParticle(new EmbersParticleOptions(1, 0.5f, 0),
                         blockEntity.getBlockPos().getX()  + 0.5f + Mth.nextFloat(random, -0.3f, 0.3f),
                         blockEntity.getBlockPos().getY() + 0.6f,
@@ -90,7 +91,7 @@ public class BrazierBlockEntity extends EmberEmitterBlockEntity {
     }
 
     @Override
-    public InteractionResult onUseWithItem(Player player, ItemStack stack, InteractionHand hand) {
+    public ItemInteractionResult onUseWithItem(Player player, ItemStack stack, InteractionHand hand) {
         ItemStack playerStack = player.getItemInHand(hand);
 
         if (this.itemHandler.isItemValid(0, playerStack)) {
@@ -100,7 +101,7 @@ public class BrazierBlockEntity extends EmberEmitterBlockEntity {
         }
 
         onFuelChange();
-        return InteractionResult.CONSUME;
+        return ItemInteractionResult.CONSUME;
     }
 
     @Override

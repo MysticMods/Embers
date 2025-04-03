@@ -3,7 +3,9 @@
   "category": "misc",
   "cookingtime": 200,
   "experience": 0.1,
-  "ingredient": "embers:caminite_blend",
+  "ingredient": {
+    "item": "embers:caminite_blend"
+  },
   "result": {
     "count": 1,
     "id": "embers:caminite_brick"

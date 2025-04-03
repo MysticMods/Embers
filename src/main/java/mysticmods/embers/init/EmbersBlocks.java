@@ -16,7 +16,6 @@ public class EmbersBlocks {
     public static final DeferredBlock<Block> CAMINITE_BRICK = BLOCKS.register(
             "caminite_bricks", registryName -> new Block(
                     BlockBehaviour.Properties.of()
-                            .setId(ResourceKey.create(Registries.BLOCK, registryName))
                             .requiresCorrectToolForDrops().strength(1.5F, 6.0F)
             )
     );
@@ -24,7 +23,6 @@ public class EmbersBlocks {
     public static final DeferredBlock<Block> BRAZIER = BLOCKS.register(
             "brazier", registryName -> new BrazierBlock(
                     BlockBehaviour.Properties.ofFullCopy(Blocks.BRICKS)
-                            .setId(ResourceKey.create(Registries.BLOCK, registryName))
                             .lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 15 : 0)
 
             )

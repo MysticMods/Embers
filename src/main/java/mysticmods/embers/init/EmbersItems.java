@@ -1,17 +1,7 @@
 package mysticmods.embers.init;
 
-import mysticmods.embers.Embers;
-import net.minecraft.client.data.models.BlockModelGenerators;
-import net.minecraft.client.data.models.ItemModelGenerators;
-import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
-import net.minecraft.client.data.models.blockstates.PropertyDispatch;
-import net.minecraft.client.data.models.blockstates.Variant;
-import net.minecraft.client.data.models.blockstates.VariantProperties;
-import net.minecraft.client.data.models.model.ModelTemplates;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.neoforge.registries.DeferredItem;
 
 import static mysticmods.embers.Embers.ITEMS;
@@ -42,30 +32,30 @@ public class EmbersItems {
     );
 
 
-    public static void registerModels(BlockModelGenerators blockModels, ItemModelGenerators itemModels) {
-        //Ites
-        itemModels.generateFlatItem(ASHEN_STEEL_INGOT.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.generateFlatItem(CAMINITE_BLEND.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.generateFlatItem(CAMINITE_BRICK.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.generateFlatItem(CINDERSTEEL_INGOT.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.generateFlatItem(CINNABAR.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.generateFlatItem(DAWNSTONE_INGOT.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.generateFlatItem(EMBER_CRYSTAL.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.generateFlatItem(QUICKSILVER.get(), ModelTemplates.FLAT_ITEM);
-        itemModels.generateFlatItem(VERMILLIONITE_CHUNK.get(), ModelTemplates.FLAT_ITEM);
-
-        //Blocks
-        blockModels.createTrivialCube(EmbersBlocks.CAMINITE_BRICK.get());
-
-        blockModels.blockStateOutput.accept(
-                MultiVariantGenerator.multiVariant(EmbersBlocks.BRAZIER.get())
-                        .with(
-                                PropertyDispatch.property(BlockStateProperties.LIT)
-                                        .select(true, Variant.variant().with(VariantProperties.MODEL, ResourceLocation.fromNamespaceAndPath(Embers.MODID, "block/brazier_on")))
-                                        .select(false, Variant.variant().with(VariantProperties.MODEL, ResourceLocation.fromNamespaceAndPath(Embers.MODID, "block/brazier")))
-                        )
-        );
-    }
+//    public static void registerModels(BlockModelGenerators blockModels, ItemModelGenerators itemModels) {
+//        //Ites
+//        itemModels.generateFlatItem(ASHEN_STEEL_INGOT.get(), ModelTemplates.FLAT_ITEM);
+//        itemModels.generateFlatItem(CAMINITE_BLEND.get(), ModelTemplates.FLAT_ITEM);
+//        itemModels.generateFlatItem(CAMINITE_BRICK.get(), ModelTemplates.FLAT_ITEM);
+//        itemModels.generateFlatItem(CINDERSTEEL_INGOT.get(), ModelTemplates.FLAT_ITEM);
+//        itemModels.generateFlatItem(CINNABAR.get(), ModelTemplates.FLAT_ITEM);
+//        itemModels.generateFlatItem(DAWNSTONE_INGOT.get(), ModelTemplates.FLAT_ITEM);
+//        itemModels.generateFlatItem(EMBER_CRYSTAL.get(), ModelTemplates.FLAT_ITEM);
+//        itemModels.generateFlatItem(QUICKSILVER.get(), ModelTemplates.FLAT_ITEM);
+//        itemModels.generateFlatItem(VERMILLIONITE_CHUNK.get(), ModelTemplates.FLAT_ITEM);
+//
+//        //Blocks
+//        blockModels.createTrivialCube(EmbersBlocks.CAMINITE_BRICK.get());
+//
+//        blockModels.blockStateOutput.accept(
+//                MultiVariantGenerator.multiVariant(EmbersBlocks.BRAZIER.get())
+//                        .with(
+//                                PropertyDispatch.property(BlockStateProperties.LIT)
+//                                        .select(true, Variant.variant().with(VariantProperties.MODEL, ResourceLocation.fromNamespaceAndPath(Embers.MODID, "block/brazier_on")))
+//                                        .select(false, Variant.variant().with(VariantProperties.MODEL, ResourceLocation.fromNamespaceAndPath(Embers.MODID, "block/brazier")))
+//                        )
+//        );
+//    }
 
     public static void init() {
     }

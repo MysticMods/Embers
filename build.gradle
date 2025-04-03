@@ -3,7 +3,7 @@ plugins {
     id 'eclipse'
     id 'idea'
     id 'maven-publish'
-    id 'net.neoforged.gradle.userdev' version '7.0.173'
+    id 'net.neoforged.gradle.userdev' version '7.0.170'
 }
 
 tasks.named('wrapper', Wrapper).configure {
@@ -54,11 +54,11 @@ runs {
 
     client {
         // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
-        systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+        systemProperty 'forge.enabledGameTestNamespaces', project.mod_id
     }
 
     server {
-        systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+        systemProperty 'forge.enabledGameTestNamespaces', project.mod_id
         argument '--nogui'
     }
 
@@ -66,10 +66,10 @@ runs {
     // By default, the server will crash when no gametests are provided.
     // The gametest system is also enabled by default for other run configs under the /test command.
     gameTestServer {
-        systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+        systemProperty 'forge.enabledGameTestNamespaces', project.mod_id
     }
 
-    clientData {
+    data {
         // example of overriding the workingDirectory set in configureEach above, uncomment if you want to use it
         // workingDirectory project.file('run-data')
 

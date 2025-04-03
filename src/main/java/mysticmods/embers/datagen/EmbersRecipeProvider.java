@@ -13,35 +13,35 @@ import java.util.concurrent.CompletableFuture;
 public class EmbersRecipeProvider extends RecipeProvider {
 
     // Construct the provider to run
-    protected EmbersRecipeProvider(HolderLookup.Provider provider, RecipeOutput output) {
-        super(provider, output);
+    public EmbersRecipeProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider) {
+        super(output, lookupProvider);
     }
 
     @Override
-    protected void buildRecipes() {
+    protected void buildRecipes(RecipeOutput recipeOutput) {
         //Caminite Blend
-        ShapelessRecipeBuilder.shapeless(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.MISC, EmbersItems.CAMINITE_BLEND)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, EmbersItems.CAMINITE_BLEND)
                 .requires(Items.CLAY_BALL)
                 .requires(Items.SAND)
                 .unlockedBy("has_caminite_blend", has(EmbersItems.CAMINITE_BLEND))
                 .unlockedBy("has_clay_ball", has(Items.CLAY_BALL))
                 .unlockedBy("has_sand", has(Items.SAND))
-                .save(this.output);
+                .save(recipeOutput);
 
 
 
         // ## Blocks ## //
 
         //Caminite Brick Block
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.BUILDING_BLOCKS, EmbersItems.CAMINITE_BRICK_BLOCK_ITEM)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, EmbersItems.CAMINITE_BRICK_BLOCK_ITEM)
                 .pattern("##")
                 .pattern("##")
                 .define('#', EmbersItems.CAMINITE_BRICK)
                 .unlockedBy("has_caminite_brick", has(EmbersItems.CAMINITE_BRICK))
-                .save(this.output);
+                .save(recipeOutput);
 
         //Brazier
-        ShapedRecipeBuilder.shaped(this.registries.lookupOrThrow(Registries.ITEM), RecipeCategory.MISC, EmbersItems.BRAZIER_BLOCK_ITEM)
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, EmbersItems.BRAZIER_BLOCK_ITEM)
                 .pattern("CFC")
                 .pattern("C#C")
                 .define('#', EmbersItems.CAMINITE_BRICK_BLOCK_ITEM)
@@ -50,7 +50,7 @@ public class EmbersRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_caminite_bricks", has(EmbersItems.CAMINITE_BRICK_BLOCK_ITEM))
                 .unlockedBy("has_copper_ingot", has(Items.COPPER_INGOT))
                 .unlockedBy("has_campfire", has(Items.CAMPFIRE))
-                .save(this.output);
+                .save(recipeOutput);
 
         // ## Smelting ## //
 
@@ -63,24 +63,8 @@ public class EmbersRecipeProvider extends RecipeProvider {
                 200
         )
                 .unlockedBy("has_caminite_blend", has(EmbersItems.CAMINITE_BLEND))
-                .save(this.output, "caminite_brick_smelting");
+                .save(recipeOutput, "caminite_brick_smelting");
 
     }
 
-    // The runner to add to the data generator
-    public static class Runner extends RecipeProvider.Runner {
-        public Runner(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider) {
-            super(output, lookupProvider);
-        }
-
-        @Override
-        protected RecipeProvider createRecipeProvider(HolderLookup.Provider provider, RecipeOutput output) {
-            return new EmbersRecipeProvider(provider, output);
-        }
-
-        @Override
-        public String getName() {
-            return "embers_recipe_provider";
-        }
-    }
 }

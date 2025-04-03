@@ -10,10 +10,10 @@ public class EmbersBlockEntities {
 
     public static final Supplier<BlockEntityType<BrazierBlockEntity>> BRAZIER = Embers.BLOCK_ENTITY_TYPES.register(
             "brazier_block_entity",
-            () -> new BlockEntityType<>(
+            () -> BlockEntityType.Builder.of(
                     BrazierBlockEntity::new,
                     EmbersBlocks.BRAZIER.get()
-            )
+            ).build(null)
     );
 
     public static void init() {

@@ -1,13 +1,18 @@
 package mysticmods.embers;
 
-import mysticmods.embers.datagen.EmbersModelProvider;
+import mysticmods.embers.datagen.EmbersBlockStateProvider;
+import mysticmods.embers.datagen.EmbersItemModelProvider;
 import mysticmods.embers.datagen.EmbersParticleDescriptionProvider;
-import mysticmods.embers.datagen.EmbersRecipeProvider;
 import mysticmods.embers.core.particles.GlowParticleProvider;
+import mysticmods.embers.datagen.EmbersRecipeProvider;
 import mysticmods.embers.init.*;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import org.slf4j.Logger;
 
@@ -31,6 +36,8 @@ import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import net.neoforged.neoforge.registries.DeferredRegister;
+
+import java.util.concurrent.CompletableFuture;
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
 @Mod(Embers.MODID)
@@ -79,8 +86,8 @@ public class Embers
             LOGGER.info("DIRT BLOCK >> {}", BuiltInRegistries.BLOCK.getKey(Blocks.DIRT));
 
         LOGGER.info(Config.magicNumberIntroduction + Config.magicNumber);
-
-        Config.items.forEach((item) -> LOGGER.info("ITEM >> {}", item.toString()));
+//
+//        Config.items.forEach((item) -> LOGGER.info("ITEM >> {}", item.toString()));
     }
 
     private void addCreative(BuildCreativeModeTabContentsEvent event)
@@ -91,7 +98,7 @@ public class Embers
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event)
     {
-        LOGGER.info("HELLO from server starting");
+
     }
 
 
@@ -101,16 +108,41 @@ public class Embers
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event)
         {
-            // Some client setup code
-            LOGGER.info("HELLO FROM CLIENT SETUP");
-            LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
+
         }
 
+//        @SubscribeEvent
+//        public static void gatherData(GatherDataEvent.Client event) {
+//            event.createProvider(EmbersModelProvider::new);
+//            event.createProvider(EmbersRecipeProvider.Runner::new);
+//            event.createProvider(EmbersParticleDescriptionProvider::new);
+//        }
+
         @SubscribeEvent
-        public static void gatherData(GatherDataEvent.Client event) {
-            event.createProvider(EmbersModelProvider::new);
-            event.createProvider(EmbersRecipeProvider.Runner::new);
-            event.createProvider(EmbersParticleDescriptionProvider::new);
+        public static void gatherData(GatherDataEvent event) {
+            DataGenerator generator = event.getGenerator();
+            PackOutput output = generator.getPackOutput();
+            ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
+            CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
+
+            // other providers here
+            generator.addProvider(
+                    event.includeClient(),
+                    new EmbersBlockStateProvider(output, existingFileHelper)
+            );
+
+            generator.addProvider(
+                    event.includeClient(),
+                    new EmbersItemModelProvider(output, existingFileHelper)
+            );
+            generator.addProvider(
+                    event.includeClient(),
+                    new EmbersParticleDescriptionProvider(output, existingFileHelper)
+            );
+            generator.addProvider(
+                    event.includeServer(),
+                    new EmbersRecipeProvider(output, lookupProvider)
+            );
         }
 
         @SubscribeEvent
