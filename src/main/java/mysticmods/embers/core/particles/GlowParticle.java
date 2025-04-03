@@ -27,6 +27,11 @@ public class GlowParticle extends TextureSheetParticle {
     }
 
     @Override
+    protected int getLightColor(float partialTick) {
+        return 0xF000F0;
+    }
+
+    @Override
     public void tick() {
         this.setSpriteFromAge(spriteSet);
         super.tick();
