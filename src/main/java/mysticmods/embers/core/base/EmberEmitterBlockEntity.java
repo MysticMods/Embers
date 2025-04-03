@@ -1,6 +1,5 @@
 package mysticmods.embers.core.base;
 
-import mysticmods.embers.api.blocks.EmbersBlockEntity;
 import mysticmods.embers.core.capabilities.emberemitter.EmberEmitter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
@@ -8,8 +7,9 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
+import team.lodestar.lodestone.systems.blockentity.LodestoneBlockEntity;
 
-public abstract class EmberEmitterBlockEntity extends EmbersBlockEntity {
+public abstract class EmberEmitterBlockEntity extends LodestoneBlockEntity {
 
     public EmberEmitterBlockEntity(BlockEntityType<? extends EmberEmitterBlockEntity> type, BlockPos pos, BlockState state) {
         super(type, pos, state);

@@ -7,6 +7,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.neoforge.registries.DeferredBlock;
+import team.lodestar.lodestone.systems.multiblock.MultiblockComponentBlock;
 
 import static mysticmods.embers.Embers.BLOCKS;
 
@@ -31,6 +32,10 @@ public class EmbersBlocks {
             "caminite_forge", registryName -> new CaminiteForgeBlock(
                     BlockBehaviour.Properties.ofFullCopy(Blocks.BRICKS)
 
+            )
+    );    public static final DeferredBlock<Block> CAMINITE_FORGE_COMPONENT = BLOCKS.register(
+            "caminite_forge_component", registryName -> new MultiblockComponentBlock(
+                    BlockBehaviour.Properties.ofFullCopy(Blocks.BRICKS)
             )
     );
 

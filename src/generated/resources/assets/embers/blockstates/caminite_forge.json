@@ -1,10 +1,28 @@
 {
   "variants": {
-    "lit=false": {
+    "facing=east,lit=false": {
       "model": "embers:block/caminite_forge"
     },
-    "lit=true": {
-      "model": "embers:block/caminite_forge_on"
+    "facing=east,lit=true": {
+      "model": "embers:block/caminite_forge"
+    },
+    "facing=north,lit=false": {
+      "model": "embers:block/caminite_forge"
+    },
+    "facing=north,lit=true": {
+      "model": "embers:block/caminite_forge"
+    },
+    "facing=south,lit=false": {
+      "model": "embers:block/caminite_forge"
+    },
+    "facing=south,lit=true": {
+      "model": "embers:block/caminite_forge"
+    },
+    "facing=west,lit=false": {
+      "model": "embers:block/caminite_forge"
+    },
+    "facing=west,lit=true": {
+      "model": "embers:block/caminite_forge"
     }
   }
 }

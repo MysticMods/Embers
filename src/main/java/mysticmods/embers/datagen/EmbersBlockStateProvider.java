@@ -26,7 +26,13 @@ public class EmbersBlockStateProvider extends BlockStateProvider {
 
         getVariantBuilder(EmbersBlocks.CAMINITE_FORGE.get()).forAllStates(state ->
                 ConfiguredModel.builder()
-                        .modelFile(state.getValue(BlockStateProperties.LIT) ? models().getExistingFile(modLoc("block/caminite_forge_on")) : models().getExistingFile(modLoc("block/caminite_forge")))
+                        .modelFile(state.getValue(BlockStateProperties.LIT) ? models().getExistingFile(modLoc("block/caminite_forge")) : models().getExistingFile(modLoc("block/caminite_forge")))
+                        .build()
+        );
+
+        getVariantBuilder(EmbersBlocks.CAMINITE_FORGE_COMPONENT.get()).forAllStates(state ->
+                ConfiguredModel.builder()
+                        .modelFile(models().getExistingFile(modLoc("block/caminite_forge_component")))
                         .build()
         );
     }

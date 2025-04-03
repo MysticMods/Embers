@@ -1,5 +1,6 @@
 package mysticmods.embers.init;
 
+import mysticmods.embers.core.machines.caminiteforge.CaminiteForgeItemBlock;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.registries.DeferredItem;
@@ -31,8 +32,12 @@ public class EmbersItems {
             EmbersBlocks.CAMINITE_BRICK
     );
 
-    public static final DeferredItem<BlockItem> CAMINITE_FORGE_BLOCK_ITEM = ITEMS.registerSimpleBlockItem(
-            EmbersBlocks.CAMINITE_FORGE
+//    public static final DeferredItem<BlockItem> CAMINITE_FORGE_BLOCK_ITEM = ITEMS.registerSimpleBlockItem(
+//            EmbersBlocks.CAMINITE_FORGE
+//    );
+
+    public static final DeferredItem<BlockItem> CAMINITE_FORGE_BLOCK_ITEM = ITEMS.register("caminite_forge_block",
+            () -> new CaminiteForgeItemBlock(new Item.Properties())
     );
 
     public static void init() {

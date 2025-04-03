@@ -16,12 +16,15 @@ import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import static mysticmods.embers.core.utils.BEUtil.dropItemHandler;
+import static mysticmods.embers.core.utils.BEUtil.updateViaState;
 
 public class BrazierBlockEntity extends EmberEmitterBlockEntity {
 
@@ -63,27 +66,27 @@ public class BrazierBlockEntity extends EmberEmitterBlockEntity {
     }
 
     @Override
-    public void tick(Level level, BlockPos pos, BlockState state, BrazierBlockEntity blockEntity) {
+    public void tick() {
         if(!level.isClientSide()) {
-            if(blockEntity.running){
-                blockEntity.ticksToBurn++;
-                if (blockEntity.ticksToBurn >= blockEntity.maxBurnTime) {
-                    blockEntity.ticksToBurn = 0;
-                    ItemStack stack = blockEntity.itemHandler.getStackInSlot(0);
+            if(running){
+                ticksToBurn++;
+                if (ticksToBurn >= maxBurnTime) {
+                    ticksToBurn = 0;
+                    ItemStack stack = itemHandler.getStackInSlot(0);
                     if (!stack.isEmpty()) {
                         stack.shrink(1);
-                        blockEntity.updateViaState();
+                        updateViaState(this);
                     } else {
                         onFuelChange();
                     }
                 }
             }
         } else {
-            if (level.getGameTime() % 40 == 0 && blockEntity.running) {
+            if (level.getGameTime() % 40 == 0 && running) {
                 level.addParticle(new EmbersParticleOptions(1, 0.5f, 0),
-                        blockEntity.getBlockPos().getX()  + 0.5f + Mth.nextFloat(random, -0.3f, 0.3f),
-                        blockEntity.getBlockPos().getY() + 0.6f,
-                        blockEntity.getBlockPos().getZ() + 0.5f + Mth.nextFloat(random, -0.3f, 0.3f),
+                        getBlockPos().getX()  + 0.5f + Mth.nextFloat(random, -0.3f, 0.3f),
+                        getBlockPos().getY() + 0.6f,
+                        getBlockPos().getZ() + 0.5f + Mth.nextFloat(random, -0.3f, 0.3f),
                         0, 0.25d * (random.nextDouble() * 0.1d), 0);
             }
         }
@@ -96,7 +99,7 @@ public class BrazierBlockEntity extends EmberEmitterBlockEntity {
         if (this.itemHandler.isItemValid(0, playerStack)) {
             ItemStack returnStack = this.itemHandler.insertItem(0, playerStack, false);
             player.setItemInHand(hand, returnStack);
-            updateViaState();
+            updateViaState(this);
         }
 
         onFuelChange();
@@ -104,12 +107,13 @@ public class BrazierBlockEntity extends EmberEmitterBlockEntity {
     }
 
     @Override
-    public void onBlockBroken() {
+    public void onBreak(@Nullable Player player) {
+        super.onBreak(player);
         EmberLevel emberLevel = SDUtil.getLevelEmbersData(level);
         if(emberLevel != null){
             emberLevel.removeEmitterListener(this.emitter);
         }
-        dropItemHandler(itemHandler);
+        dropItemHandler(this, itemHandler);
     }
 
     /*
@@ -120,7 +124,7 @@ public class BrazierBlockEntity extends EmberEmitterBlockEntity {
         if (this.itemHandler.getStackInSlot(0).isEmpty() && running) {
             this.running = false;
             level.setBlock(getBlockPos(), getBlockState().setValue(BrazierBlock.LIT, false), Block.UPDATE_ALL);
-            updateViaState();
+            updateViaState(this);
         }
         //If the item handler is not empty and we are not running, start running
         else if(!this.itemHandler.getStackInSlot(0).isEmpty() && !running){
@@ -132,7 +136,7 @@ public class BrazierBlockEntity extends EmberEmitterBlockEntity {
             if (!stack.isEmpty()) {
                 stack.shrink(1);
             }
-            updateViaState();
+            updateViaState(this);
         }
     }
 
