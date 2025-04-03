@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "lit=false": {
+      "model": "embers:block/caminite_forge"
+    },
+    "lit=true": {
+      "model": "embers:block/caminite_forge_on"
+    }
+  }
+}

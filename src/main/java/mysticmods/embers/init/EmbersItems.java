@@ -31,31 +31,9 @@ public class EmbersItems {
             EmbersBlocks.CAMINITE_BRICK
     );
 
-
-//    public static void registerModels(BlockModelGenerators blockModels, ItemModelGenerators itemModels) {
-//        //Ites
-//        itemModels.generateFlatItem(ASHEN_STEEL_INGOT.get(), ModelTemplates.FLAT_ITEM);
-//        itemModels.generateFlatItem(CAMINITE_BLEND.get(), ModelTemplates.FLAT_ITEM);
-//        itemModels.generateFlatItem(CAMINITE_BRICK.get(), ModelTemplates.FLAT_ITEM);
-//        itemModels.generateFlatItem(CINDERSTEEL_INGOT.get(), ModelTemplates.FLAT_ITEM);
-//        itemModels.generateFlatItem(CINNABAR.get(), ModelTemplates.FLAT_ITEM);
-//        itemModels.generateFlatItem(DAWNSTONE_INGOT.get(), ModelTemplates.FLAT_ITEM);
-//        itemModels.generateFlatItem(EMBER_CRYSTAL.get(), ModelTemplates.FLAT_ITEM);
-//        itemModels.generateFlatItem(QUICKSILVER.get(), ModelTemplates.FLAT_ITEM);
-//        itemModels.generateFlatItem(VERMILLIONITE_CHUNK.get(), ModelTemplates.FLAT_ITEM);
-//
-//        //Blocks
-//        blockModels.createTrivialCube(EmbersBlocks.CAMINITE_BRICK.get());
-//
-//        blockModels.blockStateOutput.accept(
-//                MultiVariantGenerator.multiVariant(EmbersBlocks.BRAZIER.get())
-//                        .with(
-//                                PropertyDispatch.property(BlockStateProperties.LIT)
-//                                        .select(true, Variant.variant().with(VariantProperties.MODEL, ResourceLocation.fromNamespaceAndPath(Embers.MODID, "block/brazier_on")))
-//                                        .select(false, Variant.variant().with(VariantProperties.MODEL, ResourceLocation.fromNamespaceAndPath(Embers.MODID, "block/brazier")))
-//                        )
-//        );
-//    }
+    public static final DeferredItem<BlockItem> CAMINITE_FORGE_BLOCK_ITEM = ITEMS.registerSimpleBlockItem(
+            EmbersBlocks.CAMINITE_FORGE
+    );
 
     public static void init() {
     }

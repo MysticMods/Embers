@@ -1,16 +1,13 @@
 package mysticmods.embers.core.machines.brazier;
 
+import mysticmods.embers.api.blocks.EmbersBlock;
 import mysticmods.embers.init.EmbersBlockEntities;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
@@ -21,7 +18,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -29,7 +25,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class BrazierBlock extends Block implements EntityBlock {
+public class BrazierBlock extends EmbersBlock implements EntityBlock {
 
     private static final VoxelShape SHAPE_DOWN = Shapes.box(0, 0, 0, 1, 0.6, 1).optimize();
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
@@ -86,23 +82,6 @@ public class BrazierBlock extends Block implements EntityBlock {
     }
 
     @Override
-    public boolean onDestroyedByPlayer(BlockState state, Level level, BlockPos pos, Player player, boolean willHarvest, FluidState fluid) {
-        this.onBlockBroken(level, pos, state);
-        return super.onDestroyedByPlayer(state, level, pos, player, willHarvest, fluid);
-    }
-
-    @Override
-    public void onBlockExploded(BlockState state, Level level, BlockPos pos, Explosion explosion) {
-        super.onBlockExploded(state, level, pos, explosion);
-        this.onBlockBroken(level, pos, state);
-    }
-
-    @Override
-    public void onDestroyedByPushReaction(BlockState state, Level level, BlockPos pos, Direction pushDirection, FluidState fluid) {
-        super.onDestroyedByPushReaction(state, level, pos, pushDirection, fluid);
-        this.onBlockBroken(level, pos, state);
-    }
-
     public void onBlockBroken(Level level, BlockPos pos, BlockState state) {
         if (level.getBlockEntity(pos) instanceof BrazierBlockEntity blockEntity) {
             blockEntity.onBlockBroken();

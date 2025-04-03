@@ -1,12 +1,8 @@
 package mysticmods.embers.api.blocks;
 
-import mysticmods.embers.core.capabilities.emberlevel.EmberLevel;
 import mysticmods.embers.core.machines.brazier.BrazierBlockEntity;
-import mysticmods.embers.core.particles.options.EmbersParticleOptions;
 import mysticmods.embers.core.utils.BlockEntityUtil;
-import mysticmods.embers.core.utils.SDUtil;
 import net.minecraft.core.BlockPos;
-import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;

@@ -2,11 +2,9 @@ package mysticmods.embers.core.base;
 
 import mysticmods.embers.api.blocks.EmbersBlockEntity;
 import mysticmods.embers.core.capabilities.emberemitter.EmberEmitter;
-import mysticmods.embers.core.capabilities.emberemitter.IEmberEmitter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
@@ -36,31 +34,5 @@ public abstract class EmberEmitterBlockEntity extends EmbersBlockEntity {
         super.loadAdditional(tag, registries);
         getEmitter().deserializeNBT(registries, tag.getCompound("emitter"));
     }
-
-
-    //    @Override
-//    public void invalidateCaps() {
-//        super.invalidateCaps();
-//        emitterOp.invalidate();
-//    }
-
-//    public void updateViaState() {
-//        setChanged();
-//        BlockEntityUtil.updateViaState(this);
-//    }
-
-//    protected void clearEmber() {
-//        if (level != null && !level.isClientSide) {
-//            level.getCapability(EmbersCaps.EMBER).ifPresent(ember -> ember.clearEmberInBoundingBox(getEmitter().getBoundingBox()));
-//        }
-//    }
-
-//    @Override
-//    public void onBreak(@Nullable Player player) {
-//        super.onBreak(player);
-//        clearEmber();
-//    }
-
-
 
 }

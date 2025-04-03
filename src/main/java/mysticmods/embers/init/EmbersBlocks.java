@@ -1,8 +1,7 @@
 package mysticmods.embers.init;
 
 import mysticmods.embers.core.machines.brazier.BrazierBlock;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceKey;
+import mysticmods.embers.core.machines.caminiteforge.CaminiteForgeBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -24,6 +23,13 @@ public class EmbersBlocks {
             "brazier", registryName -> new BrazierBlock(
                     BlockBehaviour.Properties.ofFullCopy(Blocks.BRICKS)
                             .lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 15 : 0)
+
+            )
+    );
+
+    public static final DeferredBlock<Block> CAMINITE_FORGE = BLOCKS.register(
+            "caminite_forge", registryName -> new CaminiteForgeBlock(
+                    BlockBehaviour.Properties.ofFullCopy(Blocks.BRICKS)
 
             )
     );
