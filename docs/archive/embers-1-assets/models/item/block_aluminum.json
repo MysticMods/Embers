@@ -1,7 +1,0 @@
-{
-    "parent": "block/cube_all",
-    "textures": {
-        "all": "embers:blocks/block_aluminum",
-        "particle": "embers:blocks/block_aluminum"
-    }
-}

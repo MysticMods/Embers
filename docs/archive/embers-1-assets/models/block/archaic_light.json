@@ -1,8 +1,0 @@
-{
-    "parent": "block/cube_column",
-    "textures": {
-        "end": "embers:blocks/archaic_light_top",
-        "side": "embers:blocks/archaic_light_side",
-        "particle": "embers:blocks/archaic_light_side"
-    }
-}

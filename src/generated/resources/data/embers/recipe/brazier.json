@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "embers:caminite_bricks"
+    },
+    "C": {
+      "item": "minecraft:copper_ingot"
+    },
+    "F": {
+      "item": "minecraft:campfire"
+    }
+  },
+  "pattern": [
+    "CFC",
+    "C#C"
+  ],
+  "result": {
+    "count": 1,
+    "id": "embers:brazier"
+  }
+}
