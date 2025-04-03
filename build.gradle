@@ -20,6 +20,11 @@ group = mod_group_id
 
 repositories {
     mavenLocal()
+    maven {
+        name 'Curios maven'
+        url = "https://maven.theillusivec4.top/"
+    }
+    maven { url = 'https://maven.blamejared.com/' }
 }
 
 base {
@@ -115,6 +120,12 @@ dependencies {
 
     // Example project dependency using a sister or child project:
     // implementation project(":myproject")
+
+    compileOnlyApi(("top.theillusivec4.curios:curios-neoforge:${property("curios_version")}"))
+    runtimeOnly(("top.theillusivec4.curios:curios-neoforge:${property("curios_version")}"))
+
+    compileOnlyApi(("team.lodestar.lodestone:lodestone:${property("minecraft_version")}-${property("lodestone_version")}"))
+    runtimeOnly(("team.lodestar.lodestone:lodestone:${property("minecraft_version")}-${property("lodestone_version")}"))
 
     // For more info:
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
