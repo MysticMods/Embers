@@ -4,7 +4,6 @@ import mysticmods.embers.init.EmbersItems;
 import mysticmods.embers.init.EmbersMalleableMetals;
 import mysticmods.embers.recipes.MalleableMetalRecipeBuilder;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
 import net.minecraft.world.item.ItemStack;
