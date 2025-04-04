@@ -20,6 +20,17 @@ public class EmbersItemTagProvider extends ItemTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider provider) {
+        tag(EmbersTags.IRON_NUGGETS_TAG).add(Items.IRON_NUGGET);
         tag(EmbersTags.IRON_INGOTS_TAG).add(Items.IRON_INGOT);
+        tag(EmbersTags.IRON_RAW_ORES_TAG).add(Items.RAW_IRON);
+
+        //tag(EmbersTags.COPPER_NUGGETS_TAG).add(Items.COPPER_NUGGET);
+        tag(EmbersTags.COPPER_INGOTS_TAG).add(Items.COPPER_INGOT);
+        tag(EmbersTags.COPPER_RAW_ORES_TAG).add(Items.RAW_COPPER);
+
+
+        tag(EmbersTags.GOLD_NUGGETS_TAG).add(Items.GOLD_NUGGET);
+        tag(EmbersTags.GOLD_INGOTS_TAG).add(Items.GOLD_INGOT);
+        tag(EmbersTags.GOLD_RAW_ORES_TAG).add(Items.RAW_GOLD);
     }
 }
