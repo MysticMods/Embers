@@ -5,8 +5,11 @@ import mysticmods.embers.capabilities.emberintensity.EmberIntensity;
 import mysticmods.embers.capabilities.heated_metal.IHeatedMetalCap;
 import mysticmods.embers.init.EmbersBlockEntities;
 import mysticmods.embers.init.EmbersBlocks;
+import mysticmods.embers.init.EmbersCapabilities;
 import mysticmods.embers.init.EmbersItems;
+import mysticmods.embers.particles.options.EmbersParticleOptions;
 import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -46,7 +49,11 @@ public class CaminiteForgeBlockEntity extends MultiBlockCoreEntity implements IE
 
     @Override
     public void tick() {
-        super.tick();
+        if(level.isClientSide()) {
+            clientTick();
+        } else {
+            serverTick();
+        }
     }
 
     public void serverTick() {
@@ -66,7 +73,10 @@ public class CaminiteForgeBlockEntity extends MultiBlockCoreEntity implements IE
                     hotMetalStack.setCount(hotMetalStack.getCount() + 1);
                 } else {
                     this.itemHandler.setStackInSlot(1, new ItemStack(EmbersItems.HEATED_METAL.get(), 1));
-                    //this.itemHandler.getStackInSlot(1).getCapability(EmbersCaps.HEATED_METAL).ifPresent(cap -> cap.setMetalStack(new ItemStack(this.itemHandler.getStackInSlot(0).getItem(), 1)));
+                    IHeatedMetalCap cap = this.itemHandler.getStackInSlot(1).getCapability(EmbersCapabilities.HEATED_METAL);
+                    if (cap != null) {
+                        cap.setMetalStack(new ItemStack(this.itemHandler.getStackInSlot(0).getItem(), 1));
+                    }
                 }
                 this.itemHandler.getStackInSlot(0).shrink(1);
                 progress = 0;
@@ -79,20 +89,17 @@ public class CaminiteForgeBlockEntity extends MultiBlockCoreEntity implements IE
     public void clientTick() {
         if (this.hasHotMetals && this.level != null) {
             var random = this.level.getRandom();
-//            ParticleBuilders.create(LodestoneParticleRegistry.WISP_PARTICLE)
-//                    .addMotion(0, 0.0525d * (random.nextDouble() * 0.1d), 0)
-//                    .setAlpha(0.5f, 0.2f)
-//                    .setScale(0.1f)
-//                    .setColor(230 / 255.0f, 55 / 255.0f, 16 / 255.0f, 230 / 255.0f, 83 / 255.0f, 16 / 255.0f)
-//                    .setLifetime(Math.round(random.nextFloat() * 100))
-//                    .disableForcedMotion()
-//                    .setSpin(0)
-//                    .spawn(this.level, getBlockPos().getX() + (random.nextFloat()), getBlockPos().getY() + 2, getBlockPos().getZ() + random.nextFloat());
+            level.addParticle(new EmbersParticleOptions(1, 0.5f, 0),
+                    getBlockPos().getX() + (random.nextFloat()), getBlockPos().getY() + 2, getBlockPos().getZ() + random.nextFloat(),
+                    0, 0.25d * (random.nextDouble() * 0.1d), 0);
         }
     }
 
     @Override
     public ItemInteractionResult onUseWithItem(Player player, ItemStack pStack, InteractionHand hand) {
+        if (level.isClientSide()) {
+            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        }
         if (this.itemHandler.isItemValid(0, pStack)) {
             ItemStack returnStack = this.itemHandler.insertItem(0, pStack, false);
             player.setItemInHand(hand, returnStack);
@@ -102,7 +109,10 @@ public class CaminiteForgeBlockEntity extends MultiBlockCoreEntity implements IE
         } else {
             if (this.hasHotMetals) {
                 ItemStack hotMetal = this.itemHandler.getStackInSlot(1).copy();
-                //hotMetal.getCapability(EmbersCaps.HEATED_METAL).ifPresent(cap -> transferHeatedMetal(cap, player, hotMetal));
+                IHeatedMetalCap cap = hotMetal.getCapability(EmbersCapabilities.HEATED_METAL);
+                if (cap != null) {
+                    transferHeatedMetal(cap, player, hotMetal);
+                }
             }
         }
         return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;

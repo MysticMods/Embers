@@ -63,6 +63,7 @@ public class Embers
         EmbersCapabilities.init();
         EmbersTabs.init();
         EmbersParticles.init();
+        EmbersRecipeTypes.init();
 
         BLOCKS.register(modEventBus);
         ITEMS.register(modEventBus);

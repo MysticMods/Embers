@@ -65,6 +65,9 @@ public class EmbersRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_caminite_blend", has(EmbersItems.CAMINITE_BLEND))
                 .save(recipeOutput, "caminite_brick_smelting");
 
+
+        // ## Malleable ## //
+
     }
 
 }
