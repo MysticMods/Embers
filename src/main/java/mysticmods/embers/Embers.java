@@ -1,10 +1,7 @@
 package mysticmods.embers;
 
 import com.mojang.logging.LogUtils;
-import mysticmods.embers.datagen.EmbersBlockStateProvider;
-import mysticmods.embers.datagen.EmbersItemModelProvider;
-import mysticmods.embers.datagen.EmbersParticleDescriptionProvider;
-import mysticmods.embers.datagen.EmbersRecipeProvider;
+import mysticmods.embers.datagen.*;
 import mysticmods.embers.init.*;
 import mysticmods.embers.particles.GlowParticleProvider;
 import mysticmods.embers.registries.MalleableMetalRegistry;
@@ -38,7 +35,6 @@ import org.slf4j.Logger;
 
 import java.util.concurrent.CompletableFuture;
 
-// The value here should match an entry in the META-INF/neoforge.mods.toml file
 @Mod(Embers.MODID)
 public class Embers
 {
@@ -49,9 +45,6 @@ public class Embers
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, MODID);
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
 
-//    public static final DeferredBlock<Block> EXAMPLE_BLOCK = BLOCKS.registerSimpleBlock("example_block", BlockBehaviour.Properties.of().mapColor(MapColor.STONE));
-//    public static final DeferredItem<BlockItem> EXAMPLE_BLOCK_ITEM = ITEMS.registerSimpleBlockItem("example_block", EXAMPLE_BLOCK);
-//
 
     public Embers(IEventBus modEventBus, ModContainer modContainer)
     {
@@ -63,6 +56,7 @@ public class Embers
         EmbersCapabilities.init();
         EmbersTabs.init();
         EmbersParticles.init();
+        EmbersTags.init();
         EmbersRecipeTypes.init();
 
         BLOCKS.register(modEventBus);
@@ -80,14 +74,6 @@ public class Embers
 
     private void commonSetup(final FMLCommonSetupEvent event)
     {
-        //LOGGER.info("HELLO FROM COMMON SETUP");
-
-        if (Config.logDirtBlock)
-            LOGGER.info("DIRT BLOCK >> {}", BuiltInRegistries.BLOCK.getKey(Blocks.DIRT));
-
-        LOGGER.info(Config.magicNumberIntroduction + Config.magicNumber);
-//
-//        Config.items.forEach((item) -> LOGGER.info("ITEM >> {}", item.toString()));
     }
 
     private void addCreative(BuildCreativeModeTabContentsEvent event)
@@ -111,13 +97,6 @@ public class Embers
 
         }
 
-//        @SubscribeEvent
-//        public static void gatherData(GatherDataEvent.Client event) {
-//            event.createProvider(EmbersModelProvider::new);
-//            event.createProvider(EmbersRecipeProvider.Runner::new);
-//            event.createProvider(EmbersParticleDescriptionProvider::new);
-//        }
-
         @SubscribeEvent
         public static void gatherData(GatherDataEvent event) {
             DataGenerator generator = event.getGenerator();
@@ -125,7 +104,8 @@ public class Embers
             ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
             CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
 
-            // other providers here
+            EmbersBlockTagProvider blockTagProvider = new EmbersBlockTagProvider(output, lookupProvider, existingFileHelper);
+
             generator.addProvider(
                     event.includeClient(),
                     new EmbersBlockStateProvider(output, existingFileHelper)
@@ -142,6 +122,14 @@ public class Embers
             generator.addProvider(
                     event.includeServer(),
                     new EmbersRecipeProvider(output, lookupProvider)
+            );
+            generator.addProvider(
+                    event.includeServer(),
+                    blockTagProvider
+            );
+            generator.addProvider(
+                    event.includeServer(),
+                    new EmbersItemTagProvider(output, lookupProvider, blockTagProvider.contentsGetter(), existingFileHelper)
             );
         }
 
