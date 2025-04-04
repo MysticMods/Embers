@@ -29,18 +29,6 @@ public class BrazierBlock extends LodestoneEntityBlock<BrazierBlockEntity> {
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(LIT);
     }
-//
-//    @Override
-//    public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level level, @NotNull BlockState state, @NotNull BlockEntityType<T> type) {
-//        if (type == EmbersBlockEntities.BRAZIER.get()) {
-//            return (lvl, pos, st, be) -> {
-//                if (be instanceof BrazierBlockEntity brazier) {
-//                    brazier.tick(lvl, pos, st, brazier);
-//                }
-//            };
-//        }
-//        return null;
-//    }
 
     @Override
     public @NotNull VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter level, @NotNull BlockPos pos, @NotNull CollisionContext context) {

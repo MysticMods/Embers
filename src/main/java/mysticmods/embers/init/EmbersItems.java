@@ -20,6 +20,8 @@ public class EmbersItems {
     public static final DeferredItem<Item> QUICKSILVER = ITEMS.registerSimpleItem("quicksilver", new Item.Properties());
     public static final DeferredItem<Item> VERMILLIONITE_CHUNK = ITEMS.registerSimpleItem("vermillionite_chunk", new Item.Properties());
 
+    public static final DeferredItem<Item> HEATED_METAL = ITEMS.registerSimpleItem("heated_metal", new Item.Properties());
+
     //todo: VERMILLIONITE tag
     //todo: CINNABAR tag
 

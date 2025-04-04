@@ -22,6 +22,7 @@ public class EmbersCapabilities {
 
 
 
+
     public static void register(RegisterCapabilitiesEvent event) {
         //Brazier Ember Emitter
         event.registerBlockEntity(
