@@ -64,8 +64,7 @@ public class Embers
         CREATIVE_MODE_TABS.register(modEventBus);
         EmbersParticles.PARTICLE_TYPES.register(modEventBus);
         EmbersMalleableMetals.MALLEABLE_METAL.register(modEventBus);
-        EmbersRecipeTypes.RECIPE_SERIALIZERS.register(modEventBus);
-        EmbersRecipeTypes.RECIPE_TYPES.register(modEventBus);
+
 
         NeoForge.EVENT_BUS.register(this);
 
@@ -89,6 +88,22 @@ public class Embers
 
     }
 
+
+
+    @EventBusSubscriber(modid = MODID, bus = EventBusSubscriber.Bus.MOD)
+    public static class ServerModEvents
+    {
+
+        @SubscribeEvent
+        private static void registerCapabilities(RegisterCapabilitiesEvent event) {
+            EmbersCapabilities.register(event);
+        }
+
+        @SubscribeEvent
+        static void registerRegistries(NewRegistryEvent event) {
+            event.register(MalleableMetalRegistry.MALLEABLE_METAL_REGISTRY);
+        }
+    }
 
     @EventBusSubscriber(modid = MODID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ClientModEvents
@@ -136,18 +151,8 @@ public class Embers
         }
 
         @SubscribeEvent
-        private static void registerCapabilities(RegisterCapabilitiesEvent event) {
-            EmbersCapabilities.register(event);
-        }
-
-        @SubscribeEvent
         public static void registerParticleProviders(RegisterParticleProvidersEvent event) {
             event.registerSpriteSet(EmbersParticles.PARTICLE_GLOW.get(), GlowParticleProvider::new);
-        }
-
-        @SubscribeEvent
-        static void registerRegistries(NewRegistryEvent event) {
-            event.register(MalleableMetalRegistry.MALLEABLE_METAL_REGISTRY);
         }
     }
 }

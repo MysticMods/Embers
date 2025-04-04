@@ -47,6 +47,20 @@ public class EmbersCapabilities {
                 (myBlockEntity, side) -> myBlockEntity.getItemHandler()
         );
 
+        //Caminite Forge Ember Intensity
+        event.registerBlockEntity(
+                EmbersCapabilities.EMBER_INTENSITY,
+                EmbersBlockEntities.CAMINITE_FORGE.get(),
+                (be, o) -> be.getEmberIntensity()
+        );
+
+        //Caminite Forge ItemHandler
+        event.registerBlockEntity(
+                Capabilities.ItemHandler.BLOCK,
+                EmbersBlockEntities.CAMINITE_FORGE.get(),
+                (myBlockEntity, side) -> myBlockEntity.getItemHandler()
+        );
+
         //Heated Metal Capability
         event.registerItem(
                 EmbersCapabilities.HEATED_METAL,

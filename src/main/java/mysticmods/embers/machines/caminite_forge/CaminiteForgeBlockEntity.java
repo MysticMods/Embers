@@ -132,6 +132,10 @@ public class CaminiteForgeBlockEntity extends MultiBlockCoreEntity implements IE
         return intensity;
     }
 
+    public ItemStackHandler getItemHandler() {
+        return itemHandler;
+    }
+
     public float getProgress() {
         return this.progress / this.progressTimer;
     }
