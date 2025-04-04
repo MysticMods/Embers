@@ -2,6 +2,7 @@ package mysticmods.embers.recipes;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import mysticmods.embers.registries.MalleableMetal;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -16,6 +17,7 @@ public class MalleableMetalRecipeSerializer implements RecipeSerializer<Malleabl
     public static MapCodec<MalleableMetalRecipe> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
             Ingredient.CODEC.fieldOf("input").forGetter(MalleableMetalRecipe::getInput),
             ItemStack.CODEC.fieldOf("output").forGetter(MalleableMetalRecipe::getOutput),
+            MalleableMetal.CODEC.fieldOf("malleable_metal").forGetter(MalleableMetalRecipe::getMalleableMetal),
             ExtraCodecs.POSITIVE_FLOAT.fieldOf("experience").forGetter(MalleableMetalRecipe::getExperience),
             ExtraCodecs.POSITIVE_INT.fieldOf("processingTime").forGetter(MalleableMetalRecipe::getProcessingTime)
     ).apply(inst, MalleableMetalRecipe::new));
@@ -24,6 +26,7 @@ public class MalleableMetalRecipeSerializer implements RecipeSerializer<Malleabl
             StreamCodec.composite(
                     Ingredient.CONTENTS_STREAM_CODEC, MalleableMetalRecipe::getInput,
                     ItemStack.STREAM_CODEC, MalleableMetalRecipe::getOutput,
+                    MalleableMetal.STREAM_CODEC, MalleableMetalRecipe::getMalleableMetal,
                     ByteBufCodecs.FLOAT, MalleableMetalRecipe::getExperience,
                     ByteBufCodecs.VAR_INT, MalleableMetalRecipe::getProcessingTime,
                     MalleableMetalRecipe::new
