@@ -1,10 +1,13 @@
 package mysticmods.embers.datagen;
 
 import mysticmods.embers.init.EmbersItems;
+import mysticmods.embers.init.EmbersMalleableMetals;
+import mysticmods.embers.recipes.MalleableMetalRecipeBuilder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 
@@ -67,7 +70,15 @@ public class EmbersRecipeProvider extends RecipeProvider {
 
 
         // ## Malleable ## //
-
+        new MalleableMetalRecipeBuilder(
+                Ingredient.of(Items.IRON_ORE),
+                new ItemStack(EmbersItems.HEATED_METAL.get()),
+                EmbersMalleableMetals.MALLEABLE_IRON.get(),
+                0.5f,
+                200
+        )
+                .unlockedBy("has_iron_ore", has(Items.IRON_ORE))
+                .save(recipeOutput, "malleable_iron");
     }
 
 }

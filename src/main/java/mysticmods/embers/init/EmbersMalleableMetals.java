@@ -3,7 +3,6 @@ package mysticmods.embers.init;
 import mysticmods.embers.Embers;
 import mysticmods.embers.registries.MalleableMetal;
 import mysticmods.embers.registries.MalleableMetalRegistry;
-import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -33,5 +32,9 @@ public class EmbersMalleableMetals {
             Ingredient.of(EmbersTags.GOLD_INGOTS_TAG),
             Ingredient.of(EmbersTags.GOLD_RAW_ORES_TAG)
     ));
+
+    public static void init() {
+        // This method is intentionally left empty. The registration is done through the DeferredRegister.
+    }
 
 }

@@ -1,0 +1,26 @@
+{
+  "type": "embers:malleable_metal",
+  "experience": 0.5,
+  "input": {
+    "item": "minecraft:iron_ore"
+  },
+  "malleable_metal": {
+    "ingot": {
+      "tag": "c:ingots/iron"
+    },
+    "nugget": {
+      "tag": "c:nuggets/iron"
+    },
+    "ore": {
+      "properties": {}
+    },
+    "raw_ore": {
+      "tag": "c:raw_ores/iron"
+    }
+  },
+  "output": {
+    "count": 1,
+    "id": "embers:heated_metal"
+  },
+  "processingTime": 200
+}

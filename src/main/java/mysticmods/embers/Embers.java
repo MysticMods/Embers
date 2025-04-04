@@ -57,6 +57,7 @@ public class Embers
         EmbersTabs.init();
         EmbersParticles.init();
         EmbersTags.init();
+        EmbersMalleableMetals.init();
         EmbersRecipeTypes.init();
 
         BLOCKS.register(modEventBus);
@@ -64,6 +65,9 @@ public class Embers
         BLOCK_ENTITY_TYPES.register(modEventBus);
         CREATIVE_MODE_TABS.register(modEventBus);
         EmbersParticles.PARTICLE_TYPES.register(modEventBus);
+        EmbersMalleableMetals.MALLEABLE_METAL.register(modEventBus);
+        EmbersRecipeTypes.RECIPE_SERIALIZERS.register(modEventBus);
+        EmbersRecipeTypes.RECIPE_TYPES.register(modEventBus);
 
         NeoForge.EVENT_BUS.register(this);
 
