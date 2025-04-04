@@ -6,11 +6,8 @@ import mysticmods.embers.init.*;
 import mysticmods.embers.particles.GlowParticleProvider;
 import mysticmods.embers.registries.MalleableMetalRegistry;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -27,7 +24,6 @@ import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
-import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NewRegistryEvent;
 import org.slf4j.Logger;
 
@@ -38,33 +34,24 @@ public class Embers
 {
     public static final String MODID = "embers";
     public static final Logger LOGGER = LogUtils.getLogger();
-    public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(MODID);
-    public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(MODID);
-    public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, MODID);
-    public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
 
 
     public Embers(IEventBus modEventBus, ModContainer modContainer)
     {
         modEventBus.addListener(this::commonSetup);
 
-        EmbersBlocks.init();
-        EmbersItems.init();
-        EmbersBlockEntities.init();
-        EmbersCapabilities.init();
-        EmbersTabs.init();
-        EmbersParticles.init();
         EmbersTags.init();
-        EmbersMalleableMetals.init();
-        EmbersRecipeTypes.init();
 
-        BLOCKS.register(modEventBus);
-        ITEMS.register(modEventBus);
-        BLOCK_ENTITY_TYPES.register(modEventBus);
-        CREATIVE_MODE_TABS.register(modEventBus);
-        EmbersParticles.PARTICLE_TYPES.register(modEventBus);
-        EmbersMalleableMetals.MALLEABLE_METAL.register(modEventBus);
+        EmbersBlocks.register(modEventBus);
+        EmbersBlockEntities.register(modEventBus);
+        EmbersItems.register(modEventBus);
+        EmbersMalleableMetals.register(modEventBus);
+        EmbersSerializers.register(modEventBus);
+        EmbersRecipeTypes.register(modEventBus);
+        EmbersParticles.register(modEventBus);
+        EmbersTabs.register(modEventBus);
 
+        EmbersCapabilities.init();
 
         NeoForge.EVENT_BUS.register(this);
 

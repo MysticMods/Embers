@@ -1,13 +1,18 @@
 package mysticmods.embers.init;
 
+import mysticmods.embers.Embers;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
+import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
-
-import static mysticmods.embers.Embers.CREATIVE_MODE_TABS;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class EmbersTabs {
+
+
+    public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Embers.MODID);
 
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> EMBERS_CREATIVE_TAB = CREATIVE_MODE_TABS.register("embers_tab", () -> CreativeModeTab.builder()
             .title(Component.translatable("itemGroup.embers"))
@@ -31,7 +36,8 @@ public class EmbersTabs {
                 output.accept(EmbersItems.CAMINITE_FORGE_BLOCK_ITEM.get());
             }).build());
 
-    public static void init() {
+    public static void register(IEventBus bus) {
+        CREATIVE_MODE_TABS.register(bus);
     }
 
 }

@@ -1,13 +1,16 @@
 package mysticmods.embers.init;
 
+import mysticmods.embers.Embers;
 import mysticmods.embers.machines.caminite_forge.CaminiteForgeItemBlock;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredItem;
-
-import static mysticmods.embers.Embers.ITEMS;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class EmbersItems {
+
+    public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(Embers.MODID);
 
     //Items
     public static final DeferredItem<Item> ASHEN_STEEL_INGOT = ITEMS.registerSimpleItem("ashen_steel_ingot", new Item.Properties());
@@ -42,6 +45,7 @@ public class EmbersItems {
             () -> new CaminiteForgeItemBlock(new Item.Properties())
     );
 
-    public static void init() {
+    public static void register(IEventBus bus) {
+        ITEMS.register(bus);
     }
 }

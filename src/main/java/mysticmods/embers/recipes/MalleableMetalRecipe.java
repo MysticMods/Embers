@@ -1,6 +1,7 @@
 package mysticmods.embers.recipes;
 
 import mysticmods.embers.init.EmbersRecipeTypes;
+import mysticmods.embers.init.EmbersSerializers;
 import mysticmods.embers.registries.MalleableMetal;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.world.item.ItemStack;
@@ -46,7 +47,7 @@ public class MalleableMetalRecipe implements Recipe<RecipeInput> {
 
     @Override
     public @NotNull RecipeSerializer<?> getSerializer() {
-        return EmbersRecipeTypes.MALLEABLE_METAL_SERIALIZER.get();
+        return EmbersSerializers.MALLEABLE_METAL_SERIALIZER.get();
     }
 
     @Override

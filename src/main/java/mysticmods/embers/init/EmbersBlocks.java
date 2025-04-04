@@ -1,17 +1,21 @@
 package mysticmods.embers.init;
 
+import mysticmods.embers.Embers;
 import mysticmods.embers.machines.brazier.BrazierBlock;
 import mysticmods.embers.machines.caminite_forge.CaminiteForgeBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredBlock;
+import net.neoforged.neoforge.registries.DeferredRegister;
 import team.lodestar.lodestone.systems.multiblock.MultiblockComponentBlock;
 
-import static mysticmods.embers.Embers.BLOCKS;
-
 public class EmbersBlocks {
+
+
+    public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(Embers.MODID);
 
     public static final DeferredBlock<Block> CAMINITE_BRICK = BLOCKS.register(
             "caminite_bricks", registryName -> new Block(
@@ -39,7 +43,8 @@ public class EmbersBlocks {
             )
     );
 
-    public static void init() {
+    public static void register(IEventBus bus) {
+        BLOCKS.register(bus);
     }
 
 }
