@@ -8,6 +8,7 @@ import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.CompletableFuture;
@@ -19,7 +20,7 @@ public class EmbersItemTagProvider extends ItemTagsProvider {
     }
 
     @Override
-    protected void addTags(HolderLookup.Provider provider) {
+    protected void addTags(HolderLookup.@NotNull Provider provider) {
         tag(EmbersTags.IRON_NUGGETS_TAG).add(Items.IRON_NUGGET);
         tag(EmbersTags.IRON_INGOTS_TAG).add(Items.IRON_INGOT);
         tag(EmbersTags.IRON_RAW_ORES_TAG).add(Items.RAW_IRON);

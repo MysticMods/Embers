@@ -152,7 +152,7 @@ public class BrazierBlockEntity extends LodestoneBlockEntity implements IEmberEm
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+    protected void saveAdditional(CompoundTag tag, HolderLookup.@NotNull Provider registries) {
         tag.putBoolean("running", running);
         tag.putInt("ticksToBurn", ticksToBurn);
         tag.put("inventory", itemHandler.serializeNBT(registries));
