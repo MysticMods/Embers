@@ -3,6 +3,7 @@ package mysticmods.embers;
 import com.mojang.logging.LogUtils;
 import mysticmods.embers.datagen.*;
 import mysticmods.embers.init.*;
+import mysticmods.embers.machines.caminite_forge.CaminiteForgeScreen;
 import mysticmods.embers.particles.GlowParticleProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
@@ -17,6 +18,7 @@ import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
+import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
@@ -48,6 +50,7 @@ public class Embers
         EmbersRecipeTypes.register(modEventBus);
         EmbersParticles.register(modEventBus);
         EmbersTabs.register(modEventBus);
+        EmbersMenuTypes.register(modEventBus);
 
         EmbersCapabilities.init();
 
@@ -83,6 +86,11 @@ public class Embers
         private static void registerCapabilities(RegisterCapabilitiesEvent event) {
             EmbersCapabilities.register(event);
         }
+
+        @SubscribeEvent
+        private static void registerScreens(RegisterMenuScreensEvent event) {
+            event.register(EmbersMenuTypes.CAMINITE_FORGE.get(), CaminiteForgeScreen::new);
+        }
     }
 
     @EventBusSubscriber(modid = MODID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
@@ -91,7 +99,9 @@ public class Embers
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event)
         {
-
+            // TODO: Register screens for the Caminite Forge GUI
+            // The MenuScreens.register method has private access in NeoForge
+            // Need to find the correct way to register screens in NeoForge
         }
 
         @SubscribeEvent

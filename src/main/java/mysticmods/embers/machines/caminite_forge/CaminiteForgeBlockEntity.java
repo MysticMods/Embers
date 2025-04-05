@@ -9,9 +9,14 @@ import mysticmods.embers.init.EmbersCapabilities;
 import mysticmods.embers.init.EmbersItems;
 import mysticmods.embers.particles.options.EmbersParticleOptions;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.items.ItemStackHandler;
@@ -99,21 +104,23 @@ public class CaminiteForgeBlockEntity extends MultiBlockCoreEntity implements IE
         if (level.isClientSide()) {
             return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }
-        if (this.itemHandler.isItemValid(0, pStack)) {
-            ItemStack returnStack = this.itemHandler.insertItem(0, pStack, false);
-            player.setItemInHand(hand, returnStack);
-            setProgressNeeded();
-            updateViaState(this);
-            return ItemInteractionResult.CONSUME;
-        } else {
-            if (this.hasHotMetals) {
-                ItemStack hotMetal = this.itemHandler.getStackInSlot(1).copy();
-                IHeatedMetalCap cap = hotMetal.getCapability(EmbersCapabilities.HEATED_METAL);
-                if (cap != null) {
-                    transferHeatedMetal(cap, player, hotMetal);
+
+        // Open the GUI
+        if (player instanceof ServerPlayer serverPlayer) {
+            serverPlayer.openMenu(new MenuProvider() {
+                @Override
+                public Component getDisplayName() {
+                    return Component.translatable("block.embers.caminite_forge");
                 }
-            }
+
+                @Override
+                public AbstractContainerMenu createMenu(int windowId, Inventory playerInventory, Player player) {
+                    return new CaminiteForgeMenu(windowId, playerInventory, CaminiteForgeBlockEntity.this);
+                }
+            }, buf -> buf.writeBlockPos(getBlockPos()));
+            return ItemInteractionResult.CONSUME;
         }
+
         return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
 

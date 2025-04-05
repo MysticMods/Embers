@@ -16,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import team.lodestar.lodestone.systems.block.LodestoneEntityBlock;
 
-public class CaminiteForgeBlock  extends LodestoneEntityBlock<CaminiteForgeBlockEntity> {
+public class CaminiteForgeBlock extends LodestoneEntityBlock<CaminiteForgeBlockEntity> {
 
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
