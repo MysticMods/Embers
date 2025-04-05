@@ -2,6 +2,7 @@ package mysticmods.embers.registries;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
@@ -12,7 +13,7 @@ import net.minecraft.world.level.block.Block;
 public class MalleableMetal {
 
     public static final Codec<MalleableMetal> CODEC = RecordCodecBuilder.create(inst -> inst.group(
-            Block.CODEC.fieldOf("ore").forGetter(MalleableMetal::getOre),
+            BuiltInRegistries.BLOCK.byNameCodec().fieldOf("ore").forGetter(MalleableMetal::getOre),
             Ingredient.CODEC.fieldOf("nugget").forGetter(MalleableMetal::getNugget),
             Ingredient.CODEC.fieldOf("ingot").forGetter(MalleableMetal::getIngot),
             Ingredient.CODEC.fieldOf("raw_ore").forGetter(MalleableMetal::getRaw_ore)

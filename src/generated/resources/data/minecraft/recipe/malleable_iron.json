@@ -11,9 +11,7 @@
     "nugget": {
       "tag": "c:nuggets/iron"
     },
-    "ore": {
-      "properties": {}
-    },
+    "ore": "minecraft:iron_ore",
     "raw_ore": {
       "tag": "c:raw_ores/iron"
     }

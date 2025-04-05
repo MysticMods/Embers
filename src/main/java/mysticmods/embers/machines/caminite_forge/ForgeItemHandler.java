@@ -40,6 +40,7 @@ public class ForgeItemHandler extends ItemStackHandler {
                 entity.getLevel()
         );
 
+        System.out.println(stack.getItem());
         System.out.println(optional.isPresent());
 
         return optional.isPresent();

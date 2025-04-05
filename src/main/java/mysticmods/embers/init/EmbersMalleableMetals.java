@@ -1,8 +1,8 @@
 package mysticmods.embers.init;
 
 import mysticmods.embers.Embers;
+import mysticmods.embers.api.EmbersRegistries;
 import mysticmods.embers.registries.MalleableMetal;
-import mysticmods.embers.registries.MalleableMetalRegistry;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.bus.api.IEventBus;
@@ -10,7 +10,7 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 public class EmbersMalleableMetals {
-    public static final DeferredRegister<MalleableMetal> MALLEABLE_METAL = DeferredRegister.create(MalleableMetalRegistry.MALLEABLE_METAL_REGISTRY, Embers.MODID);
+    public static final DeferredRegister<MalleableMetal> MALLEABLE_METAL = DeferredRegister.create(EmbersRegistries.Keys.MALLEABLE_METALS, Embers.MODID);
 
     public static final DeferredHolder<MalleableMetal, MalleableMetal> MALLEABLE_IRON = MALLEABLE_METAL.register("malleable_iron", () -> new MalleableMetal(
             Blocks.IRON_ORE,

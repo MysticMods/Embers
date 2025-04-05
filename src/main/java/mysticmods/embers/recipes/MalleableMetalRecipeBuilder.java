@@ -1,5 +1,6 @@
 package mysticmods.embers.recipes;
 
+import mysticmods.embers.Embers;
 import mysticmods.embers.registries.MalleableMetal;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementRequirements;
@@ -57,6 +58,8 @@ public class MalleableMetalRecipeBuilder implements RecipeBuilder {
 
     @Override
     public void save(RecipeOutput recipeOutput, @NotNull ResourceLocation id) {
+        ResourceLocation moddedId = ResourceLocation.fromNamespaceAndPath(Embers.MODID, id.getPath());
+
         Advancement.Builder advancement = recipeOutput.advancement()
                 .addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(id))
                 .rewards(AdvancementRewards.Builder.recipe(id))
@@ -65,6 +68,6 @@ public class MalleableMetalRecipeBuilder implements RecipeBuilder {
 
         MalleableMetalRecipe recipe = new MalleableMetalRecipe(input, result, malleableMetal, experience, processingTime);
 
-        recipeOutput.accept(id, recipe, advancement.build(id.withPrefix("recipes/")));
+        recipeOutput.accept(id, recipe, advancement.build(moddedId.withPrefix("recipes/")));
     }
 }

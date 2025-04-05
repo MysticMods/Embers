@@ -4,7 +4,6 @@ import com.mojang.logging.LogUtils;
 import mysticmods.embers.datagen.*;
 import mysticmods.embers.init.*;
 import mysticmods.embers.particles.GlowParticleProvider;
-import mysticmods.embers.registries.MalleableMetalRegistry;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
@@ -24,7 +23,6 @@ import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
-import net.neoforged.neoforge.registries.NewRegistryEvent;
 import org.slf4j.Logger;
 
 import java.util.concurrent.CompletableFuture;
@@ -45,8 +43,8 @@ public class Embers
         EmbersBlocks.register(modEventBus);
         EmbersBlockEntities.register(modEventBus);
         EmbersItems.register(modEventBus);
-        EmbersMalleableMetals.register(modEventBus);
         EmbersSerializers.register(modEventBus);
+        EmbersMalleableMetals.register(modEventBus);
         EmbersRecipeTypes.register(modEventBus);
         EmbersParticles.register(modEventBus);
         EmbersTabs.register(modEventBus);
@@ -84,11 +82,6 @@ public class Embers
         @SubscribeEvent
         private static void registerCapabilities(RegisterCapabilitiesEvent event) {
             EmbersCapabilities.register(event);
-        }
-
-        @SubscribeEvent
-        static void registerRegistries(NewRegistryEvent event) {
-            event.register(MalleableMetalRegistry.MALLEABLE_METAL_REGISTRY);
         }
     }
 
