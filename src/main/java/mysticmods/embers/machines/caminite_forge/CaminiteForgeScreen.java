@@ -39,9 +39,11 @@ public class CaminiteForgeScreen extends AbstractContainerScreen<CaminiteForgeMe
 
         // Draw the progress indicator if there's an item being processed
         CaminiteForgeBlockEntity blockEntity = this.menu.getBlockEntity();
+        System.out.println(x + 79);
+        System.out.println(blockEntity.getProgress());
         if (blockEntity.getProgress() > 0) {
-            int progress = (int) (blockEntity.getProgress() * 24); // 24 is the width of the progress arrow
-            guiGraphics.blit(TEXTURE, x + 79, y + 34, 176, 0, progress, 17);
+            float progress = blockEntity.getProgress() * 16; // 24 is the width of the progress arrow
+            guiGraphics.blit(TEXTURE, x + 79, y + 34, 176, 0, Math.round(progress), 16);
         }
     }
 }

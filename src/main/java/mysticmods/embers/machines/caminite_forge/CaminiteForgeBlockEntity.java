@@ -9,7 +9,11 @@ import mysticmods.embers.init.EmbersCapabilities;
 import mysticmods.embers.init.EmbersItems;
 import mysticmods.embers.particles.options.EmbersParticleOptions;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
@@ -44,7 +48,6 @@ public class CaminiteForgeBlockEntity extends MultiBlockCoreEntity implements IE
     private boolean isLit = false;
     private boolean hasHotMetals = false;
     private final int PROGRESS_PER_ITEM = 20 * 5;
-    public int progressTimer = 0;
 
     public CaminiteForgeBlockEntity(BlockPos pos, BlockState blockState) {
         super(EmbersBlockEntities.CAMINITE_FORGE.get(), STRUCTURE.get(), pos, blockState);
@@ -85,8 +88,9 @@ public class CaminiteForgeBlockEntity extends MultiBlockCoreEntity implements IE
                 this.itemHandler.getStackInSlot(0).shrink(1);
                 progress = 0;
                 this.hasHotMetals = true;
-                updateViaState(this);
             }
+
+            updateViaState(this);
         }
     }
 
@@ -144,10 +148,38 @@ public class CaminiteForgeBlockEntity extends MultiBlockCoreEntity implements IE
     }
 
     public float getProgress() {
-        return this.progress / this.progressTimer;
+        if(this.progress > 0){
+            return this.progress / this.PROGRESS_PER_ITEM;
+        }
+        return 0;
     }
 
-    public void setProgressNeeded() {
-        this.progressTimer = this.itemHandler.getStackInSlot(0).getCount() * PROGRESS_PER_ITEM;
+    public int getPROGRESS_PER_ITEM() {
+        return PROGRESS_PER_ITEM;
+    }
+
+    @Override
+    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        super.saveAdditional(tag, registries);
+        tag.putFloat("progress", this.progress);
+        tag.putBoolean("isLit", this.isLit);
+        tag.putBoolean("hasHotMetals", this.hasHotMetals);
+        tag.put("inventory", this.itemHandler.serializeNBT(registries));
+    }
+
+    @Override
+    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        super.loadAdditional(tag, registries);
+        this.progress = tag.getFloat("progress");
+        this.isLit = tag.getBoolean("isLit");
+        this.hasHotMetals = tag.getBoolean("hasHotMetals");
+        this.itemHandler.deserializeNBT(registries, tag.getCompound("inventory"));
+    }
+
+    @Override
+    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt, HolderLookup.Provider lookupProvider) {
+        super.onDataPacket(net, pkt, lookupProvider);
+        CompoundTag tag = pkt.getTag();
+        loadAdditional(tag, lookupProvider);
     }
 }
