@@ -13,6 +13,7 @@ import mysticmods.embers.utils.SDUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.IntTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -56,7 +57,7 @@ public class CaminiteForgeBlockEntity extends MultiBlockCoreEntity implements IE
 
     public CaminiteForgeBlockEntity(BlockPos pos, BlockState blockState) {
         super(EmbersBlockEntities.CAMINITE_FORGE.get(), STRUCTURE.get(), pos, blockState);
-        this.intensity = new EmberIntensity(100, 100);
+        this.intensity = new EmberIntensity(100, 100, this::updateToCLient);
     }
 
     @Override
@@ -64,6 +65,13 @@ public class CaminiteForgeBlockEntity extends MultiBlockCoreEntity implements IE
         emberLevel = SDUtil.getLevelEmbersData(level);
         if (emberLevel != null) {
             emberLevel.addEmberListener(getBlockPos(), this.intensity);
+        }
+    }
+
+    public void updateToCLient() {
+        System.out.println("update jonguh");
+        if(!level.isClientSide()){
+            updateViaState(this);
         }
     }
 
@@ -92,7 +100,7 @@ public class CaminiteForgeBlockEntity extends MultiBlockCoreEntity implements IE
                     if (!hotMetalStack.isEmpty()) {
                         hotMetalStack.setCount(hotMetalStack.getCount() + 1);
                     } else {
-                        this.itemHandler.setStackInSlot(1, new ItemStack(EmbersItems.HEATED_METAL.get(), 1));
+                        this.itemHandler.setStackInSlot(2, new ItemStack(EmbersItems.HEATED_METAL.get(), 1));
                         IHeatedMetalCap cap = this.itemHandler.getStackInSlot(1).getCapability(EmbersCapabilities.HEATED_METAL);
                         if (cap != null) {
                             cap.setMetalStack(new ItemStack(this.itemHandler.getStackInSlot(0).getItem(), 1));
@@ -155,7 +163,7 @@ public class CaminiteForgeBlockEntity extends MultiBlockCoreEntity implements IE
     }
 
     public boolean hasHotMetals(){
-        return !this.itemHandler.getStackInSlot(1).isEmpty();
+        return !this.itemHandler.getStackInSlot(2).isEmpty();
     }
 
     @Override
@@ -180,6 +188,7 @@ public class CaminiteForgeBlockEntity extends MultiBlockCoreEntity implements IE
         tag.putFloat("progress", this.progress);
         tag.putBoolean("isLit", this.isLit);
         tag.put("inventory", this.itemHandler.serializeNBT(registries));
+        tag.put("emberIntensity", this.intensity.serializeNBT(registries));
     }
 
     @Override
@@ -188,6 +197,7 @@ public class CaminiteForgeBlockEntity extends MultiBlockCoreEntity implements IE
         this.progress = tag.getFloat("progress");
         this.isLit = tag.getBoolean("isLit");
         this.itemHandler.deserializeNBT(registries, tag.getCompound("inventory"));
+        this.intensity.deserializeNBT(registries, IntTag.valueOf(tag.getInt("emberIntensity")));
     }
 
     @Override

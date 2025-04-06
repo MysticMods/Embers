@@ -32,16 +32,21 @@ public class CaminiteForgeScreen extends AbstractContainerScreen<CaminiteForgeMe
 
     @Override
     protected void renderBg(GuiGraphics guiGraphics, float partialTick, int mouseX, int mouseY) {
-        // Draw the background texture
         int x = (this.width - this.imageWidth) / 2;
         int y = (this.height - this.imageHeight) / 2;
         guiGraphics.blit(TEXTURE, x, y, 0, 0, this.imageWidth, this.imageHeight);
 
-        // Draw the progress indicator if there's an item being processed
         CaminiteForgeBlockEntity blockEntity = this.menu.getBlockEntity();
         if (blockEntity.getProgress() > 0) {
-            float progress = blockEntity.getProgress() * 16; // 24 is the width of the progress arrow
+            float progress = blockEntity.getProgress() * 16;
             guiGraphics.blit(TEXTURE, x + 79, y + 40, 176, 0, Math.round(progress), 16);
         }
+
+        int emberLevel = blockEntity.getEmberIntensity().getIntensity();
+        if (emberLevel> 0) {
+            float progress = (float) emberLevel / blockEntity.getEmberIntensity().getMinIntensity() * 54;
+            guiGraphics.blit(TEXTURE, x + 60, y + 64, 176, 16, Math.round(progress), 9);
+        }
+
     }
 }
