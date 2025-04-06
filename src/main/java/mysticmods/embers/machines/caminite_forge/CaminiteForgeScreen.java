@@ -2,6 +2,7 @@ package mysticmods.embers.machines.caminite_forge;
 
 import mysticmods.embers.Embers;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -9,6 +10,24 @@ import net.minecraft.world.entity.player.Inventory;
 
 public class CaminiteForgeScreen extends AbstractContainerScreen<CaminiteForgeMenu> {
     private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(Embers.MODID, "textures/gui/caminite_forge.png");
+    private static final ResourceLocation ALLOY_BUTTON_TEXTURE = ResourceLocation.fromNamespaceAndPath(Embers.MODID, "textures/gui/alloy_mode_button.png");
+    private AlloyModeButton alloyModeButton;
+
+    // Custom button class for alloy mode
+    private class AlloyModeButton extends Button {
+        public AlloyModeButton(int x, int y, OnPress onPress) {
+            super(x, y, 20, 18, Component.empty(), onPress, DEFAULT_NARRATION);
+        }
+
+        @Override
+        public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+            guiGraphics.blit(ALLOY_BUTTON_TEXTURE, this.getX(), this.getY(), 0, 0, 20, 18, 20, 18);
+
+            if (this.isHovered) {
+                guiGraphics.renderTooltip(font, Component.translatable("tooltip.embers.alloy_mode"), mouseX, mouseY);
+            }
+        }
+    }
 
     public CaminiteForgeScreen(CaminiteForgeMenu menu, Inventory inventory, Component title) {
         super(menu, inventory, title);
@@ -21,6 +40,21 @@ public class CaminiteForgeScreen extends AbstractContainerScreen<CaminiteForgeMe
         super.init();
         this.titleLabelY = 4;
         this.inventoryLabelY = this.imageHeight - 92;
+
+        // Add alloy mode button
+        int x = (this.width - this.imageWidth) / 2;
+        int y = (this.height - this.imageHeight) / 2;
+        this.alloyModeButton = new AlloyModeButton(
+            x + 25, y + 37,
+            button -> onAlloyModeButtonPress()
+        );
+        this.addRenderableWidget(this.alloyModeButton);
+    }
+
+    private void onAlloyModeButtonPress() {
+        // Toggle alloy mode in the block entity
+        CaminiteForgeBlockEntity blockEntity = this.menu.getBlockEntity();
+        blockEntity.toggleAlloyMode();
     }
 
     @Override

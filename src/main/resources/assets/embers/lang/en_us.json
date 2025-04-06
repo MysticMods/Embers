@@ -18,5 +18,6 @@
   "item.embers.iron_hammer": "Iron Hammer",
   "item.embers.quicksilver": "Quicksilver",
   "item.embers.vermillionite_chunk": "Vermillionite Chunk",
-  "itemGroup.embers": "Embers"
+  "itemGroup.embers": "Embers",
+  "tooltip.embers.alloy_mode": "Alloy Mode"
 }

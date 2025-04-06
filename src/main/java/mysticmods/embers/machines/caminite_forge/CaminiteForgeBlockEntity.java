@@ -52,6 +52,7 @@ public class CaminiteForgeBlockEntity extends MultiBlockCoreEntity implements IE
 
     private float progress = 0;
     private boolean isLit = false;
+    private boolean alloyMode = false;
     private static final int PROGRESS_PER_ITEM = 20 * 5;
 
     public CaminiteForgeBlockEntity(BlockPos pos, BlockState blockState) {
@@ -180,11 +181,21 @@ public class CaminiteForgeBlockEntity extends MultiBlockCoreEntity implements IE
         return 0;
     }
 
+    public boolean isAlloyMode() {
+        return alloyMode;
+    }
+
+    public void toggleAlloyMode() {
+        this.alloyMode = !this.alloyMode;
+        updateToClient();
+    }
+
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
         tag.putFloat("progress", this.progress);
         tag.putBoolean("isLit", this.isLit);
+        tag.putBoolean("alloyMode", this.alloyMode);
         tag.put("inventory", this.itemHandler.serializeNBT(registries));
         tag.put("emberIntensity", this.intensity.serializeNBT(registries));
     }
@@ -194,6 +205,7 @@ public class CaminiteForgeBlockEntity extends MultiBlockCoreEntity implements IE
         super.loadAdditional(tag, registries);
         this.progress = tag.getFloat("progress");
         this.isLit = tag.getBoolean("isLit");
+        this.alloyMode = tag.contains("alloyMode") ? tag.getBoolean("alloyMode") : false;
         this.itemHandler.deserializeNBT(registries, tag.getCompound("inventory"));
         this.intensity.deserializeNBT(registries, IntTag.valueOf(tag.getInt("emberIntensity")));
     }
