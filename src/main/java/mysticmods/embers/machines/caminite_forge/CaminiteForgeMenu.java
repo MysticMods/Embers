@@ -27,7 +27,7 @@ public class CaminiteForgeMenu extends AbstractContainerMenu {
         this.containerLevelAccess = ContainerLevelAccess.create(blockEntity.getLevel(), blockEntity.getBlockPos());
 
         // Add the input slot
-        this.addSlot(new SlotItemHandler(blockEntity.getItemHandler(), 0, 80, 20) {
+        this.addSlot(new SlotItemHandler(blockEntity.getItemHandler(), 0, 61, 16) {
             @Override
             public boolean mayPlace(ItemStack stack) {
                 return blockEntity.getItemHandler().isItemValid(0, stack);
@@ -35,7 +35,15 @@ public class CaminiteForgeMenu extends AbstractContainerMenu {
         });
 
         // Add the output slot
-        this.addSlot(new SlotItemHandler(blockEntity.getItemHandler(), 1, 80, 53) {
+        this.addSlot(new SlotItemHandler(blockEntity.getItemHandler(), 1, 97, 16) {
+            @Override
+            public boolean mayPlace(ItemStack stack) {
+                return blockEntity.getItemHandler().isItemValid(1, stack);
+            }
+        });
+
+        // Add the output slot
+        this.addSlot(new SlotItemHandler(blockEntity.getItemHandler(), 2, 138, 39) {
             @Override
             public boolean mayPlace(ItemStack stack) {
                 return false; // Output slot, can't place items
@@ -77,9 +85,9 @@ public class CaminiteForgeMenu extends AbstractContainerMenu {
             ItemStack itemstack1 = slot.getItem();
             itemstack = itemstack1.copy();
 
-            if (index < 2) {
+            if (index < 3) {  // Changed from 2 to 3
                 // If the item is in the Caminite Forge slots
-                if (!this.moveItemStackTo(itemstack1, 2, this.slots.size(), true)) {
+                if (!this.moveItemStackTo(itemstack1, 3, this.slots.size(), true)) {  // Changed from 2 to 3
                     return ItemStack.EMPTY;
                 }
             } else if (!this.moveItemStackTo(itemstack1, 0, 1, false)) {

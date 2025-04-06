@@ -37,7 +37,7 @@ public class CaminiteForgeBlockEntity extends MultiBlockCoreEntity implements IE
     public static final Supplier<MultiBlockStructure> STRUCTURE = () -> MultiBlockStructure.of(new MultiBlockStructure.StructurePiece(0, 1, 0, EmbersBlocks.CAMINITE_FORGE_COMPONENT.get().defaultBlockState()));
 
     private final EmberIntensity intensity;
-    private final ItemStackHandler itemHandler = new ForgeItemHandler(2, this) {
+    private final ItemStackHandler itemHandler = new ForgeItemHandler(3, this) {
         @Override
         protected int getStackLimit(int slot, @NotNull ItemStack stack) {
             return 32;
@@ -96,10 +96,14 @@ public class CaminiteForgeBlockEntity extends MultiBlockCoreEntity implements IE
 
     public void clientTick() {
         if (this.hasHotMetals && this.level != null) {
-            var random = this.level.getRandom();
-            level.addParticle(new EmbersParticleOptions(1, 0.5f, 0),
-                    getBlockPos().getX() + (random.nextFloat()), getBlockPos().getY() + 2, getBlockPos().getZ() + random.nextFloat(),
-                    0, 0.25d * (random.nextDouble() * 0.1d), 0);
+            if(level.getGameTime() % 5 == 0) {
+                var random = this.level.getRandom();
+                level.addParticle(new EmbersParticleOptions(1, 0.5f, 0),
+                        getBlockPos().getX() + (0.25f + random.nextFloat() * 0.5f),
+                        getBlockPos().getY() + 2,
+                        getBlockPos().getZ() + (0.25f + random.nextFloat() * 0.5f),
+                        0, 0.25d * (random.nextDouble() * 0.1d), 0);
+            }
         }
     }
 
