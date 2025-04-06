@@ -52,12 +52,11 @@ public class CaminiteForgeBlockEntity extends MultiBlockCoreEntity implements IE
 
     private float progress = 0;
     private boolean isLit = false;
-    private final int PROGRESS_PER_ITEM = 20 * 5;
-
+    private static final int PROGRESS_PER_ITEM = 20 * 5;
 
     public CaminiteForgeBlockEntity(BlockPos pos, BlockState blockState) {
         super(EmbersBlockEntities.CAMINITE_FORGE.get(), STRUCTURE.get(), pos, blockState);
-        this.intensity = new EmberIntensity(100, 100, this::updateToCLient);
+        this.intensity = new EmberIntensity(100, 100, this::updateToClient);
     }
 
     @Override
@@ -68,16 +67,15 @@ public class CaminiteForgeBlockEntity extends MultiBlockCoreEntity implements IE
         }
     }
 
-    public void updateToCLient() {
-        System.out.println("update jonguh");
-        if(!level.isClientSide()){
+    public void updateToClient() {
+        if (!level.isClientSide()) {
             updateViaState(this);
         }
     }
 
     @Override
     public void tick() {
-        if(level.isClientSide()) {
+        if (level.isClientSide()) {
             clientTick();
         } else {
             serverTick();
@@ -92,16 +90,16 @@ public class CaminiteForgeBlockEntity extends MultiBlockCoreEntity implements IE
         }
 
         if (!this.itemHandler.getStackInSlot(0).isEmpty()) {
-            if(this.intensity.hasEmberForOperation()){
+            if (this.intensity.hasEmberForOperation()) {
                 progress++;
 
                 if (progress >= this.PROGRESS_PER_ITEM) {
-                    ItemStack hotMetalStack = this.itemHandler.getStackInSlot(1);
+                    ItemStack hotMetalStack = this.itemHandler.getStackInSlot(2);
                     if (!hotMetalStack.isEmpty()) {
                         hotMetalStack.setCount(hotMetalStack.getCount() + 1);
                     } else {
                         this.itemHandler.setStackInSlot(2, new ItemStack(EmbersItems.HEATED_METAL.get(), 1));
-                        IHeatedMetalCap cap = this.itemHandler.getStackInSlot(1).getCapability(EmbersCapabilities.HEATED_METAL);
+                        IHeatedMetalCap cap = this.itemHandler.getStackInSlot(2).getCapability(EmbersCapabilities.HEATED_METAL);
                         if (cap != null) {
                             cap.setMetalStack(new ItemStack(this.itemHandler.getStackInSlot(0).getItem(), 1));
                         }
@@ -117,7 +115,7 @@ public class CaminiteForgeBlockEntity extends MultiBlockCoreEntity implements IE
 
     public void clientTick() {
         if (this.hasHotMetals() && this.level != null) {
-            if(level.getGameTime() % 5 == 0) {
+            if (level.getGameTime() % 5 == 0) {
                 var random = this.level.getRandom();
                 level.addParticle(new EmbersParticleOptions(1, 0.5f, 0),
                         getBlockPos().getX() + (0.25f + random.nextFloat() * 0.5f),
@@ -156,13 +154,13 @@ public class CaminiteForgeBlockEntity extends MultiBlockCoreEntity implements IE
     public void transferHeatedMetal(IHeatedMetalCap cap, Player player, ItemStack stack) {
         cap.setMaxHeat(100 * stack.getCount());
         cap.setStackHeat(100 * stack.getCount());
-        this.itemHandler.setStackInSlot(1, ItemStack.EMPTY);
+        this.itemHandler.setStackInSlot(2, ItemStack.EMPTY);
 
         player.addItem(stack);
         updateViaState(this);
     }
 
-    public boolean hasHotMetals(){
+    public boolean hasHotMetals() {
         return !this.itemHandler.getStackInSlot(2).isEmpty();
     }
 
@@ -176,7 +174,7 @@ public class CaminiteForgeBlockEntity extends MultiBlockCoreEntity implements IE
     }
 
     public float getProgress() {
-        if(this.progress > 0){
+        if (this.progress > 0) {
             return this.progress / this.PROGRESS_PER_ITEM;
         }
         return 0;

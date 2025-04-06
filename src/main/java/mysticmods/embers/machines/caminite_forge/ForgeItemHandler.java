@@ -33,15 +33,16 @@ public class ForgeItemHandler extends ItemStackHandler {
 
     @Override
     public boolean isItemValid(int slot, @NotNull ItemStack stack) {
+        if (slot != 0) {
+            return false;
+        }
+
         RecipeManager recipes = entity.getLevel().getRecipeManager();
         Optional<RecipeHolder<MalleableMetalRecipe>> optional = recipes.getRecipeFor(
                 EmbersRecipeTypes.MALLEABLE_METAL.get(),
                 new SingleRecipeInput(stack),
                 entity.getLevel()
         );
-
-        System.out.println(stack.getItem());
-        System.out.println(optional.isPresent());
 
         return optional.isPresent();
     }
