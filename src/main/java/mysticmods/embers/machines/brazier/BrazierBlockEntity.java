@@ -9,6 +9,9 @@ import mysticmods.embers.utils.SDUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
+import net.minecraft.network.Connection;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
@@ -32,6 +35,7 @@ public class BrazierBlockEntity extends LodestoneBlockEntity implements IEmberEm
     private final EmberEmitter emitter;
     private final ItemStackHandler itemHandler;
     private static final RandomSource random = RandomSource.create();
+    private EmberLevel emberLevel;
 
     public boolean running = false;
     public final int maxBurnTime = 1200;
@@ -60,10 +64,11 @@ public class BrazierBlockEntity extends LodestoneBlockEntity implements IEmberEm
     public void onLoad() {
         super.onLoad();
 
-        EmberLevel emberLevel = SDUtil.getLevelEmbersData(level);
+        emberLevel = SDUtil.getLevelEmbersData(level);
         if(emberLevel != null){
             emitter.initEmitter(emberLevel);
         }
+        updateViaState(this);
     }
 
     @Override
@@ -110,9 +115,8 @@ public class BrazierBlockEntity extends LodestoneBlockEntity implements IEmberEm
     @Override
     public void onBreak(@Nullable Player player) {
         super.onBreak(player);
-        EmberLevel emberLevel = SDUtil.getLevelEmbersData(level);
-        if(emberLevel != null){
-            emberLevel.removeEmitterListener(this.emitter);
+        if(this.emberLevel != null){
+            this.emberLevel.removeEmitterListener(this.emitter);
         }
         dropItemHandler(this, itemHandler);
     }
@@ -121,21 +125,24 @@ public class BrazierBlockEntity extends LodestoneBlockEntity implements IEmberEm
      * This method is called when the item handler is changed. It checks if the item handler is empty or not and sets the running state accordingly.
      */
     private void onFuelChange(){
-        //If the item handler is empty and we are running, stop running
         if (this.itemHandler.getStackInSlot(0).isEmpty() && running) {
             this.running = false;
+            this.emitter.deactivate(emberLevel);
             level.setBlock(getBlockPos(), getBlockState().setValue(BrazierBlock.LIT, false), Block.UPDATE_ALL);
             updateViaState(this);
         }
-        //If the item handler is not empty and we are not running, start running
+
         else if(!this.itemHandler.getStackInSlot(0).isEmpty() && !running){
             this.running = true;
             level.setBlock(getBlockPos(), getBlockState().setValue(BrazierBlock.LIT, true), Block.UPDATE_ALL);
 
-            //Remove one item from the item handler
             ItemStack stack = itemHandler.getStackInSlot(0);
             if (!stack.isEmpty()) {
                 stack.shrink(1);
+            }
+
+            if(emberLevel != null){
+                this.emitter.initEmitter(emberLevel);
             }
             updateViaState(this);
         }
@@ -148,6 +155,9 @@ public class BrazierBlockEntity extends LodestoneBlockEntity implements IEmberEm
         ticksToBurn = tag.getInt("ticksToBurn");
         itemHandler.deserializeNBT(registries, tag.getCompound("inventory"));
         emitter.deserializeNBT(registries, tag.getCompound("emitter"));
+        if (emberLevel != null) {
+           emberLevel.deserializeNBT(registries, tag.getList("emberLevel", Tag.TAG_LIST));
+        }
         super.loadAdditional(tag, registries);
     }
 
@@ -157,6 +167,11 @@ public class BrazierBlockEntity extends LodestoneBlockEntity implements IEmberEm
         tag.putInt("ticksToBurn", ticksToBurn);
         tag.put("inventory", itemHandler.serializeNBT(registries));
         tag.put("emitter", emitter.serializeNBT(registries));
+
+        if (emberLevel != null) {
+            tag.put("emberLevel", emberLevel.serializeNBT(registries));
+        }
+
         super.saveAdditional(tag, registries);
     }
 
@@ -165,6 +180,13 @@ public class BrazierBlockEntity extends LodestoneBlockEntity implements IEmberEm
         CompoundTag tag = super.getUpdateTag(registries);
         this.saveAdditional(tag, registries);
         return tag;
+    }
+
+    @Override
+    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt, HolderLookup.Provider lookupProvider) {
+        super.onDataPacket(net, pkt, lookupProvider);
+        CompoundTag tag = pkt.getTag();
+        loadAdditional(tag, lookupProvider);
     }
 
     //Emitters

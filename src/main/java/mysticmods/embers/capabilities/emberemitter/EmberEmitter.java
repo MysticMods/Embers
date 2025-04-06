@@ -44,6 +44,12 @@ public class EmberEmitter implements IEmberEmitter, INBTSerializable<CompoundTag
         }
     }
 
+    public void deactivate(@NotNull IEmberLevel levelEmber){
+        if (isActive()) {
+            levelEmber.clearEmberInBoundingBox(box);
+        }
+    }
+
     @Override
     @NotNull
     public BoundingBox getBoundingBox() {

@@ -65,13 +65,14 @@ public class EmberLevel extends SavedData implements IEmberLevel{
     @Override
     public void addEmberListener(@NotNull BlockPos pos, @NotNull IEmberIntensity intensity) {
         emberListeners.put(pos, intensity);
+        intensity.setIntensity(ember.getOrDefault(pos, 0));
         this.setDirty();
 
     }
 
     @Override
     public void removeEmberListener(@NotNull BlockPos pos, @NotNull IEmberIntensity intensity) {
-        //todo
+        emberListeners.remove(pos);
     }
 
     @Override
@@ -83,6 +84,7 @@ public class EmberLevel extends SavedData implements IEmberLevel{
     @Override
     public void removeEmitterListener( @NotNull IEmberEmitter emitter) {
         emitterListeners.remove(emitter.getBoundingBox());
+        clearEmberInBoundingBox(emitter.getBoundingBox());
         this.setDirty();
     }
 

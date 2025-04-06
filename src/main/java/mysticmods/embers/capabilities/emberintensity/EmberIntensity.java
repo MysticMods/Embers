@@ -21,6 +21,13 @@ public class EmberIntensity implements IEmberIntensity, INBTSerializable<IntTag>
         this.minIntensity = minIntensity;
     }
 
+    public boolean hasEmberForOperation(){
+        return intensity >= minIntensity;
+    }
+
+    public boolean isOverheated() {
+        return intensity > maxIntensity;
+    }
 
     @Override
     public int getMinIntensity() {

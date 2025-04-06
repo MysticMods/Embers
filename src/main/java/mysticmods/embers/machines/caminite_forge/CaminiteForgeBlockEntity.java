@@ -2,12 +2,14 @@ package mysticmods.embers.machines.caminite_forge;
 
 import mysticmods.embers.base.IEmberIntesityEntity;
 import mysticmods.embers.capabilities.emberintensity.EmberIntensity;
+import mysticmods.embers.capabilities.emberlevel.EmberLevel;
 import mysticmods.embers.capabilities.heated_metal.IHeatedMetalCap;
 import mysticmods.embers.init.EmbersBlockEntities;
 import mysticmods.embers.init.EmbersBlocks;
 import mysticmods.embers.init.EmbersCapabilities;
 import mysticmods.embers.init.EmbersItems;
 import mysticmods.embers.particles.options.EmbersParticleOptions;
+import mysticmods.embers.utils.SDUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -25,11 +27,13 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import team.lodestar.lodestone.systems.multiblock.MultiBlockCoreEntity;
 import team.lodestar.lodestone.systems.multiblock.MultiBlockStructure;
 
 import java.util.function.Supplier;
 
+import static mysticmods.embers.utils.BEUtil.dropItemHandler;
 import static mysticmods.embers.utils.BEUtil.updateViaState;
 
 public class CaminiteForgeBlockEntity extends MultiBlockCoreEntity implements IEmberIntesityEntity {
@@ -43,15 +47,24 @@ public class CaminiteForgeBlockEntity extends MultiBlockCoreEntity implements IE
             return 32;
         }
     };
+    private EmberLevel emberLevel;
 
     private float progress = 0;
     private boolean isLit = false;
-    private boolean hasHotMetals = false;
     private final int PROGRESS_PER_ITEM = 20 * 5;
+
 
     public CaminiteForgeBlockEntity(BlockPos pos, BlockState blockState) {
         super(EmbersBlockEntities.CAMINITE_FORGE.get(), STRUCTURE.get(), pos, blockState);
         this.intensity = new EmberIntensity(100, 100);
+    }
+
+    @Override
+    public void onLoad() {
+        emberLevel = SDUtil.getLevelEmbersData(level);
+        if (emberLevel != null) {
+            emberLevel.addEmberListener(getBlockPos(), this.intensity);
+        }
     }
 
     @Override
@@ -71,31 +84,31 @@ public class CaminiteForgeBlockEntity extends MultiBlockCoreEntity implements IE
         }
 
         if (!this.itemHandler.getStackInSlot(0).isEmpty()) {
-            //hasEmberForOperation() &&
-            progress++;
+            if(this.intensity.hasEmberForOperation()){
+                progress++;
 
-            if (progress >= this.PROGRESS_PER_ITEM) {
-                ItemStack hotMetalStack = this.itemHandler.getStackInSlot(1);
-                if (!hotMetalStack.isEmpty()) {
-                    hotMetalStack.setCount(hotMetalStack.getCount() + 1);
-                } else {
-                    this.itemHandler.setStackInSlot(1, new ItemStack(EmbersItems.HEATED_METAL.get(), 1));
-                    IHeatedMetalCap cap = this.itemHandler.getStackInSlot(1).getCapability(EmbersCapabilities.HEATED_METAL);
-                    if (cap != null) {
-                        cap.setMetalStack(new ItemStack(this.itemHandler.getStackInSlot(0).getItem(), 1));
+                if (progress >= this.PROGRESS_PER_ITEM) {
+                    ItemStack hotMetalStack = this.itemHandler.getStackInSlot(1);
+                    if (!hotMetalStack.isEmpty()) {
+                        hotMetalStack.setCount(hotMetalStack.getCount() + 1);
+                    } else {
+                        this.itemHandler.setStackInSlot(1, new ItemStack(EmbersItems.HEATED_METAL.get(), 1));
+                        IHeatedMetalCap cap = this.itemHandler.getStackInSlot(1).getCapability(EmbersCapabilities.HEATED_METAL);
+                        if (cap != null) {
+                            cap.setMetalStack(new ItemStack(this.itemHandler.getStackInSlot(0).getItem(), 1));
+                        }
                     }
+                    this.itemHandler.getStackInSlot(0).shrink(1);
+                    progress = 0;
                 }
-                this.itemHandler.getStackInSlot(0).shrink(1);
-                progress = 0;
-                this.hasHotMetals = true;
-            }
 
-            updateViaState(this);
+                updateViaState(this);
+            }
         }
     }
 
     public void clientTick() {
-        if (this.hasHotMetals && this.level != null) {
+        if (this.hasHotMetals() && this.level != null) {
             if(level.getGameTime() % 5 == 0) {
                 var random = this.level.getRandom();
                 level.addParticle(new EmbersParticleOptions(1, 0.5f, 0),
@@ -136,10 +149,13 @@ public class CaminiteForgeBlockEntity extends MultiBlockCoreEntity implements IE
         cap.setMaxHeat(100 * stack.getCount());
         cap.setStackHeat(100 * stack.getCount());
         this.itemHandler.setStackInSlot(1, ItemStack.EMPTY);
-        this.hasHotMetals = false;
 
         player.addItem(stack);
         updateViaState(this);
+    }
+
+    public boolean hasHotMetals(){
+        return !this.itemHandler.getStackInSlot(1).isEmpty();
     }
 
     @Override
@@ -158,16 +174,11 @@ public class CaminiteForgeBlockEntity extends MultiBlockCoreEntity implements IE
         return 0;
     }
 
-    public int getPROGRESS_PER_ITEM() {
-        return PROGRESS_PER_ITEM;
-    }
-
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
         tag.putFloat("progress", this.progress);
         tag.putBoolean("isLit", this.isLit);
-        tag.putBoolean("hasHotMetals", this.hasHotMetals);
         tag.put("inventory", this.itemHandler.serializeNBT(registries));
     }
 
@@ -176,7 +187,6 @@ public class CaminiteForgeBlockEntity extends MultiBlockCoreEntity implements IE
         super.loadAdditional(tag, registries);
         this.progress = tag.getFloat("progress");
         this.isLit = tag.getBoolean("isLit");
-        this.hasHotMetals = tag.getBoolean("hasHotMetals");
         this.itemHandler.deserializeNBT(registries, tag.getCompound("inventory"));
     }
 
@@ -185,5 +195,15 @@ public class CaminiteForgeBlockEntity extends MultiBlockCoreEntity implements IE
         super.onDataPacket(net, pkt, lookupProvider);
         CompoundTag tag = pkt.getTag();
         loadAdditional(tag, lookupProvider);
+    }
+
+    @Override
+    public void onBreak(@Nullable Player player) {
+        super.onBreak(player);
+        if (emberLevel != null) {
+            emberLevel.removeEmberListener(getBlockPos(), this.intensity);
+        }
+
+        dropItemHandler(this, itemHandler);
     }
 }
