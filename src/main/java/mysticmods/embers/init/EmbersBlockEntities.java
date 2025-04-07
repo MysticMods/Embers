@@ -1,6 +1,7 @@
 package mysticmods.embers.init;
 
 import mysticmods.embers.Embers;
+import mysticmods.embers.machines.anvil.copper.CopperAnvilBlockEntity;
 import mysticmods.embers.machines.brazier.BrazierBlockEntity;
 import mysticmods.embers.machines.caminite_forge.CaminiteForgeBlockEntity;
 import net.minecraft.core.registries.Registries;
@@ -26,6 +27,14 @@ public class EmbersBlockEntities {
             () -> BlockEntityType.Builder.of(
                     CaminiteForgeBlockEntity::new,
                     EmbersBlocks.CAMINITE_FORGE.get()
+            ).build(null)
+    );
+
+    public static final  DeferredHolder<BlockEntityType<?>, BlockEntityType<CopperAnvilBlockEntity>> COPPER_ANVIL = BLOCK_ENTITY_TYPES.register(
+            "copper_anvil_block_entity",
+            () -> BlockEntityType.Builder.of(
+                    CopperAnvilBlockEntity::new,
+                    EmbersBlocks.COPPER_ANVIL.get()
             ).build(null)
     );
 

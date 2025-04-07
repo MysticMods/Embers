@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "embers:caminite_bricks"
+    },
+    "O": {
+      "item": "minecraft:copper_block"
+    }
+  },
+  "pattern": [
+    "OOO",
+    " # ",
+    "###"
+  ],
+  "result": {
+    "count": 1,
+    "id": "embers:copper_anvil"
+  }
+}

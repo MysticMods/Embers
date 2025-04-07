@@ -34,6 +34,7 @@ public class EmbersTabs {
                 output.accept(EmbersItems.CAMINITE_BRICK_BLOCK_ITEM.get());
                 output.accept(EmbersItems.BRAZIER_BLOCK_ITEM.get());
                 output.accept(EmbersItems.CAMINITE_FORGE_BLOCK_ITEM.get());
+                output.accept(EmbersItems.COPPER_ANVIL_BLOCK_ITEM.get());
             }).build());
 
     public static void register(IEventBus bus) {

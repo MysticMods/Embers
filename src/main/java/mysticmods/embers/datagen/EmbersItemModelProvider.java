@@ -18,6 +18,7 @@ public class EmbersItemModelProvider extends ItemModelProvider {
         withExistingParent(EmbersItems.CAMINITE_BRICK_BLOCK_ITEM.getId().toString(), modLoc("block/caminite_bricks"));
         withExistingParent(EmbersItems.BRAZIER_BLOCK_ITEM.getId().toString(), modLoc("block/brazier"));
         withExistingParent(EmbersItems.CAMINITE_FORGE_BLOCK_ITEM.getId().toString(), modLoc("block/caminite_forge"));
+        withExistingParent(EmbersItems.COPPER_ANVIL_BLOCK_ITEM.getId().toString(), modLoc("block/copper_anvil"));
 
         basicItem(EmbersItems.ASHEN_STEEL_INGOT.get());
         basicItem(EmbersItems.CAMINITE_BLEND.get());

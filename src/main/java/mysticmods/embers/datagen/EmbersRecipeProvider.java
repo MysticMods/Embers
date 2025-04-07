@@ -55,6 +55,17 @@ public class EmbersRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_campfire", has(Items.CAMPFIRE))
                 .save(recipeOutput);
 
+        //Copper Anvil
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, EmbersItems.COPPER_ANVIL_BLOCK_ITEM)
+                .pattern("OOO")
+                .pattern(" # ")
+                .pattern("###")
+                .define('#', EmbersItems.CAMINITE_BRICK_BLOCK_ITEM)
+                .define('O', Items.COPPER_BLOCK)
+                .unlockedBy("has_caminite_bricks", has(EmbersItems.CAMINITE_BRICK_BLOCK_ITEM))
+                .unlockedBy("has_copper_block", has(Items.COPPER_BLOCK))
+                .save(recipeOutput);
+
         // ## Smelting ## //
 
         //Caminite Brick

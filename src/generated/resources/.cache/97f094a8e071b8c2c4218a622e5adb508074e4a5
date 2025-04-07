@@ -1,6 +1,7 @@
-// 1.21.1	2025-04-03T19:23:08.8229805	Block States: embers
+// 1.21.1	2025-04-07T22:55:58.3974813	Block States: embers
 06b416524984d3da333a8dca6d7b100ac5e468aa assets/embers/blockstates/brazier.json
 ace42d0aa0968fb561690e4732c125b427910256 assets/embers/blockstates/caminite_bricks.json
 0518f1be305ce0678c007cb02c0c8294a5104cd6 assets/embers/blockstates/caminite_forge.json
 453304b3beea513500921ac4ef5781739dae4dd1 assets/embers/blockstates/caminite_forge_component.json
+5be9c31dce1b94d92208d04f9dd623f275437869 assets/embers/blockstates/copper_anvil.json
 fed6ee3430257052e07c671e582eac9b33e4fa7a assets/embers/models/block/caminite_bricks.json

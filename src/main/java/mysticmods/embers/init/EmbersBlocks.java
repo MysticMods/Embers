@@ -1,6 +1,7 @@
 package mysticmods.embers.init;
 
 import mysticmods.embers.Embers;
+import mysticmods.embers.machines.anvil.copper.CopperAnvilBlock;
 import mysticmods.embers.machines.brazier.BrazierBlock;
 import mysticmods.embers.machines.caminite_forge.CaminiteForgeBlock;
 import net.minecraft.world.level.block.Block;
@@ -37,9 +38,17 @@ public class EmbersBlocks {
                     BlockBehaviour.Properties.ofFullCopy(Blocks.BRICKS)
 
             )
-    );    public static final DeferredBlock<Block> CAMINITE_FORGE_COMPONENT = BLOCKS.register(
+    );
+
+    public static final DeferredBlock<Block> CAMINITE_FORGE_COMPONENT = BLOCKS.register(
             "caminite_forge_component", registryName -> new MultiblockComponentBlock(
                     BlockBehaviour.Properties.ofFullCopy(Blocks.BRICKS)
+            )
+    );
+
+    public static final DeferredBlock<Block> COPPER_ANVIL = BLOCKS.register(
+            "copper_anvil", registryName -> new CopperAnvilBlock(
+                    BlockBehaviour.Properties.ofFullCopy(Blocks.ANVIL).noOcclusion()
             )
     );
 
