@@ -172,6 +172,8 @@ public class CaminiteForgeBlockEntity extends MultiBlockCoreEntity implements IE
     public void toggleAlloyMode(Player player) {
         this.alloyMode = !this.alloyMode;
         updateViaState(this);
+
+        openMenu(player);
     }
 
     public void openMenu(Player player){

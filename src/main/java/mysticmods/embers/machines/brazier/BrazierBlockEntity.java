@@ -106,10 +106,11 @@ public class BrazierBlockEntity extends LodestoneBlockEntity implements IEmberEm
             ItemStack returnStack = this.itemHandler.insertItem(0, playerStack, false);
             player.setItemInHand(hand, returnStack);
             updateViaState(this);
-        }
 
-        onFuelChange();
-        return ItemInteractionResult.CONSUME;
+            onFuelChange();
+            return ItemInteractionResult.CONSUME;
+        }
+        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
 
     @Override
