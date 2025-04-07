@@ -13,7 +13,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 public class CaminiteForgeAlloyScreen extends AbstractContainerScreen<CaminiteForgeAlloyMenu> {
-    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(Embers.MODID, "textures/gui/caminite_forge.png");
+    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(Embers.MODID, "textures/gui/caminite_forge_alloy.png");
     private static final ResourceLocation ALLOY_BUTTON_TEXTURE = ResourceLocation.fromNamespaceAndPath(Embers.MODID, "textures/gui/alloy_mode_button.png");
     private AlloyModeButton alloyModeButton;
 

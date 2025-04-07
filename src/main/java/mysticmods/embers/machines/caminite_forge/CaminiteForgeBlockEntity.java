@@ -133,13 +133,10 @@ public class CaminiteForgeBlockEntity extends MultiBlockCoreEntity implements IE
     }
 
     @Override
-    public ItemInteractionResult onUseWithItem(Player player, ItemStack pStack, InteractionHand hand) {
-        if (level.isClientSide()) {
-            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+    public ItemInteractionResult onUse(Player pPlayer, InteractionHand pHand) {
+        if(pHand == InteractionHand.MAIN_HAND) {
+            this.openMenu(pPlayer);
         }
-
-        openMenu(player);
-
         return ItemInteractionResult.SUCCESS;
     }
 
