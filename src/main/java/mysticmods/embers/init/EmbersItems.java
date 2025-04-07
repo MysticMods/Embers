@@ -1,9 +1,11 @@
 package mysticmods.embers.init;
 
 import mysticmods.embers.Embers;
+import mysticmods.embers.items.HammerItem;
 import mysticmods.embers.machines.caminite_forge.CaminiteForgeItemBlock;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Tiers;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -24,6 +26,8 @@ public class EmbersItems {
     public static final DeferredItem<Item> VERMILLIONITE_CHUNK = ITEMS.registerSimpleItem("vermillionite_chunk", new Item.Properties());
 
     public static final DeferredItem<Item> HEATED_METAL = ITEMS.registerSimpleItem("heated_metal", new Item.Properties());
+
+    public static final DeferredItem<HammerItem> IRON_HAMMER = ITEMS.register("iron_hammer", () -> new HammerItem(Tiers.IRON, 8.0f, 2, new Item.Properties()));
 
     //todo: VERMILLIONITE tag
     //todo: CINNABAR tag

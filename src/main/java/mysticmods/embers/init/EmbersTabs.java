@@ -29,6 +29,7 @@ public class EmbersTabs {
                 output.accept(EmbersItems.EMBER_CRYSTAL.get());
                 output.accept(EmbersItems.QUICKSILVER.get());
                 output.accept(EmbersItems.VERMILLIONITE_CHUNK.get());
+                output.accept(EmbersItems.IRON_HAMMER.get());
 
                 //Blocks
                 output.accept(EmbersItems.CAMINITE_BRICK_BLOCK_ITEM.get());

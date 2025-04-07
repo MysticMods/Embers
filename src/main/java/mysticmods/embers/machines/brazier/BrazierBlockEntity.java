@@ -130,6 +130,7 @@ public class BrazierBlockEntity extends LodestoneBlockEntity implements IEmberEm
             this.running = false;
             this.emitter.deactivate(emberLevel);
             level.setBlock(getBlockPos(), getBlockState().setValue(BrazierBlock.LIT, false), Block.UPDATE_ALL);
+            emberLevel.clearEmberInBoundingBox(this.emitter.getBoundingBox());
             updateViaState(this);
         }
 

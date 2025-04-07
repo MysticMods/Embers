@@ -30,5 +30,6 @@ public class EmbersItemModelProvider extends ItemModelProvider {
         basicItem(EmbersItems.QUICKSILVER.get());
         basicItem(EmbersItems.VERMILLIONITE_CHUNK.get());
         basicItem(EmbersItems.HEATED_METAL.get());
+        basicItem(EmbersItems.IRON_HAMMER.get());
     }
 }

@@ -5,25 +5,23 @@ import net.minecraft.nbt.IntTag;
 import net.neoforged.neoforge.common.util.INBTSerializable;
 import org.jetbrains.annotations.UnknownNullability;
 
-import java.util.function.Function;
-
 public class EmberIntensity implements IEmberIntensity, INBTSerializable<IntTag> {
 
     private int intensity;
     private int maxIntensity;
     private int minIntensity;
-    private Runnable  updateEntity;
+    private Runnable intensityUpdateListener;
 
     //Add function reference to constructor
-    public EmberIntensity(int minIntensity, int maxIntensity, Runnable  function) {
-        this(0, minIntensity, maxIntensity, function);
+    public EmberIntensity(int minIntensity, int maxIntensity, Runnable intensityUpdateListener) {
+        this(0, minIntensity, maxIntensity, intensityUpdateListener);
     }
 
-    public EmberIntensity(int intensity, int minIntensity, int maxIntensity, Runnable  function) {
+    public EmberIntensity(int intensity, int minIntensity, int maxIntensity, Runnable intensityUpdateListener) {
         this.intensity = intensity;
         this.maxIntensity = maxIntensity;
         this.minIntensity = minIntensity;
-        this.updateEntity = function;
+        this.intensityUpdateListener = intensityUpdateListener;
     }
 
     public boolean hasEmberForOperation(){
@@ -52,7 +50,9 @@ public class EmberIntensity implements IEmberIntensity, INBTSerializable<IntTag>
     @Override
     public void setIntensity(int intensity) {
         this.intensity = intensity;
-        this.updateEntity.run();
+        if(this.intensityUpdateListener != null){
+            this.intensityUpdateListener.run();
+        }
     }
 
     @Override
