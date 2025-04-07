@@ -3,7 +3,10 @@ package mysticmods.embers;
 import com.mojang.logging.LogUtils;
 import mysticmods.embers.datagen.*;
 import mysticmods.embers.init.*;
-import mysticmods.embers.machines.caminite_forge.CaminiteForgeScreen;
+import mysticmods.embers.machines.caminite_forge.menu.CaminiteForgeAlloyScreen;
+import mysticmods.embers.machines.caminite_forge.menu.CaminiteForgeScreen;
+import mysticmods.embers.network.CaminiteForgeToggleAlloyData;
+import mysticmods.embers.network.EmbersNetworkHandler;
 import mysticmods.embers.particles.GlowParticleProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
@@ -25,6 +28,8 @@ import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
+import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import org.slf4j.Logger;
 
 import java.util.concurrent.CompletableFuture;
@@ -90,6 +95,17 @@ public class Embers
         @SubscribeEvent
         private static void registerScreens(RegisterMenuScreensEvent event) {
             event.register(EmbersMenuTypes.CAMINITE_FORGE.get(), CaminiteForgeScreen::new);
+            event.register(EmbersMenuTypes.CAMINITE_FORGE_ALLOY.get(), CaminiteForgeAlloyScreen::new);
+        }
+
+        @SubscribeEvent
+        public static void register(final RegisterPayloadHandlersEvent event) {
+            final PayloadRegistrar registrar = event.registrar("1");
+            registrar.playToServer(
+                    CaminiteForgeToggleAlloyData.TYPE,
+                    CaminiteForgeToggleAlloyData.STREAM_CODEC,
+                    EmbersNetworkHandler::handleCaminiteForgePayload
+            );
         }
     }
 

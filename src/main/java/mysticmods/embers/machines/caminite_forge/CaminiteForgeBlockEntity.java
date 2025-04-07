@@ -8,6 +8,8 @@ import mysticmods.embers.init.EmbersBlockEntities;
 import mysticmods.embers.init.EmbersBlocks;
 import mysticmods.embers.init.EmbersCapabilities;
 import mysticmods.embers.init.EmbersItems;
+import mysticmods.embers.machines.caminite_forge.menu.CaminiteForgeAlloyMenu;
+import mysticmods.embers.machines.caminite_forge.menu.CaminiteForgeMenu;
 import mysticmods.embers.particles.options.EmbersParticleOptions;
 import mysticmods.embers.utils.SDUtil;
 import net.minecraft.core.BlockPos;
@@ -26,6 +28,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -66,6 +69,8 @@ public class CaminiteForgeBlockEntity extends MultiBlockCoreEntity implements IE
         if (emberLevel != null) {
             emberLevel.addEmberListener(getBlockPos(), this.intensity);
         }
+
+        updateViaState(this);
     }
 
     public void updateToClient() {
@@ -133,23 +138,9 @@ public class CaminiteForgeBlockEntity extends MultiBlockCoreEntity implements IE
             return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }
 
-        // Open the GUI
-        if (player instanceof ServerPlayer serverPlayer) {
-            serverPlayer.openMenu(new MenuProvider() {
-                @Override
-                public Component getDisplayName() {
-                    return Component.translatable("block.embers.caminite_forge");
-                }
+        openMenu(player);
 
-                @Override
-                public AbstractContainerMenu createMenu(int windowId, Inventory playerInventory, Player player) {
-                    return new CaminiteForgeMenu(windowId, playerInventory, CaminiteForgeBlockEntity.this);
-                }
-            }, buf -> buf.writeBlockPos(getBlockPos()));
-            return ItemInteractionResult.CONSUME;
-        }
-
-        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        return ItemInteractionResult.SUCCESS;
     }
 
     public void transferHeatedMetal(IHeatedMetalCap cap, Player player, ItemStack stack) {
@@ -181,17 +172,43 @@ public class CaminiteForgeBlockEntity extends MultiBlockCoreEntity implements IE
         return 0;
     }
 
-    public boolean isAlloyMode() {
-        return alloyMode;
+    public void toggleAlloyMode(Player player) {
+        this.alloyMode = !this.alloyMode;
+        updateViaState(this);
     }
 
-    public void toggleAlloyMode() {
-        this.alloyMode = !this.alloyMode;
-        updateToClient();
+    public void openMenu(Player player){
+        if (player instanceof ServerPlayer serverPlayer) {
+            if(this.alloyMode){
+                serverPlayer.openMenu(new MenuProvider() {
+                    @Override
+                    public @NotNull Component getDisplayName() {
+                        return Component.translatable("block.embers.caminite_forge");
+                    }
+
+                    @Override
+                    public AbstractContainerMenu createMenu(int windowId, @NotNull Inventory playerInventory, @NotNull Player player) {
+                        return new CaminiteForgeAlloyMenu(windowId, playerInventory, CaminiteForgeBlockEntity.this);
+                    }
+                }, buf -> buf.writeBlockPos(getBlockPos()));
+            } else {
+                serverPlayer.openMenu(new MenuProvider() {
+                    @Override
+                    public @NotNull Component getDisplayName() {
+                        return Component.translatable("block.embers.caminite_forge");
+                    }
+
+                    @Override
+                    public AbstractContainerMenu createMenu(int windowId, @NotNull Inventory playerInventory, @NotNull Player player) {
+                        return new CaminiteForgeMenu(windowId, playerInventory, CaminiteForgeBlockEntity.this);
+                    }
+                }, buf -> buf.writeBlockPos(getBlockPos()));
+            }
+        }
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+    protected void saveAdditional(@NotNull CompoundTag tag, HolderLookup.@NotNull Provider registries) {
         super.saveAdditional(tag, registries);
         tag.putFloat("progress", this.progress);
         tag.putBoolean("isLit", this.isLit);
@@ -208,6 +225,7 @@ public class CaminiteForgeBlockEntity extends MultiBlockCoreEntity implements IE
         this.alloyMode = tag.contains("alloyMode") ? tag.getBoolean("alloyMode") : false;
         this.itemHandler.deserializeNBT(registries, tag.getCompound("inventory"));
         this.intensity.deserializeNBT(registries, IntTag.valueOf(tag.getInt("emberIntensity")));
+        System.out.println("load");
     }
 
     @Override

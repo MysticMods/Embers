@@ -1,12 +1,15 @@
-package mysticmods.embers.machines.caminite_forge;
+package mysticmods.embers.machines.caminite_forge.menu;
 
 import mysticmods.embers.Embers;
+import mysticmods.embers.machines.caminite_forge.CaminiteForgeBlockEntity;
+import mysticmods.embers.network.CaminiteForgeToggleAlloyData;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 public class CaminiteForgeScreen extends AbstractContainerScreen<CaminiteForgeMenu> {
     private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(Embers.MODID, "textures/gui/caminite_forge.png");
@@ -54,7 +57,7 @@ public class CaminiteForgeScreen extends AbstractContainerScreen<CaminiteForgeMe
     private void onAlloyModeButtonPress() {
         // Toggle alloy mode in the block entity
         CaminiteForgeBlockEntity blockEntity = this.menu.getBlockEntity();
-        blockEntity.toggleAlloyMode();
+        PacketDistributor.sendToServer(new CaminiteForgeToggleAlloyData(blockEntity.getBlockPos()));
     }
 
     @Override

@@ -1,6 +1,7 @@
-package mysticmods.embers.machines.caminite_forge;
+package mysticmods.embers.machines.caminite_forge.menu;
 
 import mysticmods.embers.init.EmbersMenuTypes;
+import mysticmods.embers.machines.caminite_forge.CaminiteForgeBlockEntity;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -10,6 +11,7 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.neoforge.items.SlotItemHandler;
+import org.jetbrains.annotations.NotNull;
 
 public class CaminiteForgeMenu extends AbstractContainerMenu {
     private final CaminiteForgeBlockEntity blockEntity;
@@ -27,25 +29,17 @@ public class CaminiteForgeMenu extends AbstractContainerMenu {
         this.containerLevelAccess = ContainerLevelAccess.create(blockEntity.getLevel(), blockEntity.getBlockPos());
 
         // Add the input slot
-        this.addSlot(new SlotItemHandler(blockEntity.getItemHandler(), 0, 61, 16) {
+        this.addSlot(new SlotItemHandler(blockEntity.getItemHandler(), 0, 79, 16) {
             @Override
-            public boolean mayPlace(ItemStack stack) {
+            public boolean mayPlace(@NotNull ItemStack stack) {
                 return blockEntity.getItemHandler().isItemValid(0, stack);
-            }
-        });
-
-        // Add the output slot
-        this.addSlot(new SlotItemHandler(blockEntity.getItemHandler(), 1, 97, 16) {
-            @Override
-            public boolean mayPlace(ItemStack stack) {
-                return blockEntity.getItemHandler().isItemValid(1, stack);
             }
         });
 
         // Add the output slot
         this.addSlot(new SlotItemHandler(blockEntity.getItemHandler(), 2, 138, 39) {
             @Override
-            public boolean mayPlace(ItemStack stack) {
+            public boolean mayPlace(@NotNull ItemStack stack) {
                 return false; // Output slot, can't place items
             }
         });
@@ -72,26 +66,24 @@ public class CaminiteForgeMenu extends AbstractContainerMenu {
     }
 
     @Override
-    public boolean stillValid(Player player) {
+    public boolean stillValid(@NotNull Player player) {
         return stillValid(this.containerLevelAccess, player, blockEntity.getBlockState().getBlock());
     }
 
     @Override
-    public ItemStack quickMoveStack(Player player, int index) {
+    public @NotNull ItemStack quickMoveStack(@NotNull Player player, int index) {
         ItemStack itemstack = ItemStack.EMPTY;
         Slot slot = this.slots.get(index);
 
-        if (slot != null && slot.hasItem()) {
+        if (slot.hasItem()) {
             ItemStack itemstack1 = slot.getItem();
             itemstack = itemstack1.copy();
 
-            if (index < 3) {  // Changed from 2 to 3
-                // If the item is in the Caminite Forge slots
-                if (!this.moveItemStackTo(itemstack1, 3, this.slots.size(), true)) {  // Changed from 2 to 3
+            if (index < 2) {
+                if (!this.moveItemStackTo(itemstack1, 3, this.slots.size(), true)) {
                     return ItemStack.EMPTY;
                 }
             } else if (!this.moveItemStackTo(itemstack1, 0, 1, false)) {
-                // If the item is in the player inventory, try to move it to the input slot
                 return ItemStack.EMPTY;
             }
 
