@@ -118,7 +118,7 @@ public class CaminiteForgeBlockEntity extends MultiBlockCoreEntity implements IE
 
                             if(optional.isPresent()){
                                 MalleableMetalDataComponent data = hotMetalStack.get(EmbersDataComponents.MALLEABLE_METAL);
-                                data = data.setMalleableMetal(optional.get().value().malleableMetal);
+                                data = data.setMalleableMetal(optional.get().value().malleableMetal).setMaxHeat();
                                 hotMetalStack.set(EmbersDataComponents.MALLEABLE_METAL, data);
                             }
 
