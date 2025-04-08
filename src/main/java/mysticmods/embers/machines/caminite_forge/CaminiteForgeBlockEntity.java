@@ -4,6 +4,7 @@ import mysticmods.embers.base.IEmberIntesityEntity;
 import mysticmods.embers.capabilities.emberintensity.EmberIntensity;
 import mysticmods.embers.capabilities.emberlevel.EmberLevel;
 import mysticmods.embers.capabilities.heated_metal.IHeatedMetalCap;
+import mysticmods.embers.data.components.MalleableMetalDataComponent;
 import mysticmods.embers.init.*;
 import mysticmods.embers.machines.caminite_forge.menu.CaminiteForgeAlloyMenu;
 import mysticmods.embers.machines.caminite_forge.menu.CaminiteForgeMenu;
@@ -104,26 +105,29 @@ public class CaminiteForgeBlockEntity extends MultiBlockCoreEntity implements IE
 
                     if (progress >= PROGRESS_PER_ITEM) {
                         ItemStack hotMetalStack = this.itemHandler.getStackInSlot(2);
-                        if (!hotMetalStack.isEmpty()) {
-                            IHeatedMetalCap cap = hotMetalStack.getCapability(EmbersCapabilities.HEATED_METAL);
-                            if(cap != null) {
-                                cap.addIngots(1);
-                                cap.addNuggets(3);
-                            }
-                        } else {
+                        if (hotMetalStack.isEmpty()) {
+                            RecipeManager recipes = level.getRecipeManager();
+                            Optional<RecipeHolder<MalleableMetalRecipe>> optional = recipes.getRecipeFor(
+                                    EmbersRecipeTypes.MALLEABLE_METAL.get(),
+                                    new SingleRecipeInput(this.itemHandler.getStackInSlot(0)),
+                                    level
+                            );
+
                             this.itemHandler.setStackInSlot(2, new ItemStack(EmbersItems.HEATED_METAL.get(), 1));
-                            IHeatedMetalCap cap = this.itemHandler.getStackInSlot(2).getCapability(EmbersCapabilities.HEATED_METAL);
-                            if (cap != null) {
-                                Optional<RecipeHolder<MalleableMetalRecipe>> optional = level.getRecipeManager().getRecipeFor(
-                                        EmbersRecipeTypes.MALLEABLE_METAL.get(),
-                                        new SingleRecipeInput(this.itemHandler.getStackInSlot(0)),
-                                        level
-                                );
-                                optional.ifPresent(((s) -> cap.setMalleableMetal(s.value().malleableMetal)));
-                                cap.addIngots(1);
-                                cap.addNuggets(3);
+                            hotMetalStack = this.itemHandler.getStackInSlot(2);
+
+                            if(optional.isPresent()){
+                                MalleableMetalDataComponent data = hotMetalStack.get(EmbersDataComponents.MALLEABLE_METAL);
+                                data = data.setMalleableMetal(optional.get().value().malleableMetal);
+                                hotMetalStack.set(EmbersDataComponents.MALLEABLE_METAL, data);
                             }
+
                         }
+
+                        MalleableMetalDataComponent data = hotMetalStack.get(EmbersDataComponents.MALLEABLE_METAL);
+                        data = data.addIngots(1).addNuggets(3);
+                        hotMetalStack.set(EmbersDataComponents.MALLEABLE_METAL, data);
+
                         this.itemHandler.getStackInSlot(0).shrink(1);
                         progress = 0;
                     }

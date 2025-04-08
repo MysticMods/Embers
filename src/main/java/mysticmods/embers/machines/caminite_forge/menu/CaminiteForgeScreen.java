@@ -2,7 +2,9 @@ package mysticmods.embers.machines.caminite_forge.menu;
 
 import mysticmods.embers.Embers;
 import mysticmods.embers.capabilities.heated_metal.IHeatedMetalCap;
+import mysticmods.embers.data.components.MalleableMetalDataComponent;
 import mysticmods.embers.init.EmbersCapabilities;
+import mysticmods.embers.init.EmbersDataComponents;
 import mysticmods.embers.machines.caminite_forge.CaminiteForgeBlockEntity;
 import mysticmods.embers.network.CaminiteForgeToggleAlloyData;
 import net.minecraft.client.gui.GuiGraphics;
@@ -88,13 +90,5 @@ public class CaminiteForgeScreen extends AbstractContainerScreen<CaminiteForgeMe
             float progress = (float) emberLevel / blockEntity.getEmberIntensity().getMinIntensity() * 54;
             guiGraphics.blit(TEXTURE, x + 60, y + 64, 176, 16, Math.round(progress), 9);
         }
-
-        if(blockEntity.getItemHandler().getStackInSlot(2) != ItemStack.EMPTY) {
-            IHeatedMetalCap cap = blockEntity.getItemHandler().getStackInSlot(2).getCapability(EmbersCapabilities.HEATED_METAL);
-            if (cap != null) {
-                System.out.println(cap.getIngots());
-            }
-        }
-
     }
 }
