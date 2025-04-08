@@ -1,17 +1,19 @@
 package mysticmods.embers.machines.anvil.copper;
 
 import mysticmods.embers.capabilities.emberintensity.EmberIntensity;
-import mysticmods.embers.capabilities.heated_metal.HeatedMetalCap;
+import mysticmods.embers.data.components.MalleableMetalDataComponent;
 import mysticmods.embers.init.EmbersBlockEntities;
+import mysticmods.embers.init.EmbersDataComponents;
 import mysticmods.embers.init.EmbersItems;
 import mysticmods.embers.machines.anvil.AnvilItemHandler;
 import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 import team.lodestar.lodestone.systems.blockentity.LodestoneBlockEntity;
@@ -22,7 +24,7 @@ public class CopperAnvilBlockEntity extends LodestoneBlockEntity {
     public final AnvilItemHandler itemHandler = new AnvilItemHandler(6, this) {
         @Override
         protected int getStackLimit(int slot, @NotNull ItemStack stack) {
-            return 32;
+            return 1;
         }
     };
 
@@ -34,48 +36,55 @@ public class CopperAnvilBlockEntity extends LodestoneBlockEntity {
     public ItemInteractionResult onUse(Player player, InteractionHand hand) {
         ItemStack playerStack = player.getItemInHand(hand);
 
+        if (playerStack.getItem() == EmbersItems.IRON_HAMMER.get()) {
+            if (this.itemHandler.getFilledSlotAmount() == 1) {
+                MalleableMetalDataComponent data = this.itemHandler.getStackInSlot(0).get(EmbersDataComponents.MALLEABLE_METAL);
+                if(data != null){
+                    smithIngot(this.itemHandler.getStackInSlot(0), data, player);
+                    data = this.itemHandler.getStackInSlot(0).get(EmbersDataComponents.MALLEABLE_METAL);
+                    if(data != null){
+                        if(data.getIngots() == 0 && data.getNuggets() == 0){
+                            this.itemHandler.setStackInSlot(0, ItemStack.EMPTY);
+                        }
+                    }
+                }
+                return ItemInteractionResult.CONSUME;
+            }
+        }
 
-//        if (playerStack.getItem() == EmbersItems.IRON_HAMMER.get()) {
-//            if (this.itemHandler.getFilledSlotAmount() == 1 && this.itemHandler.getStackInSlot(0).getCapability(EmbersCaps.HEATED_METAL).isPresent()) {
-//                this.itemHandler.getStackInSlot(0).getCapability(EmbersCaps.HEATED_METAL).ifPresent(cap -> smithIngot(cap, level));
-//                return ItemInteractionResult.SUCCESS;
-//            }
-//        }
+        //If hand is empty return the itemstack from itemhandler to the players hand
+        if(playerStack == ItemStack.EMPTY){
+            player.setItemInHand(hand, this.itemHandler.extractItem(0, 1, false));
+            return ItemInteractionResult.SUCCESS;
+        }
 
         player.setItemInHand(hand, this.itemHandler.addItemStack(playerStack));
         return ItemInteractionResult.SUCCESS;
     }
 
-    public void smithIngot(HeatedMetalCap cap, Level level) {
-//        System.out.println(cap.getMetal().getItem());
-//        if (MetalFamilyRegistry.getInstance().getByRaw(cap.getMetal().getItem()).isPresent()) {
-//            MetalFamilyRegistry.MetalFamily family = MetalFamilyRegistry.getInstance().getByRaw(cap.getMetal().getItem()).get();
-//            int nuggets = 0;
-//            float f = EntityType.ITEM.getHeight() / 2.0F;
-//            int heatProcentage = cap.getStackHeat() / (cap.getMaxHeat() / 100);
-//            for (int i = heatProcentage; i > 25; i -= 25) {
-//                nuggets++;
-//            }
-//            for (int i = nuggets; i > 0; i--) {
-//                ItemStack nuggetStack = new ItemStack(family.nugget);
-//                double d0 = (double) ((float) getBlockPos().getX() + 0.5F) + Mth.nextDouble(level.random, -0.25D, 0.25D);
-//                double d1 = (double) ((float) getBlockPos().getY() + 1.1F) + Mth.nextDouble(level.random, -0.25D, 0.25D) - (double) f;
-//                double d2 = (double) ((float) getBlockPos().getZ() + 0.5F) + Mth.nextDouble(level.random, -0.25D, 0.25D);
-//                ItemEntity entity = new ItemEntity(level, d0, d1, d2, nuggetStack);
-//                entity.setDefaultPickUpDelay();
-//                level.addFreshEntity(entity);
-//            }
-//
-//            ItemStack ingotStacl = new ItemStack(family.ingot);
-//            double d0 = (double) ((float) getBlockPos().getX() + 0.5F) + Mth.nextDouble(level.random, -0.25D, 0.25D);
-//            double d1 = (double) ((float) getBlockPos().getY() + 1.1F) + Mth.nextDouble(level.random, -0.25D, 0.25D) - (double) f;
-//            double d2 = (double) ((float) getBlockPos().getZ() + 0.5F) + Mth.nextDouble(level.random, -0.25D, 0.25D);
-//            ItemEntity entity = new ItemEntity(level, d0, d1, d2, ingotStacl);
-//            entity.setDefaultPickUpDelay();
-//            level.addFreshEntity(entity);
-//
-//            this.itemHandler.getStackInSlot(0).shrink(1);
-//        }
+    public void smithIngot(ItemStack stack, MalleableMetalDataComponent metalData, Player player) {
+        if(metalData.getIngots() > 0){
+            player.addItem(metalData.getMalleableMetal().ingot.getItems()[0].copy());
+            metalData = metalData.removeIngots(1);
+            stack.set(EmbersDataComponents.MALLEABLE_METAL, metalData);
+        } else {
+            ItemStack nuggets = metalData.getMalleableMetal().nugget.getItems()[0].copy();
+            nuggets.grow(metalData.getNuggets() - 1);
+            player.addItem(nuggets);
+            metalData = metalData.removeNuggets(metalData.getNuggets());
+            stack.set(EmbersDataComponents.MALLEABLE_METAL, metalData);
+        }
+
+        player.swing(InteractionHand.MAIN_HAND, true);player.level().playSound(
+                null,
+                player.getX(),
+                player.getY(),
+                player.getZ(),
+                SoundEvents.ANVIL_USE,
+                SoundSource.PLAYERS,
+                1.0f,
+                1.0f
+        );
     }
 
     public EmberIntensity getEmber() {

@@ -75,6 +75,14 @@ public class MalleableMetalDataComponent implements TooltipProvider {
         return new MalleableMetalDataComponent(this.stackHeat, this.maximumStackHeat, this.ingots + ingotAmount, this.nuggets, this.malleableMetal);
     }
 
+    public MalleableMetalDataComponent removeIngots(int ingotAmount) {
+        int newIngots = this.ingots - ingotAmount;
+        if (newIngots < 0) {
+            newIngots = 0;
+        }
+        return new MalleableMetalDataComponent(this.stackHeat, this.maximumStackHeat, newIngots, this.nuggets, this.malleableMetal);
+    }
+
     public MalleableMetalDataComponent addNuggets(int nuggetAmount) {
         int newNuggets = this.nuggets + nuggetAmount;
         int extraIngots = 0;
@@ -84,6 +92,14 @@ public class MalleableMetalDataComponent implements TooltipProvider {
         }
 
         return new MalleableMetalDataComponent(this.stackHeat, this.maximumStackHeat, this.ingots + extraIngots, newNuggets, this.malleableMetal);
+    }
+
+    public MalleableMetalDataComponent removeNuggets(int nuggetAmount) {
+        int newNuggets = this.nuggets - nuggetAmount;
+        if (newNuggets < 0) {
+            newNuggets = 0;
+        }
+        return new MalleableMetalDataComponent(this.stackHeat, this.maximumStackHeat, this.ingots, newNuggets, this.malleableMetal);
     }
 
     public MalleableMetalDataComponent setMalleableMetal(MalleableMetal metal) {
