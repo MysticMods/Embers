@@ -4,7 +4,7 @@ import mysticmods.embers.base.IEmberEmitterEntity;
 import mysticmods.embers.capabilities.emberemitter.EmberEmitter;
 import mysticmods.embers.capabilities.emberlevel.EmberLevel;
 import mysticmods.embers.init.EmbersBlockEntities;
-import mysticmods.embers.particles.options.EmbersParticleOptions;
+import mysticmods.embers.init.EmbersParticles;
 import mysticmods.embers.utils.SDUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
@@ -25,7 +25,16 @@ import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import team.lodestar.lodestone.helpers.RandomHelper;
 import team.lodestar.lodestone.systems.blockentity.LodestoneBlockEntity;
+import team.lodestar.lodestone.systems.easing.Easing;
+import team.lodestar.lodestone.systems.particle.builder.WorldParticleBuilder;
+import team.lodestar.lodestone.systems.particle.data.GenericParticleData;
+import team.lodestar.lodestone.systems.particle.data.color.ColorParticleData;
+import team.lodestar.lodestone.systems.particle.render_types.LodestoneWorldParticleRenderType;
+import team.lodestar.lodestone.systems.particle.world.options.WorldParticleOptions;
+
+import java.awt.*;
 
 import static mysticmods.embers.utils.BEUtil.dropItemHandler;
 import static mysticmods.embers.utils.BEUtil.updateViaState;
@@ -89,11 +98,24 @@ public class BrazierBlockEntity extends LodestoneBlockEntity implements IEmberEm
             }
         } else {
             if (level.getGameTime() % 40 == 0 && running) {
-                level.addParticle(new EmbersParticleOptions(1, 0.5f, 0),
-                        getBlockPos().getX()  + 0.5f + Mth.nextFloat(random, -0.3f, 0.3f),
-                        getBlockPos().getY() + 0.6f,
-                        getBlockPos().getZ() + 0.5f + Mth.nextFloat(random, -0.3f, 0.3f),
-                        0, 0.25d * (random.nextDouble() * 0.1d), 0);
+                var random = this.level.getRandom();
+                int lifetime = RandomHelper.randomBetween(random, 60, 120);
+                var options = new WorldParticleOptions(EmbersParticles.PARTICLE_GLOW);
+                final float scale = 0.2f;
+                WorldParticleBuilder.create(options)
+                        .setTransparencyData(GenericParticleData.create(0.1f, 0.4f, 0).build())
+                        .setColorData(ColorParticleData.create(Color.RED).setCoefficient(4f).build())
+                        .setScaleData(GenericParticleData.create( scale / 2f, scale, 0.2f).setCoefficient(1.25f).setEasing(Easing.EXPO_OUT, Easing.EXPO_IN).build())
+                        .setRenderType(LodestoneWorldParticleRenderType.ADDITIVE)
+                        .setRandomOffset(0, 0.5f)
+                        .setMotion(0, 0.25d * (random.nextDouble() * 0.1d), 0)
+                        .setLifetime(lifetime)
+                        .enableNoClip()
+                        .repeat(level,
+                                getBlockPos().getX()  + 0.5f + Mth.nextFloat(random, -0.3f, 0.3f),
+                                getBlockPos().getY() + 0.6f,
+                                getBlockPos().getZ() + 0.5f + Mth.nextFloat(random, -0.3f, 0.3f),
+                                1);
             }
         }
     }

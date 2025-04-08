@@ -5,20 +5,27 @@ import mysticmods.embers.data.components.MalleableMetalDataComponent;
 import mysticmods.embers.init.EmbersBlockEntities;
 import mysticmods.embers.init.EmbersDataComponents;
 import mysticmods.embers.init.EmbersItems;
+import mysticmods.embers.init.EmbersParticles;
 import mysticmods.embers.machines.anvil.AnvilItemHandler;
-import mysticmods.embers.particles.options.EmbersParticleOptions;
-import mysticmods.embers.particles.options.HammerSparkParticleOptions;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
+import team.lodestar.lodestone.helpers.RandomHelper;
 import team.lodestar.lodestone.systems.blockentity.LodestoneBlockEntity;
+import team.lodestar.lodestone.systems.easing.Easing;
+import team.lodestar.lodestone.systems.particle.builder.WorldParticleBuilder;
+import team.lodestar.lodestone.systems.particle.data.GenericParticleData;
+import team.lodestar.lodestone.systems.particle.data.color.ColorParticleData;
+import team.lodestar.lodestone.systems.particle.render_types.LodestoneWorldParticleRenderType;
+import team.lodestar.lodestone.systems.particle.world.options.WorldParticleOptions;
+
+import java.awt.*;
 
 public class CopperAnvilBlockEntity extends LodestoneBlockEntity {
 
@@ -90,15 +97,29 @@ public class CopperAnvilBlockEntity extends LodestoneBlockEntity {
 
         if(level.isClientSide()){
             for (int i = 0; i < 20; i++) {
-                double speedX = (level.random.nextDouble() - 0.5) * 0.2;
-                double speedY = level.random.nextDouble() * 0.3 + 0.1;
-                double speedZ = (level.random.nextDouble() - 0.5) * 0.2;
+                double speedX = (level.random.nextDouble() - 0.5) * 0.4;
+                double speedY = level.random.nextDouble() * 0.1 + 0.08f;
+                double speedZ = (level.random.nextDouble() - 0.5) * 0.4;
 
-                level.addParticle(
-                        new HammerSparkParticleOptions(1, 0.5f, 0),
-                        getBlockPos().getX() + 0.5f, getBlockPos().getY() + 0.9f, getBlockPos().getZ() + 0.5f,
-                        speedX, speedY, speedZ
-                );
+                var random = this.level.getRandom();
+                int lifetime = RandomHelper.randomBetween(random, 10, 30);
+                var options = new WorldParticleOptions(EmbersParticles.PARTICLE_GLOW);
+                final float scale = 0.05f;
+                WorldParticleBuilder.create(options)
+                        .setTransparencyData(GenericParticleData.create(1f, 0.2f, 0).build())
+                        .setColorData(ColorParticleData.create(Color.RED).setCoefficient(4f).build())
+                        .setScaleData(GenericParticleData.create( scale / 2f, scale, 0.2f).setCoefficient(1.25f).setEasing(Easing.EXPO_OUT, Easing.EXPO_IN).build())
+                        .setRenderType(LodestoneWorldParticleRenderType.ADDITIVE)
+                        .setRandomOffset(0, 0)
+                        .setMotion(speedX, speedY, speedZ)
+                        .setLifetime(lifetime)
+                        .enableNoClip()
+                        .setGravityStrength(0.15f)
+                        .repeat(level,
+                                getBlockPos().getX() + 0.5f,
+                                getBlockPos().getY() + 0.9f,
+                                getBlockPos().getZ() + 0.5f,
+                                1);
             }
         }
     }

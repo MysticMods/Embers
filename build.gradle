@@ -34,7 +34,8 @@ base {
 // Mojang ships Java 21 to end users starting in 1.20.5, so mods should target Java 21.
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
-//minecraft.accessTransformers.file rootProject.file('src/main/resources/META-INF/accesstransformer.cfg')
+minecraft.accessTransformers.file rootProject.file('src/main/resources/META-INF/renderstates.cfg')
+minecraft.accessTransformers.file rootProject.file('src/main/resources/META-INF/accesstransformers.cfg')
 //minecraft.accessTransformers.entry public net.minecraft.client.Minecraft textureManager # textureManager
 
 // Default run configurations.
@@ -42,16 +43,8 @@ java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 runs {
     // applies to all the run configs below
     configureEach {
-        // Recommended logging data for a userdev environment
-        // The markers can be added/remove as needed separated by commas.
-        // "SCAN": For mods scan.
-        // "REGISTRIES": For firing of registry events.
-        // "REGISTRYDUMP": For getting the contents of all registries.
         systemProperty 'forge.logging.markers', 'REGISTRIES'
 
-        // Recommended logging level for the console
-        // You can set various levels here.
-        // Please read: https://stackoverflow.com/questions/2031163/when-to-use-the-different-log-levels
         systemProperty 'forge.logging.console.level', 'debug'
 
         modSource project.sourceSets.main

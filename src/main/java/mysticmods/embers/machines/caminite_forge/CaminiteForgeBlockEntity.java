@@ -8,7 +8,6 @@ import mysticmods.embers.data.components.MalleableMetalDataComponent;
 import mysticmods.embers.init.*;
 import mysticmods.embers.machines.caminite_forge.menu.CaminiteForgeAlloyMenu;
 import mysticmods.embers.machines.caminite_forge.menu.CaminiteForgeMenu;
-import mysticmods.embers.particles.options.EmbersParticleOptions;
 import mysticmods.embers.recipes.MalleableMetalRecipe;
 import mysticmods.embers.utils.SDUtil;
 import net.minecraft.core.BlockPos;
@@ -19,6 +18,7 @@ import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.MenuProvider;
@@ -30,13 +30,20 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import team.lodestar.lodestone.helpers.RandomHelper;
+import team.lodestar.lodestone.systems.easing.Easing;
 import team.lodestar.lodestone.systems.multiblock.MultiBlockCoreEntity;
 import team.lodestar.lodestone.systems.multiblock.MultiBlockStructure;
+import team.lodestar.lodestone.systems.particle.builder.WorldParticleBuilder;
+import team.lodestar.lodestone.systems.particle.data.GenericParticleData;
+import team.lodestar.lodestone.systems.particle.data.color.ColorParticleData;
+import team.lodestar.lodestone.systems.particle.render_types.LodestoneWorldParticleRenderType;
+import team.lodestar.lodestone.systems.particle.world.options.WorldParticleOptions;
 
+import java.awt.*;
 import java.util.Optional;
 import java.util.function.Supplier;
 
@@ -142,11 +149,23 @@ public class CaminiteForgeBlockEntity extends MultiBlockCoreEntity implements IE
         if (this.hasHotMetals() && this.level != null) {
             if (level.getGameTime() % 5 == 0) {
                 var random = this.level.getRandom();
-                level.addParticle(new EmbersParticleOptions(1, 0.5f, 0),
-                        getBlockPos().getX() + (0.25f + random.nextFloat() * 0.5f),
-                        getBlockPos().getY() + 2,
-                        getBlockPos().getZ() + (0.25f + random.nextFloat() * 0.5f),
-                        0, 0.25d * (random.nextDouble() * 0.1d), 0);
+                int lifetime = RandomHelper.randomBetween(random, 60, 120);
+                var options = new WorldParticleOptions(EmbersParticles.PARTICLE_GLOW);
+                final float scale = 0.2f;
+                WorldParticleBuilder.create(options)
+                        .setTransparencyData(GenericParticleData.create(0.1f, 0.4f, 0).build())
+                        .setColorData(ColorParticleData.create(Color.RED).setCoefficient(4f).build())
+                        .setScaleData(GenericParticleData.create( scale / 2f, scale, 0.2f).setCoefficient(1.25f).setEasing(Easing.EXPO_OUT, Easing.EXPO_IN).build())
+                        .setRenderType(LodestoneWorldParticleRenderType.ADDITIVE)
+                        .setRandomOffset(0, 0.5f)
+                        .setMotion(0, 0.25d * (random.nextDouble() * 0.1d), 0)
+                        .setLifetime(lifetime)
+                        .enableNoClip()
+                        .repeat(level,
+                                getBlockPos().getX() + (0.25f + random.nextFloat() * 0.5f),
+                                getBlockPos().getY() + 2,
+                                getBlockPos().getZ() + (0.25f + random.nextFloat() * 0.5f),
+                                1);
             }
         }
     }
