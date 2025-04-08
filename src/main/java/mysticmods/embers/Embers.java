@@ -1,6 +1,7 @@
 package mysticmods.embers;
 
 import com.mojang.logging.LogUtils;
+import mysticmods.embers.client.CopperAnvilRenderer;
 import mysticmods.embers.datagen.*;
 import mysticmods.embers.init.*;
 import mysticmods.embers.machines.caminite_forge.menu.CaminiteForgeAlloyScreen;
@@ -21,6 +22,7 @@ import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 import net.neoforged.neoforge.common.NeoForge;
@@ -106,6 +108,14 @@ public class Embers
                     CaminiteForgeToggleAlloyData.TYPE,
                     CaminiteForgeToggleAlloyData.STREAM_CODEC,
                     EmbersNetworkHandler::handleCaminiteForgePayload
+            );
+        }
+
+        @SubscribeEvent
+        public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
+            event.registerBlockEntityRenderer(
+                    EmbersBlockEntities.COPPER_ANVIL.get(),
+                    CopperAnvilRenderer::new
             );
         }
     }

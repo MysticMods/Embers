@@ -80,7 +80,7 @@ public class CopperAnvilBlockEntity extends LodestoneBlockEntity {
                 player.getX(),
                 player.getY(),
                 player.getZ(),
-                SoundEvents.ANVIL_USE,
+                SoundEvents.ANVIL_BREAK,
                 SoundSource.PLAYERS,
                 1.0f,
                 1.0f
