@@ -35,19 +35,19 @@ public class CopperAnvilBlockEntity extends LodestoneBlockEntity {
         ItemStack playerStack = player.getItemInHand(hand);
 
 
-        if (playerStack.getItem() == EmbersItems.IRON_HAMMER.get()) {
-            if (this.itemHandler.getFilledSlotAmount() == 1 && this.itemHandler.getStackInSlot(0).getCapability(EmbersCaps.HEATED_METAL).isPresent()) {
-                this.itemHandler.getStackInSlot(0).getCapability(EmbersCaps.HEATED_METAL).ifPresent(cap -> smithIngot(cap, level));
-                return ItemInteractionResult.SUCCESS;
-            }
-        }
+//        if (playerStack.getItem() == EmbersItems.IRON_HAMMER.get()) {
+//            if (this.itemHandler.getFilledSlotAmount() == 1 && this.itemHandler.getStackInSlot(0).getCapability(EmbersCaps.HEATED_METAL).isPresent()) {
+//                this.itemHandler.getStackInSlot(0).getCapability(EmbersCaps.HEATED_METAL).ifPresent(cap -> smithIngot(cap, level));
+//                return ItemInteractionResult.SUCCESS;
+//            }
+//        }
 
         player.setItemInHand(hand, this.itemHandler.addItemStack(playerStack));
         return ItemInteractionResult.SUCCESS;
     }
 
     public void smithIngot(HeatedMetalCap cap, Level level) {
-        System.out.println(cap.getMetal().getItem());
+//        System.out.println(cap.getMetal().getItem());
 //        if (MetalFamilyRegistry.getInstance().getByRaw(cap.getMetal().getItem()).isPresent()) {
 //            MetalFamilyRegistry.MetalFamily family = MetalFamilyRegistry.getInstance().getByRaw(cap.getMetal().getItem()).get();
 //            int nuggets = 0;

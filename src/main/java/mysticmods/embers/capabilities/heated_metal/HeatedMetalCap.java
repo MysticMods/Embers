@@ -1,5 +1,6 @@
 package mysticmods.embers.capabilities.heated_metal;
 
+import mysticmods.embers.registries.MalleableMetal;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
@@ -11,7 +12,10 @@ public class HeatedMetalCap implements IHeatedMetalCap, INBTSerializable<Compoun
 
     private int stackHeat;
     private int maximumStackHeat;
+    private int ingots = 0;
+    private int nuggets = 0;
     private ItemStack stack;
+    private MalleableMetal malleableMetal;
 
     public HeatedMetalCap(int stackHeat, int maximumStackHeat, ItemStack stack) {
         this.stackHeat = stackHeat;
@@ -51,14 +55,37 @@ public class HeatedMetalCap implements IHeatedMetalCap, INBTSerializable<Compoun
     }
 
     @Override
-    public ItemStack getMetal() {
-        return this.stack;
+    public MalleableMetal getMalleableMetal() {
+        return malleableMetal;
     }
 
     @Override
-    public void setMetalStack(ItemStack stack) {
-        this.stack = stack;
+    public void setMalleableMetal(MalleableMetal malleableMetal) {
+        this.malleableMetal = malleableMetal;
+    }
 
+    @Override
+    public int getIngots() {
+        return this.ingots;
+    }
+
+    @Override
+    public void addIngots(int ingotAmount) {
+        this.ingots += ingotAmount;
+    }
+
+    @Override
+    public int getNuggets() {
+        return this.nuggets;
+    }
+
+    @Override
+    public void addNuggets(int nuggetAmount) {
+        this.nuggets += nuggetAmount;
+        if (this.nuggets >= 9) {
+            this.nuggets -= 9;
+            this.ingots += 1;
+        }
     }
 
     @Override
@@ -72,6 +99,8 @@ public class HeatedMetalCap implements IHeatedMetalCap, INBTSerializable<Compoun
     public void clearCap() {
         this.stackHeat = 0;
         this.maximumStackHeat = 0;
+        this.ingots = 0;
+        this.nuggets = 0;
         this.stack = ItemStack.EMPTY;
     }
 
@@ -80,6 +109,8 @@ public class HeatedMetalCap implements IHeatedMetalCap, INBTSerializable<Compoun
         CompoundTag tag = new CompoundTag();
         tag.putInt("stackHeat", this.stackHeat);
         tag.putInt("maximumStackHeat", this.maximumStackHeat);
+        tag.putInt("ingots", this.ingots);
+        tag.putInt("nuggets", this.nuggets);
         tag.put("itemStack", this.stack.save(provider));
         return tag;
     }
@@ -88,6 +119,8 @@ public class HeatedMetalCap implements IHeatedMetalCap, INBTSerializable<Compoun
     public void deserializeNBT(HolderLookup.@NotNull Provider provider, CompoundTag nbt) {
         this.stackHeat = nbt.getInt("stackHeat");
         this.maximumStackHeat = nbt.getInt("maximumStackHeat");
+        this.ingots = nbt.getInt("ingots");
+        this.nuggets = nbt.getInt("nuggets");
         this.stack = ItemStack.parse(provider, nbt.getCompound("itemStack")).orElse(ItemStack.EMPTY);
     }
 }

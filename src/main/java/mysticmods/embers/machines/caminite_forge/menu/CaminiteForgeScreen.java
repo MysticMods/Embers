@@ -1,6 +1,8 @@
 package mysticmods.embers.machines.caminite_forge.menu;
 
 import mysticmods.embers.Embers;
+import mysticmods.embers.capabilities.heated_metal.IHeatedMetalCap;
+import mysticmods.embers.init.EmbersCapabilities;
 import mysticmods.embers.machines.caminite_forge.CaminiteForgeBlockEntity;
 import mysticmods.embers.network.CaminiteForgeToggleAlloyData;
 import net.minecraft.client.gui.GuiGraphics;
@@ -9,6 +11,8 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 public class CaminiteForgeScreen extends AbstractContainerScreen<CaminiteForgeMenu> {
@@ -83,6 +87,13 @@ public class CaminiteForgeScreen extends AbstractContainerScreen<CaminiteForgeMe
         if (emberLevel> 0) {
             float progress = (float) emberLevel / blockEntity.getEmberIntensity().getMinIntensity() * 54;
             guiGraphics.blit(TEXTURE, x + 60, y + 64, 176, 16, Math.round(progress), 9);
+        }
+
+        if(blockEntity.getItemHandler().getStackInSlot(2) != ItemStack.EMPTY) {
+            IHeatedMetalCap cap = blockEntity.getItemHandler().getStackInSlot(2).getCapability(EmbersCapabilities.HEATED_METAL);
+            if (cap != null) {
+                System.out.println(cap.getIngots());
+            }
         }
 
     }

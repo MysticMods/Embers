@@ -4,13 +4,11 @@ import mysticmods.embers.base.IEmberIntesityEntity;
 import mysticmods.embers.capabilities.emberintensity.EmberIntensity;
 import mysticmods.embers.capabilities.emberlevel.EmberLevel;
 import mysticmods.embers.capabilities.heated_metal.IHeatedMetalCap;
-import mysticmods.embers.init.EmbersBlockEntities;
-import mysticmods.embers.init.EmbersBlocks;
-import mysticmods.embers.init.EmbersCapabilities;
-import mysticmods.embers.init.EmbersItems;
+import mysticmods.embers.init.*;
 import mysticmods.embers.machines.caminite_forge.menu.CaminiteForgeAlloyMenu;
 import mysticmods.embers.machines.caminite_forge.menu.CaminiteForgeMenu;
 import mysticmods.embers.particles.options.EmbersParticleOptions;
+import mysticmods.embers.recipes.MalleableMetalRecipe;
 import mysticmods.embers.utils.SDUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
@@ -27,6 +25,9 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.RecipeManager;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.items.ItemStackHandler;
@@ -35,6 +36,7 @@ import org.jetbrains.annotations.Nullable;
 import team.lodestar.lodestone.systems.multiblock.MultiBlockCoreEntity;
 import team.lodestar.lodestone.systems.multiblock.MultiBlockStructure;
 
+import java.util.Optional;
 import java.util.function.Supplier;
 
 import static mysticmods.embers.utils.BEUtil.dropItemHandler;
@@ -95,26 +97,39 @@ public class CaminiteForgeBlockEntity extends MultiBlockCoreEntity implements IE
             return;
         }
 
-        if (!this.itemHandler.getStackInSlot(0).isEmpty()) {
-            if (this.intensity.hasEmberForOperation()) {
-                progress++;
+        if(!this.alloyMode){
+            if (!this.itemHandler.getStackInSlot(0).isEmpty()) {
+                if (this.intensity.hasEmberForOperation()) {
+                    progress++;
 
-                if (progress >= this.PROGRESS_PER_ITEM) {
-                    ItemStack hotMetalStack = this.itemHandler.getStackInSlot(2);
-                    if (!hotMetalStack.isEmpty()) {
-                        hotMetalStack.setCount(hotMetalStack.getCount() + 1);
-                    } else {
-                        this.itemHandler.setStackInSlot(2, new ItemStack(EmbersItems.HEATED_METAL.get(), 1));
-                        IHeatedMetalCap cap = this.itemHandler.getStackInSlot(2).getCapability(EmbersCapabilities.HEATED_METAL);
-                        if (cap != null) {
-                            cap.setMetalStack(new ItemStack(this.itemHandler.getStackInSlot(0).getItem(), 1));
+                    if (progress >= PROGRESS_PER_ITEM) {
+                        ItemStack hotMetalStack = this.itemHandler.getStackInSlot(2);
+                        if (!hotMetalStack.isEmpty()) {
+                            IHeatedMetalCap cap = hotMetalStack.getCapability(EmbersCapabilities.HEATED_METAL);
+                            if(cap != null) {
+                                cap.addIngots(1);
+                                cap.addNuggets(3);
+                            }
+                        } else {
+                            this.itemHandler.setStackInSlot(2, new ItemStack(EmbersItems.HEATED_METAL.get(), 1));
+                            IHeatedMetalCap cap = this.itemHandler.getStackInSlot(2).getCapability(EmbersCapabilities.HEATED_METAL);
+                            if (cap != null) {
+                                Optional<RecipeHolder<MalleableMetalRecipe>> optional = level.getRecipeManager().getRecipeFor(
+                                        EmbersRecipeTypes.MALLEABLE_METAL.get(),
+                                        new SingleRecipeInput(this.itemHandler.getStackInSlot(0)),
+                                        level
+                                );
+                                optional.ifPresent(((s) -> cap.setMalleableMetal(s.value().malleableMetal)));
+                                cap.addIngots(1);
+                                cap.addNuggets(3);
+                            }
                         }
+                        this.itemHandler.getStackInSlot(0).shrink(1);
+                        progress = 0;
                     }
-                    this.itemHandler.getStackInSlot(0).shrink(1);
-                    progress = 0;
-                }
 
-                updateViaState(this);
+                    updateViaState(this);
+                }
             }
         }
     }
@@ -224,7 +239,6 @@ public class CaminiteForgeBlockEntity extends MultiBlockCoreEntity implements IE
         this.alloyMode = tag.contains("alloyMode") ? tag.getBoolean("alloyMode") : false;
         this.itemHandler.deserializeNBT(registries, tag.getCompound("inventory"));
         this.intensity.deserializeNBT(registries, IntTag.valueOf(tag.getInt("emberIntensity")));
-        System.out.println("load");
     }
 
     @Override

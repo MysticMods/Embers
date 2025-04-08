@@ -1,5 +1,6 @@
 package mysticmods.embers.capabilities.heated_metal;
 
+import mysticmods.embers.registries.MalleableMetal;
 import net.minecraft.world.item.ItemStack;
 
 public interface IHeatedMetalCap {
@@ -25,13 +26,29 @@ public interface IHeatedMetalCap {
     void setMaxHeat(int maxHeat);
 
     /**
-     * Gets the item stack that is tied to the heat
+     * Gets the malleable metal of the Itemstack
      *
-     * @return an ItemStack with a metal.
+     * @return an MalleableMetal.
      */
-    ItemStack getMetal();
+    MalleableMetal getMalleableMetal();
 
-    void setMetalStack(ItemStack stack);
+    void setMalleableMetal(MalleableMetal malleableMetal);
+
+    /**
+     * Gets the amount ingots of the heated metal
+     *
+     * @return an int.
+     */
+    int getIngots();
+    void addIngots(int ingotAmount);
+
+    /**
+     * Gets the amount nuggets of the heated metal
+     *
+     * @return an int.
+     */
+    int getNuggets();
+    void addNuggets(int nuggetAmount);
 
     void copyFromCapability(IHeatedMetalCap cap);
 

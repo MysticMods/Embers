@@ -19,5 +19,8 @@
   "item.embers.quicksilver": "Quicksilver",
   "item.embers.vermillionite_chunk": "Vermillionite Chunk",
   "itemGroup.embers": "Embers",
-  "tooltip.embers.alloy_mode": "Alloy Mode"
+  "tooltip.embers.alloy_mode": "Alloy Mode",
+  "tooltip.embers.heat": "Heat: %s / %s",
+  "tooltip.embers.ingots": "Ingots: %s",
+  "tooltip.embers.nuggets": "Nuggets: %s"
 }

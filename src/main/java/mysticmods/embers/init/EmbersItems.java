@@ -2,6 +2,7 @@ package mysticmods.embers.init;
 
 import mysticmods.embers.Embers;
 import mysticmods.embers.items.HammerItem;
+import mysticmods.embers.items.MalleableMetalItem;
 import mysticmods.embers.machines.caminite_forge.CaminiteForgeItemBlock;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -25,7 +26,7 @@ public class EmbersItems {
     public static final DeferredItem<Item> QUICKSILVER = ITEMS.registerSimpleItem("quicksilver", new Item.Properties());
     public static final DeferredItem<Item> VERMILLIONITE_CHUNK = ITEMS.registerSimpleItem("vermillionite_chunk", new Item.Properties());
 
-    public static final DeferredItem<Item> HEATED_METAL = ITEMS.registerSimpleItem("heated_metal", new Item.Properties());
+    public static final DeferredItem<MalleableMetalItem> HEATED_METAL = ITEMS.register("heated_metal", () -> new MalleableMetalItem(new Item.Properties()));
 
     public static final DeferredItem<HammerItem> IRON_HAMMER = ITEMS.register("iron_hammer", () -> new HammerItem(Tiers.IRON, 8.0f, 2, new Item.Properties()));
 
