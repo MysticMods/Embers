@@ -15,7 +15,8 @@ public class EmbersParticleDescriptionProvider extends ParticleDescriptionProvid
 
     @Override
     protected void addDescriptions() {
-        sprite(EmbersParticles.PARTICLE_GLOW.get(), ResourceLocation.fromNamespaceAndPath(Embers.MODID, "particle_glow"));
+//        sprite(EmbersParticles.PARTICLE_GLOW.get(), ResourceLocation.fromNamespaceAndPath(Embers.MODID, "particle_glow"));
+//        sprite(EmbersParticles.HAMMER_SPARK.get(), ResourceLocation.fromNamespaceAndPath(Embers.MODID, "hammer_spark"));
 
     }
 }

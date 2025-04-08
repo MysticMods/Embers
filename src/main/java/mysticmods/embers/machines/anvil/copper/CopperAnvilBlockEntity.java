@@ -6,6 +6,8 @@ import mysticmods.embers.init.EmbersBlockEntities;
 import mysticmods.embers.init.EmbersDataComponents;
 import mysticmods.embers.init.EmbersItems;
 import mysticmods.embers.machines.anvil.AnvilItemHandler;
+import mysticmods.embers.particles.options.EmbersParticleOptions;
+import mysticmods.embers.particles.options.HammerSparkParticleOptions;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -85,6 +87,20 @@ public class CopperAnvilBlockEntity extends LodestoneBlockEntity {
                 1.0f,
                 1.0f
         );
+
+        if(level.isClientSide()){
+            for (int i = 0; i < 20; i++) {
+                double speedX = (level.random.nextDouble() - 0.5) * 0.2;
+                double speedY = level.random.nextDouble() * 0.3 + 0.1;
+                double speedZ = (level.random.nextDouble() - 0.5) * 0.2;
+
+                level.addParticle(
+                        new HammerSparkParticleOptions(1, 0.5f, 0),
+                        getBlockPos().getX() + 0.5f, getBlockPos().getY() + 0.9f, getBlockPos().getZ() + 0.5f,
+                        speedX, speedY, speedZ
+                );
+            }
+        }
     }
 
     public EmberIntensity getEmber() {

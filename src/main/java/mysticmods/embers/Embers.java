@@ -8,7 +8,6 @@ import mysticmods.embers.machines.caminite_forge.menu.CaminiteForgeAlloyScreen;
 import mysticmods.embers.machines.caminite_forge.menu.CaminiteForgeScreen;
 import mysticmods.embers.network.CaminiteForgeToggleAlloyData;
 import mysticmods.embers.network.EmbersNetworkHandler;
-import mysticmods.embers.particles.GlowParticleProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
@@ -169,7 +168,7 @@ public class Embers
 
         @SubscribeEvent
         public static void registerParticleProviders(RegisterParticleProvidersEvent event) {
-            event.registerSpriteSet(EmbersParticles.PARTICLE_GLOW.get(), GlowParticleProvider::new);
+            EmbersParticles.registerParticleFactory(event);
         }
     }
 }

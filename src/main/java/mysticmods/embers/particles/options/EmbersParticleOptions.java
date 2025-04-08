@@ -39,6 +39,7 @@ public class EmbersParticleOptions implements ParticleOptions {
     public float getRed() { return red; }
     public float getGreen() { return green; }
     public float getBlue() { return blue; }
+
     @Override
     public @NotNull ParticleType<?> getType() {
         return EmbersParticles.PARTICLE_GLOW.get();
