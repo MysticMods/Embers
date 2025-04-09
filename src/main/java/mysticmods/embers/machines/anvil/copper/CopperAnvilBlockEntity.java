@@ -27,6 +27,8 @@ import team.lodestar.lodestone.systems.particle.world.options.WorldParticleOptio
 
 import java.awt.*;
 
+import static mysticmods.embers.utils.BEUtil.updateViaState;
+
 public class CopperAnvilBlockEntity extends LodestoneBlockEntity {
 
     private final EmberIntensity ember = new EmberIntensity(100, 100,null);
@@ -56,6 +58,7 @@ public class CopperAnvilBlockEntity extends LodestoneBlockEntity {
                             this.itemHandler.setStackInSlot(0, ItemStack.EMPTY);
                         }
                     }
+                    updateViaState(this);
                 }
                 return ItemInteractionResult.CONSUME;
             }
@@ -64,10 +67,12 @@ public class CopperAnvilBlockEntity extends LodestoneBlockEntity {
         //If hand is empty return the itemstack from itemhandler to the players hand
         if(playerStack == ItemStack.EMPTY){
             player.setItemInHand(hand, this.itemHandler.extractItem(0, 1, false));
+            updateViaState(this);
             return ItemInteractionResult.SUCCESS;
         }
 
         player.setItemInHand(hand, this.itemHandler.addItemStack(playerStack));
+        updateViaState(this);
         return ItemInteractionResult.SUCCESS;
     }
 
