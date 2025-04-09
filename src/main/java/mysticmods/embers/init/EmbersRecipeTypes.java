@@ -1,7 +1,7 @@
 package mysticmods.embers.init;
 
 import mysticmods.embers.Embers;
-import mysticmods.embers.recipes.MalleableMetalRecipe;
+import mysticmods.embers.recipes.malleable_metal.MalleableMetalRecipe;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeType;

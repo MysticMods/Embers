@@ -1,7 +1,7 @@
 package mysticmods.embers.machines.caminite_forge;
 
 import mysticmods.embers.init.EmbersRecipeTypes;
-import mysticmods.embers.recipes.MalleableMetalRecipe;
+import mysticmods.embers.recipes.malleable_metal.MalleableMetalRecipe;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;

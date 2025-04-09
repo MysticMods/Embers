@@ -1,4 +1,4 @@
-package mysticmods.embers.recipes;
+package mysticmods.embers.recipes.malleable_metal;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;

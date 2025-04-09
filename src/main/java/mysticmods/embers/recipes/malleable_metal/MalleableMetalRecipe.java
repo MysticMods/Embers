@@ -1,4 +1,4 @@
-package mysticmods.embers.recipes;
+package mysticmods.embers.recipes.malleable_metal;
 
 import mysticmods.embers.init.EmbersRecipeTypes;
 import mysticmods.embers.init.EmbersSerializers;

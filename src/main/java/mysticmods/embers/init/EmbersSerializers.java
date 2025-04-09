@@ -1,7 +1,7 @@
 package mysticmods.embers.init;
 
 import mysticmods.embers.Embers;
-import mysticmods.embers.recipes.MalleableMetalRecipeSerializer;
+import mysticmods.embers.recipes.malleable_metal.MalleableMetalRecipeSerializer;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.neoforged.bus.api.IEventBus;
