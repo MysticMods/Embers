@@ -1,6 +1,7 @@
 package mysticmods.embers.init;
 
 import mysticmods.embers.Embers;
+import mysticmods.embers.recipes.alloy.AlloyRecipe;
 import mysticmods.embers.recipes.malleable_metal.MalleableMetalRecipe;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
@@ -16,6 +17,11 @@ public class EmbersRecipeTypes {
             RECIPE_TYPES.register(
                     "malleable_metal",
                     () -> RecipeType.simple(ResourceLocation.fromNamespaceAndPath(Embers.MODID, "malleable_metal"))
+            );
+    public static final DeferredHolder<RecipeType<?>, RecipeType<AlloyRecipe>> ALLOY =
+            RECIPE_TYPES.register(
+                    "alloy",
+                    () -> RecipeType.simple(ResourceLocation.fromNamespaceAndPath(Embers.MODID, "alloy"))
             );
 
 

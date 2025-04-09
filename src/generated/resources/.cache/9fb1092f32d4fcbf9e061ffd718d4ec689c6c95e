@@ -1,5 +1,6 @@
-// 1.21.1	2025-04-09T22:27:11.0341894	Recipes
+// 1.21.1	2025-04-09T22:53:50.7539925	Recipes
 d556b0b2e9f131ed043febae4c63a367b1661501 data/embers/advancement/recipes/building_blocks/caminite_bricks.json
+97bdfbc8ff0ab0e31e4468471aaa30a6c98c3bfa data/embers/advancement/recipes/dawnstone_alloy.json
 b304774490de15158e4860e9e6101793eb2edbd5 data/embers/advancement/recipes/malleable_copper.json
 5bea9edbbad7984643eeba38451c8c6cd2e6cba0 data/embers/advancement/recipes/malleable_gold.json
 2b3e188ed2a6ef47b62f70d2339f5dbf7c70d5d5 data/embers/advancement/recipes/malleable_iron.json
@@ -20,6 +21,7 @@ bce85bf23704e991a647a7f4905647c462611c52 data/minecraft/advancement/recipes/misc
 417dae77ca1dff8a6bc39bf139f6df5896baa3cc data/minecraft/advancement/recipes/misc/copper_ingot.json
 9fd146d41a28da09a50be32347857536eab83794 data/minecraft/recipe/caminite_brick_smelting.json
 769b07a4a290d9a29a31cd65ef32bfd9e89f9ddc data/minecraft/recipe/copper_ingot.json
+19a6b3a08b7be80db111e1c7d27a31120e13ba4a data/minecraft/recipe/dawnstone_alloy.json
 d97d0747f8f67ce624ca592788af3b9f03580c5b data/minecraft/recipe/malleable_copper.json
 803ccd7109a4dbfa87b64ef4e60075e75b6edcf5 data/minecraft/recipe/malleable_gold.json
 7f16b113ab4df6cd64a31856194e84dbedd828f6 data/minecraft/recipe/malleable_iron.json

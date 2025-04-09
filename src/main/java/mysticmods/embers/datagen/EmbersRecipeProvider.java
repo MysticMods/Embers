@@ -3,10 +3,13 @@ package mysticmods.embers.datagen;
 import mysticmods.embers.init.EmbersItems;
 import mysticmods.embers.init.EmbersMalleableMetals;
 import mysticmods.embers.init.EmbersTags;
+import mysticmods.embers.recipes.alloy.AlloyRecipeBuilder;
 import mysticmods.embers.recipes.malleable_metal.MalleableMetalRecipeBuilder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import org.jetbrains.annotations.NotNull;
@@ -142,6 +145,17 @@ public class EmbersRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_gold_nugget", has(EmbersTags.GOLD_NUGGETS_TAG))
                 .unlockedBy("has_gold_ingot", has(EmbersTags.GOLD_INGOTS_TAG))
                 .save(recipeOutput, "malleable_gold");
+
+        // ## Alloys ## //
+        new AlloyRecipeBuilder(
+                Ingredient.of(EmbersTags.COPPER_INGOTS_TAG),
+                Ingredient.of(EmbersTags.GOLD_INGOTS_TAG),
+                new ItemStack(EmbersItems.DAWNSTONE_INGOT.get())
+        )
+                .unlockedBy("has_copper_ingot", has(EmbersTags.COPPER_INGOTS_TAG))
+                .unlockedBy("has_gold_ingot", has(EmbersTags.GOLD_INGOTS_TAG))
+                .unlockedBy("has_dawnstone_ingot", has(EmbersItems.DAWNSTONE_INGOT))
+                .save(recipeOutput, "dawnstone_alloy");
     }
 
 }

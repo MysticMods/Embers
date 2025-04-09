@@ -1,8 +1,7 @@
-package mysticmods.embers.recipes.malleable_metal;
+package mysticmods.embers.recipes.alloy;
 
 import mysticmods.embers.Embers;
-import mysticmods.embers.init.EmbersItems;
-import mysticmods.embers.registries.MalleableMetal;
+import mysticmods.embers.recipes.malleable_metal.MalleableMetalRecipe;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementRequirements;
 import net.minecraft.advancements.AdvancementRewards;
@@ -12,47 +11,49 @@ import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class MalleableMetalRecipeBuilder implements RecipeBuilder {
+public class AlloyRecipeBuilder implements RecipeBuilder {
 
-    protected final MalleableMetal malleableMetal;
-    public final float experience;
-    public final int processingTime;
+    private final Ingredient metalOne;
+    private final Ingredient metalTwo;
+    private final ItemStack output;
 
     protected final Map<String, Criterion<?>> criteria = new LinkedHashMap<>();
-    @Nullable
+    @javax.annotation.Nullable
     protected String group;
 
-    public MalleableMetalRecipeBuilder(MalleableMetal malleableMetal, float experience, int processingTime) {
-        this.malleableMetal = malleableMetal;
-        this.experience = experience;
-        this.processingTime = processingTime;
+    public AlloyRecipeBuilder(Ingredient metalOne, Ingredient metalTwo, ItemStack output) {
+        this.metalOne = metalOne;
+        this.metalTwo = metalTwo;
+        this.output = output;
     }
 
     @Override
-    public @NotNull MalleableMetalRecipeBuilder unlockedBy(@NotNull String name, @NotNull Criterion<?> criterion) {
+    public @NotNull AlloyRecipeBuilder unlockedBy(@NotNull String name, @NotNull Criterion<?> criterion) {
         this.criteria.put(name, criterion);
         return this;
     }
 
     @Override
-    public @NotNull MalleableMetalRecipeBuilder group(@Nullable String groupName) {
+    public @NotNull AlloyRecipeBuilder group(@Nullable String groupName) {
         this.group = groupName;
         return this;
     }
 
     @Override
     public @NotNull Item getResult() {
-        return EmbersItems.HEATED_METAL.get();
+        return output.getItem();
     }
 
     @Override
-    public void save(RecipeOutput recipeOutput, @NotNull ResourceLocation id) {
+    public void save(@NotNull RecipeOutput recipeOutput, @NotNull ResourceLocation id) {
         ResourceLocation moddedId = ResourceLocation.fromNamespaceAndPath(Embers.MODID, id.getPath());
 
         Advancement.Builder advancement = recipeOutput.advancement()
@@ -61,7 +62,7 @@ public class MalleableMetalRecipeBuilder implements RecipeBuilder {
                 .requirements(AdvancementRequirements.Strategy.OR);
         this.criteria.forEach(advancement::addCriterion);
 
-        MalleableMetalRecipe recipe = new MalleableMetalRecipe(malleableMetal, experience, processingTime);
+        AlloyRecipe recipe = new AlloyRecipe(metalOne, metalTwo, output);
 
         recipeOutput.accept(id, recipe, advancement.build(moddedId.withPrefix("recipes/")));
     }
