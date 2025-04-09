@@ -78,11 +78,11 @@ public class CopperAnvilBlockEntity extends LodestoneBlockEntity {
 
     public void smithIngot(ItemStack stack, MalleableMetalDataComponent metalData, Player player) {
         if(metalData.getIngots() > 0){
-            player.addItem(metalData.getMalleableMetal().ingot.getItems()[0].copy());
+            player.addItem(metalData.getMalleableMetal().getIngot().getItems()[0].copy());
             metalData = metalData.removeIngots(1);
             stack.set(EmbersDataComponents.MALLEABLE_METAL, metalData);
         } else {
-            ItemStack nuggets = metalData.getMalleableMetal().nugget.getItems()[0].copy();
+            ItemStack nuggets = metalData.getMalleableMetal().getNugget().getItems()[0].copy();
             nuggets.grow(metalData.getNuggets() - 1);
             player.addItem(nuggets);
             metalData = metalData.removeNuggets(metalData.getNuggets());
