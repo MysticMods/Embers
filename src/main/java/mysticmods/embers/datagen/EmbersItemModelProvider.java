@@ -30,6 +30,7 @@ public class EmbersItemModelProvider extends ItemModelProvider {
         basicItem(EmbersItems.CINDERSTEEL_INGOT.get());
         basicItem(EmbersItems.CINNABAR.get());
         basicItem(EmbersItems.DAWNSTONE_INGOT.get());
+        basicItem(EmbersItems.DAWNSTONE_NUGGET.get());
         basicItem(EmbersItems.EMBER_CRYSTAL.get());
         basicItem(EmbersItems.QUICKSILVER.get());
         basicItem(EmbersItems.VERMILLIONITE_CHUNK.get());

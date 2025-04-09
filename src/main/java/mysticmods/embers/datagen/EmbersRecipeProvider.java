@@ -31,7 +31,7 @@ public class EmbersRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_sand", has(Items.SAND))
                 .save(recipeOutput);
 
-        //Copper
+        //Metals
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Items.COPPER_INGOT)
                 .pattern("###")
                 .pattern("###")
@@ -41,6 +41,26 @@ public class EmbersRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_copper_ingot", has(EmbersTags.COPPER_INGOTS_TAG))
                 .save(recipeOutput);
 
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, EmbersItems.COPPER_NUGGET, 9)
+                .requires(Items.COPPER_INGOT)
+                .unlockedBy("has_copper_nugget", has(EmbersTags.COPPER_NUGGETS_TAG))
+                .unlockedBy("has_copper_ingot", has(EmbersTags.COPPER_INGOTS_TAG))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, EmbersItems.DAWNSTONE_INGOT)
+                .pattern("###")
+                .pattern("###")
+                .pattern("###")
+                .define('#', Ingredient.of(EmbersItems.DAWNSTONE_NUGGET))
+                .unlockedBy("has_dawnstone_nugget", has(EmbersItems.DAWNSTONE_NUGGET))
+                .unlockedBy("has_dawnstone_ingot", has(EmbersItems.DAWNSTONE_INGOT))
+                .save(recipeOutput);
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, EmbersItems.DAWNSTONE_NUGGET, 9)
+                .requires(EmbersItems.DAWNSTONE_INGOT)
+                .unlockedBy("has_dawnstone_nugget", has(EmbersItems.DAWNSTONE_NUGGET))
+                .unlockedBy("has_dawnstone_ingot", has(EmbersItems.DAWNSTONE_INGOT))
+                .save(recipeOutput);
 
         // ## Blocks ## //
 
