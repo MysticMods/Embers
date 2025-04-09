@@ -2,6 +2,7 @@ package mysticmods.embers.datagen;
 
 import mysticmods.embers.init.EmbersItems;
 import mysticmods.embers.init.EmbersMalleableMetals;
+import mysticmods.embers.init.EmbersTags;
 import mysticmods.embers.recipes.MalleableMetalRecipeBuilder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
@@ -87,7 +88,32 @@ public class EmbersRecipeProvider extends RecipeProvider {
                 200
         )
                 .unlockedBy("has_iron_ore", has(Items.IRON_ORE))
+                .unlockedBy("has_iron_deepslate_ore", has(Items.DEEPSLATE_IRON_ORE))
+                .unlockedBy("has_iron_nugget", has(EmbersTags.IRON_NUGGETS_TAG))
+                .unlockedBy("has_iron_ingot", has(EmbersTags.IRON_INGOTS_TAG))
                 .save(recipeOutput, "malleable_iron");
+
+        new MalleableMetalRecipeBuilder(
+                EmbersMalleableMetals.MALLEABLE_COPPER.get(),
+                0.5f,
+                200
+        )
+                .unlockedBy("has_copper_ore", has(Items.COPPER_ORE))
+                .unlockedBy("has_copper_deepslate_ore", has(Items.DEEPSLATE_COPPER_ORE))
+                .unlockedBy("has_copper_nugget", has(EmbersTags.COPPER_NUGGETS_TAG))
+                .unlockedBy("has_copper_ingot", has(EmbersTags.COPPER_INGOTS_TAG))
+                .save(recipeOutput, "malleable_copper");
+
+        new MalleableMetalRecipeBuilder(
+                EmbersMalleableMetals.MALLEABLE_GOLD.get(),
+                0.5f,
+                200
+        )
+                .unlockedBy("has_gold_ore", has(Items.GOLD_ORE))
+                .unlockedBy("has_gold_deepslate_ore", has(Items.DEEPSLATE_GOLD_ORE))
+                .unlockedBy("has_gold_nugget", has(EmbersTags.GOLD_NUGGETS_TAG))
+                .unlockedBy("has_gold_ingot", has(EmbersTags.GOLD_INGOTS_TAG))
+                .save(recipeOutput, "malleable_gold");
     }
 
 }
