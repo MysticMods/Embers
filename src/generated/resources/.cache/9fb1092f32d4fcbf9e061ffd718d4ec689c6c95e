@@ -1,4 +1,4 @@
-// 1.21.1	2025-04-07T22:55:58.4004849	Recipes
+// 1.21.1	2025-04-09T15:43:56.9845593	Recipes
 d556b0b2e9f131ed043febae4c63a367b1661501 data/embers/advancement/recipes/building_blocks/caminite_bricks.json
 32f146aee10f1aab0df5e090a463e25089d0936d data/embers/advancement/recipes/malleable_iron.json
 2ad22e0869ff60efd5610a9695733c80bf922a7b data/embers/advancement/recipes/misc/brazier.json
@@ -10,4 +10,4 @@ eba8b4683af492ba50629197b31fb708e395eaa2 data/embers/advancement/recipes/misc/co
 076412a8866858c1a899e9cf458ebe275a879d67 data/embers/recipe/copper_anvil.json
 bce85bf23704e991a647a7f4905647c462611c52 data/minecraft/advancement/recipes/misc/caminite_brick_smelting.json
 9fd146d41a28da09a50be32347857536eab83794 data/minecraft/recipe/caminite_brick_smelting.json
-89b75e57129fee00b6cc79d1fa24a7701dadf61d data/minecraft/recipe/malleable_iron.json
+7f16b113ab4df6cd64a31856194e84dbedd828f6 data/minecraft/recipe/malleable_iron.json

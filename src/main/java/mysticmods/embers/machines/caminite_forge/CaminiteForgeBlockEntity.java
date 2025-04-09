@@ -112,31 +112,33 @@ public class CaminiteForgeBlockEntity extends MultiBlockCoreEntity implements IE
 
                     if (progress >= PROGRESS_PER_ITEM) {
                         ItemStack hotMetalStack = this.itemHandler.getStackInSlot(2);
-                        if (hotMetalStack.isEmpty()) {
-                            RecipeManager recipes = level.getRecipeManager();
-                            Optional<RecipeHolder<MalleableMetalRecipe>> optional = recipes.getRecipeFor(
-                                    EmbersRecipeTypes.MALLEABLE_METAL.get(),
-                                    new SingleRecipeInput(this.itemHandler.getStackInSlot(0)),
-                                    level
-                            );
+                        ItemStack inputStack = this.itemHandler.getStackInSlot(0);
+                        RecipeManager recipes = level.getRecipeManager();
+                        Optional<RecipeHolder<MalleableMetalRecipe>> optional = recipes.getRecipeFor(
+                                EmbersRecipeTypes.MALLEABLE_METAL.get(),
+                                new SingleRecipeInput(this.itemHandler.getStackInSlot(0)),
+                                level
+                        );
 
-                            this.itemHandler.setStackInSlot(2, new ItemStack(EmbersItems.HEATED_METAL.get(), 1));
-                            hotMetalStack = this.itemHandler.getStackInSlot(2);
+                        if(optional.isPresent()){
+                            MalleableMetalRecipe recipe = optional.get().value();
+                            if (hotMetalStack.isEmpty()) {
+                                this.itemHandler.setStackInSlot(2, new ItemStack(EmbersItems.HEATED_METAL.get(), 1));
+                                hotMetalStack = this.itemHandler.getStackInSlot(2);
 
-                            if(optional.isPresent()){
                                 MalleableMetalDataComponent data = hotMetalStack.get(EmbersDataComponents.MALLEABLE_METAL);
-                                data = data.setMalleableMetal(optional.get().value().malleableMetal).setMaxHeat();
+                                data = data.setMalleableMetal(recipe.malleableMetal).setMaxHeat();
                                 hotMetalStack.set(EmbersDataComponents.MALLEABLE_METAL, data);
                             }
 
+                            MalleableMetalDataComponent data = hotMetalStack.get(EmbersDataComponents.MALLEABLE_METAL);
+                            data = data.addIngots(recipe.getResultIngotAmount(inputStack))
+                                    .addNuggets(recipe.getResultNuggetAmount(inputStack));
+                            hotMetalStack.set(EmbersDataComponents.MALLEABLE_METAL, data);
+
+                            inputStack.shrink(1);
+                            progress = 0;
                         }
-
-                        MalleableMetalDataComponent data = hotMetalStack.get(EmbersDataComponents.MALLEABLE_METAL);
-                        data = data.addIngots(1).addNuggets(3);
-                        hotMetalStack.set(EmbersDataComponents.MALLEABLE_METAL, data);
-
-                        this.itemHandler.getStackInSlot(0).shrink(1);
-                        progress = 0;
                     }
 
                     updateViaState(this);

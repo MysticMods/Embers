@@ -82,8 +82,6 @@ public class EmbersRecipeProvider extends RecipeProvider {
 
         // ## Malleable ## //
         new MalleableMetalRecipeBuilder(
-                Ingredient.of(Items.IRON_ORE),
-                new ItemStack(EmbersItems.HEATED_METAL.get()),
                 EmbersMalleableMetals.MALLEABLE_IRON.get(),
                 0.5f,
                 200

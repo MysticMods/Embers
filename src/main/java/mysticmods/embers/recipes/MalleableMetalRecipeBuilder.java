@@ -1,6 +1,7 @@
 package mysticmods.embers.recipes;
 
 import mysticmods.embers.Embers;
+import mysticmods.embers.init.EmbersItems;
 import mysticmods.embers.registries.MalleableMetal;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementRequirements;
@@ -11,8 +12,6 @@ import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
@@ -21,8 +20,6 @@ import java.util.Map;
 
 public class MalleableMetalRecipeBuilder implements RecipeBuilder {
 
-    protected final ItemStack result;
-    protected final Ingredient input;
     protected final MalleableMetal malleableMetal;
     public final float experience;
     public final int processingTime;
@@ -31,9 +28,7 @@ public class MalleableMetalRecipeBuilder implements RecipeBuilder {
     @Nullable
     protected String group;
 
-    public MalleableMetalRecipeBuilder(Ingredient input, ItemStack result, MalleableMetal malleableMetal, float experience, int processingTime) {
-        this.result = result;
-        this.input = input;
+    public MalleableMetalRecipeBuilder(MalleableMetal malleableMetal, float experience, int processingTime) {
         this.malleableMetal = malleableMetal;
         this.experience = experience;
         this.processingTime = processingTime;
@@ -53,7 +48,7 @@ public class MalleableMetalRecipeBuilder implements RecipeBuilder {
 
     @Override
     public @NotNull Item getResult() {
-        return this.result.getItem();
+        return EmbersItems.HEATED_METAL.get();
     }
 
     @Override
@@ -66,7 +61,7 @@ public class MalleableMetalRecipeBuilder implements RecipeBuilder {
                 .requirements(AdvancementRequirements.Strategy.OR);
         this.criteria.forEach(advancement::addCriterion);
 
-        MalleableMetalRecipe recipe = new MalleableMetalRecipe(input, result, malleableMetal, experience, processingTime);
+        MalleableMetalRecipe recipe = new MalleableMetalRecipe(malleableMetal, experience, processingTime);
 
         recipeOutput.accept(id, recipe, advancement.build(moddedId.withPrefix("recipes/")));
     }

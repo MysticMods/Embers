@@ -2,10 +2,15 @@ package mysticmods.embers.registries;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import mysticmods.embers.data.components.MalleableMetalDataComponent;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Block;
 
@@ -43,6 +48,19 @@ public class MalleableMetal {
         this.nugget = nugget;
         this.ingot = ingot;
         this.rawOre = rawOre;
+    }
+
+    public boolean matches(ItemStack stack) {
+        if (stack.getItem() instanceof BlockItem blockItem) {
+            Block block = blockItem.getBlock();
+            for (Holder<Block> holder : BuiltInRegistries.BLOCK.getTagOrEmpty(oreTag)) {
+                if (holder.value() == block) {
+                    return true;
+                }
+            }
+        }
+
+        return nugget.test(stack) || ingot.test(stack) ;
     }
 
     public TagKey<Block> getOreTag() {

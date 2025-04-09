@@ -7,16 +7,12 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.util.ExtraCodecs;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import org.jetbrains.annotations.NotNull;
 
 public class MalleableMetalRecipeSerializer implements RecipeSerializer<MalleableMetalRecipe> {
 
     public static MapCodec<MalleableMetalRecipe> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
-            Ingredient.CODEC.fieldOf("input").forGetter(MalleableMetalRecipe::getInput),
-            ItemStack.CODEC.fieldOf("output").forGetter(MalleableMetalRecipe::getOutput),
             MalleableMetal.CODEC.fieldOf("malleable_metal").forGetter(MalleableMetalRecipe::getMalleableMetal),
             ExtraCodecs.POSITIVE_FLOAT.fieldOf("experience").forGetter(MalleableMetalRecipe::getExperience),
             ExtraCodecs.POSITIVE_INT.fieldOf("processingTime").forGetter(MalleableMetalRecipe::getProcessingTime)
@@ -24,8 +20,6 @@ public class MalleableMetalRecipeSerializer implements RecipeSerializer<Malleabl
 
     public static final StreamCodec<RegistryFriendlyByteBuf, MalleableMetalRecipe> STREAM_CODEC =
             StreamCodec.composite(
-                    Ingredient.CONTENTS_STREAM_CODEC, MalleableMetalRecipe::getInput,
-                    ItemStack.STREAM_CODEC, MalleableMetalRecipe::getOutput,
                     MalleableMetal.STREAM_CODEC, MalleableMetalRecipe::getMalleableMetal,
                     ByteBufCodecs.FLOAT, MalleableMetalRecipe::getExperience,
                     ByteBufCodecs.VAR_INT, MalleableMetalRecipe::getProcessingTime,
