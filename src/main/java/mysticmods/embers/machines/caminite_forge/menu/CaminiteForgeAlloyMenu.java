@@ -90,13 +90,11 @@ public class CaminiteForgeAlloyMenu extends AbstractContainerMenu {
             ItemStack itemstack1 = slot.getItem();
             itemstack = itemstack1.copy();
 
-            if (index < 3) {  // Changed from 2 to 3
-                // If the item is in the Caminite Forge slots
-                if (!this.moveItemStackTo(itemstack1, 3, this.slots.size(), true)) {  // Changed from 2 to 3
+            if (index < 3) {
+                if (!this.moveItemStackTo(itemstack1, 3, this.slots.size(), true)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (!this.moveItemStackTo(itemstack1, 0, 1, false)) {
-                // If the item is in the player inventory, try to move it to the input slot
+            } else if (!this.moveItemStackTo(itemstack1, 0, 2, false)) {
                 return ItemStack.EMPTY;
             }
 

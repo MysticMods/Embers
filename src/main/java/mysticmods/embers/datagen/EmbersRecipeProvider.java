@@ -150,7 +150,7 @@ public class EmbersRecipeProvider extends RecipeProvider {
         new AlloyRecipeBuilder(
                 Ingredient.of(EmbersTags.COPPER_INGOTS_TAG),
                 Ingredient.of(EmbersTags.GOLD_INGOTS_TAG),
-                new ItemStack(EmbersItems.DAWNSTONE_INGOT.get())
+                new ItemStack(EmbersItems.DAWNSTONE_INGOT.get(), 2)
         )
                 .unlockedBy("has_copper_ingot", has(EmbersTags.COPPER_INGOTS_TAG))
                 .unlockedBy("has_gold_ingot", has(EmbersTags.GOLD_INGOTS_TAG))

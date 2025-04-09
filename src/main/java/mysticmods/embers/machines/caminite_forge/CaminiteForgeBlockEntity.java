@@ -3,11 +3,12 @@ package mysticmods.embers.machines.caminite_forge;
 import mysticmods.embers.base.IEmberIntesityEntity;
 import mysticmods.embers.capabilities.emberintensity.EmberIntensity;
 import mysticmods.embers.capabilities.emberlevel.EmberLevel;
-import mysticmods.embers.capabilities.heated_metal.IHeatedMetalCap;
 import mysticmods.embers.data.components.MalleableMetalDataComponent;
 import mysticmods.embers.init.*;
 import mysticmods.embers.machines.caminite_forge.menu.CaminiteForgeAlloyMenu;
 import mysticmods.embers.machines.caminite_forge.menu.CaminiteForgeMenu;
+import mysticmods.embers.recipes.alloy.AlloyRecipe;
+import mysticmods.embers.recipes.alloy.AlloyRecipeInput;
 import mysticmods.embers.recipes.malleable_metal.MalleableMetalRecipe;
 import mysticmods.embers.utils.SDUtil;
 import net.minecraft.core.BlockPos;
@@ -59,6 +60,7 @@ public class CaminiteForgeBlockEntity extends MultiBlockCoreEntity implements IE
         protected int getStackLimit(int slot, @NotNull ItemStack stack) {
             return 32;
         }
+
     };
     private EmberLevel emberLevel;
 
@@ -98,50 +100,70 @@ public class CaminiteForgeBlockEntity extends MultiBlockCoreEntity implements IE
     }
 
     public void serverTick() {
-        if (this.itemHandler.getStackInSlot(0).isEmpty() && this.progress > 0) {
-            this.progress = 0;
-            updateViaState(this);
-            return;
-        }
+        if (this.isLit && this.intensity.hasEmberForOperation()) {
+            progress++;
 
-        if(!this.alloyMode){
-            if (!this.itemHandler.getStackInSlot(0).isEmpty()) {
-                if (this.intensity.hasEmberForOperation()) {
-                    progress++;
+            if (!this.alloyMode) {
+                if (progress >= PROGRESS_PER_ITEM) {
+                    ItemStack hotMetalStack = this.itemHandler.getStackInSlot(2);
+                    ItemStack inputStack = this.itemHandler.getStackInSlot(0);
+                    RecipeManager recipes = level.getRecipeManager();
+                    Optional<RecipeHolder<MalleableMetalRecipe>> optional = recipes.getRecipeFor(
+                            EmbersRecipeTypes.MALLEABLE_METAL.get(),
+                            new SingleRecipeInput(this.itemHandler.getStackInSlot(0)),
+                            level
+                    );
 
-                    if (progress >= PROGRESS_PER_ITEM) {
-                        ItemStack hotMetalStack = this.itemHandler.getStackInSlot(2);
-                        ItemStack inputStack = this.itemHandler.getStackInSlot(0);
-                        RecipeManager recipes = level.getRecipeManager();
-                        Optional<RecipeHolder<MalleableMetalRecipe>> optional = recipes.getRecipeFor(
-                                EmbersRecipeTypes.MALLEABLE_METAL.get(),
-                                new SingleRecipeInput(this.itemHandler.getStackInSlot(0)),
-                                level
-                        );
-
-                        if(optional.isPresent()){
-                            MalleableMetalRecipe recipe = optional.get().value();
-                            if (hotMetalStack.isEmpty()) {
-                                this.itemHandler.setStackInSlot(2, new ItemStack(EmbersItems.HEATED_METAL.get(), 1));
-                                hotMetalStack = this.itemHandler.getStackInSlot(2);
-
-                                MalleableMetalDataComponent data = hotMetalStack.get(EmbersDataComponents.MALLEABLE_METAL);
-                                data = data.setMalleableMetal(recipe.malleableMetal).setMaxHeat();
-                                hotMetalStack.set(EmbersDataComponents.MALLEABLE_METAL, data);
-                            }
+                    if (optional.isPresent()) {
+                        MalleableMetalRecipe recipe = optional.get().value();
+                        if (hotMetalStack.isEmpty()) {
+                            this.itemHandler.setStackInSlot(2, new ItemStack(EmbersItems.HEATED_METAL.get(), 1));
+                            hotMetalStack = this.itemHandler.getStackInSlot(2);
 
                             MalleableMetalDataComponent data = hotMetalStack.get(EmbersDataComponents.MALLEABLE_METAL);
-                            data = data.addIngots(recipe.getResultIngotAmount(inputStack))
-                                    .addNuggets(recipe.getResultNuggetAmount(inputStack));
+                            data = data.setMalleableMetal(recipe.malleableMetal).setMaxHeat();
                             hotMetalStack.set(EmbersDataComponents.MALLEABLE_METAL, data);
-
-                            inputStack.shrink(1);
-                            progress = 0;
                         }
-                    }
 
-                    updateViaState(this);
+                        MalleableMetalDataComponent data = hotMetalStack.get(EmbersDataComponents.MALLEABLE_METAL);
+                        data = data.addIngots(recipe.getResultIngotAmount(inputStack))
+                                .addNuggets(recipe.getResultNuggetAmount(inputStack));
+                        hotMetalStack.set(EmbersDataComponents.MALLEABLE_METAL, data);
+
+                        inputStack.shrink(1);
+                        progress = 0;
+                    }
                 }
+
+                updateViaState(this);
+            } else {
+                if (progress >= PROGRESS_PER_ITEM) {
+                    ItemStack inputStackOne = this.itemHandler.getStackInSlot(0);
+                    ItemStack inputStackTwo = this.itemHandler.getStackInSlot(1);
+                    RecipeManager recipes = level.getRecipeManager();
+                    Optional<RecipeHolder<AlloyRecipe>> optional = recipes.getRecipeFor(
+                            EmbersRecipeTypes.ALLOY.get(),
+                            new AlloyRecipeInput(inputStackOne, inputStackTwo),
+                            level
+                    );
+
+                    if (optional.isPresent()) {
+                        ItemStack output = optional.get().value().getOutput();
+
+                        if(this.itemHandler.getStackInSlot(2).isEmpty()) {
+                            this.itemHandler.setStackInSlot(2, output.copy());
+                        } else {
+                            ItemStack outputStack = this.itemHandler.getStackInSlot(2);
+                            outputStack.grow(2);
+                        }
+
+                        inputStackOne.shrink(1);
+                        inputStackTwo.shrink(1);
+                        progress = 0;
+                    }
+                }
+
+                updateViaState(this);
             }
         }
     }
@@ -156,7 +178,7 @@ public class CaminiteForgeBlockEntity extends MultiBlockCoreEntity implements IE
                 WorldParticleBuilder.create(options)
                         .setTransparencyData(GenericParticleData.create(0.1f, 0.4f, 0).build())
                         .setColorData(ColorParticleData.create(Color.RED).setCoefficient(4f).build())
-                        .setScaleData(GenericParticleData.create( scale / 2f, scale, 0.2f).setCoefficient(1.25f).setEasing(Easing.EXPO_OUT, Easing.EXPO_IN).build())
+                        .setScaleData(GenericParticleData.create(scale / 2f, scale, 0.2f).setCoefficient(1.25f).setEasing(Easing.EXPO_OUT, Easing.EXPO_IN).build())
                         .setRenderType(LodestoneWorldParticleRenderType.ADDITIVE)
                         .setRandomOffset(0, 0.5f)
                         .setMotion(0, 0.25d * (random.nextDouble() * 0.1d), 0)
@@ -171,21 +193,61 @@ public class CaminiteForgeBlockEntity extends MultiBlockCoreEntity implements IE
         }
     }
 
+    public void itemHandlerUpdate() {
+        if (this.alloyMode) {
+            if (this.itemHandler.getStackInSlot(0).isEmpty() || this.itemHandler.getStackInSlot(1).isEmpty()) {
+                this.progress = 0;
+                this.isLit = false;
+            } else {
+                ItemStack inputStackOne = this.itemHandler.getStackInSlot(0);
+                ItemStack inputStackTwo = this.itemHandler.getStackInSlot(1);
+                ItemStack outputStack = this.itemHandler.getStackInSlot(2);
+                RecipeManager recipes = level.getRecipeManager();
+                Optional<RecipeHolder<AlloyRecipe>> optional = recipes.getRecipeFor(
+                        EmbersRecipeTypes.ALLOY.get(),
+                        new AlloyRecipeInput(inputStackOne, inputStackTwo),
+                        level
+                );
+
+                if (optional.isPresent() && (optional.get().value().getOutput().is(outputStack.getItem()) || outputStack.isEmpty())) {
+                    this.isLit = true;
+                } else {
+                    this.isLit = false;
+                    this.progress = 0;
+                }
+            }
+        } else {
+            if (this.itemHandler.getStackInSlot(0).isEmpty()) {
+                this.progress = 0;
+                this.isLit = false;
+            } else {
+                ItemStack inputStack = this.itemHandler.getStackInSlot(0);
+                ItemStack outputStack = this.itemHandler.getStackInSlot(2);
+                RecipeManager recipes = level.getRecipeManager();
+                Optional<RecipeHolder<MalleableMetalRecipe>> optional = recipes.getRecipeFor(
+                        EmbersRecipeTypes.MALLEABLE_METAL.get(),
+                        new SingleRecipeInput(inputStack),
+                        level
+                );
+
+                if (optional.isPresent() && (optional.get().value().getResultItem(null).is(outputStack.getItem()) || outputStack.isEmpty())) {
+                    this.isLit = true;
+                } else {
+                    this.isLit = false;
+                    this.progress = 0;
+                }
+            }
+        }
+
+        updateViaState(this);
+    }
+
     @Override
     public ItemInteractionResult onUse(Player pPlayer, InteractionHand pHand) {
-        if(pHand == InteractionHand.MAIN_HAND) {
+        if (pHand == InteractionHand.MAIN_HAND) {
             this.openMenu(pPlayer);
         }
         return ItemInteractionResult.SUCCESS;
-    }
-
-    public void transferHeatedMetal(IHeatedMetalCap cap, Player player, ItemStack stack) {
-        cap.setMaxHeat(100 * stack.getCount());
-        cap.setStackHeat(100 * stack.getCount());
-        this.itemHandler.setStackInSlot(2, ItemStack.EMPTY);
-
-        player.addItem(stack);
-        updateViaState(this);
     }
 
     public boolean hasHotMetals() {
@@ -208,16 +270,23 @@ public class CaminiteForgeBlockEntity extends MultiBlockCoreEntity implements IE
         return 0;
     }
 
+    public boolean isAlloyMode() {
+        return alloyMode;
+    }
+
     public void toggleAlloyMode(Player player) {
         this.alloyMode = !this.alloyMode;
+        this.isLit = false;
+        this.progress = 0;
+        this.itemHandlerUpdate();
         updateViaState(this);
 
         openMenu(player);
     }
 
-    public void openMenu(Player player){
+    public void openMenu(Player player) {
         if (player instanceof ServerPlayer serverPlayer) {
-            if(this.alloyMode){
+            if (this.alloyMode) {
                 serverPlayer.openMenu(new MenuProvider() {
                     @Override
                     public @NotNull Component getDisplayName() {
