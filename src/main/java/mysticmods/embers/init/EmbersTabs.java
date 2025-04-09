@@ -20,6 +20,7 @@ public class EmbersTabs {
             .icon(() -> EmbersItems.ASHEN_STEEL_INGOT.get().getDefaultInstance())
             .displayItems((parameters, output) -> {
                 //Items
+                output.accept(EmbersItems.COPPER_NUGGET.get());
                 output.accept(EmbersItems.ASHEN_STEEL_INGOT.get());
                 output.accept(EmbersItems.CAMINITE_BLEND.get());
                 output.accept(EmbersItems.CAMINITE_BRICK.get());

@@ -26,6 +26,7 @@ public class EmbersItems {
     public static final DeferredItem<Item> EMBER_CRYSTAL = ITEMS.registerSimpleItem("ember_crystal", new Item.Properties());
     public static final DeferredItem<Item> QUICKSILVER = ITEMS.registerSimpleItem("quicksilver", new Item.Properties());
     public static final DeferredItem<Item> VERMILLIONITE_CHUNK = ITEMS.registerSimpleItem("vermillionite_chunk", new Item.Properties());
+    public static final DeferredItem<Item> COPPER_NUGGET = ITEMS.registerSimpleItem("copper_nugget", new Item.Properties());
 
     public static final DeferredItem<MalleableMetalItem> HEATED_METAL = ITEMS.register("heated_metal",
             () -> new MalleableMetalItem(new Item.Properties().component(EmbersDataComponents.MALLEABLE_METAL.get(), new MalleableMetalDataComponent(100, null))));

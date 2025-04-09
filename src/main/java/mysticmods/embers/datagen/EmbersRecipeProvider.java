@@ -32,6 +32,15 @@ public class EmbersRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_sand", has(Items.SAND))
                 .save(recipeOutput);
 
+        //Copper
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Items.COPPER_INGOT)
+                .pattern("###")
+                .pattern("###")
+                .pattern("###")
+                .define('#', Ingredient.of(EmbersTags.COPPER_NUGGETS_TAG))
+                .unlockedBy("has_copper_nugget", has(EmbersTags.COPPER_NUGGETS_TAG))
+                .unlockedBy("has_copper_ingot", has(EmbersTags.COPPER_INGOTS_TAG))
+                .save(recipeOutput);
 
 
         // ## Blocks ## //

@@ -1,6 +1,7 @@
 package mysticmods.embers.datagen;
 
 import mysticmods.embers.Embers;
+import mysticmods.embers.init.EmbersItems;
 import mysticmods.embers.init.EmbersTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
@@ -26,7 +27,7 @@ public class EmbersItemTagProvider extends ItemTagsProvider {
         tag(EmbersTags.IRON_INGOTS_TAG).add(Items.IRON_INGOT);
         tag(EmbersTags.IRON_RAW_ORES_TAG).add(Items.RAW_IRON);
 
-        //tag(EmbersTags.COPPER_NUGGETS_TAG).add(Items.COPPER_NUGGET);
+        tag(EmbersTags.COPPER_NUGGETS_TAG).add(EmbersItems.COPPER_NUGGET.get());
         tag(EmbersTags.COPPER_INGOTS_TAG).add(Items.COPPER_INGOT);
         tag(EmbersTags.COPPER_RAW_ORES_TAG).add(Items.RAW_COPPER);
 

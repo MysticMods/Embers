@@ -1,4 +1,4 @@
-// 1.21.1	2025-04-08T00:02:31.9858406	Item Models: embers
+// 1.21.1	2025-04-09T16:46:26.5083272	Item Models: embers
 f48e0c39961096aacbf2b851af87760bd63edf3e assets/embers/models/item/ashen_steel_ingot.json
 02a1930659b01d194cfaa73bc5e447eb7c27be1d assets/embers/models/item/brazier.json
 6d2d64485336d17ab30ac735fa6abcc29222735b assets/embers/models/item/caminite_blend.json
@@ -8,6 +8,7 @@ f48e0c39961096aacbf2b851af87760bd63edf3e assets/embers/models/item/ashen_steel_i
 0c31585e4e7bed139ac3caf0a47e09a3b47bd934 assets/embers/models/item/cindersteel_ingot.json
 7e4e8d6ff5f7425d19bc7e9bd3bb2e6275c86418 assets/embers/models/item/cinnabar.json
 cb10012c60d98c3f026a894a100298ce525f408c assets/embers/models/item/copper_anvil.json
+38d331d87ed2c6a56a775d8fe78d5fdf0ff275a3 assets/embers/models/item/copper_nugget.json
 e0e19c0a42ef889bf2e0fc39c66cc323f9aedc5f assets/embers/models/item/dawnstone_ingot.json
 3c078fcc2455bf8ba41788f6be15c3f2bdcf50a4 assets/embers/models/item/ember_crystal.json
 3b0b5c926c20339b692c8870a5b67a6f819af449 assets/embers/models/item/heated_metal.json
