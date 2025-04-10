@@ -1,10 +1,11 @@
-// 1.21.1	2025-04-09T22:24:06.2820345	Item Models: embers
+// 1.21.1	2025-04-11T00:48:09.2359466	Item Models: embers
 f48e0c39961096aacbf2b851af87760bd63edf3e assets/embers/models/item/ashen_steel_ingot.json
 02a1930659b01d194cfaa73bc5e447eb7c27be1d assets/embers/models/item/brazier.json
 6d2d64485336d17ab30ac735fa6abcc29222735b assets/embers/models/item/caminite_blend.json
 8647b58288ec3dca45097692ee2aaceca1d97d3a assets/embers/models/item/caminite_brick.json
 2b7074b8663c8919f16aa6ddcd91237766dce3cd assets/embers/models/item/caminite_bricks.json
 9294fa06c66908538424bd0c98af4ddb21b5ae84 assets/embers/models/item/caminite_forge_block.json
+15b54a95c5db561b3f4fac9bf8740af010e6caac assets/embers/models/item/caminite_mold.json
 0c31585e4e7bed139ac3caf0a47e09a3b47bd934 assets/embers/models/item/cindersteel_ingot.json
 7e4e8d6ff5f7425d19bc7e9bd3bb2e6275c86418 assets/embers/models/item/cinnabar.json
 cb10012c60d98c3f026a894a100298ce525f408c assets/embers/models/item/copper_anvil.json

@@ -75,6 +75,17 @@ public class EmbersRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_caminite_brick", has(EmbersItems.CAMINITE_BRICK))
                 .save(recipeOutput);
 
+        //Caminite Mold
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, EmbersItems.CAMINITE_MOLD_BLOCK_ITEM)
+                .pattern("# #")
+                .pattern("# #")
+                .pattern("BBB")
+                .define('B', EmbersItems.CAMINITE_BRICK)
+                .define('#', EmbersItems.CAMINITE_BLEND)
+                .unlockedBy("has_caminite_brick", has(EmbersItems.CAMINITE_BRICK))
+                .unlockedBy("has_caminite_blend", has(EmbersItems.CAMINITE_BLEND))
+                .save(recipeOutput);
+
         //Brazier
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, EmbersItems.BRAZIER_BLOCK_ITEM)
                 .pattern("CFC")

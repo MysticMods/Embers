@@ -52,6 +52,13 @@ public class EmbersBlocks {
             )
     );
 
+    public static final DeferredBlock<Block> CAMINITE_MOLD = BLOCKS.register(
+            "caminite_mold", registryName -> new Block(
+                    BlockBehaviour.Properties.of()
+                            .requiresCorrectToolForDrops().strength(1.5F, 6.0F)
+            )
+    );
+
     public static void register(IEventBus bus) {
         BLOCKS.register(bus);
     }

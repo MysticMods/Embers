@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "item": "embers:caminite_blend"
+    },
+    "B": {
+      "item": "embers:caminite_brick"
+    }
+  },
+  "pattern": [
+    "# #",
+    "# #",
+    "BBB"
+  ],
+  "result": {
+    "count": 1,
+    "id": "embers:caminite_mold"
+  }
+}

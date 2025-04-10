@@ -1,4 +1,4 @@
-// 1.21.1	2025-04-09T23:11:33.5987348	Recipes
+// 1.21.1	2025-04-11T00:48:09.2386369	Recipes
 d556b0b2e9f131ed043febae4c63a367b1661501 data/embers/advancement/recipes/building_blocks/caminite_bricks.json
 97bdfbc8ff0ab0e31e4468471aaa30a6c98c3bfa data/embers/advancement/recipes/dawnstone_alloy.json
 b304774490de15158e4860e9e6101793eb2edbd5 data/embers/advancement/recipes/malleable_copper.json
@@ -6,6 +6,7 @@ b304774490de15158e4860e9e6101793eb2edbd5 data/embers/advancement/recipes/malleab
 2b3e188ed2a6ef47b62f70d2339f5dbf7c70d5d5 data/embers/advancement/recipes/malleable_iron.json
 2ad22e0869ff60efd5610a9695733c80bf922a7b data/embers/advancement/recipes/misc/brazier.json
 a8c33b743d416bba5f715dc3a6d7bc382b905393 data/embers/advancement/recipes/misc/caminite_blend.json
+c64527f573ba494c77c77c8960127e9bcdb12727 data/embers/advancement/recipes/misc/caminite_mold.json
 eba8b4683af492ba50629197b31fb708e395eaa2 data/embers/advancement/recipes/misc/copper_anvil.json
 a03ed2e7144391f000036702b2746ff84dc7b9f2 data/embers/advancement/recipes/misc/copper_nugget.json
 49bf4390d79176af25129dd2c76c9690a07a93f0 data/embers/advancement/recipes/misc/dawnstone_ingot.json
@@ -13,6 +14,7 @@ a03ed2e7144391f000036702b2746ff84dc7b9f2 data/embers/advancement/recipes/misc/co
 87faf7135c04626bd59a5fab49eb0a57f461d98d data/embers/recipe/brazier.json
 16b6023fcb88a71132008fad885db6593f1596bc data/embers/recipe/caminite_blend.json
 0429c1fd6e37733403de2a0015a560215b75c2d5 data/embers/recipe/caminite_bricks.json
+55684445afceadd06e922520c27c1f4f74846ea6 data/embers/recipe/caminite_mold.json
 076412a8866858c1a899e9cf458ebe275a879d67 data/embers/recipe/copper_anvil.json
 5c372963436455c34520c0a7f328b026c455fa58 data/embers/recipe/copper_nugget.json
 8d5b0d5489355c4df758f0fc7682d431e7735c6d data/embers/recipe/dawnstone_ingot.json

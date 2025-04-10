@@ -41,5 +41,11 @@ public class EmbersBlockStateProvider extends BlockStateProvider {
                         .modelFile(models().getExistingFile(modLoc("block/copper_anvil")))
                         .build()
         );
+
+        getVariantBuilder(EmbersBlocks.CAMINITE_MOLD.get()).forAllStates(state ->
+                ConfiguredModel.builder()
+                        .modelFile(models().getExistingFile(modLoc("block/caminite_mold")))
+                        .build()
+        );
     }
 }
