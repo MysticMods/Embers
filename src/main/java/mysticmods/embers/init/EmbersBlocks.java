@@ -4,6 +4,7 @@ import mysticmods.embers.Embers;
 import mysticmods.embers.machines.anvil.copper.CopperAnvilBlock;
 import mysticmods.embers.machines.brazier.BrazierBlock;
 import mysticmods.embers.machines.caminite_forge.CaminiteForgeBlock;
+import mysticmods.embers.machines.caminite_mold.CaminiteMoldBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -53,7 +54,7 @@ public class EmbersBlocks {
     );
 
     public static final DeferredBlock<Block> CAMINITE_MOLD = BLOCKS.register(
-            "caminite_mold", registryName -> new Block(
+            "caminite_mold", registryName -> new CaminiteMoldBlock(
                     BlockBehaviour.Properties.of()
                             .requiresCorrectToolForDrops().strength(1.5F, 6.0F)
             )

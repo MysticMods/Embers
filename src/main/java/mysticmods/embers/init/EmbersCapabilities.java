@@ -61,6 +61,13 @@ public class EmbersCapabilities {
                 (myBlockEntity, side) -> myBlockEntity.getItemHandler()
         );
 
+        //Caminite Mold ItemHandler
+        event.registerBlockEntity(
+                Capabilities.ItemHandler.BLOCK,
+                EmbersBlockEntities.CAMINITE_MOLD.get(),
+                (myBlockEntity, side) -> myBlockEntity.getItemHandler()
+        );
+
         //Heated Metal Capability
         event.registerItem(
                 EmbersCapabilities.HEATED_METAL,

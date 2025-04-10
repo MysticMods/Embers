@@ -4,6 +4,7 @@ import mysticmods.embers.Embers;
 import mysticmods.embers.machines.anvil.copper.CopperAnvilBlockEntity;
 import mysticmods.embers.machines.brazier.BrazierBlockEntity;
 import mysticmods.embers.machines.caminite_forge.CaminiteForgeBlockEntity;
+import mysticmods.embers.machines.caminite_mold.CaminiteMoldBlockEntity;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.bus.api.IEventBus;
@@ -27,6 +28,14 @@ public class EmbersBlockEntities {
             () -> BlockEntityType.Builder.of(
                     CaminiteForgeBlockEntity::new,
                     EmbersBlocks.CAMINITE_FORGE.get()
+            ).build(null)
+    );
+
+    public static final  DeferredHolder<BlockEntityType<?>, BlockEntityType<CaminiteMoldBlockEntity>> CAMINITE_MOLD = BLOCK_ENTITY_TYPES.register(
+            "caminite_mold_block_entity",
+            () -> BlockEntityType.Builder.of(
+                    CaminiteMoldBlockEntity::new,
+                    EmbersBlocks.CAMINITE_MOLD.get()
             ).build(null)
     );
 
