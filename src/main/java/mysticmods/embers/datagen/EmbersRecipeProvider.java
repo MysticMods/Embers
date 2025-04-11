@@ -5,15 +5,16 @@ import mysticmods.embers.init.EmbersMalleableMetals;
 import mysticmods.embers.init.EmbersTags;
 import mysticmods.embers.recipes.alloy.AlloyRecipeBuilder;
 import mysticmods.embers.recipes.malleable_metal.MalleableMetalRecipeBuilder;
+import mysticmods.embers.recipes.mold.MoldRecipeBuilder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public class EmbersRecipeProvider extends RecipeProvider {
@@ -167,6 +168,22 @@ public class EmbersRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_gold_ingot", has(EmbersTags.GOLD_INGOTS_TAG))
                 .unlockedBy("has_dawnstone_ingot", has(EmbersItems.DAWNSTONE_INGOT))
                 .save(recipeOutput, "dawnstone_alloy");
+
+        // ## Machine Molds ## //
+
+        //Caminite Smelter
+        new MoldRecipeBuilder(
+                List.of(Ingredient.of(
+                        Items.COPPER_INGOT),
+                        Ingredient.of(Items.COPPER_INGOT),
+                        Ingredient.of(Items.COPPER_INGOT),
+                        Ingredient.of(Items.FURNACE)
+                ),
+                new ItemStack(EmbersItems.CAMINITE_FORGE_BLOCK_ITEM.get())
+        )
+                .unlockedBy("has_copper_ingot", has(EmbersTags.COPPER_INGOTS_TAG))
+                .unlockedBy("has_furnace", has(Items.FURNACE))
+                .save(recipeOutput, "caminite_smelter");
     }
 
 }

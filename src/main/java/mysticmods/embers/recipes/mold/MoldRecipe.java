@@ -11,7 +11,6 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class MoldRecipe implements Recipe<MoldRecipeInput> {
@@ -19,8 +18,8 @@ public class MoldRecipe implements Recipe<MoldRecipeInput> {
     private final List<Ingredient> inputIngredients;
     private final ItemStack output;
 
-    public MoldRecipe(ItemStack output, List<Ingredient> inputIngredients) {
-        if (inputIngredients.size() > 9 || inputIngredients.size() < 1)
+    public MoldRecipe(List<Ingredient> inputIngredients, ItemStack output) {
+        if (inputIngredients.size() > 9 || inputIngredients.isEmpty())
             throw new IllegalArgumentException("MoldRecipe requires between 1 and 9 ingredents.");
         this.inputIngredients = inputIngredients;
 
@@ -29,19 +28,28 @@ public class MoldRecipe implements Recipe<MoldRecipeInput> {
 
     @Override
     public boolean matches(MoldRecipeInput input, @NotNull Level level) {
-        int recipeIngredientCount = inputIngredients.size();
-
-        if (input.size() != recipeIngredientCount) {
+        if (input.size() != inputIngredients.size()) {
             return false;
         }
 
-//        int inputIndex = 0;
-//        for (int i = 0; i < inputIngredients.size(); i++) {
-//            if (inputIndex < input.size() && !inputIngredients[i].test(input.getItem(inputIndex))) {
-//                return false;
-//            }
-//            inputIndex++;
-//        }
+        boolean[] matched = new boolean[inputIngredients.size()];
+
+        for (int i = 0; i < input.size(); i++) {
+            ItemStack inputStack = input.getItem(i);
+            boolean foundMatch = false;
+
+            for (int j = 0; j < inputIngredients.size(); j++) {
+                if (!matched[j] && inputIngredients.get(j).test(inputStack)) {
+                    matched[j] = true;
+                    foundMatch = true;
+                    break;
+                }
+            }
+
+            if (!foundMatch) {
+                return false;
+            }
+        }
 
         return true;
     }

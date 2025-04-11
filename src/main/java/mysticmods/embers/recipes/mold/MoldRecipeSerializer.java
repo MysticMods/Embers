@@ -13,14 +13,14 @@ import org.jetbrains.annotations.NotNull;
 public class MoldRecipeSerializer implements RecipeSerializer<MoldRecipe> {
 
     public static MapCodec<MoldRecipe> CODEC = RecordCodecBuilder.mapCodec(inst -> inst.group(
-            ItemStack.CODEC.fieldOf("output").forGetter(MoldRecipe::getOutput),
-            Ingredient.CODEC.listOf().fieldOf("ingredients").forGetter(MoldRecipe::getInputIngredients)
+            Ingredient.CODEC.listOf().fieldOf("ingredients").forGetter(MoldRecipe::getInputIngredients),
+            ItemStack.CODEC.fieldOf("output").forGetter(MoldRecipe::getOutput)
     ).apply(inst, MoldRecipe::new));
 
     public static final StreamCodec<RegistryFriendlyByteBuf, MoldRecipe> STREAM_CODEC =
             StreamCodec.composite(
-                    ItemStack.STREAM_CODEC, MoldRecipe::getOutput,
                     Ingredient.CONTENTS_STREAM_CODEC.apply(ByteBufCodecs.list()), MoldRecipe::getInputIngredients,
+                    ItemStack.STREAM_CODEC, MoldRecipe::getOutput,
                     MoldRecipe::new
             );
 
