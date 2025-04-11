@@ -2,6 +2,7 @@ package mysticmods.embers.machines.caminite_mold;
 
 import mysticmods.embers.init.EmbersBlockEntities;
 import mysticmods.embers.machines.caminite_forge.CaminiteForgeBlockEntity;
+import net.minecraft.world.level.block.Blocks;
 import team.lodestar.lodestone.systems.block.LodestoneEntityBlock;
 
 public class CaminiteMoldBlock extends LodestoneEntityBlock<CaminiteMoldBlockEntity> {

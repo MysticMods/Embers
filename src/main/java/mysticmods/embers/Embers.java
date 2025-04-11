@@ -1,6 +1,7 @@
 package mysticmods.embers;
 
 import com.mojang.logging.LogUtils;
+import mysticmods.embers.client.CaminiteMoldRenderer;
 import mysticmods.embers.client.CopperAnvilRenderer;
 import mysticmods.embers.datagen.*;
 import mysticmods.embers.init.*;
@@ -115,6 +116,11 @@ public class Embers
             event.registerBlockEntityRenderer(
                     EmbersBlockEntities.COPPER_ANVIL.get(),
                     CopperAnvilRenderer::new
+            );
+
+            event.registerBlockEntityRenderer(
+                    EmbersBlockEntities.CAMINITE_MOLD.get(),
+                    CaminiteMoldRenderer::new
             );
         }
     }

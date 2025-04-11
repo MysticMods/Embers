@@ -5,9 +5,12 @@ import mysticmods.embers.machines.anvil.copper.CopperAnvilBlock;
 import mysticmods.embers.machines.brazier.BrazierBlock;
 import mysticmods.embers.machines.caminite_forge.CaminiteForgeBlock;
 import mysticmods.embers.machines.caminite_mold.CaminiteMoldBlock;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredBlock;
@@ -57,8 +60,13 @@ public class EmbersBlocks {
             "caminite_mold", registryName -> new CaminiteMoldBlock(
                     BlockBehaviour.Properties.of()
                             .requiresCorrectToolForDrops().strength(1.5F, 6.0F)
+                            .isViewBlocking(EmbersBlocks::never)
             )
     );
+
+    private static boolean never(BlockState state, BlockGetter blockGetter, BlockPos pos) {
+        return false;
+    }
 
     public static void register(IEventBus bus) {
         BLOCKS.register(bus);
