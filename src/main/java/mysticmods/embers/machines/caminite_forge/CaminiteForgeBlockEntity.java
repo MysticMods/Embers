@@ -160,6 +160,9 @@ public class CaminiteForgeBlockEntity extends MultiBlockCoreEntity implements IE
                         inputStackOne.shrink(1);
                         inputStackTwo.shrink(1);
                         progress = 0;
+                    } else {
+                        this.isLit = false;
+                        this.progress = 0;
                     }
                 }
 

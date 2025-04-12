@@ -35,6 +35,14 @@ public class EmbersRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_sand", has(Items.SAND))
                 .save(recipeOutput);
 
+        //Smoldering Crystal Blend
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, EmbersItems.SMOLDERING_CRYSTAL_BLEND)
+                .requires(Items.AMETHYST_SHARD, 3)
+                .requires(EmbersItems.EMBER_SHARD)
+                .unlockedBy("has_amethyst_shard", has(Items.AMETHYST_SHARD))
+                .unlockedBy("had_ember_shard", has(EmbersItems.EMBER_SHARD))
+                .save(recipeOutput);
+
         //Metals
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, Items.COPPER_INGOT)
                 .pattern("###")

@@ -22,10 +22,11 @@ public class BEUtil {
 
     public static <T extends BlockEntity>  void dropItemHandler(T entity, ItemStackHandler itemHandler) {
         if(!entity.getLevel().isClientSide()){
-            ItemStack stack = itemHandler.getStackInSlot(0);
-            if(!stack.isEmpty()){
-                Block.popResource(entity.getLevel(), entity.getBlockPos(), stack);
-                itemHandler.setStackInSlot(0, ItemStack.EMPTY);
+            for (int i = 0; i < itemHandler.getSlots(); i++) {
+                if(!itemHandler.getStackInSlot(i).isEmpty()){
+                    Block.popResource(entity.getLevel(), entity.getBlockPos(), itemHandler.getStackInSlot(i));
+                    itemHandler.setStackInSlot(i, ItemStack.EMPTY);
+                }
             }
         }
     }

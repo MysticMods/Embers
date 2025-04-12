@@ -27,6 +27,7 @@ public class EmbersItems {
     public static final DeferredItem<Item> EMBER_CRYSTAL = ITEMS.registerSimpleItem("ember_crystal", new Item.Properties());
     public static final DeferredItem<Item> EMBER_SHARD = ITEMS.registerSimpleItem("ember_shard", new Item.Properties());
     public static final DeferredItem<Item> QUICKSILVER = ITEMS.registerSimpleItem("quicksilver", new Item.Properties());
+    public static final DeferredItem<Item> SMOLDERING_CRYSTAL_BLEND = ITEMS.registerSimpleItem("smoldering_crystal_blend", new Item.Properties());
     public static final DeferredItem<Item> VERMILLIONITE_CHUNK = ITEMS.registerSimpleItem("vermillionite_chunk", new Item.Properties());
     public static final DeferredItem<Item> COPPER_NUGGET = ITEMS.registerSimpleItem("copper_nugget", new Item.Properties());
 

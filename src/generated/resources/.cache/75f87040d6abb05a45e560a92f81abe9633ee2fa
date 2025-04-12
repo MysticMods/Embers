@@ -1,4 +1,4 @@
-// 1.21.1	2025-04-12T14:37:26.0878851	Item Models: embers
+// 1.21.1	2025-04-12T15:07:05.964035	Item Models: embers
 f48e0c39961096aacbf2b851af87760bd63edf3e assets/embers/models/item/ashen_steel_ingot.json
 02a1930659b01d194cfaa73bc5e447eb7c27be1d assets/embers/models/item/brazier.json
 6d2d64485336d17ab30ac735fa6abcc29222735b assets/embers/models/item/caminite_blend.json
@@ -17,4 +17,5 @@ e0e19c0a42ef889bf2e0fc39c66cc323f9aedc5f assets/embers/models/item/dawnstone_ing
 3b0b5c926c20339b692c8870a5b67a6f819af449 assets/embers/models/item/heated_metal.json
 0547edf4539e185723578211ba31215f3cc45864 assets/embers/models/item/iron_hammer.json
 5683a3d3b07c3e7dc6ac0477aef5ecd3a7979418 assets/embers/models/item/quicksilver.json
+aab026b8f009ba7b949682e2ccdbe619106b3b0a assets/embers/models/item/smoldering_crystal_blend.json
 2d80e1d44358d96ee1de203325e57e0a2d779e1d assets/embers/models/item/vermillionite_chunk.json
