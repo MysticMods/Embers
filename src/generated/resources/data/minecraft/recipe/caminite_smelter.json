@@ -1,0 +1,21 @@
+{
+  "type": "embers:mold_recipe",
+  "ingredients": [
+    {
+      "item": "minecraft:copper_ingot"
+    },
+    {
+      "item": "minecraft:copper_ingot"
+    },
+    {
+      "item": "minecraft:copper_ingot"
+    },
+    {
+      "item": "minecraft:furnace"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "embers:caminite_forge_block"
+  }
+}

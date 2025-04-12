@@ -3,6 +3,7 @@
   "block.embers.caminite_bricks": "Caminite Bricks",
   "block.embers.caminite_forge": "Caminite Forge",
   "block.embers.caminite_forge_component": "Caminite Forge Component",
+  "block.embers.caminite_mold": "Caminite Machine Mold",
   "block.embers.copper_anvil": "Copper Anvil",
   "block.embers.ember_crystallizer": "Ember Crystallizer",
   "block.embers.vermillionite_ore": "Vermillionite Ore",
@@ -12,11 +13,19 @@
   "item.embers.cindersteel_ingot": "Cindersteel Ingot",
   "item.embers.cinnabar": "Cinnabar",
   "item.embers.dawnstone_ingot": "Dawnstone Ingot",
+  "item.embers.dawnstone_nugget": "Dawnstone Nugget",
   "item.embers.ember_crystal": "Ember Crystal",
+  "item.embers.ember_shard": "Ember Shard",
   "item.embers.forging_glove": "Forging Glove",
   "item.embers.heated_metal": "Heated Metal",
   "item.embers.iron_hammer": "Iron Hammer",
   "item.embers.quicksilver": "Quicksilver",
+  "item.embers.smoldering_crystal_blend": "Smoldering Crystal Blend",
   "item.embers.vermillionite_chunk": "Vermillionite Chunk",
-  "itemGroup.embers": "Embers"
+  "item.embers.copper_nugget": "Copper Nugget",
+  "itemGroup.embers": "Embers",
+  "tooltip.embers.alloy_mode": "Alloy Mode",
+  "tooltip.embers.heat": "Heat: %s / %s",
+  "tooltip.embers.ingots": "Ingots: %s",
+  "tooltip.embers.nuggets": "Nuggets: %s"
 }

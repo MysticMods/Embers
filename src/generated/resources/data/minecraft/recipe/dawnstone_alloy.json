@@ -1,0 +1,13 @@
+{
+  "type": "embers:alloy_recipe",
+  "metalOne": {
+    "tag": "c:ingots/copper"
+  },
+  "metalTwo": {
+    "tag": "c:ingots/gold"
+  },
+  "output": {
+    "count": 2,
+    "id": "embers:dawnstone_ingot"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "embers:malleable_metal",
+  "experience": 0.5,
+  "malleable_metal": {
+    "ingot": {
+      "tag": "c:ingots/copper"
+    },
+    "nugget": {
+      "tag": "c:nuggets/copper"
+    },
+    "ore_tag": "#c:ores/copper",
+    "raw_ore": {
+      "tag": "c:raw_ores/copper"
+    }
+  },
+  "processingTime": 200
+}

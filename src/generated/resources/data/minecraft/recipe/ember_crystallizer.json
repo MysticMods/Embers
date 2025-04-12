@@ -1,0 +1,21 @@
+{
+  "type": "embers:mold_recipe",
+  "ingredients": [
+    {
+      "item": "embers:ember_shard"
+    },
+    {
+      "item": "embers:caminite_brick"
+    },
+    {
+      "item": "embers:caminite_brick"
+    },
+    {
+      "item": "minecraft:glass"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "embers:ember_crystallizer"
+  }
+}

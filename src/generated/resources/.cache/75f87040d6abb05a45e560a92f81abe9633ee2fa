@@ -1,13 +1,22 @@
-// 1.21.1	2025-04-03T20:00:03.0560065	Item Models: embers
+// 1.21.1	2025-04-12T15:31:32.4680005	Item Models: embers
 f48e0c39961096aacbf2b851af87760bd63edf3e assets/embers/models/item/ashen_steel_ingot.json
 02a1930659b01d194cfaa73bc5e447eb7c27be1d assets/embers/models/item/brazier.json
 6d2d64485336d17ab30ac735fa6abcc29222735b assets/embers/models/item/caminite_blend.json
 8647b58288ec3dca45097692ee2aaceca1d97d3a assets/embers/models/item/caminite_brick.json
 2b7074b8663c8919f16aa6ddcd91237766dce3cd assets/embers/models/item/caminite_bricks.json
 9294fa06c66908538424bd0c98af4ddb21b5ae84 assets/embers/models/item/caminite_forge_block.json
+15b54a95c5db561b3f4fac9bf8740af010e6caac assets/embers/models/item/caminite_mold.json
 0c31585e4e7bed139ac3caf0a47e09a3b47bd934 assets/embers/models/item/cindersteel_ingot.json
 7e4e8d6ff5f7425d19bc7e9bd3bb2e6275c86418 assets/embers/models/item/cinnabar.json
+cb10012c60d98c3f026a894a100298ce525f408c assets/embers/models/item/copper_anvil.json
+38d331d87ed2c6a56a775d8fe78d5fdf0ff275a3 assets/embers/models/item/copper_nugget.json
 e0e19c0a42ef889bf2e0fc39c66cc323f9aedc5f assets/embers/models/item/dawnstone_ingot.json
+37b856eb67a5966edb4f89566760528e8871b514 assets/embers/models/item/dawnstone_nugget.json
 3c078fcc2455bf8ba41788f6be15c3f2bdcf50a4 assets/embers/models/item/ember_crystal.json
+3165b340ae57335491fa04cb5a9a2eab4934ff7c assets/embers/models/item/ember_crystallizer.json
+9a5fa75f00f4cb4e4355c21609f4b8923dbefc1e assets/embers/models/item/ember_shard.json
+3b0b5c926c20339b692c8870a5b67a6f819af449 assets/embers/models/item/heated_metal.json
+0547edf4539e185723578211ba31215f3cc45864 assets/embers/models/item/iron_hammer.json
 5683a3d3b07c3e7dc6ac0477aef5ecd3a7979418 assets/embers/models/item/quicksilver.json
+aab026b8f009ba7b949682e2ccdbe619106b3b0a assets/embers/models/item/smoldering_crystal_blend.json
 2d80e1d44358d96ee1de203325e57e0a2d779e1d assets/embers/models/item/vermillionite_chunk.json
