@@ -47,6 +47,7 @@ public class EmbersItems {
     public static final DeferredItem<BlockItem> CAMINITE_FORGE_BLOCK_ITEM = ITEMS.register("caminite_forge_block", () -> new CaminiteForgeItemBlock(new Item.Properties()));
     public static final DeferredItem<BlockItem> COPPER_ANVIL_BLOCK_ITEM = ITEMS.registerSimpleBlockItem(EmbersBlocks.COPPER_ANVIL);
     public static final DeferredItem<BlockItem> CAMINITE_MOLD_BLOCK_ITEM = ITEMS.registerSimpleBlockItem(EmbersBlocks.CAMINITE_MOLD);
+    public static final DeferredItem<BlockItem> EMBER_CLUSTER_BLOCK_ITEM = ITEMS.registerSimpleBlockItem(EmbersBlocks.EMBER_CLUSTER);
     public static final DeferredItem<BlockItem> EMBER_CRYSTALLIZER_BLOCK_ITEM = ITEMS.registerSimpleBlockItem(EmbersBlocks.EMBER_CRYSTALLIZER);
 
     public static void register(IEventBus bus) {

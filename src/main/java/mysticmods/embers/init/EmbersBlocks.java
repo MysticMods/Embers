@@ -9,6 +9,7 @@ import mysticmods.embers.machines.caminite_mold.CaminiteMoldBlock;
 import mysticmods.embers.machines.crystallizer.EmberCrystallizerBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.AmethystClusterBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -32,9 +33,18 @@ public class EmbersBlocks {
     );
 
     // ## Misc Blocks ## //
+
+    //Budding
     public static final DeferredBlock<Block> BUDDING_EMBER = BLOCKS.register(
             "budding_ember", registryName -> new BuddingEmberBlock(
                     BlockBehaviour.Properties.ofFullCopy(Blocks.BUDDING_AMETHYST)
+            )
+    );
+    public static final DeferredBlock<Block> EMBER_CLUSTER = BLOCKS.register(
+            "ember_cluster", registryName -> new AmethystClusterBlock(
+                    7.0F,
+                    3.0F,
+                    BlockBehaviour.Properties.ofFullCopy(Blocks.AMETHYST_CLUSTER)
             )
     );
 

@@ -19,6 +19,28 @@ public class EmbersBlockStateProvider extends BlockStateProvider {
         simpleBlock(EmbersBlocks.CAMINITE_BRICK.get());
         simpleBlock(EmbersBlocks.BUDDING_EMBER.get());
 
+        getVariantBuilder(EmbersBlocks.EMBER_CLUSTER.get()).forAllStates(state -> {
+            var facing = state.getValue(BlockStateProperties.FACING);
+            int yRot = switch (facing) {
+                case NORTH -> 0;
+                case SOUTH -> 180;
+                case WEST -> 270;
+                case EAST -> 90;
+                case UP, DOWN -> 0;
+            };
+            int xRot = switch (facing) {
+                case DOWN -> 180;
+                case UP -> 0;
+                default -> 90;
+            };
+
+            return ConfiguredModel.builder()
+                    .modelFile(models().getExistingFile(modLoc("block/ember_cluster")))
+                    .rotationX(xRot)
+                    .rotationY(yRot)
+                    .build();
+        });
+
         getVariantBuilder(EmbersBlocks.BRAZIER.get()).forAllStates(state ->
                 ConfiguredModel.builder()
                         .modelFile(state.getValue(BlockStateProperties.LIT) ? models().getExistingFile(modLoc("block/brazier_on")) : models().getExistingFile(modLoc("block/brazier")))
