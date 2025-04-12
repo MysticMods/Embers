@@ -12,6 +12,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
@@ -78,13 +79,14 @@ public class CopperAnvilBlockEntity extends LodestoneBlockEntity {
 
     public void smithIngot(ItemStack stack, MalleableMetalDataComponent metalData, Player player) {
         if(metalData.getIngots() > 0){
-            player.addItem(metalData.getMalleableMetal().getIngot().getItems()[0].copy());
+            level.addFreshEntity(new ItemEntity(level, getBlockPos().getX(), getBlockPos().getY() + 1, getBlockPos().getZ(),
+                    metalData.getMalleableMetal().getIngot().getItems()[0].copy()));
             metalData = metalData.removeIngots(1);
             stack.set(EmbersDataComponents.MALLEABLE_METAL, metalData);
         } else {
             ItemStack nuggets = metalData.getMalleableMetal().getNugget().getItems()[0].copy();
             nuggets.grow(metalData.getNuggets() - 1);
-            player.addItem(nuggets);
+            level.addFreshEntity(new ItemEntity(level, getBlockPos().getX(), getBlockPos().getY() + 1, getBlockPos().getZ(), nuggets));
             metalData = metalData.removeNuggets(metalData.getNuggets());
             stack.set(EmbersDataComponents.MALLEABLE_METAL, metalData);
         }
@@ -99,6 +101,14 @@ public class CopperAnvilBlockEntity extends LodestoneBlockEntity {
                 1.0f,
                 1.0f
         );
+
+        if(!level.isClientSide()){
+            var random = this.level.getRandom();
+            if(random.nextInt(20) + 1 == 1){
+                ItemStack output = new ItemStack(EmbersItems.EMBER_SHARD.get());
+                level.addFreshEntity(new ItemEntity(level, getBlockPos().getX(), getBlockPos().getY() + 1, getBlockPos().getZ(), output));
+            }
+        }
 
         if(level.isClientSide()){
             for (int i = 0; i < 20; i++) {
