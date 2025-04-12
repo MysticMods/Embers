@@ -1,0 +1,10 @@
+{
+  "type": "embers:crystallizer_recipe",
+  "input": {
+    "item": "embers:smoldering_crystal_blend"
+  },
+  "output": {
+    "count": 1,
+    "id": "embers:crystal_ember_seed"
+  }
+}

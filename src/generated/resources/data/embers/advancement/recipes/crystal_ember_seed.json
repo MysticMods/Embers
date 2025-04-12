@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_crystal_ember_seed": {
+      "conditions": {
+        "items": [
+          {
+            "items": "embers:crystal_ember_seed"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_smoldering_crystal_blend": {
+      "conditions": {
+        "items": [
+          {
+            "items": "embers:smoldering_crystal_blend"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:crystal_ember_seed"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_smoldering_crystal_blend",
+      "has_crystal_ember_seed"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:crystal_ember_seed"
+    ]
+  }
+}

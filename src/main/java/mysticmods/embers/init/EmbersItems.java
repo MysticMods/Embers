@@ -22,6 +22,7 @@ public class EmbersItems {
     public static final DeferredItem<Item> CAMINITE_BRICK = ITEMS.registerSimpleItem("caminite_brick", new Item.Properties());
     public static final DeferredItem<Item> CINDERSTEEL_INGOT = ITEMS.registerSimpleItem("cindersteel_ingot", new Item.Properties());
     public static final DeferredItem<Item> CINNABAR = ITEMS.registerSimpleItem("cinnabar", new Item.Properties());
+    public static final DeferredItem<Item> CRYSTAL_EMBER_SEED = ITEMS.registerSimpleItem("crystal_ember_seed", new Item.Properties());
     public static final DeferredItem<Item> DAWNSTONE_INGOT = ITEMS.registerSimpleItem("dawnstone_ingot", new Item.Properties());
     public static final DeferredItem<Item> DAWNSTONE_NUGGET = ITEMS.registerSimpleItem("dawnstone_nugget", new Item.Properties());
     public static final DeferredItem<Item> EMBER_CRYSTAL = ITEMS.registerSimpleItem("ember_crystal", new Item.Properties());

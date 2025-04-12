@@ -4,6 +4,7 @@ import mysticmods.embers.init.EmbersItems;
 import mysticmods.embers.init.EmbersMalleableMetals;
 import mysticmods.embers.init.EmbersTags;
 import mysticmods.embers.recipes.alloy.AlloyRecipeBuilder;
+import mysticmods.embers.recipes.crystallizer.CrystallizerRecipeBuilder;
 import mysticmods.embers.recipes.malleable_metal.MalleableMetalRecipeBuilder;
 import mysticmods.embers.recipes.mold.MoldRecipeBuilder;
 import net.minecraft.core.HolderLookup;
@@ -205,6 +206,15 @@ public class EmbersRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_glass", has(Items.GLASS))
                 .unlockedBy("has_ember_shard", has(EmbersItems.EMBER_SHARD))
                 .save(recipeOutput, "ember_crystallizer");
+
+        // ## Crystallizer Recipes ## //
+        new CrystallizerRecipeBuilder(
+                Ingredient.of(EmbersItems.SMOLDERING_CRYSTAL_BLEND),
+                new ItemStack(EmbersItems.CRYSTAL_EMBER_SEED.get())
+        )
+                .unlockedBy("has_smoldering_crystal_blend", has(EmbersItems.SMOLDERING_CRYSTAL_BLEND))
+                .unlockedBy("has_crystal_ember_seed", has(EmbersItems.CRYSTAL_EMBER_SEED.get()))
+                .save(recipeOutput, "crystal_ember_seed");
     }
 
 }

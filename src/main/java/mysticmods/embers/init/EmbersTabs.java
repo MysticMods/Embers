@@ -26,6 +26,7 @@ public class EmbersTabs {
                 output.accept(EmbersItems.CINDERSTEEL_INGOT.get());
                 output.accept(EmbersItems.CINNABAR.get());
                 output.accept(EmbersItems.COPPER_NUGGET.get());
+                output.accept(EmbersItems.CRYSTAL_EMBER_SEED.get());
                 output.accept(EmbersItems.DAWNSTONE_INGOT.get());
                 output.accept(EmbersItems.DAWNSTONE_NUGGET.get());
                 output.accept(EmbersItems.EMBER_CRYSTAL.get());
