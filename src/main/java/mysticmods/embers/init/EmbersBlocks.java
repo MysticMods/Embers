@@ -5,6 +5,7 @@ import mysticmods.embers.machines.anvil.copper.CopperAnvilBlock;
 import mysticmods.embers.machines.brazier.BrazierBlock;
 import mysticmods.embers.machines.caminite_forge.CaminiteForgeBlock;
 import mysticmods.embers.machines.caminite_mold.CaminiteMoldBlock;
+import mysticmods.embers.machines.crystallizer.EmberCrystallizerBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
@@ -58,6 +59,14 @@ public class EmbersBlocks {
 
     public static final DeferredBlock<Block> CAMINITE_MOLD = BLOCKS.register(
             "caminite_mold", registryName -> new CaminiteMoldBlock(
+                    BlockBehaviour.Properties.of()
+                            .requiresCorrectToolForDrops().strength(1.5F, 6.0F)
+                            .isViewBlocking(EmbersBlocks::never)
+            )
+    );
+
+    public static final DeferredBlock<Block> EMBER_CRYSTALLIZER = BLOCKS.register(
+            "ember_crystallizer", registryName -> new EmberCrystallizerBlock(
                     BlockBehaviour.Properties.of()
                             .requiresCorrectToolForDrops().strength(1.5F, 6.0F)
                             .isViewBlocking(EmbersBlocks::never)

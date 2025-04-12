@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "embers:block/ember_crystallizer"
+    }
+  }
+}

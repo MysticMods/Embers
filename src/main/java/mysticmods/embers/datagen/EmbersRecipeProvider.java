@@ -181,8 +181,7 @@ public class EmbersRecipeProvider extends RecipeProvider {
 
         //Caminite Smelter
         new MoldRecipeBuilder(
-                List.of(Ingredient.of(
-                        Items.COPPER_INGOT),
+                List.of(Ingredient.of( Items.COPPER_INGOT),
                         Ingredient.of(Items.COPPER_INGOT),
                         Ingredient.of(Items.COPPER_INGOT),
                         Ingredient.of(Items.FURNACE)
@@ -192,6 +191,20 @@ public class EmbersRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_copper_ingot", has(EmbersTags.COPPER_INGOTS_TAG))
                 .unlockedBy("has_furnace", has(Items.FURNACE))
                 .save(recipeOutput, "caminite_smelter");
+
+        //Ember Crystallizer
+        new MoldRecipeBuilder(
+                List.of(Ingredient.of(EmbersItems.EMBER_SHARD),
+                        Ingredient.of(EmbersItems.CAMINITE_BRICK),
+                        Ingredient.of(EmbersItems.CAMINITE_BRICK),
+                        Ingredient.of(Items.GLASS)
+                ),
+                new ItemStack(EmbersItems.EMBER_CRYSTALLIZER_BLOCK_ITEM.get())
+        )
+                .unlockedBy("has_caminite_brick", has(EmbersItems.CAMINITE_BRICK))
+                .unlockedBy("has_glass", has(Items.GLASS))
+                .unlockedBy("has_ember_shard", has(EmbersItems.EMBER_SHARD))
+                .save(recipeOutput, "ember_crystallizer");
     }
 
 }
