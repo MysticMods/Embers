@@ -17,6 +17,7 @@ public class EmbersBlockStateProvider extends BlockStateProvider {
     @Override
     protected void registerStatesAndModels() {
         simpleBlock(EmbersBlocks.CAMINITE_BRICK.get());
+        simpleBlock(EmbersBlocks.BUDDING_EMBER.get());
 
         getVariantBuilder(EmbersBlocks.BRAZIER.get()).forAllStates(state ->
                 ConfiguredModel.builder()

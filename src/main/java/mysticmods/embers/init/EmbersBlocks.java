@@ -1,6 +1,7 @@
 package mysticmods.embers.init;
 
 import mysticmods.embers.Embers;
+import mysticmods.embers.blocks.BuddingEmberBlock;
 import mysticmods.embers.machines.anvil.copper.CopperAnvilBlock;
 import mysticmods.embers.machines.brazier.BrazierBlock;
 import mysticmods.embers.machines.caminite_forge.CaminiteForgeBlock;
@@ -29,6 +30,15 @@ public class EmbersBlocks {
                             .requiresCorrectToolForDrops().strength(1.5F, 6.0F)
             )
     );
+
+    // ## Misc Blocks ## //
+    public static final DeferredBlock<Block> BUDDING_EMBER = BLOCKS.register(
+            "budding_ember", registryName -> new BuddingEmberBlock(
+                    BlockBehaviour.Properties.ofFullCopy(Blocks.BUDDING_AMETHYST)
+            )
+    );
+
+    // ## Machines ## //
 
     public static final DeferredBlock<Block> BRAZIER = BLOCKS.register(
             "brazier", registryName -> new BrazierBlock(
