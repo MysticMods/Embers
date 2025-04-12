@@ -3,6 +3,7 @@ package mysticmods.embers;
 import com.mojang.logging.LogUtils;
 import mysticmods.embers.client.CaminiteMoldRenderer;
 import mysticmods.embers.client.CopperAnvilRenderer;
+import mysticmods.embers.client.CrystallizerRenderer;
 import mysticmods.embers.datagen.*;
 import mysticmods.embers.init.*;
 import mysticmods.embers.machines.caminite_forge.menu.CaminiteForgeAlloyScreen;
@@ -121,6 +122,11 @@ public class Embers
             event.registerBlockEntityRenderer(
                     EmbersBlockEntities.CAMINITE_MOLD.get(),
                     CaminiteMoldRenderer::new
+            );
+
+            event.registerBlockEntityRenderer(
+                    EmbersBlockEntities.EMBER_CRYSTALLIZER.get(),
+                    CrystallizerRenderer::new
             );
         }
     }
