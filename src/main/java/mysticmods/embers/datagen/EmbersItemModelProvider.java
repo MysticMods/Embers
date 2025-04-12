@@ -23,7 +23,7 @@ public class EmbersItemModelProvider extends ItemModelProvider {
         withExistingParent(EmbersItems.CAMINITE_MOLD_BLOCK_ITEM.getId().toString(), modLoc("block/caminite_mold"));
         withExistingParent(EmbersItems.EMBER_CRYSTALLIZER_BLOCK_ITEM.getId().toString(), modLoc("block/ember_crystallizer"));
         withExistingParent(EmbersItems.BUDDING_EMBER_BLOCK_ITEM.getId().toString(), modLoc("block/budding_ember"));
-        withExistingParent(EmbersItems.BUDDING_EMBER_BLOCK_ITEM.getId().toString(), modLoc("block/budding_ember"));
+        withExistingParent(EmbersItems.EMBER_CLUSTER_BLOCK_ITEM.getId().toString(), modLoc("block/ember_cluster"));
 
         //Stones
         basicItem(EmbersItems.CAMINITE_BLEND.get());

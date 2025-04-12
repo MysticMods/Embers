@@ -1,4 +1,4 @@
-// 1.21.1	2025-04-13T01:21:26.9792121	Item Models: embers
+// 1.21.1	2025-04-13T01:44:49.1760084	Item Models: embers
 f48e0c39961096aacbf2b851af87760bd63edf3e assets/embers/models/item/ashen_steel_ingot.json
 02a1930659b01d194cfaa73bc5e447eb7c27be1d assets/embers/models/item/brazier.json
 0d6f3c189379803e3007c96a6223c398b8e11482 assets/embers/models/item/budding_ember.json
@@ -14,6 +14,7 @@ cb10012c60d98c3f026a894a100298ce525f408c assets/embers/models/item/copper_anvil.
 face3c0cd896a78f31af46e6080935b58f0c4606 assets/embers/models/item/crystal_ember_seed.json
 e0e19c0a42ef889bf2e0fc39c66cc323f9aedc5f assets/embers/models/item/dawnstone_ingot.json
 37b856eb67a5966edb4f89566760528e8871b514 assets/embers/models/item/dawnstone_nugget.json
+694ebaa0864c6fc21546f0bcebd13d4e0cd377fb assets/embers/models/item/ember_cluster.json
 3c078fcc2455bf8ba41788f6be15c3f2bdcf50a4 assets/embers/models/item/ember_crystal.json
 3165b340ae57335491fa04cb5a9a2eab4934ff7c assets/embers/models/item/ember_crystallizer.json
 9a5fa75f00f4cb4e4355c21609f4b8923dbefc1e assets/embers/models/item/ember_shard.json
