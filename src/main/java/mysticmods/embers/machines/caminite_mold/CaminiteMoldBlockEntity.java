@@ -3,7 +3,7 @@ package mysticmods.embers.machines.caminite_mold;
 import mysticmods.embers.Embers;
 import mysticmods.embers.init.EmbersBlockEntities;
 import mysticmods.embers.init.EmbersParticles;
-import mysticmods.embers.init.EmbersRecipeTypes;
+import mysticmods.embers.init.ModRecipeTypes;
 import mysticmods.embers.recipes.mold.MoldRecipe;
 import mysticmods.embers.recipes.mold.MoldRecipeInput;
 import net.minecraft.core.BlockPos;
@@ -199,7 +199,7 @@ public class CaminiteMoldBlockEntity extends LodestoneBlockEntity {
 
         RecipeManager recipes = level.getRecipeManager();
         Optional<RecipeHolder<MoldRecipe>> optional = recipes.getRecipeFor(
-                EmbersRecipeTypes.MOLD.get(),
+                ModRecipeTypes.MOLD.get(),
                 new MoldRecipeInput(inputs),
                 level
         );

@@ -1,7 +1,7 @@
 package mysticmods.embers.recipes.mold;
 
-import mysticmods.embers.init.EmbersRecipeTypes;
-import mysticmods.embers.init.EmbersSerializers;
+import mysticmods.embers.init.ModRecipeTypes;
+import mysticmods.embers.init.ModSerializers;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -71,12 +71,12 @@ public class MoldRecipe implements Recipe<MoldRecipeInput> {
 
     @Override
     public @NotNull RecipeSerializer<?> getSerializer() {
-        return EmbersSerializers.MOLD_RECIPE_SERIALIZER.get();
+        return ModSerializers.MOLD_RECIPE_SERIALIZER.get();
     }
 
     @Override
     public @NotNull RecipeType<?> getType() {
-        return EmbersRecipeTypes.MOLD.get();
+        return ModRecipeTypes.MOLD.get();
     }
 
     public List<Ingredient> getInputIngredients() {

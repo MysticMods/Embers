@@ -53,9 +53,9 @@ public class Embers
         EmbersBlockEntities.register(modEventBus);
         EmbersDataComponents.register(modEventBus);
         EmbersItems.register(modEventBus);
-        EmbersSerializers.register(modEventBus);
+        ModSerializers.register(modEventBus);
         EmbersMalleableMetals.register(modEventBus);
-        EmbersRecipeTypes.register(modEventBus);
+        ModRecipeTypes.register(modEventBus);
         EmbersParticles.register(modEventBus);
         EmbersTabs.register(modEventBus);
         EmbersMenuTypes.register(modEventBus);

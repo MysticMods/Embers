@@ -2,6 +2,7 @@ package mysticmods.embers.init;
 
 import mysticmods.embers.Embers;
 import mysticmods.embers.recipes.alloy.AlloyRecipe;
+import mysticmods.embers.recipes.crystallizer.CrystallizerRecipe;
 import mysticmods.embers.recipes.malleable_metal.MalleableMetalRecipe;
 import mysticmods.embers.recipes.mold.MoldRecipe;
 import net.minecraft.core.registries.Registries;
@@ -11,7 +12,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
-public class EmbersRecipeTypes {
+public class ModRecipeTypes {
     public static final DeferredRegister<RecipeType<?>> RECIPE_TYPES = DeferredRegister.create(Registries.RECIPE_TYPE, Embers.MODID);
 
     public static final DeferredHolder<RecipeType<?>, RecipeType<MalleableMetalRecipe>> MALLEABLE_METAL =
@@ -29,6 +30,12 @@ public class EmbersRecipeTypes {
             RECIPE_TYPES.register(
                     "mold",
                     () -> RecipeType.simple(ResourceLocation.fromNamespaceAndPath(Embers.MODID, "mold"))
+            );
+
+    public static final DeferredHolder<RecipeType<?>, RecipeType<CrystallizerRecipe>> CRYSTALLIZER =
+            RECIPE_TYPES.register(
+                    "crystallizer",
+                    () -> RecipeType.simple(ResourceLocation.fromNamespaceAndPath(Embers.MODID, "crystallizer"))
             );
 
 

@@ -1,7 +1,7 @@
 package mysticmods.embers.recipes.alloy;
 
-import mysticmods.embers.init.EmbersRecipeTypes;
-import mysticmods.embers.init.EmbersSerializers;
+import mysticmods.embers.init.ModRecipeTypes;
+import mysticmods.embers.init.ModSerializers;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -47,12 +47,12 @@ public class AlloyRecipe implements Recipe<AlloyRecipeInput> {
 
     @Override
     public @NotNull RecipeSerializer<?> getSerializer() {
-        return EmbersSerializers.ALLOY_RECIPE_SERIALIZER.get();
+        return ModSerializers.ALLOY_RECIPE_SERIALIZER.get();
     }
 
     @Override
     public @NotNull RecipeType<?> getType() {
-        return EmbersRecipeTypes.ALLOY.get();
+        return ModRecipeTypes.ALLOY.get();
     }
 
     public Ingredient getMetalOne() {

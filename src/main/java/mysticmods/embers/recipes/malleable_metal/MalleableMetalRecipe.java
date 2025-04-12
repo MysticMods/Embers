@@ -1,8 +1,8 @@
 package mysticmods.embers.recipes.malleable_metal;
 
 import mysticmods.embers.init.EmbersItems;
-import mysticmods.embers.init.EmbersRecipeTypes;
-import mysticmods.embers.init.EmbersSerializers;
+import mysticmods.embers.init.ModRecipeTypes;
+import mysticmods.embers.init.ModSerializers;
 import mysticmods.embers.registries.MalleableMetal;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
@@ -82,12 +82,12 @@ public class MalleableMetalRecipe implements Recipe<RecipeInput> {
 
     @Override
     public @NotNull RecipeSerializer<?> getSerializer() {
-        return EmbersSerializers.MALLEABLE_METAL_SERIALIZER.get();
+        return ModSerializers.MALLEABLE_METAL_SERIALIZER.get();
     }
 
     @Override
     public @NotNull RecipeType<?> getType() {
-        return EmbersRecipeTypes.MALLEABLE_METAL.get();
+        return ModRecipeTypes.MALLEABLE_METAL.get();
     }
 
     public float getExperience() {

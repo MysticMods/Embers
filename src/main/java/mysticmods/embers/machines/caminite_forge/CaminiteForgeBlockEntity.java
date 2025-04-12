@@ -109,7 +109,7 @@ public class CaminiteForgeBlockEntity extends MultiBlockCoreEntity implements IE
                     ItemStack inputStack = this.itemHandler.getStackInSlot(0);
                     RecipeManager recipes = level.getRecipeManager();
                     Optional<RecipeHolder<MalleableMetalRecipe>> optional = recipes.getRecipeFor(
-                            EmbersRecipeTypes.MALLEABLE_METAL.get(),
+                            ModRecipeTypes.MALLEABLE_METAL.get(),
                             new SingleRecipeInput(this.itemHandler.getStackInSlot(0)),
                             level
                     );
@@ -142,7 +142,7 @@ public class CaminiteForgeBlockEntity extends MultiBlockCoreEntity implements IE
                     ItemStack inputStackTwo = this.itemHandler.getStackInSlot(1);
                     RecipeManager recipes = level.getRecipeManager();
                     Optional<RecipeHolder<AlloyRecipe>> optional = recipes.getRecipeFor(
-                            EmbersRecipeTypes.ALLOY.get(),
+                            ModRecipeTypes.ALLOY.get(),
                             new AlloyRecipeInput(inputStackOne, inputStackTwo),
                             level
                     );
@@ -207,7 +207,7 @@ public class CaminiteForgeBlockEntity extends MultiBlockCoreEntity implements IE
                 ItemStack outputStack = this.itemHandler.getStackInSlot(2);
                 RecipeManager recipes = level.getRecipeManager();
                 Optional<RecipeHolder<AlloyRecipe>> optional = recipes.getRecipeFor(
-                        EmbersRecipeTypes.ALLOY.get(),
+                        ModRecipeTypes.ALLOY.get(),
                         new AlloyRecipeInput(inputStackOne, inputStackTwo),
                         level
                 );
@@ -228,7 +228,7 @@ public class CaminiteForgeBlockEntity extends MultiBlockCoreEntity implements IE
                 ItemStack outputStack = this.itemHandler.getStackInSlot(2);
                 RecipeManager recipes = level.getRecipeManager();
                 Optional<RecipeHolder<MalleableMetalRecipe>> optional = recipes.getRecipeFor(
-                        EmbersRecipeTypes.MALLEABLE_METAL.get(),
+                        ModRecipeTypes.MALLEABLE_METAL.get(),
                         new SingleRecipeInput(inputStack),
                         level
                 );

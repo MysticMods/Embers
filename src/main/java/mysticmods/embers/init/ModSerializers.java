@@ -2,6 +2,7 @@ package mysticmods.embers.init;
 
 import mysticmods.embers.Embers;
 import mysticmods.embers.recipes.alloy.AlloyRecipeSerializer;
+import mysticmods.embers.recipes.crystallizer.CrystallizerRecipeSerializer;
 import mysticmods.embers.recipes.malleable_metal.MalleableMetalRecipeSerializer;
 import mysticmods.embers.recipes.mold.MoldRecipeSerializer;
 import net.minecraft.core.registries.Registries;
@@ -10,7 +11,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
-public class EmbersSerializers {
+public class ModSerializers {
 
     public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(Registries.RECIPE_SERIALIZER, Embers.MODID);
 
@@ -22,6 +23,9 @@ public class EmbersSerializers {
 
     public static final DeferredHolder<RecipeSerializer<?>, MoldRecipeSerializer> MOLD_RECIPE_SERIALIZER =
             RECIPE_SERIALIZERS.register("mold_recipe", MoldRecipeSerializer::new);
+
+    public static final DeferredHolder<RecipeSerializer<?>, CrystallizerRecipeSerializer> CRYSTALLIZER_RECIPE_SERIALIZER =
+            RECIPE_SERIALIZERS.register("crystallizer_recipe", CrystallizerRecipeSerializer::new);
 
     public static void register(IEventBus bus) {
         RECIPE_SERIALIZERS.register(bus);
