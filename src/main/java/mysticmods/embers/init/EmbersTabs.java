@@ -20,15 +20,16 @@ public class EmbersTabs {
             .icon(() -> EmbersItems.ASHEN_STEEL_INGOT.get().getDefaultInstance())
             .displayItems((parameters, output) -> {
                 //Items
-                output.accept(EmbersItems.COPPER_NUGGET.get());
                 output.accept(EmbersItems.ASHEN_STEEL_INGOT.get());
                 output.accept(EmbersItems.CAMINITE_BLEND.get());
                 output.accept(EmbersItems.CAMINITE_BRICK.get());
                 output.accept(EmbersItems.CINDERSTEEL_INGOT.get());
                 output.accept(EmbersItems.CINNABAR.get());
+                output.accept(EmbersItems.COPPER_NUGGET.get());
                 output.accept(EmbersItems.DAWNSTONE_INGOT.get());
                 output.accept(EmbersItems.DAWNSTONE_NUGGET.get());
                 output.accept(EmbersItems.EMBER_CRYSTAL.get());
+                output.accept(EmbersItems.EMBER_SHARD.get());
                 output.accept(EmbersItems.QUICKSILVER.get());
                 output.accept(EmbersItems.VERMILLIONITE_CHUNK.get());
                 output.accept(EmbersItems.IRON_HAMMER.get());
