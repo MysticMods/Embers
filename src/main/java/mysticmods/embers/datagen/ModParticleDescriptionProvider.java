@@ -1,15 +1,12 @@
 package mysticmods.embers.datagen;
 
-import mysticmods.embers.Embers;
-import mysticmods.embers.init.EmbersParticles;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.common.data.ParticleDescriptionProvider;
 
-public class EmbersParticleDescriptionProvider extends ParticleDescriptionProvider {
+public class ModParticleDescriptionProvider extends ParticleDescriptionProvider {
 
-    public EmbersParticleDescriptionProvider(PackOutput output, ExistingFileHelper fileHelper) {
+    public ModParticleDescriptionProvider(PackOutput output, ExistingFileHelper fileHelper) {
         super(output, fileHelper);
     }
 

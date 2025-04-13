@@ -144,24 +144,24 @@ public class Embers {
             ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
             CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
 
-            EmbersBlockTagProvider blockTagProvider = new EmbersBlockTagProvider(output, lookupProvider, existingFileHelper);
+            ModBlockTagProvider blockTagProvider = new ModBlockTagProvider(output, lookupProvider, existingFileHelper);
 
             generator.addProvider(
                     event.includeClient(),
-                    new EmbersBlockStateProvider(output, existingFileHelper)
+                    new ModBlockStateProvider(output, existingFileHelper)
             );
 
             generator.addProvider(
                     event.includeClient(),
-                    new EmbersItemModelProvider(output, existingFileHelper)
+                    new ModItemModelProvider(output, existingFileHelper)
             );
             generator.addProvider(
                     event.includeClient(),
-                    new EmbersParticleDescriptionProvider(output, existingFileHelper)
+                    new ModParticleDescriptionProvider(output, existingFileHelper)
             );
             generator.addProvider(
                     event.includeServer(),
-                    new EmbersRecipeProvider(output, lookupProvider)
+                    new ModRecipeProvider(output, lookupProvider)
             );
             generator.addProvider(
                     event.includeServer(),
@@ -169,7 +169,7 @@ public class Embers {
             );
             generator.addProvider(
                     event.includeServer(),
-                    new EmbersItemTagProvider(output, lookupProvider, blockTagProvider.contentsGetter(), existingFileHelper)
+                    new ModItemTagProvider(output, lookupProvider, blockTagProvider.contentsGetter(), existingFileHelper)
             );
 
             event.getGenerator().addProvider(

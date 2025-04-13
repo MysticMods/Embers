@@ -18,10 +18,10 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-public class EmbersRecipeProvider extends RecipeProvider {
+public class ModRecipeProvider extends RecipeProvider {
 
     // Construct the provider to run
-    public EmbersRecipeProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider) {
+    public ModRecipeProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider) {
         super(output, lookupProvider);
     }
 
