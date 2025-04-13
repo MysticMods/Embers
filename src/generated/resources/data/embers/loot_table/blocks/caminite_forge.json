@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "embers:caminite_forge_block"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "embers:blocks/caminite_forge"
+}

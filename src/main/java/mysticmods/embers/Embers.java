@@ -13,6 +13,8 @@ import mysticmods.embers.network.EmbersNetworkHandler;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
+import net.minecraft.data.loot.LootTableProvider;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -35,17 +37,17 @@ import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import org.slf4j.Logger;
 
+import java.util.List;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 @Mod(Embers.MODID)
-public class Embers
-{
+public class Embers {
     public static final String MODID = "embers";
     public static final Logger LOGGER = LogUtils.getLogger();
 
 
-    public Embers(IEventBus modEventBus, ModContainer modContainer)
-    {
+    public Embers(IEventBus modEventBus, ModContainer modContainer) {
         modEventBus.addListener(this::commonSetup);
 
         EmbersTags.init();
@@ -70,26 +72,21 @@ public class Embers
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
     }
 
-    private void commonSetup(final FMLCommonSetupEvent event)
-    {
+    private void commonSetup(final FMLCommonSetupEvent event) {
     }
 
-    private void addCreative(BuildCreativeModeTabContentsEvent event)
-    {
+    private void addCreative(BuildCreativeModeTabContentsEvent event) {
 
     }
 
     @SubscribeEvent
-    public void onServerStarting(ServerStartingEvent event)
-    {
+    public void onServerStarting(ServerStartingEvent event) {
 
     }
 
 
-
     @EventBusSubscriber(modid = MODID, bus = EventBusSubscriber.Bus.MOD)
-    public static class ServerModEvents
-    {
+    public static class ServerModEvents {
 
         @SubscribeEvent
         private static void registerCapabilities(RegisterCapabilitiesEvent event) {
@@ -132,11 +129,9 @@ public class Embers
     }
 
     @EventBusSubscriber(modid = MODID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-    public static class ClientModEvents
-    {
+    public static class ClientModEvents {
         @SubscribeEvent
-        public static void onClientSetup(FMLClientSetupEvent event)
-        {
+        public static void onClientSetup(FMLClientSetupEvent event) {
             // TODO: Register screens for the Caminite Forge GUI
             // The MenuScreens.register method has private access in NeoForge
             // Need to find the correct way to register screens in NeoForge
@@ -176,6 +171,20 @@ public class Embers
                     event.includeServer(),
                     new EmbersItemTagProvider(output, lookupProvider, blockTagProvider.contentsGetter(), existingFileHelper)
             );
+
+            event.getGenerator().addProvider(
+                    event.includeServer(),
+                    new ModLootTableProvider(
+                            output,
+                            Set.of(),
+                            List.of(new LootTableProvider.SubProviderEntry(
+                                    ModBlockLootSubProvider::new,
+                                    LootContextParamSets.BLOCK
+                            )),
+                            lookupProvider
+                    )
+            );
+
         }
 
         @SubscribeEvent

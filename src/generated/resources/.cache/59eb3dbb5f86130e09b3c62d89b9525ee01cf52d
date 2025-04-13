@@ -1,0 +1,13 @@
+// 1.21.1	2025-04-13T21:10:10.2150161	Loot Tables
+5eaab0b60cc8ecf6fc12b8343b8851cb5fb73e37 data/embers/loot_table/blocks/brazier.json
+5718633cfc3f31f457ca453bb359f1599d37756c data/embers/loot_table/blocks/budding_ember.json
+d26503a4f2c5f983c294eef9f1fce25b9dbc91f2 data/embers/loot_table/blocks/caminite_bricks.json
+89b1e6ffc2e848394bc72258b072626f8be69d8f data/embers/loot_table/blocks/caminite_forge.json
+8bb69bff204673602a9805b4fbbaa84bc1553509 data/embers/loot_table/blocks/caminite_forge_component.json
+2bf4a4c46a7595eb94e4daeefd27c81bb0518b2e data/embers/loot_table/blocks/caminite_mold.json
+231ce56a9c4d43a15164243186ebb0aeea6ee85f data/embers/loot_table/blocks/copper_anvil.json
+7da75cae3b4aa8df3fc8c84801b9f918ff566aa3 data/embers/loot_table/blocks/ember_cluster.json
+ef411467f93a4a684c8308d812d9180b424a32b2 data/embers/loot_table/blocks/ember_crystallizer.json
+40bd0c4772e5d7cdf763212bceedf08970491dd4 data/embers/loot_table/blocks/large_ember_bud.json
+0e0626593acd7bd56f09e1f8ada19b7a523d1e93 data/embers/loot_table/blocks/medium_ember_bud.json
+ac83ddb522a9cd5c44aa9791aeae9022fec9dc7a data/embers/loot_table/blocks/small_ember_bud.json
