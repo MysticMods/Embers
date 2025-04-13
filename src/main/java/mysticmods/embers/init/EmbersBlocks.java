@@ -47,6 +47,27 @@ public class EmbersBlocks {
                     BlockBehaviour.Properties.ofFullCopy(Blocks.AMETHYST_CLUSTER)
             )
     );
+    public static final DeferredBlock<Block> LARGE_EMBER_BUD = BLOCKS.register(
+            "large_ember_bud", registryName -> new AmethystClusterBlock(
+                    5.0F,
+                    3.0F,
+                    BlockBehaviour.Properties.ofFullCopy(Blocks.LARGE_AMETHYST_BUD)
+            )
+    );
+    public static final DeferredBlock<Block> MEDIUM_EMBER_BUD = BLOCKS.register(
+            "medium_ember_bud", registryName -> new AmethystClusterBlock(
+                    4.0F,
+                    3.0F,
+                    BlockBehaviour.Properties.ofFullCopy(Blocks.MEDIUM_AMETHYST_BUD)
+            )
+    );
+    public static final DeferredBlock<Block> SMALL_EMBER_BUD = BLOCKS.register(
+            "small_ember_bud", registryName -> new AmethystClusterBlock(
+                    3.0F,
+                    4.0F,
+                    BlockBehaviour.Properties.ofFullCopy(Blocks.SMALL_AMETHYST_BUD)
+            )
+    );
 
     // ## Machines ## //
 

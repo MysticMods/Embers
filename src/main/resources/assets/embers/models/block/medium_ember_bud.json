@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "embers:block/small_ember_bud"
+  },
+  "render_type": "cutout"
+}

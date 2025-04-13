@@ -2,6 +2,7 @@ package mysticmods.embers.datagen;
 
 import mysticmods.embers.Embers;
 import mysticmods.embers.init.EmbersBlocks;
+import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
@@ -19,27 +20,33 @@ public class EmbersBlockStateProvider extends BlockStateProvider {
         simpleBlock(EmbersBlocks.CAMINITE_BRICK.get());
         simpleBlock(EmbersBlocks.BUDDING_EMBER.get());
 
-        getVariantBuilder(EmbersBlocks.EMBER_CLUSTER.get()).forAllStates(state -> {
-            var facing = state.getValue(BlockStateProperties.FACING);
-            int yRot = switch (facing) {
-                case NORTH -> 0;
-                case SOUTH -> 180;
-                case WEST -> 270;
-                case EAST -> 90;
-                case UP, DOWN -> 0;
-            };
-            int xRot = switch (facing) {
-                case DOWN -> 180;
-                case UP -> 0;
-                default -> 90;
-            };
-
-            return ConfiguredModel.builder()
+        getVariantBuilder(EmbersBlocks.EMBER_CLUSTER.get()).forAllStates(state ->
+                ConfiguredModel.builder()
                     .modelFile(models().getExistingFile(modLoc("block/ember_cluster")))
-                    .rotationX(xRot)
-                    .rotationY(yRot)
-                    .build();
-        });
+                    .rotationX(getXRot(state.getValue(BlockStateProperties.FACING)))
+                    .rotationY(getYRot(state.getValue(BlockStateProperties.FACING)))
+                    .build());
+
+        getVariantBuilder(EmbersBlocks.LARGE_EMBER_BUD.get()).forAllStates(state ->
+                ConfiguredModel.builder()
+                    .modelFile(models().getExistingFile(modLoc("block/large_ember_bud")))
+                    .rotationX(getXRot(state.getValue(BlockStateProperties.FACING)))
+                    .rotationY(getYRot(state.getValue(BlockStateProperties.FACING)))
+                    .build());
+
+        getVariantBuilder(EmbersBlocks.MEDIUM_EMBER_BUD.get()).forAllStates(state ->
+                ConfiguredModel.builder()
+                    .modelFile(models().getExistingFile(modLoc("block/medium_ember_bud")))
+                    .rotationX(getXRot(state.getValue(BlockStateProperties.FACING)))
+                    .rotationY(getYRot(state.getValue(BlockStateProperties.FACING)))
+                    .build());
+
+        getVariantBuilder(EmbersBlocks.SMALL_EMBER_BUD.get()).forAllStates(state ->
+                ConfiguredModel.builder()
+                    .modelFile(models().getExistingFile(modLoc("block/small_ember_bud")))
+                    .rotationX(getXRot(state.getValue(BlockStateProperties.FACING)))
+                    .rotationY(getYRot(state.getValue(BlockStateProperties.FACING)))
+                    .build());
 
         getVariantBuilder(EmbersBlocks.BRAZIER.get()).forAllStates(state ->
                 ConfiguredModel.builder()
@@ -76,5 +83,25 @@ public class EmbersBlockStateProvider extends BlockStateProvider {
                         .modelFile(models().getExistingFile(modLoc("block/ember_crystallizer")))
                         .build()
         );
+    }
+
+    public int getYRot(Direction facing){
+        int yRot = switch (facing) {
+            case NORTH -> 0;
+            case SOUTH -> 180;
+            case WEST -> 270;
+            case EAST -> 90;
+            case UP, DOWN -> 0;
+        };
+        return yRot;
+    }
+
+    public int getXRot(Direction facing){
+        int xRot = switch (facing) {
+            case DOWN -> 180;
+            case UP -> 0;
+            default -> 90;
+        };
+        return xRot;
     }
 }

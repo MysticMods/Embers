@@ -1,6 +1,7 @@
 package mysticmods.embers.blocks;
 
 import com.mojang.serialization.MapCodec;
+import mysticmods.embers.init.EmbersBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -35,7 +36,7 @@ public class BuddingEmberBlock extends AmethystBlock {
             BlockState blockstate = level.getBlockState(blockpos);
             Block block = null;
             if (canClusterGrowAtState(blockstate)) {
-                block = Blocks.SMALL_AMETHYST_BUD;
+                block = EmbersBlocks.SMALL_EMBER_BUD.get();
             } else if (blockstate.is(Blocks.SMALL_AMETHYST_BUD) && blockstate.getValue(AmethystClusterBlock.FACING) == direction) {
                 block = Blocks.MEDIUM_AMETHYST_BUD;
             } else if (blockstate.is(Blocks.MEDIUM_AMETHYST_BUD) && blockstate.getValue(AmethystClusterBlock.FACING) == direction) {
