@@ -30,6 +30,7 @@ public class ModBlockTagProvider extends BlockTagsProvider {
                 EmbersBlocks.CAMINITE_FORGE.get(),
                 EmbersBlocks.CAMINITE_FORGE_COMPONENT.get(),
                 EmbersBlocks.CAMINITE_MOLD.get(),
+                EmbersBlocks.CAMINITE_SMELTER.get(),
                 EmbersBlocks.COPPER_ANVIL.get(),
                 EmbersBlocks.EMBER_CLUSTER.get(),
                 EmbersBlocks.EMBER_CRYSTALLIZER.get(),

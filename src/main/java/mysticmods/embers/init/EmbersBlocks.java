@@ -6,6 +6,7 @@ import mysticmods.embers.machines.anvil.copper.CopperAnvilBlock;
 import mysticmods.embers.machines.brazier.BrazierBlock;
 import mysticmods.embers.machines.caminite_forge.CaminiteForgeBlock;
 import mysticmods.embers.machines.caminite_mold.CaminiteMoldBlock;
+import mysticmods.embers.machines.caminite_smelter.CaminiteSmelter;
 import mysticmods.embers.machines.crystallizer.EmberCrystallizerBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
@@ -75,6 +76,13 @@ public class EmbersBlocks {
             "brazier", registryName -> new BrazierBlock(
                     BlockBehaviour.Properties.ofFullCopy(Blocks.BRICKS)
                             .lightLevel(state -> state.getValue(BlockStateProperties.LIT) ? 15 : 0)
+
+            )
+    );
+
+    public static final DeferredBlock<Block> CAMINITE_SMELTER = BLOCKS.register(
+            "caminite_smelter", registryName -> new CaminiteSmelter(
+                    BlockBehaviour.Properties.ofFullCopy(Blocks.BRICKS)
 
             )
     );

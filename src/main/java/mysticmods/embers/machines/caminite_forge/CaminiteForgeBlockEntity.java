@@ -6,7 +6,6 @@ import mysticmods.embers.capabilities.emberlevel.EmberLevel;
 import mysticmods.embers.data.components.MalleableMetalDataComponent;
 import mysticmods.embers.init.*;
 import mysticmods.embers.machines.caminite_forge.menu.CaminiteForgeAlloyMenu;
-import mysticmods.embers.machines.caminite_forge.menu.CaminiteForgeMenu;
 import mysticmods.embers.recipes.alloy.AlloyRecipe;
 import mysticmods.embers.recipes.alloy.AlloyRecipeInput;
 import mysticmods.embers.recipes.malleable_metal.MalleableMetalRecipe;
@@ -302,17 +301,7 @@ public class CaminiteForgeBlockEntity extends MultiBlockCoreEntity implements IE
                     }
                 }, buf -> buf.writeBlockPos(getBlockPos()));
             } else {
-                serverPlayer.openMenu(new MenuProvider() {
-                    @Override
-                    public @NotNull Component getDisplayName() {
-                        return Component.translatable("block.embers.caminite_forge");
-                    }
 
-                    @Override
-                    public AbstractContainerMenu createMenu(int windowId, @NotNull Inventory playerInventory, @NotNull Player player) {
-                        return new CaminiteForgeMenu(windowId, playerInventory, CaminiteForgeBlockEntity.this);
-                    }
-                }, buf -> buf.writeBlockPos(getBlockPos()));
             }
         }
     }

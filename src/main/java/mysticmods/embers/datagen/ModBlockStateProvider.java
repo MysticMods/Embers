@@ -54,6 +54,14 @@ public class ModBlockStateProvider extends BlockStateProvider {
                         .build()
         );
 
+        getVariantBuilder(EmbersBlocks.CAMINITE_SMELTER.get()).forAllStates(state -> {
+            var facing = state.getValue(BlockStateProperties.HORIZONTAL_FACING);
+            return ConfiguredModel.builder()
+                    .modelFile(models().getExistingFile(modLoc("block/caminite_smelter")))
+                    .rotationY(facing.get2DDataValue() * 90)
+                    .build();
+        });
+
         getVariantBuilder(EmbersBlocks.CAMINITE_FORGE.get()).forAllStates(state ->
                 ConfiguredModel.builder()
                         .modelFile(state.getValue(BlockStateProperties.LIT) ? models().getExistingFile(modLoc("block/caminite_forge")) : models().getExistingFile(modLoc("block/caminite_forge")))

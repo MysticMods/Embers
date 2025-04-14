@@ -42,6 +42,7 @@ public class EmbersTabs {
                 output.accept(EmbersItems.CAMINITE_BRICK_BLOCK_ITEM.get());
                 output.accept(EmbersItems.CAMINITE_FORGE_BLOCK_ITEM.get());
                 output.accept(EmbersItems.CAMINITE_MOLD_BLOCK_ITEM.get());
+                output.accept(EmbersItems.CAMINITE_SMELTER_BLOCK_ITEM.get());
                 output.accept(EmbersItems.COPPER_ANVIL_BLOCK_ITEM.get());
                 output.accept(EmbersItems.EMBER_CLUSTER_BLOCK_ITEM.get());
                 output.accept(EmbersItems.EMBER_CRYSTALLIZER_BLOCK_ITEM.get());

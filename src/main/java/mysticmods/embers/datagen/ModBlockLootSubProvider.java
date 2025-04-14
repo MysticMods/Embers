@@ -29,6 +29,7 @@ public class ModBlockLootSubProvider extends BlockLootSubProvider {
         dropSelf(EmbersBlocks.CAMINITE_BRICK.get());
         dropSelf(EmbersBlocks.CAMINITE_FORGE.get());
         dropSelf(EmbersBlocks.CAMINITE_MOLD.get());
+        dropSelf(EmbersBlocks.CAMINITE_SMELTER.get());
         dropSelf(EmbersBlocks.COPPER_ANVIL.get());
         dropSelf(EmbersBlocks.EMBER_CRYSTALLIZER.get());
 

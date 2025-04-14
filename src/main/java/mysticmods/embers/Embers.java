@@ -7,7 +7,7 @@ import mysticmods.embers.client.CrystallizerRenderer;
 import mysticmods.embers.datagen.*;
 import mysticmods.embers.init.*;
 import mysticmods.embers.machines.caminite_forge.menu.CaminiteForgeAlloyScreen;
-import mysticmods.embers.machines.caminite_forge.menu.CaminiteForgeScreen;
+import mysticmods.embers.machines.caminite_smelter.menu.CaminiteSmelterScreen;
 import mysticmods.embers.network.CaminiteForgeToggleAlloyData;
 import mysticmods.embers.network.EmbersNetworkHandler;
 import net.minecraft.core.HolderLookup;
@@ -95,7 +95,7 @@ public class Embers {
 
         @SubscribeEvent
         private static void registerScreens(RegisterMenuScreensEvent event) {
-            event.register(EmbersMenuTypes.CAMINITE_FORGE.get(), CaminiteForgeScreen::new);
+            event.register(EmbersMenuTypes.CAMINITE_FORGE.get(), CaminiteSmelterScreen::new);
             event.register(EmbersMenuTypes.CAMINITE_FORGE_ALLOY.get(), CaminiteForgeAlloyScreen::new);
         }
 

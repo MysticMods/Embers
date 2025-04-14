@@ -1,7 +1,7 @@
-package mysticmods.embers.machines.caminite_forge.menu;
+package mysticmods.embers.machines.caminite_smelter.menu;
 
 import mysticmods.embers.init.EmbersMenuTypes;
-import mysticmods.embers.machines.caminite_forge.CaminiteForgeBlockEntity;
+import mysticmods.embers.machines.caminite_smelter.CaminiteSmelterBlockEntity;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -13,17 +13,17 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.neoforge.items.SlotItemHandler;
 import org.jetbrains.annotations.NotNull;
 
-public class CaminiteForgeMenu extends AbstractContainerMenu {
-    private final CaminiteForgeBlockEntity blockEntity;
+public class CaminiteSmelterMenu extends AbstractContainerMenu {
+    private final CaminiteSmelterBlockEntity blockEntity;
     private final ContainerLevelAccess containerLevelAccess;
 
     // Client constructor
-    public CaminiteForgeMenu(int windowId, Inventory playerInventory, FriendlyByteBuf data) {
+    public CaminiteSmelterMenu(int windowId, Inventory playerInventory, FriendlyByteBuf data) {
         this(windowId, playerInventory, retrieveBlockEntityFromWorld(playerInventory, data));
     }
 
     // Server constructor
-    public CaminiteForgeMenu(int windowId, Inventory playerInventory, CaminiteForgeBlockEntity blockEntity) {
+    public CaminiteSmelterMenu(int windowId, Inventory playerInventory, CaminiteSmelterBlockEntity blockEntity) {
         super(EmbersMenuTypes.CAMINITE_FORGE.get(), windowId);
         this.blockEntity = blockEntity;
         this.containerLevelAccess = ContainerLevelAccess.create(blockEntity.getLevel(), blockEntity.getBlockPos());
@@ -57,10 +57,10 @@ public class CaminiteForgeMenu extends AbstractContainerMenu {
         }
     }
 
-    public static CaminiteForgeBlockEntity retrieveBlockEntityFromWorld(Inventory playerInventory, FriendlyByteBuf data) {
+    public static CaminiteSmelterBlockEntity retrieveBlockEntityFromWorld(Inventory playerInventory, FriendlyByteBuf data) {
         BlockEntity blockEntity = playerInventory.player.level().getBlockEntity(data.readBlockPos());
-        if (blockEntity instanceof CaminiteForgeBlockEntity) {
-            return (CaminiteForgeBlockEntity) blockEntity;
+        if (blockEntity instanceof CaminiteSmelterBlockEntity) {
+            return (CaminiteSmelterBlockEntity) blockEntity;
         }
         throw new IllegalStateException("Block entity is not correct! " + blockEntity);
     }
@@ -97,7 +97,7 @@ public class CaminiteForgeMenu extends AbstractContainerMenu {
         return itemstack;
     }
 
-    public CaminiteForgeBlockEntity getBlockEntity() {
+    public CaminiteSmelterBlockEntity getBlockEntity() {
         return blockEntity;
     }
 }

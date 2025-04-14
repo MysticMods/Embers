@@ -30,27 +30,25 @@ public class BuddingEmberBlock extends AmethystBlock {
 
     @Override
     protected void randomTick(@NotNull BlockState state, @NotNull ServerLevel level, @NotNull BlockPos pos, RandomSource random) {
-        if (random.nextInt(GROWTH_CHANCE) == 0) {
-            Direction direction = DIRECTIONS[random.nextInt(DIRECTIONS.length)];
-            BlockPos blockpos = pos.relative(direction);
-            BlockState blockstate = level.getBlockState(blockpos);
-            Block block = null;
-            if (canClusterGrowAtState(blockstate)) {
-                block = EmbersBlocks.SMALL_EMBER_BUD.get();
-            } else if (blockstate.is(Blocks.SMALL_AMETHYST_BUD) && blockstate.getValue(AmethystClusterBlock.FACING) == direction) {
-                block = Blocks.MEDIUM_AMETHYST_BUD;
-            } else if (blockstate.is(Blocks.MEDIUM_AMETHYST_BUD) && blockstate.getValue(AmethystClusterBlock.FACING) == direction) {
-                block = Blocks.LARGE_AMETHYST_BUD;
-            } else if (blockstate.is(Blocks.LARGE_AMETHYST_BUD) && blockstate.getValue(AmethystClusterBlock.FACING) == direction) {
-                block = Blocks.AMETHYST_CLUSTER;
-            }
+        Direction direction = DIRECTIONS[random.nextInt(DIRECTIONS.length)];
+        BlockPos blockpos = pos.relative(direction);
+        BlockState blockstate = level.getBlockState(blockpos);
+        Block block = null;
+        if (canClusterGrowAtState(blockstate)) {
+            block = EmbersBlocks.SMALL_EMBER_BUD.get();
+        } else if (blockstate.is(Blocks.SMALL_AMETHYST_BUD) && blockstate.getValue(AmethystClusterBlock.FACING) == direction) {
+            block = EmbersBlocks.MEDIUM_EMBER_BUD.get();
+        } else if (blockstate.is(Blocks.MEDIUM_AMETHYST_BUD) && blockstate.getValue(AmethystClusterBlock.FACING) == direction) {
+            block = EmbersBlocks.LARGE_EMBER_BUD.get();
+        } else if (blockstate.is(Blocks.LARGE_AMETHYST_BUD) && blockstate.getValue(AmethystClusterBlock.FACING) == direction) {
+            block = EmbersBlocks.EMBER_CLUSTER.get();
+        }
 
-            if (block != null) {
-                BlockState blockstate1 = block.defaultBlockState()
-                        .setValue(AmethystClusterBlock.FACING, direction)
-                        .setValue(AmethystClusterBlock.WATERLOGGED, Boolean.valueOf(blockstate.getFluidState().getType() == Fluids.WATER));
-                level.setBlockAndUpdate(blockpos, blockstate1);
-            }
+        if (block != null) {
+            BlockState blockstate1 = block.defaultBlockState()
+                    .setValue(AmethystClusterBlock.FACING, direction)
+                    .setValue(AmethystClusterBlock.WATERLOGGED, Boolean.valueOf(blockstate.getFluidState().getType() == Fluids.WATER));
+            level.setBlockAndUpdate(blockpos, blockstate1);
         }
     }
 

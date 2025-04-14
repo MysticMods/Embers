@@ -179,10 +179,24 @@ public class ModRecipeProvider extends RecipeProvider {
                 .save(recipeOutput, "dawnstone_alloy");
 
         // ## Machine Molds ## //
+        buildMoldRecipes(recipeOutput);
 
-        //Caminite Smelter
+
+        // ## Crystallizer Recipes ## //
+        new CrystallizerRecipeBuilder(
+                Ingredient.of(EmbersItems.SMOLDERING_CRYSTAL_BLEND),
+                new ItemStack(EmbersItems.CRYSTAL_EMBER_SEED.get())
+        )
+                .unlockedBy("has_smoldering_crystal_blend", has(EmbersItems.SMOLDERING_CRYSTAL_BLEND))
+                .unlockedBy("has_crystal_ember_seed", has(EmbersItems.CRYSTAL_EMBER_SEED.get()))
+                .save(recipeOutput, "crystal_ember_seed");
+    }
+
+    public void buildMoldRecipes(RecipeOutput recipeOutput) {
+        //Caminite Forge
         new MoldRecipeBuilder(
                 List.of(Ingredient.of( Items.COPPER_INGOT),
+                        Ingredient.of(Items.COPPER_INGOT),
                         Ingredient.of(Items.COPPER_INGOT),
                         Ingredient.of(Items.COPPER_INGOT),
                         Ingredient.of(Items.FURNACE)
@@ -191,7 +205,7 @@ public class ModRecipeProvider extends RecipeProvider {
         )
                 .unlockedBy("has_copper_ingot", has(EmbersTags.COPPER_INGOTS_TAG))
                 .unlockedBy("has_furnace", has(Items.FURNACE))
-                .save(recipeOutput, "caminite_smelter");
+                .save(recipeOutput, "caminite_forge");
 
         //Ember Crystallizer
         new MoldRecipeBuilder(
@@ -207,14 +221,18 @@ public class ModRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_ember_shard", has(EmbersItems.EMBER_SHARD))
                 .save(recipeOutput, "ember_crystallizer");
 
-        // ## Crystallizer Recipes ## //
-        new CrystallizerRecipeBuilder(
-                Ingredient.of(EmbersItems.SMOLDERING_CRYSTAL_BLEND),
-                new ItemStack(EmbersItems.CRYSTAL_EMBER_SEED.get())
+        //Caminite Smelter
+        new MoldRecipeBuilder(
+                List.of(Ingredient.of( Items.COPPER_INGOT),
+                        Ingredient.of(Items.COPPER_INGOT),
+                        Ingredient.of(Items.COPPER_INGOT),
+                        Ingredient.of(Items.FURNACE)
+                ),
+                new ItemStack(EmbersItems.CAMINITE_SMELTER_BLOCK_ITEM.get())
         )
-                .unlockedBy("has_smoldering_crystal_blend", has(EmbersItems.SMOLDERING_CRYSTAL_BLEND))
-                .unlockedBy("has_crystal_ember_seed", has(EmbersItems.CRYSTAL_EMBER_SEED.get()))
-                .save(recipeOutput, "crystal_ember_seed");
+                .unlockedBy("has_copper_ingot", has(EmbersTags.COPPER_INGOTS_TAG))
+                .unlockedBy("has_furnace", has(Items.FURNACE))
+                .save(recipeOutput, "caminite_smelter");
     }
 
 }

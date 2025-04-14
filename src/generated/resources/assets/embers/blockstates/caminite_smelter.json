@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "embers:block/caminite_smelter",
+      "y": 270
+    },
+    "facing=north": {
+      "model": "embers:block/caminite_smelter",
+      "y": 180
+    },
+    "facing=south": {
+      "model": "embers:block/caminite_smelter"
+    },
+    "facing=west": {
+      "model": "embers:block/caminite_smelter",
+      "y": 90
+    }
+  }
+}
