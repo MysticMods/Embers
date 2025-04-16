@@ -23,6 +23,7 @@ public class CrystalEmberSeedItem extends Item {
         if(block == Blocks.BUDDING_AMETHYST){
             ItemStack drop = new ItemStack(ModItems.BUDDING_EMBER_BLOCK_ITEM.get());
             context.getLevel().addFreshEntity(new ItemEntity(context.getLevel(), pos.getX(), pos.getY(), pos.getZ(), drop));
+            context.getLevel().destroyBlock(pos, false);
             if(!context.getPlayer().isCreative()){
                 stack.shrink(1);
             }

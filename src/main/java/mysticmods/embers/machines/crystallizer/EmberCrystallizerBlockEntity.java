@@ -1,11 +1,14 @@
 package mysticmods.embers.machines.crystallizer;
 
 import mysticmods.embers.Embers;
+import mysticmods.embers.capabilities.emberintensity.EmberIntensity;
+import mysticmods.embers.capabilities.emberlevel.EmberLevel;
 import mysticmods.embers.init.ModBlockEntities;
 import mysticmods.embers.init.ModParticles;
 import mysticmods.embers.init.ModRecipeTypes;
 import mysticmods.embers.recipes.crystallizer.CrystallizerRecipe;
 import mysticmods.embers.recipes.mold.MoldRecipe;
+import mysticmods.embers.utils.SDUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -35,10 +38,13 @@ import java.awt.*;
 import java.util.Optional;
 import java.util.function.Consumer;
 
+import static mysticmods.embers.utils.BEUtil.dropItemHandler;
 import static mysticmods.embers.utils.BEUtil.updateViaState;
 
 public class EmberCrystallizerBlockEntity extends LodestoneBlockEntity {
 
+    private final EmberIntensity intensity;
+    private EmberLevel emberLevel;
     private final ItemStackHandler itemHandler;
     private CrystallizerRecipe currentRecipe;
 
@@ -61,6 +67,17 @@ public class EmberCrystallizerBlockEntity extends LodestoneBlockEntity {
                 super.onContentsChanged(slot);
             }
         };
+        this.intensity = new EmberIntensity(100, 100, this::updateToClient);
+    }
+
+    @Override
+    public void onLoad() {
+        emberLevel = SDUtil.getLevelEmbersData(level);
+        if (emberLevel != null) {
+            emberLevel.addEmberListener(getBlockPos(), this.intensity);
+        }
+
+        updateViaState(this);
     }
 
     @Override
@@ -123,7 +140,7 @@ public class EmberCrystallizerBlockEntity extends LodestoneBlockEntity {
                                 1);
             }
         } else {
-            if(this.currentRecipe != null) {
+            if(this.currentRecipe != null && this.intensity.hasEmberForOperation()) {
                 if (this.progress < this.maxProgress) {
                     this.progress++;
                 } else {
@@ -193,6 +210,12 @@ public class EmberCrystallizerBlockEntity extends LodestoneBlockEntity {
         updateViaState(this);
     }
 
+    public void updateToClient() {
+        if (!level.isClientSide()) {
+            updateViaState(this);
+        }
+    }
+
     public @Nullable IItemHandler getItemHandler() {
         return this.itemHandler;
     }
@@ -223,5 +246,15 @@ public class EmberCrystallizerBlockEntity extends LodestoneBlockEntity {
                     .resultOrPartial(error -> Embers.LOGGER.warn("Failed to load recipe: {}", error))
                     .ifPresent(recipe -> this.currentRecipe = (CrystallizerRecipe) recipe);
         }
+    }
+
+    @Override
+    public void onBreak(@Nullable Player player) {
+        super.onBreak(player);
+        if (emberLevel != null) {
+            emberLevel.removeEmberListener(getBlockPos(), this.intensity);
+        }
+
+        dropItemHandler(this, itemHandler);
     }
 }

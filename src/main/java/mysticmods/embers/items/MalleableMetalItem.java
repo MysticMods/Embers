@@ -27,7 +27,6 @@ public class MalleableMetalItem extends Item {
 
     @Override
     public void inventoryTick(ItemStack stack, Level level, Entity entity, int slotId, boolean isSelected) {
-        super.inventoryTick(stack, level, entity, slotId, isSelected);
         if(level.getGameTime() % 2 == 0) {
             MalleableMetalDataComponent data = stack.get(ModDataComponents.MALLEABLE_METAL);
             data = data.removeHeat(1);
