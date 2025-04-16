@@ -1,11 +1,14 @@
 package mysticmods.embers.machines.caminite_mold;
 
 import mysticmods.embers.Embers;
+import mysticmods.embers.capabilities.emberintensity.EmberIntensity;
+import mysticmods.embers.capabilities.emberlevel.EmberLevel;
 import mysticmods.embers.init.ModBlockEntities;
 import mysticmods.embers.init.ModParticles;
 import mysticmods.embers.init.ModRecipeTypes;
 import mysticmods.embers.recipes.mold.MoldRecipe;
 import mysticmods.embers.recipes.mold.MoldRecipeInput;
+import mysticmods.embers.utils.SDUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -37,9 +40,13 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 
+import static mysticmods.embers.utils.BEUtil.dropItemHandler;
 import static mysticmods.embers.utils.BEUtil.updateViaState;
 
 public class CaminiteMoldBlockEntity extends LodestoneBlockEntity {
+
+    private final EmberIntensity intensity;
+    private EmberLevel emberLevel;
 
     private final ItemStackHandler itemHandler;
     private MoldRecipe currentRecipe;
@@ -63,6 +70,17 @@ public class CaminiteMoldBlockEntity extends LodestoneBlockEntity {
                 super.onContentsChanged(slot);
             }
         };
+        this.intensity = new EmberIntensity(100, 100, this::updateToClient);
+    }
+
+    @Override
+    public void onLoad() {
+        emberLevel = SDUtil.getLevelEmbersData(level);
+        if (emberLevel != null) {
+            emberLevel.addEmberListener(getBlockPos(), this.intensity);
+        }
+
+        updateViaState(this);
     }
 
     @Override
@@ -213,6 +231,13 @@ public class CaminiteMoldBlockEntity extends LodestoneBlockEntity {
         updateViaState(this);
     }
 
+
+    public void updateToClient() {
+        if (!level.isClientSide()) {
+            updateViaState(this);
+        }
+    }
+
     public @Nullable IItemHandler getItemHandler() {
         return this.itemHandler;
     }
@@ -243,5 +268,15 @@ public class CaminiteMoldBlockEntity extends LodestoneBlockEntity {
                     .resultOrPartial(error -> Embers.LOGGER.warn("Failed to load recipe: {}", error))
                     .ifPresent(recipe -> this.currentRecipe = (MoldRecipe) recipe);
         }
+    }
+
+    @Override
+    public void onBreak(@Nullable Player player) {
+        super.onBreak(player);
+        if (emberLevel != null) {
+            emberLevel.removeEmberListener(getBlockPos(), this.intensity);
+        }
+
+        dropItemHandler(this, itemHandler);
     }
 }
