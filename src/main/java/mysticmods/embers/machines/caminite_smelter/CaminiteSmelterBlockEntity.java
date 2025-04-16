@@ -69,15 +69,8 @@ public class CaminiteSmelterBlockEntity extends IntensityBlockEntity{
         super(ModBlockEntities.CAMINITE_SMELTER.get(), pos, state, 100, 100);
     }
 
-    @Override
-    public void tick() {
-        if (level.isClientSide()) {
-            clientTick();
-        } else {
-            serverTick();
-        }
-    }
 
+    @Override
     public void serverTick() {
         if (this.isLit && this.intensity.hasEmberForOperation()) {
             this.progress++;
@@ -118,7 +111,7 @@ public class CaminiteSmelterBlockEntity extends IntensityBlockEntity{
         }
     }
 
-
+    @Override
     public void clientTick() {
         if (this.hasHotMetals() && this.level != null) {
             if (level.getGameTime() % 5 == 0) {

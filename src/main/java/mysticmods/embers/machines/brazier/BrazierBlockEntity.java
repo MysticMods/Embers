@@ -43,7 +43,6 @@ public class BrazierBlockEntity extends LodestoneBlockEntity implements IEmberEm
 
     private final EmberEmitter emitter;
     private final ItemStackHandler itemHandler;
-    private static final RandomSource random = RandomSource.create();
     private EmberLevel emberLevel;
 
     public boolean running = false;
@@ -64,9 +63,9 @@ public class BrazierBlockEntity extends LodestoneBlockEntity implements IEmberEm
             }
         };
 
-        BlockPos lowerBound = getBlockPos().offset(-3, -3, -3);
-        BlockPos upperBound = getBlockPos().offset(3, 3, 3);
-        emitter = new EmberEmitter(new int[]{100, 100, 100, 50}, getBlockPos(), new BoundingBox(lowerBound.getX(), lowerBound.getY(), lowerBound.getZ(), upperBound.getX(), upperBound.getY(), upperBound.getZ()), () -> running);
+        BlockPos lowerBound = getBlockPos().offset(-5, -5, -5);
+        BlockPos upperBound = getBlockPos().offset(5, 5, 5);
+        emitter = new EmberEmitter(new int[]{100, 100, 100, 100, 70, 30}, getBlockPos(), new BoundingBox(lowerBound.getX(), lowerBound.getY(), lowerBound.getZ(), upperBound.getX(), upperBound.getY(), upperBound.getZ()), () -> running);
     }
 
     @Override

@@ -33,28 +33,24 @@ public class ModCapabilities {
 
 
     public static void register(RegisterCapabilitiesEvent event) {
-        //Brazier Ember Emitter
+        //Brazier
         event.registerBlockEntity(
                 ModCapabilities.EMBER_EMITTER,
                 ModBlockEntities.BRAZIER.get(),
                 (be, o) -> be.getEmitter()
         );
-
-        //Brazier ItemHandler
         event.registerBlockEntity(
                 Capabilities.ItemHandler.BLOCK,
                 ModBlockEntities.BRAZIER.get(),
                 (myBlockEntity, side) -> myBlockEntity.getItemHandler()
         );
 
-        //Caminite Forge Ember Intensity
+        //Caminite Forge
         event.registerBlockEntity(
                 ModCapabilities.EMBER_INTENSITY,
                 ModBlockEntities.CAMINITE_FORGE.get(),
                 (be, o) -> be.getEmberIntensity()
         );
-
-        //Caminite Forge ItemHandler
         event.registerBlockEntity(
                 Capabilities.ItemHandler.BLOCK,
                 ModBlockEntities.CAMINITE_FORGE.get(),
@@ -65,9 +61,8 @@ public class ModCapabilities {
         event.registerBlockEntity(
                 ModCapabilities.EMBER_INTENSITY,
                 ModBlockEntities.CAMINITE_MOLD.get(),
-                (myBlockEntity, side) -> myBlockEntity.getIntensity()
+                (myBlockEntity, side) -> myBlockEntity.getEmberIntensity()
         );
-
         event.registerBlockEntity(
                 Capabilities.ItemHandler.BLOCK,
                 ModBlockEntities.CAMINITE_MOLD.get(),
@@ -78,9 +73,8 @@ public class ModCapabilities {
         event.registerBlockEntity(
                 ModCapabilities.EMBER_INTENSITY,
                 ModBlockEntities.EMBER_CRYSTALLIZER.get(),
-                (myBlockEntity, side) -> myBlockEntity.getIntensity()
+                (myBlockEntity, side) -> myBlockEntity.getEmberIntensity()
         );
-
         event.registerBlockEntity(
                 Capabilities.ItemHandler.BLOCK,
                 ModBlockEntities.EMBER_CRYSTALLIZER.get(),

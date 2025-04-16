@@ -71,87 +71,87 @@ public class CaminiteMoldBlockEntity extends IntensityBlockEntity {
     }
 
     @Override
-    public void tick() {
-        if(level.isClientSide) {
-            if(this.currentRecipe != null && level.getGameTime() % 5 == 0) {
-                //Spawn particles
-                var random = this.level.getRandom();
-                int lifetime = RandomHelper.randomBetween(random, 20, 40);
-                var options = new WorldParticleOptions(ModParticles.PARTICLE_GLOW);
-                final float scale = 0.2f;
-                final double SPEED = 0.05f;
+    protected void clientTick() {
+        if(this.currentRecipe != null && level.getGameTime() % 5 == 0) {
+            //Spawn particles
+            var random = this.level.getRandom();
+            int lifetime = RandomHelper.randomBetween(random, 20, 40);
+            var options = new WorldParticleOptions(ModParticles.PARTICLE_GLOW);
+            final float scale = 0.2f;
+            final double SPEED = 0.05f;
 
-                float offsetX = random.nextFloat() * 4.0f - 2.0f;
-                float offsetZ = random.nextFloat() * 4.0f - 2.0f;
-                float offsetY = random.nextFloat() * 4.0f - 2.0f;
+            float offsetX = random.nextFloat() * 4.0f - 2.0f;
+            float offsetZ = random.nextFloat() * 4.0f - 2.0f;
+            float offsetY = random.nextFloat() * 4.0f - 2.0f;
 
-                double spawnX = getBlockPos().getX() + offsetX;
-                double spawnY = getBlockPos().getY() + offsetY;
-                double spawnZ = getBlockPos().getZ() + offsetZ;
+            double spawnX = getBlockPos().getX() + offsetX;
+            double spawnY = getBlockPos().getY() + offsetY;
+            double spawnZ = getBlockPos().getZ() + offsetZ;
 
-                double centerX = getBlockPos().getX() + 0.5;
-                double centerY = getBlockPos().getY() + 0.5;
-                double centerZ = getBlockPos().getZ() + 0.5;
+            double centerX = getBlockPos().getX() + 0.5;
+            double centerY = getBlockPos().getY() + 0.5;
+            double centerZ = getBlockPos().getZ() + 0.5;
 
-                Consumer<WorldParticleBuilder> behavior = b -> b.addTickActor(p -> {
+            Consumer<WorldParticleBuilder> behavior = b -> b.addTickActor(p -> {
 
-                    double dx = centerX - p.getX();
-                    double dy = centerY - p.getY();
-                    double dz = centerZ - p.getZ();
+                double dx = centerX - p.getX();
+                double dy = centerY - p.getY();
+                double dz = centerZ - p.getZ();
 
-                    double distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
+                double distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
 
 
-                    if (distance <= SPEED) {
-                        p.setPos(centerX, centerY, centerZ);
-                        return;
-                    }
-
-                    double moveX = dx / distance * SPEED;
-                    double moveY = dy / distance * SPEED;
-                    double moveZ = dz / distance * SPEED;
-
-                    // Move particle manually
-                    p.setParticleSpeed(moveX, moveY, moveZ);
-                });
-
-                WorldParticleBuilder.create(options)
-                        .act(behavior)
-                        .setTransparencyData(GenericParticleData.create(0.8f, 0.7f, 0).build())
-                        .setColorData(ColorParticleData.create(Color.RED).setCoefficient(4f).build())
-                        .setScaleData(GenericParticleData.create(scale / 2f, scale, 0.2f).setCoefficient(1.25f).setEasing(Easing.EXPO_OUT, Easing.EXPO_IN).build())
-                        .setRenderType(LodestoneWorldParticleRenderType.ADDITIVE)
-                        .setLifetime(lifetime)
-                        .enableNoClip()
-                        .repeat(level,
-                                spawnX,
-                                spawnY,
-                                spawnZ,
-                                1);
-            }
-        } else {
-            if(this.currentRecipe != null  && this.intensity.hasEmberForOperation()) {
-                if (this.progress < this.maxProgress) {
-                    this.progress++;
-                } else {
-
-                    ItemStack output = this.currentRecipe.getOutput().copy();
-                    level.addFreshEntity(new ItemEntity(level, getBlockPos().getX(), getBlockPos().getY(), getBlockPos().getZ(), output));
-
-                    for (int i = 0; i < this.itemHandler.getSlots(); i++) {
-                        ItemStack itemStack = this.itemHandler.getStackInSlot(i);
-                        if (!itemStack.isEmpty()) {
-                            itemStack.shrink(1);
-                        }
-                    }
-
-                    this.currentRecipe = null;
-                    this.progress = 0;
-                    level.destroyBlock(getBlockPos(), false);
+                if (distance <= SPEED) {
+                    p.setPos(centerX, centerY, centerZ);
+                    return;
                 }
+
+                double moveX = dx / distance * SPEED;
+                double moveY = dy / distance * SPEED;
+                double moveZ = dz / distance * SPEED;
+
+                // Move particle manually
+                p.setParticleSpeed(moveX, moveY, moveZ);
+            });
+
+            WorldParticleBuilder.create(options)
+                    .act(behavior)
+                    .setTransparencyData(GenericParticleData.create(0.8f, 0.7f, 0).build())
+                    .setColorData(ColorParticleData.create(Color.RED).setCoefficient(4f).build())
+                    .setScaleData(GenericParticleData.create(scale / 2f, scale, 0.2f).setCoefficient(1.25f).setEasing(Easing.EXPO_OUT, Easing.EXPO_IN).build())
+                    .setRenderType(LodestoneWorldParticleRenderType.ADDITIVE)
+                    .setLifetime(lifetime)
+                    .enableNoClip()
+                    .repeat(level,
+                            spawnX,
+                            spawnY,
+                            spawnZ,
+                            1);
+        }
+    }
+
+    @Override
+    protected void serverTick() {
+        if(this.currentRecipe != null  && this.intensity.hasEmberForOperation()) {
+            if (this.progress < this.maxProgress) {
+                this.progress++;
+            } else {
+
+                ItemStack output = this.currentRecipe.getOutput().copy();
+                level.addFreshEntity(new ItemEntity(level, getBlockPos().getX(), getBlockPos().getY(), getBlockPos().getZ(), output));
+
+                for (int i = 0; i < this.itemHandler.getSlots(); i++) {
+                    ItemStack itemStack = this.itemHandler.getStackInSlot(i);
+                    if (!itemStack.isEmpty()) {
+                        itemStack.shrink(1);
+                    }
+                }
+
+                this.currentRecipe = null;
+                this.progress = 0;
+                level.destroyBlock(getBlockPos(), false);
             }
         }
-
     }
 
     @Override

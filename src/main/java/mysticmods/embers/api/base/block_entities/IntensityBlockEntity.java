@@ -12,7 +12,7 @@ import team.lodestar.lodestone.systems.blockentity.LodestoneBlockEntity;
 
 import static mysticmods.embers.utils.BEUtil.updateViaState;
 
-public class IntensityBlockEntity extends LodestoneBlockEntity {
+public abstract class IntensityBlockEntity extends LodestoneBlockEntity {
 
     protected final EmberIntensity intensity;
     protected EmberLevel emberLevel;
@@ -22,6 +22,18 @@ public class IntensityBlockEntity extends LodestoneBlockEntity {
 
         this.intensity = new EmberIntensity(minIntensity, maxIntensity, this::updateToClient);
     }
+
+    @Override
+    public void tick() {
+        if (level.isClientSide) {
+            clientTick();
+        } else {
+            serverTick();
+        }
+    }
+
+    protected abstract void clientTick();
+    protected abstract void serverTick();
 
     @Override
     public void onLoad() {
@@ -39,7 +51,7 @@ public class IntensityBlockEntity extends LodestoneBlockEntity {
         }
     }
 
-    public EmberIntensity getIntensity() {
+    public EmberIntensity getEmberIntensity() {
         return intensity;
     }
 

@@ -1,16 +1,12 @@
 package mysticmods.embers.machines.caminite_smelter.menu;
 
 import mysticmods.embers.Embers;
-import mysticmods.embers.machines.caminite_forge.CaminiteForgeBlockEntity;
 import mysticmods.embers.machines.caminite_smelter.CaminiteSmelterBlockEntity;
-import mysticmods.embers.network.CaminiteForgeToggleAlloyData;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
-import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 
 public class CaminiteSmelterScreen extends AbstractContainerScreen<CaminiteSmelterMenu> {
