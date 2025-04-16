@@ -21,7 +21,7 @@ import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import team.lodestar.lodestone.systems.multiblock.MultiblockComponentBlock;
 
-public class EmbersBlocks {
+public class ModBlocks {
 
 
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(Embers.MODID);
@@ -110,7 +110,7 @@ public class EmbersBlocks {
             "caminite_mold", registryName -> new CaminiteMoldBlock(
                     BlockBehaviour.Properties.of()
                             .requiresCorrectToolForDrops().strength(1.5F, 6.0F)
-                            .isViewBlocking(EmbersBlocks::never)
+                            .isViewBlocking(ModBlocks::never)
             )
     );
 
@@ -118,7 +118,7 @@ public class EmbersBlocks {
             "ember_crystallizer", registryName -> new EmberCrystallizerBlock(
                     BlockBehaviour.Properties.of()
                             .requiresCorrectToolForDrops().strength(1.5F, 6.0F)
-                            .isViewBlocking(EmbersBlocks::never)
+                            .isViewBlocking(ModBlocks::never)
             )
     );
 

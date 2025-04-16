@@ -1,8 +1,8 @@
 package mysticmods.embers.datagen;
 
 import mysticmods.embers.Embers;
-import mysticmods.embers.init.EmbersItems;
-import mysticmods.embers.init.EmbersTags;
+import mysticmods.embers.init.ModItems;
+import mysticmods.embers.init.ModTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
@@ -22,16 +22,16 @@ public class ModItemTagProvider extends ItemTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.@NotNull Provider provider) {
-        tag(EmbersTags.IRON_NUGGETS_TAG).add(Items.IRON_NUGGET);
-        tag(EmbersTags.IRON_INGOTS_TAG).add(Items.IRON_INGOT);
-        tag(EmbersTags.IRON_RAW_ORES_TAG).add(Items.RAW_IRON);
+        tag(ModTags.IRON_NUGGETS_TAG).add(Items.IRON_NUGGET);
+        tag(ModTags.IRON_INGOTS_TAG).add(Items.IRON_INGOT);
+        tag(ModTags.IRON_RAW_ORES_TAG).add(Items.RAW_IRON);
 
-        tag(EmbersTags.COPPER_NUGGETS_TAG).add(EmbersItems.COPPER_NUGGET.get());
-        tag(EmbersTags.COPPER_INGOTS_TAG).add(Items.COPPER_INGOT);
-        tag(EmbersTags.COPPER_RAW_ORES_TAG).add(Items.RAW_COPPER);
+        tag(ModTags.COPPER_NUGGETS_TAG).add(ModItems.COPPER_NUGGET.get());
+        tag(ModTags.COPPER_INGOTS_TAG).add(Items.COPPER_INGOT);
+        tag(ModTags.COPPER_RAW_ORES_TAG).add(Items.RAW_COPPER);
 
-        tag(EmbersTags.GOLD_NUGGETS_TAG).add(Items.GOLD_NUGGET);
-        tag(EmbersTags.GOLD_INGOTS_TAG).add(Items.GOLD_INGOT);
-        tag(EmbersTags.GOLD_RAW_ORES_TAG).add(Items.RAW_GOLD);
+        tag(ModTags.GOLD_NUGGETS_TAG).add(Items.GOLD_NUGGET);
+        tag(ModTags.GOLD_INGOTS_TAG).add(Items.GOLD_INGOT);
+        tag(ModTags.GOLD_RAW_ORES_TAG).add(Items.RAW_GOLD);
     }
 }

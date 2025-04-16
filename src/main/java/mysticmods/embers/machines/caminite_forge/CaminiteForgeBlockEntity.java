@@ -3,12 +3,10 @@ package mysticmods.embers.machines.caminite_forge;
 import mysticmods.embers.base.IEmberIntesityEntity;
 import mysticmods.embers.capabilities.emberintensity.EmberIntensity;
 import mysticmods.embers.capabilities.emberlevel.EmberLevel;
-import mysticmods.embers.data.components.MalleableMetalDataComponent;
 import mysticmods.embers.init.*;
 import mysticmods.embers.machines.caminite_forge.menu.CaminiteForgeAlloyMenu;
 import mysticmods.embers.recipes.alloy.AlloyRecipe;
 import mysticmods.embers.recipes.alloy.AlloyRecipeInput;
-import mysticmods.embers.recipes.malleable_metal.MalleableMetalRecipe;
 import mysticmods.embers.utils.SDUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
@@ -27,7 +25,6 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
-import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
@@ -51,7 +48,7 @@ import static mysticmods.embers.utils.BEUtil.updateViaState;
 
 public class CaminiteForgeBlockEntity extends MultiBlockCoreEntity implements IEmberIntesityEntity {
 
-    public static final Supplier<MultiBlockStructure> STRUCTURE = () -> MultiBlockStructure.of(new MultiBlockStructure.StructurePiece(0, 1, 0, EmbersBlocks.CAMINITE_FORGE_COMPONENT.get().defaultBlockState()));
+    public static final Supplier<MultiBlockStructure> STRUCTURE = () -> MultiBlockStructure.of(new MultiBlockStructure.StructurePiece(0, 1, 0, ModBlocks.CAMINITE_FORGE_COMPONENT.get().defaultBlockState()));
 
     private final EmberIntensity intensity;
     private final ItemStackHandler itemHandler = new ForgeItemHandler(3, this) {
@@ -65,11 +62,10 @@ public class CaminiteForgeBlockEntity extends MultiBlockCoreEntity implements IE
 
     private float progress = 0;
     private boolean isLit = false;
-    private boolean alloyMode = false;
     private static final int PROGRESS_PER_ITEM = 20 * 5;
 
     public CaminiteForgeBlockEntity(BlockPos pos, BlockState blockState) {
-        super(EmbersBlockEntities.CAMINITE_FORGE.get(), STRUCTURE.get(), pos, blockState);
+        super(ModBlockEntities.CAMINITE_FORGE.get(), STRUCTURE.get(), pos, blockState);
         this.intensity = new EmberIntensity(100, 100, this::updateToClient);
     }
 
@@ -102,71 +98,37 @@ public class CaminiteForgeBlockEntity extends MultiBlockCoreEntity implements IE
         if (this.isLit && this.intensity.hasEmberForOperation()) {
             progress++;
 
-            if (!this.alloyMode) {
-                if (progress >= PROGRESS_PER_ITEM) {
-                    ItemStack hotMetalStack = this.itemHandler.getStackInSlot(2);
-                    ItemStack inputStack = this.itemHandler.getStackInSlot(0);
-                    RecipeManager recipes = level.getRecipeManager();
-                    Optional<RecipeHolder<MalleableMetalRecipe>> optional = recipes.getRecipeFor(
-                            ModRecipeTypes.MALLEABLE_METAL.get(),
-                            new SingleRecipeInput(this.itemHandler.getStackInSlot(0)),
-                            level
-                    );
+            if (progress >= PROGRESS_PER_ITEM) {
+                ItemStack inputStackOne = this.itemHandler.getStackInSlot(0);
+                ItemStack inputStackTwo = this.itemHandler.getStackInSlot(1);
+                RecipeManager recipes = level.getRecipeManager();
+                Optional<RecipeHolder<AlloyRecipe>> optional = recipes.getRecipeFor(
+                        ModRecipeTypes.ALLOY.get(),
+                        new AlloyRecipeInput(inputStackOne, inputStackTwo),
+                        level
+                );
 
-                    if (optional.isPresent()) {
-                        MalleableMetalRecipe recipe = optional.get().value();
-                        if (hotMetalStack.isEmpty()) {
-                            this.itemHandler.setStackInSlot(2, new ItemStack(EmbersItems.HEATED_METAL.get(), 1));
-                            hotMetalStack = this.itemHandler.getStackInSlot(2);
+                if (optional.isPresent()) {
+                    ItemStack output = optional.get().value().getOutput();
 
-                            MalleableMetalDataComponent data = hotMetalStack.get(EmbersDataComponents.MALLEABLE_METAL);
-                            data = data.setMalleableMetal(recipe.malleableMetal).setMaxHeat();
-                            hotMetalStack.set(EmbersDataComponents.MALLEABLE_METAL, data);
-                        }
-
-                        MalleableMetalDataComponent data = hotMetalStack.get(EmbersDataComponents.MALLEABLE_METAL);
-                        data = data.addIngots(recipe.getResultIngotAmount(inputStack))
-                                .addNuggets(recipe.getResultNuggetAmount(inputStack));
-                        hotMetalStack.set(EmbersDataComponents.MALLEABLE_METAL, data);
-
-                        inputStack.shrink(1);
-                        progress = 0;
-                    }
-                }
-
-                updateViaState(this);
-            } else {
-                if (progress >= PROGRESS_PER_ITEM) {
-                    ItemStack inputStackOne = this.itemHandler.getStackInSlot(0);
-                    ItemStack inputStackTwo = this.itemHandler.getStackInSlot(1);
-                    RecipeManager recipes = level.getRecipeManager();
-                    Optional<RecipeHolder<AlloyRecipe>> optional = recipes.getRecipeFor(
-                            ModRecipeTypes.ALLOY.get(),
-                            new AlloyRecipeInput(inputStackOne, inputStackTwo),
-                            level
-                    );
-
-                    if (optional.isPresent()) {
-                        ItemStack output = optional.get().value().getOutput();
-
-                        if(this.itemHandler.getStackInSlot(2).isEmpty()) {
-                            this.itemHandler.setStackInSlot(2, output.copy());
-                        } else {
-                            ItemStack outputStack = this.itemHandler.getStackInSlot(2);
-                            outputStack.grow(2);
-                        }
-
-                        inputStackOne.shrink(1);
-                        inputStackTwo.shrink(1);
-                        progress = 0;
+                    if(this.itemHandler.getStackInSlot(2).isEmpty()) {
+                        this.itemHandler.setStackInSlot(2, output.copy());
                     } else {
-                        this.isLit = false;
-                        this.progress = 0;
+                        ItemStack outputStack = this.itemHandler.getStackInSlot(2);
+                        outputStack.grow(2);
                     }
-                }
 
-                updateViaState(this);
+                    inputStackOne.shrink(1);
+                    inputStackTwo.shrink(1);
+                    progress = 0;
+                    this.itemHandlerUpdate();
+                } else {
+                    this.isLit = false;
+                    this.progress = 0;
+                }
             }
+
+            updateViaState(this);
         }
     }
 
@@ -175,7 +137,7 @@ public class CaminiteForgeBlockEntity extends MultiBlockCoreEntity implements IE
             if (level.getGameTime() % 5 == 0) {
                 var random = this.level.getRandom();
                 int lifetime = RandomHelper.randomBetween(random, 60, 120);
-                var options = new WorldParticleOptions(EmbersParticles.PARTICLE_GLOW);
+                var options = new WorldParticleOptions(ModParticles.PARTICLE_GLOW);
                 final float scale = 0.2f;
                 WorldParticleBuilder.create(options)
                         .setTransparencyData(GenericParticleData.create(0.1f, 0.4f, 0).build())
@@ -196,48 +158,25 @@ public class CaminiteForgeBlockEntity extends MultiBlockCoreEntity implements IE
     }
 
     public void itemHandlerUpdate() {
-        if (this.alloyMode) {
-            if (this.itemHandler.getStackInSlot(0).isEmpty() || this.itemHandler.getStackInSlot(1).isEmpty()) {
-                this.progress = 0;
-                this.isLit = false;
-            } else {
-                ItemStack inputStackOne = this.itemHandler.getStackInSlot(0);
-                ItemStack inputStackTwo = this.itemHandler.getStackInSlot(1);
-                ItemStack outputStack = this.itemHandler.getStackInSlot(2);
-                RecipeManager recipes = level.getRecipeManager();
-                Optional<RecipeHolder<AlloyRecipe>> optional = recipes.getRecipeFor(
-                        ModRecipeTypes.ALLOY.get(),
-                        new AlloyRecipeInput(inputStackOne, inputStackTwo),
-                        level
-                );
-
-                if (optional.isPresent() && (optional.get().value().getOutput().is(outputStack.getItem()) || outputStack.isEmpty())) {
-                    this.isLit = true;
-                } else {
-                    this.isLit = false;
-                    this.progress = 0;
-                }
-            }
+        if (this.itemHandler.getStackInSlot(0).isEmpty() || this.itemHandler.getStackInSlot(1).isEmpty()) {
+            this.progress = 0;
+            this.isLit = false;
         } else {
-            if (this.itemHandler.getStackInSlot(0).isEmpty()) {
-                this.progress = 0;
-                this.isLit = false;
-            } else {
-                ItemStack inputStack = this.itemHandler.getStackInSlot(0);
-                ItemStack outputStack = this.itemHandler.getStackInSlot(2);
-                RecipeManager recipes = level.getRecipeManager();
-                Optional<RecipeHolder<MalleableMetalRecipe>> optional = recipes.getRecipeFor(
-                        ModRecipeTypes.MALLEABLE_METAL.get(),
-                        new SingleRecipeInput(inputStack),
-                        level
-                );
+            ItemStack inputStackOne = this.itemHandler.getStackInSlot(0);
+            ItemStack inputStackTwo = this.itemHandler.getStackInSlot(1);
+            ItemStack outputStack = this.itemHandler.getStackInSlot(2);
+            RecipeManager recipes = level.getRecipeManager();
+            Optional<RecipeHolder<AlloyRecipe>> optional = recipes.getRecipeFor(
+                    ModRecipeTypes.ALLOY.get(),
+                    new AlloyRecipeInput(inputStackOne, inputStackTwo),
+                    level
+            );
 
-                if (optional.isPresent() && (optional.get().value().getResultItem(null).is(outputStack.getItem()) || outputStack.isEmpty())) {
-                    this.isLit = true;
-                } else {
-                    this.isLit = false;
-                    this.progress = 0;
-                }
+            if (optional.isPresent() && (optional.get().value().getOutput().is(outputStack.getItem()) || outputStack.isEmpty())) {
+                this.isLit = true;
+            } else {
+                this.isLit = false;
+                this.progress = 0;
             }
         }
 
@@ -272,37 +211,20 @@ public class CaminiteForgeBlockEntity extends MultiBlockCoreEntity implements IE
         return 0;
     }
 
-    public boolean isAlloyMode() {
-        return alloyMode;
-    }
-
-    public void toggleAlloyMode(Player player) {
-        this.alloyMode = !this.alloyMode;
-        this.isLit = false;
-        this.progress = 0;
-        this.itemHandlerUpdate();
-        updateViaState(this);
-
-        openMenu(player);
-    }
 
     public void openMenu(Player player) {
         if (player instanceof ServerPlayer serverPlayer) {
-            if (this.alloyMode) {
-                serverPlayer.openMenu(new MenuProvider() {
-                    @Override
-                    public @NotNull Component getDisplayName() {
-                        return Component.translatable("block.embers.caminite_forge");
-                    }
+            serverPlayer.openMenu(new MenuProvider() {
+                @Override
+                public @NotNull Component getDisplayName() {
+                    return Component.translatable("block.embers.caminite_forge");
+                }
 
-                    @Override
-                    public AbstractContainerMenu createMenu(int windowId, @NotNull Inventory playerInventory, @NotNull Player player) {
-                        return new CaminiteForgeAlloyMenu(windowId, playerInventory, CaminiteForgeBlockEntity.this);
-                    }
-                }, buf -> buf.writeBlockPos(getBlockPos()));
-            } else {
-
-            }
+                @Override
+                public AbstractContainerMenu createMenu(int windowId, @NotNull Inventory playerInventory, @NotNull Player player) {
+                    return new CaminiteForgeAlloyMenu(windowId, playerInventory, CaminiteForgeBlockEntity.this);
+                }
+            }, buf -> buf.writeBlockPos(getBlockPos()));
         }
     }
 
@@ -311,7 +233,6 @@ public class CaminiteForgeBlockEntity extends MultiBlockCoreEntity implements IE
         super.saveAdditional(tag, registries);
         tag.putFloat("progress", this.progress);
         tag.putBoolean("isLit", this.isLit);
-        tag.putBoolean("alloyMode", this.alloyMode);
         tag.put("inventory", this.itemHandler.serializeNBT(registries));
         tag.put("emberIntensity", this.intensity.serializeNBT(registries));
     }
@@ -321,7 +242,6 @@ public class CaminiteForgeBlockEntity extends MultiBlockCoreEntity implements IE
         super.loadAdditional(tag, registries);
         this.progress = tag.getFloat("progress");
         this.isLit = tag.getBoolean("isLit");
-        this.alloyMode = tag.contains("alloyMode") ? tag.getBoolean("alloyMode") : false;
         this.itemHandler.deserializeNBT(registries, tag.getCompound("inventory"));
         this.intensity.deserializeNBT(registries, IntTag.valueOf(tag.getInt("emberIntensity")));
     }

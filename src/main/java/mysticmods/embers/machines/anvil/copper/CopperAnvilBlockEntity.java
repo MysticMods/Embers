@@ -2,10 +2,10 @@ package mysticmods.embers.machines.anvil.copper;
 
 import mysticmods.embers.capabilities.emberintensity.EmberIntensity;
 import mysticmods.embers.data.components.MalleableMetalDataComponent;
-import mysticmods.embers.init.EmbersBlockEntities;
-import mysticmods.embers.init.EmbersDataComponents;
-import mysticmods.embers.init.EmbersItems;
-import mysticmods.embers.init.EmbersParticles;
+import mysticmods.embers.init.ModBlockEntities;
+import mysticmods.embers.init.ModDataComponents;
+import mysticmods.embers.init.ModItems;
+import mysticmods.embers.init.ModParticles;
 import mysticmods.embers.machines.anvil.AnvilItemHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
@@ -41,19 +41,19 @@ public class CopperAnvilBlockEntity extends LodestoneBlockEntity {
     };
 
     public CopperAnvilBlockEntity(BlockPos pos, BlockState state) {
-        super(EmbersBlockEntities.COPPER_ANVIL.get(), pos, state);
+        super(ModBlockEntities.COPPER_ANVIL.get(), pos, state);
     }
 
     @Override
     public ItemInteractionResult onUse(Player player, InteractionHand hand) {
         ItemStack playerStack = player.getItemInHand(hand);
 
-        if (playerStack.getItem() == EmbersItems.IRON_HAMMER.get()) {
+        if (playerStack.getItem() == ModItems.IRON_HAMMER.get()) {
             if (this.itemHandler.getFilledSlotAmount() == 1) {
-                MalleableMetalDataComponent data = this.itemHandler.getStackInSlot(0).get(EmbersDataComponents.MALLEABLE_METAL);
+                MalleableMetalDataComponent data = this.itemHandler.getStackInSlot(0).get(ModDataComponents.MALLEABLE_METAL);
                 if(data != null){
                     smithIngot(this.itemHandler.getStackInSlot(0), data, player);
-                    data = this.itemHandler.getStackInSlot(0).get(EmbersDataComponents.MALLEABLE_METAL);
+                    data = this.itemHandler.getStackInSlot(0).get(ModDataComponents.MALLEABLE_METAL);
                     if(data != null){
                         if(data.getIngots() == 0 && data.getNuggets() == 0){
                             this.itemHandler.setStackInSlot(0, ItemStack.EMPTY);
@@ -82,13 +82,13 @@ public class CopperAnvilBlockEntity extends LodestoneBlockEntity {
             level.addFreshEntity(new ItemEntity(level, getBlockPos().getX(), getBlockPos().getY() + 1, getBlockPos().getZ(),
                     metalData.getMalleableMetal().getIngot().getItems()[0].copy()));
             metalData = metalData.removeIngots(1);
-            stack.set(EmbersDataComponents.MALLEABLE_METAL, metalData);
+            stack.set(ModDataComponents.MALLEABLE_METAL, metalData);
         } else {
             ItemStack nuggets = metalData.getMalleableMetal().getNugget().getItems()[0].copy();
             nuggets.grow(metalData.getNuggets() - 1);
             level.addFreshEntity(new ItemEntity(level, getBlockPos().getX(), getBlockPos().getY() + 1, getBlockPos().getZ(), nuggets));
             metalData = metalData.removeNuggets(metalData.getNuggets());
-            stack.set(EmbersDataComponents.MALLEABLE_METAL, metalData);
+            stack.set(ModDataComponents.MALLEABLE_METAL, metalData);
         }
 
         player.swing(InteractionHand.MAIN_HAND, true);player.level().playSound(
@@ -105,7 +105,7 @@ public class CopperAnvilBlockEntity extends LodestoneBlockEntity {
         if(!level.isClientSide()){
             var random = this.level.getRandom();
             if(random.nextInt(20) + 1 == 1){
-                ItemStack output = new ItemStack(EmbersItems.EMBER_SHARD.get());
+                ItemStack output = new ItemStack(ModItems.EMBER_SHARD.get());
                 level.addFreshEntity(new ItemEntity(level, getBlockPos().getX(), getBlockPos().getY() + 1, getBlockPos().getZ(), output));
             }
         }
@@ -118,7 +118,7 @@ public class CopperAnvilBlockEntity extends LodestoneBlockEntity {
 
                 var random = this.level.getRandom();
                 int lifetime = RandomHelper.randomBetween(random, 10, 30);
-                var options = new WorldParticleOptions(EmbersParticles.PARTICLE_GLOW);
+                var options = new WorldParticleOptions(ModParticles.PARTICLE_GLOW);
                 final float scale = 0.05f;
                 WorldParticleBuilder.create(options)
                         .setTransparencyData(GenericParticleData.create(1f, 0.2f, 0).build())

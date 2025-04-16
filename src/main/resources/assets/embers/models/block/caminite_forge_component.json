@@ -23,7 +23,7 @@
 			"to": [12, 10, 12],
 			"faces": {
 				"north": {"uv": [4, 3, 12, 5.5], "texture": "#0"},
-				"east": {"uv": [0, 0, 8, 5], "texture": "#missing"},
+				"east": {"uv": [4, 3, 12, 5.5], "texture": "#0"},
 				"south": {"uv": [4, 3, 12, 5.5], "texture": "#0"},
 				"west": {"uv": [4, 3, 12, 5.5], "texture": "#0"},
 				"up": {"uv": [0, 0, 8, 8], "texture": "#missing"},

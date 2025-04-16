@@ -1,6 +1,6 @@
 package mysticmods.embers.machines.caminite_smelter;
 
-import mysticmods.embers.init.EmbersBlockEntities;
+import mysticmods.embers.init.ModBlockEntities;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
@@ -16,7 +16,7 @@ public class CaminiteSmelter extends LodestoneEntityBlock<CaminiteSmelterBlockEn
 
     public CaminiteSmelter(Properties properties) {
         super(properties);
-        this.setBlockEntity(EmbersBlockEntities.CAMINITE_SMELTER);
+        this.setBlockEntity(ModBlockEntities.CAMINITE_SMELTER);
     }
 
     @Override

@@ -1,6 +1,6 @@
 package mysticmods.embers.machines.caminite_smelter.menu;
 
-import mysticmods.embers.init.EmbersMenuTypes;
+import mysticmods.embers.init.ModMenuTypes;
 import mysticmods.embers.machines.caminite_smelter.CaminiteSmelterBlockEntity;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
@@ -24,7 +24,7 @@ public class CaminiteSmelterMenu extends AbstractContainerMenu {
 
     // Server constructor
     public CaminiteSmelterMenu(int windowId, Inventory playerInventory, CaminiteSmelterBlockEntity blockEntity) {
-        super(EmbersMenuTypes.CAMINITE_FORGE.get(), windowId);
+        super(ModMenuTypes.CAMINITE_FORGE.get(), windowId);
         this.blockEntity = blockEntity;
         this.containerLevelAccess = ContainerLevelAccess.create(blockEntity.getLevel(), blockEntity.getBlockPos());
 

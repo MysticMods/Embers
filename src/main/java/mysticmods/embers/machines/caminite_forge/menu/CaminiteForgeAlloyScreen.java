@@ -14,24 +14,6 @@ import net.neoforged.neoforge.network.PacketDistributor;
 
 public class CaminiteForgeAlloyScreen extends AbstractContainerScreen<CaminiteForgeAlloyMenu> {
     private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(Embers.MODID, "textures/gui/caminite_forge_alloy.png");
-    private static final ResourceLocation ALLOY_BUTTON_TEXTURE = ResourceLocation.fromNamespaceAndPath(Embers.MODID, "textures/gui/alloy_mode_button.png");
-    private AlloyModeButton alloyModeButton;
-
-    // Custom button class for alloy mode
-    private class AlloyModeButton extends Button {
-        public AlloyModeButton(int x, int y, OnPress onPress) {
-            super(x, y, 20, 18, Component.empty(), onPress, DEFAULT_NARRATION);
-        }
-
-        @Override
-        public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
-            guiGraphics.blit(ALLOY_BUTTON_TEXTURE, this.getX(), this.getY(), 0, 0, 20, 18, 20, 18);
-
-            if (this.isHovered) {
-                guiGraphics.renderTooltip(font, Component.translatable("tooltip.embers.alloy_mode"), mouseX, mouseY);
-            }
-        }
-    }
 
     public CaminiteForgeAlloyScreen(CaminiteForgeAlloyMenu menu, Inventory inventory, Component title) {
         super(menu, inventory, title);
@@ -48,17 +30,8 @@ public class CaminiteForgeAlloyScreen extends AbstractContainerScreen<CaminiteFo
         // Add alloy mode button
         int x = (this.width - this.imageWidth) / 2;
         int y = (this.height - this.imageHeight) / 2;
-        this.alloyModeButton = new AlloyModeButton(
-            x + 25, y + 37,
-            button -> onAlloyModeButtonPress()
-        );
-        this.addRenderableWidget(this.alloyModeButton);
     }
 
-    private void onAlloyModeButtonPress() {
-        CaminiteForgeBlockEntity blockEntity = this.menu.getBlockEntity();
-        PacketDistributor.sendToServer(new CaminiteForgeToggleAlloyData(blockEntity.getBlockPos()));
-    }
 
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {

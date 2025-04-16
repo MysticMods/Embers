@@ -1,7 +1,7 @@
 package mysticmods.embers.datagen;
 
 import mysticmods.embers.Embers;
-import mysticmods.embers.init.EmbersItems;
+import mysticmods.embers.init.ModItems;
 import net.minecraft.data.PackOutput;
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
@@ -16,38 +16,38 @@ public class ModItemModelProvider extends ItemModelProvider {
     protected void registerModels() {
 
         //Blocks
-        withExistingParent(EmbersItems.CAMINITE_BRICK_BLOCK_ITEM.getId().toString(), modLoc("block/caminite_bricks"));
-        withExistingParent(EmbersItems.BRAZIER_BLOCK_ITEM.getId().toString(), modLoc("block/brazier"));
-        withExistingParent(EmbersItems.CAMINITE_FORGE_BLOCK_ITEM.getId().toString(), modLoc("block/caminite_forge"));
-        withExistingParent(EmbersItems.CAMINITE_SMELTER_BLOCK_ITEM.getId().toString(), modLoc("block/caminite_smelter"));
-        withExistingParent(EmbersItems.COPPER_ANVIL_BLOCK_ITEM.getId().toString(), modLoc("block/copper_anvil"));
-        withExistingParent(EmbersItems.CAMINITE_MOLD_BLOCK_ITEM.getId().toString(), modLoc("block/caminite_mold"));
-        withExistingParent(EmbersItems.EMBER_CRYSTALLIZER_BLOCK_ITEM.getId().toString(), modLoc("block/ember_crystallizer"));
-        withExistingParent(EmbersItems.BUDDING_EMBER_BLOCK_ITEM.getId().toString(), modLoc("block/budding_ember"));
-        withExistingParent(EmbersItems.EMBER_CLUSTER_BLOCK_ITEM.getId().toString(), modLoc("block/ember_cluster"));
+        withExistingParent(ModItems.CAMINITE_BRICK_BLOCK_ITEM.getId().toString(), modLoc("block/caminite_bricks"));
+        withExistingParent(ModItems.BRAZIER_BLOCK_ITEM.getId().toString(), modLoc("block/brazier"));
+        withExistingParent(ModItems.CAMINITE_FORGE_BLOCK_ITEM.getId().toString(), modLoc("block/caminite_forge"));
+        withExistingParent(ModItems.CAMINITE_SMELTER_BLOCK_ITEM.getId().toString(), modLoc("block/caminite_smelter"));
+        withExistingParent(ModItems.COPPER_ANVIL_BLOCK_ITEM.getId().toString(), modLoc("block/copper_anvil"));
+        withExistingParent(ModItems.CAMINITE_MOLD_BLOCK_ITEM.getId().toString(), modLoc("block/caminite_mold"));
+        withExistingParent(ModItems.EMBER_CRYSTALLIZER_BLOCK_ITEM.getId().toString(), modLoc("block/ember_crystallizer"));
+        withExistingParent(ModItems.BUDDING_EMBER_BLOCK_ITEM.getId().toString(), modLoc("block/budding_ember"));
+        withExistingParent(ModItems.EMBER_CLUSTER_BLOCK_ITEM.getId().toString(), modLoc("block/ember_cluster"));
 
         //Stones
-        basicItem(EmbersItems.CAMINITE_BLEND.get());
-        basicItem(EmbersItems.CAMINITE_BRICK.get());
+        basicItem(ModItems.CAMINITE_BLEND.get());
+        basicItem(ModItems.CAMINITE_BRICK.get());
 
         //Metals
-        basicItem(EmbersItems.ASHEN_STEEL_INGOT.get());
-        basicItem(EmbersItems.CINDERSTEEL_INGOT.get());
-        basicItem(EmbersItems.CINNABAR.get());
-        basicItem(EmbersItems.COPPER_NUGGET.get());
-        basicItem(EmbersItems.CRYSTAL_EMBER_SEED.get());
-        basicItem(EmbersItems.DAWNSTONE_INGOT.get());
-        basicItem(EmbersItems.DAWNSTONE_NUGGET.get());
-        basicItem(EmbersItems.EMBER_CRYSTAL.get());
-        basicItem(EmbersItems.EMBER_SHARD.get());
-        basicItem(EmbersItems.QUICKSILVER.get());
-        basicItem(EmbersItems.SMOLDERING_CRYSTAL_BLEND.get());
-        basicItem(EmbersItems.VERMILLIONITE_CHUNK.get());
+        basicItem(ModItems.ASHEN_STEEL_INGOT.get());
+        basicItem(ModItems.CINDERSTEEL_INGOT.get());
+        basicItem(ModItems.CINNABAR.get());
+        basicItem(ModItems.COPPER_NUGGET.get());
+        basicItem(ModItems.CRYSTAL_EMBER_SEED.get());
+        basicItem(ModItems.DAWNSTONE_INGOT.get());
+        basicItem(ModItems.DAWNSTONE_NUGGET.get());
+        basicItem(ModItems.EMBER_CRYSTAL.get());
+        basicItem(ModItems.EMBER_SHARD.get());
+        basicItem(ModItems.QUICKSILVER.get());
+        basicItem(ModItems.SMOLDERING_CRYSTAL_BLEND.get());
+        basicItem(ModItems.VERMILLIONITE_CHUNK.get());
 
         //Misc
-        basicItem(EmbersItems.HEATED_METAL.get());
+        basicItem(ModItems.HEATED_METAL.get());
 
         //Tools
-        basicItem(EmbersItems.IRON_HAMMER.get());
+        basicItem(ModItems.IRON_HAMMER.get());
     }
 }

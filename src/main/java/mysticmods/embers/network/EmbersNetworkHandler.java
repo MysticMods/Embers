@@ -13,7 +13,7 @@ public class EmbersNetworkHandler {
             if (player != null) {
                 Level level = player.level();
                 if (level.getBlockEntity(msg.pos()) instanceof CaminiteForgeBlockEntity be) {
-                    be.toggleAlloyMode(player); // Your method to update state
+                    
                 }
             }
         });

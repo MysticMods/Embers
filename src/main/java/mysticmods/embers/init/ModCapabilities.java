@@ -12,7 +12,7 @@ import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.ItemCapability;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 
-public class EmbersCapabilities {
+public class ModCapabilities {
 
     public static final BlockCapability<IEmberIntensity, Void> EMBER_INTENSITY =
             BlockCapability.createVoid(
@@ -35,44 +35,44 @@ public class EmbersCapabilities {
     public static void register(RegisterCapabilitiesEvent event) {
         //Brazier Ember Emitter
         event.registerBlockEntity(
-                EmbersCapabilities.EMBER_EMITTER,
-                EmbersBlockEntities.BRAZIER.get(),
+                ModCapabilities.EMBER_EMITTER,
+                ModBlockEntities.BRAZIER.get(),
                 (be, o) -> be.getEmitter()
         );
 
         //Brazier ItemHandler
         event.registerBlockEntity(
                 Capabilities.ItemHandler.BLOCK,
-                EmbersBlockEntities.BRAZIER.get(),
+                ModBlockEntities.BRAZIER.get(),
                 (myBlockEntity, side) -> myBlockEntity.getItemHandler()
         );
 
         //Caminite Forge Ember Intensity
         event.registerBlockEntity(
-                EmbersCapabilities.EMBER_INTENSITY,
-                EmbersBlockEntities.CAMINITE_FORGE.get(),
+                ModCapabilities.EMBER_INTENSITY,
+                ModBlockEntities.CAMINITE_FORGE.get(),
                 (be, o) -> be.getEmberIntensity()
         );
 
         //Caminite Forge ItemHandler
         event.registerBlockEntity(
                 Capabilities.ItemHandler.BLOCK,
-                EmbersBlockEntities.CAMINITE_FORGE.get(),
+                ModBlockEntities.CAMINITE_FORGE.get(),
                 (myBlockEntity, side) -> myBlockEntity.getItemHandler()
         );
 
         //Caminite Mold ItemHandler
         event.registerBlockEntity(
                 Capabilities.ItemHandler.BLOCK,
-                EmbersBlockEntities.CAMINITE_MOLD.get(),
+                ModBlockEntities.CAMINITE_MOLD.get(),
                 (myBlockEntity, side) -> myBlockEntity.getItemHandler()
         );
 
         //Heated Metal Capability
         event.registerItem(
-                EmbersCapabilities.HEATED_METAL,
+                ModCapabilities.HEATED_METAL,
                 (itemStack, context) -> new HeatedMetalCap(0, 100, ItemStack.EMPTY),
-                EmbersItems.HEATED_METAL.get()
+                ModItems.HEATED_METAL.get()
         );
     }
 

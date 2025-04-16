@@ -50,20 +50,20 @@ public class Embers {
     public Embers(IEventBus modEventBus, ModContainer modContainer) {
         modEventBus.addListener(this::commonSetup);
 
-        EmbersTags.init();
+        ModTags.init();
 
-        EmbersBlocks.register(modEventBus);
-        EmbersBlockEntities.register(modEventBus);
-        EmbersDataComponents.register(modEventBus);
-        EmbersItems.register(modEventBus);
+        ModBlocks.register(modEventBus);
+        ModBlockEntities.register(modEventBus);
+        ModDataComponents.register(modEventBus);
+        ModItems.register(modEventBus);
         ModSerializers.register(modEventBus);
-        EmbersMalleableMetals.register(modEventBus);
+        ModMalleableMetals.register(modEventBus);
         ModRecipeTypes.register(modEventBus);
-        EmbersParticles.register(modEventBus);
-        EmbersTabs.register(modEventBus);
-        EmbersMenuTypes.register(modEventBus);
+        ModParticles.register(modEventBus);
+        ModTabs.register(modEventBus);
+        ModMenuTypes.register(modEventBus);
 
-        EmbersCapabilities.init();
+        ModCapabilities.init();
 
         NeoForge.EVENT_BUS.register(this);
 
@@ -90,13 +90,13 @@ public class Embers {
 
         @SubscribeEvent
         private static void registerCapabilities(RegisterCapabilitiesEvent event) {
-            EmbersCapabilities.register(event);
+            ModCapabilities.register(event);
         }
 
         @SubscribeEvent
         private static void registerScreens(RegisterMenuScreensEvent event) {
-            event.register(EmbersMenuTypes.CAMINITE_FORGE.get(), CaminiteSmelterScreen::new);
-            event.register(EmbersMenuTypes.CAMINITE_FORGE_ALLOY.get(), CaminiteForgeAlloyScreen::new);
+            event.register(ModMenuTypes.CAMINITE_FORGE.get(), CaminiteSmelterScreen::new);
+            event.register(ModMenuTypes.CAMINITE_FORGE_ALLOY.get(), CaminiteForgeAlloyScreen::new);
         }
 
         @SubscribeEvent
@@ -112,17 +112,17 @@ public class Embers {
         @SubscribeEvent
         public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
             event.registerBlockEntityRenderer(
-                    EmbersBlockEntities.COPPER_ANVIL.get(),
+                    ModBlockEntities.COPPER_ANVIL.get(),
                     CopperAnvilRenderer::new
             );
 
             event.registerBlockEntityRenderer(
-                    EmbersBlockEntities.CAMINITE_MOLD.get(),
+                    ModBlockEntities.CAMINITE_MOLD.get(),
                     CaminiteMoldRenderer::new
             );
 
             event.registerBlockEntityRenderer(
-                    EmbersBlockEntities.EMBER_CRYSTALLIZER.get(),
+                    ModBlockEntities.EMBER_CRYSTALLIZER.get(),
                     CrystallizerRenderer::new
             );
         }
@@ -189,7 +189,7 @@ public class Embers {
 
         @SubscribeEvent
         public static void registerParticleProviders(RegisterParticleProvidersEvent event) {
-            EmbersParticles.registerParticleFactory(event);
+            ModParticles.registerParticleFactory(event);
         }
     }
 }

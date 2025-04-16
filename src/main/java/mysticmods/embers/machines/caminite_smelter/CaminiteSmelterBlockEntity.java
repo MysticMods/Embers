@@ -67,7 +67,7 @@ public class CaminiteSmelterBlockEntity extends LodestoneBlockEntity implements 
     private static final int PROGRESS_PER_ITEM = 20 * 5;
 
     public CaminiteSmelterBlockEntity(BlockPos pos, BlockState state) {
-        super(EmbersBlockEntities.CAMINITE_SMELTER.get(), pos, state);
+        super(ModBlockEntities.CAMINITE_SMELTER.get(), pos, state);
         this.intensity = new EmberIntensity(100, 100, this::updateToClient);
     }
 
@@ -113,18 +113,18 @@ public class CaminiteSmelterBlockEntity extends LodestoneBlockEntity implements 
                 if (optional.isPresent()) {
                     MalleableMetalRecipe recipe = optional.get().value();
                     if (hotMetalStack.isEmpty()) {
-                        this.itemHandler.setStackInSlot(2, new ItemStack(EmbersItems.HEATED_METAL.get(), 1));
+                        this.itemHandler.setStackInSlot(2, new ItemStack(ModItems.HEATED_METAL.get(), 1));
                         hotMetalStack = this.itemHandler.getStackInSlot(2);
 
-                        MalleableMetalDataComponent data = hotMetalStack.get(EmbersDataComponents.MALLEABLE_METAL);
+                        MalleableMetalDataComponent data = hotMetalStack.get(ModDataComponents.MALLEABLE_METAL);
                         data = data.setMalleableMetal(recipe.malleableMetal).setMaxHeat();
-                        hotMetalStack.set(EmbersDataComponents.MALLEABLE_METAL, data);
+                        hotMetalStack.set(ModDataComponents.MALLEABLE_METAL, data);
                     }
 
-                    MalleableMetalDataComponent data = hotMetalStack.get(EmbersDataComponents.MALLEABLE_METAL);
+                    MalleableMetalDataComponent data = hotMetalStack.get(ModDataComponents.MALLEABLE_METAL);
                     data = data.addIngots(recipe.getResultIngotAmount(inputStack))
                             .addNuggets(recipe.getResultNuggetAmount(inputStack));
-                    hotMetalStack.set(EmbersDataComponents.MALLEABLE_METAL, data);
+                    hotMetalStack.set(ModDataComponents.MALLEABLE_METAL, data);
 
                     inputStack.shrink(1);
                     this.progress = 0;
@@ -142,7 +142,7 @@ public class CaminiteSmelterBlockEntity extends LodestoneBlockEntity implements 
             if (level.getGameTime() % 5 == 0) {
                 var random = this.level.getRandom();
                 int lifetime = RandomHelper.randomBetween(random, 60, 120);
-                var options = new WorldParticleOptions(EmbersParticles.PARTICLE_GLOW);
+                var options = new WorldParticleOptions(ModParticles.PARTICLE_GLOW);
                 final float scale = 0.2f;
                 WorldParticleBuilder.create(options)
                         .setTransparencyData(GenericParticleData.create(0.1f, 0.4f, 0).build())
@@ -210,7 +210,7 @@ public class CaminiteSmelterBlockEntity extends LodestoneBlockEntity implements 
 
     public float getProgress() {
         if (this.progress > 0) {
-            return this.progress / this.PROGRESS_PER_ITEM;
+            return this.progress / PROGRESS_PER_ITEM;
         }
         return 0;
     }

@@ -2,14 +2,17 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "#": {
-      "tag": "c:nuggets/copper"
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "S": {
+      "item": "minecraft:stick"
     }
   },
   "pattern": [
-    "###",
-    "###",
-    "###"
+    "III",
+    "ISI",
+    " S "
   ],
   "result": {
     "count": 1,

@@ -1,8 +1,8 @@
 package mysticmods.embers.datagen;
 
-import mysticmods.embers.init.EmbersItems;
-import mysticmods.embers.init.EmbersMalleableMetals;
-import mysticmods.embers.init.EmbersTags;
+import mysticmods.embers.init.ModItems;
+import mysticmods.embers.init.ModMalleableMetals;
+import mysticmods.embers.init.ModTags;
 import mysticmods.embers.recipes.alloy.AlloyRecipeBuilder;
 import mysticmods.embers.recipes.crystallizer.CrystallizerRecipeBuilder;
 import mysticmods.embers.recipes.malleable_metal.MalleableMetalRecipeBuilder;
@@ -27,21 +27,32 @@ public class ModRecipeProvider extends RecipeProvider {
 
     @Override
     protected void buildRecipes(@NotNull RecipeOutput recipeOutput) {
+        //Items
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.IRON_HAMMER)
+                .pattern("III")
+                .pattern("ISI")
+                .pattern(" S ")
+                .define('I', Ingredient.of(Items.IRON_INGOT))
+                .define('S', Ingredient.of(Items.STICK))
+                .unlockedBy("has_stick", has(Items.STICK))
+                .unlockedBy("has_iron_ingot", has(Items.IRON_INGOT))
+                .save(recipeOutput);
+
         //Caminite Blend
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, EmbersItems.CAMINITE_BLEND)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.CAMINITE_BLEND)
                 .requires(Items.CLAY_BALL)
                 .requires(Items.SAND)
-                .unlockedBy("has_caminite_blend", has(EmbersItems.CAMINITE_BLEND))
+                .unlockedBy("has_caminite_blend", has(ModItems.CAMINITE_BLEND))
                 .unlockedBy("has_clay_ball", has(Items.CLAY_BALL))
                 .unlockedBy("has_sand", has(Items.SAND))
                 .save(recipeOutput);
 
         //Smoldering Crystal Blend
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, EmbersItems.SMOLDERING_CRYSTAL_BLEND)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.SMOLDERING_CRYSTAL_BLEND)
                 .requires(Items.AMETHYST_SHARD, 3)
-                .requires(EmbersItems.EMBER_SHARD)
+                .requires(ModItems.EMBER_SHARD)
                 .unlockedBy("has_amethyst_shard", has(Items.AMETHYST_SHARD))
-                .unlockedBy("had_ember_shard", has(EmbersItems.EMBER_SHARD))
+                .unlockedBy("had_ember_shard", has(ModItems.EMBER_SHARD))
                 .save(recipeOutput);
 
         //Metals
@@ -49,73 +60,73 @@ public class ModRecipeProvider extends RecipeProvider {
                 .pattern("###")
                 .pattern("###")
                 .pattern("###")
-                .define('#', Ingredient.of(EmbersTags.COPPER_NUGGETS_TAG))
-                .unlockedBy("has_copper_nugget", has(EmbersTags.COPPER_NUGGETS_TAG))
-                .unlockedBy("has_copper_ingot", has(EmbersTags.COPPER_INGOTS_TAG))
+                .define('#', Ingredient.of(ModTags.COPPER_NUGGETS_TAG))
+                .unlockedBy("has_copper_nugget", has(ModTags.COPPER_NUGGETS_TAG))
+                .unlockedBy("has_copper_ingot", has(ModTags.COPPER_INGOTS_TAG))
                 .save(recipeOutput);
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, EmbersItems.COPPER_NUGGET, 9)
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.COPPER_NUGGET, 9)
                 .requires(Items.COPPER_INGOT)
-                .unlockedBy("has_copper_nugget", has(EmbersTags.COPPER_NUGGETS_TAG))
-                .unlockedBy("has_copper_ingot", has(EmbersTags.COPPER_INGOTS_TAG))
+                .unlockedBy("has_copper_nugget", has(ModTags.COPPER_NUGGETS_TAG))
+                .unlockedBy("has_copper_ingot", has(ModTags.COPPER_INGOTS_TAG))
                 .save(recipeOutput);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, EmbersItems.DAWNSTONE_INGOT)
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.DAWNSTONE_INGOT)
                 .pattern("###")
                 .pattern("###")
                 .pattern("###")
-                .define('#', Ingredient.of(EmbersItems.DAWNSTONE_NUGGET))
-                .unlockedBy("has_dawnstone_nugget", has(EmbersItems.DAWNSTONE_NUGGET))
-                .unlockedBy("has_dawnstone_ingot", has(EmbersItems.DAWNSTONE_INGOT))
+                .define('#', Ingredient.of(ModItems.DAWNSTONE_NUGGET))
+                .unlockedBy("has_dawnstone_nugget", has(ModItems.DAWNSTONE_NUGGET))
+                .unlockedBy("has_dawnstone_ingot", has(ModItems.DAWNSTONE_INGOT))
                 .save(recipeOutput);
 
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, EmbersItems.DAWNSTONE_NUGGET, 9)
-                .requires(EmbersItems.DAWNSTONE_INGOT)
-                .unlockedBy("has_dawnstone_nugget", has(EmbersItems.DAWNSTONE_NUGGET))
-                .unlockedBy("has_dawnstone_ingot", has(EmbersItems.DAWNSTONE_INGOT))
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.DAWNSTONE_NUGGET, 9)
+                .requires(ModItems.DAWNSTONE_INGOT)
+                .unlockedBy("has_dawnstone_nugget", has(ModItems.DAWNSTONE_NUGGET))
+                .unlockedBy("has_dawnstone_ingot", has(ModItems.DAWNSTONE_INGOT))
                 .save(recipeOutput);
 
         // ## Blocks ## //
 
         //Caminite Brick Block
-        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, EmbersItems.CAMINITE_BRICK_BLOCK_ITEM)
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModItems.CAMINITE_BRICK_BLOCK_ITEM)
                 .pattern("##")
                 .pattern("##")
-                .define('#', EmbersItems.CAMINITE_BRICK)
-                .unlockedBy("has_caminite_brick", has(EmbersItems.CAMINITE_BRICK))
+                .define('#', ModItems.CAMINITE_BRICK)
+                .unlockedBy("has_caminite_brick", has(ModItems.CAMINITE_BRICK))
                 .save(recipeOutput);
 
         //Caminite Mold
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, EmbersItems.CAMINITE_MOLD_BLOCK_ITEM)
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.CAMINITE_MOLD_BLOCK_ITEM)
                 .pattern("# #")
                 .pattern("# #")
                 .pattern("BBB")
-                .define('B', EmbersItems.CAMINITE_BRICK)
-                .define('#', EmbersItems.CAMINITE_BLEND)
-                .unlockedBy("has_caminite_brick", has(EmbersItems.CAMINITE_BRICK))
-                .unlockedBy("has_caminite_blend", has(EmbersItems.CAMINITE_BLEND))
+                .define('B', ModItems.CAMINITE_BRICK)
+                .define('#', ModItems.CAMINITE_BLEND)
+                .unlockedBy("has_caminite_brick", has(ModItems.CAMINITE_BRICK))
+                .unlockedBy("has_caminite_blend", has(ModItems.CAMINITE_BLEND))
                 .save(recipeOutput);
 
         //Brazier
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, EmbersItems.BRAZIER_BLOCK_ITEM)
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.BRAZIER_BLOCK_ITEM)
                 .pattern("CFC")
                 .pattern("C#C")
-                .define('#', EmbersItems.CAMINITE_BRICK_BLOCK_ITEM)
+                .define('#', ModItems.CAMINITE_BRICK_BLOCK_ITEM)
                 .define('C', Items.COPPER_INGOT)
                 .define('F', Items.CAMPFIRE)
-                .unlockedBy("has_caminite_bricks", has(EmbersItems.CAMINITE_BRICK_BLOCK_ITEM))
+                .unlockedBy("has_caminite_bricks", has(ModItems.CAMINITE_BRICK_BLOCK_ITEM))
                 .unlockedBy("has_copper_ingot", has(Items.COPPER_INGOT))
                 .unlockedBy("has_campfire", has(Items.CAMPFIRE))
                 .save(recipeOutput);
 
         //Copper Anvil
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, EmbersItems.COPPER_ANVIL_BLOCK_ITEM)
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.COPPER_ANVIL_BLOCK_ITEM)
                 .pattern("OOO")
                 .pattern(" # ")
                 .pattern("###")
-                .define('#', EmbersItems.CAMINITE_BRICK_BLOCK_ITEM)
+                .define('#', ModItems.CAMINITE_BRICK_BLOCK_ITEM)
                 .define('O', Items.COPPER_BLOCK)
-                .unlockedBy("has_caminite_bricks", has(EmbersItems.CAMINITE_BRICK_BLOCK_ITEM))
+                .unlockedBy("has_caminite_bricks", has(ModItems.CAMINITE_BRICK_BLOCK_ITEM))
                 .unlockedBy("has_copper_block", has(Items.COPPER_BLOCK))
                 .save(recipeOutput);
 
@@ -123,59 +134,59 @@ public class ModRecipeProvider extends RecipeProvider {
 
         //Caminite Brick
         SimpleCookingRecipeBuilder.smelting(
-                Ingredient.of(EmbersItems.CAMINITE_BLEND),
+                Ingredient.of(ModItems.CAMINITE_BLEND),
                 RecipeCategory.MISC,
-                EmbersItems.CAMINITE_BRICK,
+                ModItems.CAMINITE_BRICK,
                 0.1f,
                 200
         )
-                .unlockedBy("has_caminite_blend", has(EmbersItems.CAMINITE_BLEND))
+                .unlockedBy("has_caminite_blend", has(ModItems.CAMINITE_BLEND))
                 .save(recipeOutput, "caminite_brick_smelting");
 
 
         // ## Malleable ## //
         new MalleableMetalRecipeBuilder(
-                EmbersMalleableMetals.MALLEABLE_IRON.get(),
+                ModMalleableMetals.MALLEABLE_IRON.get(),
                 0.5f,
                 200
         )
                 .unlockedBy("has_iron_ore", has(Items.IRON_ORE))
                 .unlockedBy("has_iron_deepslate_ore", has(Items.DEEPSLATE_IRON_ORE))
-                .unlockedBy("has_iron_nugget", has(EmbersTags.IRON_NUGGETS_TAG))
-                .unlockedBy("has_iron_ingot", has(EmbersTags.IRON_INGOTS_TAG))
+                .unlockedBy("has_iron_nugget", has(ModTags.IRON_NUGGETS_TAG))
+                .unlockedBy("has_iron_ingot", has(ModTags.IRON_INGOTS_TAG))
                 .save(recipeOutput, "malleable_iron");
 
         new MalleableMetalRecipeBuilder(
-                EmbersMalleableMetals.MALLEABLE_COPPER.get(),
+                ModMalleableMetals.MALLEABLE_COPPER.get(),
                 0.5f,
                 200
         )
                 .unlockedBy("has_copper_ore", has(Items.COPPER_ORE))
                 .unlockedBy("has_copper_deepslate_ore", has(Items.DEEPSLATE_COPPER_ORE))
-                .unlockedBy("has_copper_nugget", has(EmbersTags.COPPER_NUGGETS_TAG))
-                .unlockedBy("has_copper_ingot", has(EmbersTags.COPPER_INGOTS_TAG))
+                .unlockedBy("has_copper_nugget", has(ModTags.COPPER_NUGGETS_TAG))
+                .unlockedBy("has_copper_ingot", has(ModTags.COPPER_INGOTS_TAG))
                 .save(recipeOutput, "malleable_copper");
 
         new MalleableMetalRecipeBuilder(
-                EmbersMalleableMetals.MALLEABLE_GOLD.get(),
+                ModMalleableMetals.MALLEABLE_GOLD.get(),
                 0.5f,
                 200
         )
                 .unlockedBy("has_gold_ore", has(Items.GOLD_ORE))
                 .unlockedBy("has_gold_deepslate_ore", has(Items.DEEPSLATE_GOLD_ORE))
-                .unlockedBy("has_gold_nugget", has(EmbersTags.GOLD_NUGGETS_TAG))
-                .unlockedBy("has_gold_ingot", has(EmbersTags.GOLD_INGOTS_TAG))
+                .unlockedBy("has_gold_nugget", has(ModTags.GOLD_NUGGETS_TAG))
+                .unlockedBy("has_gold_ingot", has(ModTags.GOLD_INGOTS_TAG))
                 .save(recipeOutput, "malleable_gold");
 
         // ## Alloys ## //
         new AlloyRecipeBuilder(
-                Ingredient.of(EmbersTags.COPPER_INGOTS_TAG),
-                Ingredient.of(EmbersTags.GOLD_INGOTS_TAG),
-                new ItemStack(EmbersItems.DAWNSTONE_INGOT.get(), 2)
+                Ingredient.of(ModTags.COPPER_INGOTS_TAG),
+                Ingredient.of(ModTags.GOLD_INGOTS_TAG),
+                new ItemStack(ModItems.DAWNSTONE_INGOT.get(), 2)
         )
-                .unlockedBy("has_copper_ingot", has(EmbersTags.COPPER_INGOTS_TAG))
-                .unlockedBy("has_gold_ingot", has(EmbersTags.GOLD_INGOTS_TAG))
-                .unlockedBy("has_dawnstone_ingot", has(EmbersItems.DAWNSTONE_INGOT))
+                .unlockedBy("has_copper_ingot", has(ModTags.COPPER_INGOTS_TAG))
+                .unlockedBy("has_gold_ingot", has(ModTags.GOLD_INGOTS_TAG))
+                .unlockedBy("has_dawnstone_ingot", has(ModItems.DAWNSTONE_INGOT))
                 .save(recipeOutput, "dawnstone_alloy");
 
         // ## Machine Molds ## //
@@ -184,11 +195,11 @@ public class ModRecipeProvider extends RecipeProvider {
 
         // ## Crystallizer Recipes ## //
         new CrystallizerRecipeBuilder(
-                Ingredient.of(EmbersItems.SMOLDERING_CRYSTAL_BLEND),
-                new ItemStack(EmbersItems.CRYSTAL_EMBER_SEED.get())
+                Ingredient.of(ModItems.SMOLDERING_CRYSTAL_BLEND),
+                new ItemStack(ModItems.CRYSTAL_EMBER_SEED.get())
         )
-                .unlockedBy("has_smoldering_crystal_blend", has(EmbersItems.SMOLDERING_CRYSTAL_BLEND))
-                .unlockedBy("has_crystal_ember_seed", has(EmbersItems.CRYSTAL_EMBER_SEED.get()))
+                .unlockedBy("has_smoldering_crystal_blend", has(ModItems.SMOLDERING_CRYSTAL_BLEND))
+                .unlockedBy("has_crystal_ember_seed", has(ModItems.CRYSTAL_EMBER_SEED.get()))
                 .save(recipeOutput, "crystal_ember_seed");
     }
 
@@ -201,24 +212,24 @@ public class ModRecipeProvider extends RecipeProvider {
                         Ingredient.of(Items.COPPER_INGOT),
                         Ingredient.of(Items.FURNACE)
                 ),
-                new ItemStack(EmbersItems.CAMINITE_FORGE_BLOCK_ITEM.get())
+                new ItemStack(ModItems.CAMINITE_FORGE_BLOCK_ITEM.get())
         )
-                .unlockedBy("has_copper_ingot", has(EmbersTags.COPPER_INGOTS_TAG))
+                .unlockedBy("has_copper_ingot", has(ModTags.COPPER_INGOTS_TAG))
                 .unlockedBy("has_furnace", has(Items.FURNACE))
                 .save(recipeOutput, "caminite_forge");
 
         //Ember Crystallizer
         new MoldRecipeBuilder(
-                List.of(Ingredient.of(EmbersItems.EMBER_SHARD),
-                        Ingredient.of(EmbersItems.CAMINITE_BRICK),
-                        Ingredient.of(EmbersItems.CAMINITE_BRICK),
+                List.of(Ingredient.of(ModItems.EMBER_SHARD),
+                        Ingredient.of(ModItems.CAMINITE_BRICK),
+                        Ingredient.of(ModItems.CAMINITE_BRICK),
                         Ingredient.of(Items.GLASS)
                 ),
-                new ItemStack(EmbersItems.EMBER_CRYSTALLIZER_BLOCK_ITEM.get())
+                new ItemStack(ModItems.EMBER_CRYSTALLIZER_BLOCK_ITEM.get())
         )
-                .unlockedBy("has_caminite_brick", has(EmbersItems.CAMINITE_BRICK))
+                .unlockedBy("has_caminite_brick", has(ModItems.CAMINITE_BRICK))
                 .unlockedBy("has_glass", has(Items.GLASS))
-                .unlockedBy("has_ember_shard", has(EmbersItems.EMBER_SHARD))
+                .unlockedBy("has_ember_shard", has(ModItems.EMBER_SHARD))
                 .save(recipeOutput, "ember_crystallizer");
 
         //Caminite Smelter
@@ -228,9 +239,9 @@ public class ModRecipeProvider extends RecipeProvider {
                         Ingredient.of(Items.COPPER_INGOT),
                         Ingredient.of(Items.FURNACE)
                 ),
-                new ItemStack(EmbersItems.CAMINITE_SMELTER_BLOCK_ITEM.get())
+                new ItemStack(ModItems.CAMINITE_SMELTER_BLOCK_ITEM.get())
         )
-                .unlockedBy("has_copper_ingot", has(EmbersTags.COPPER_INGOTS_TAG))
+                .unlockedBy("has_copper_ingot", has(ModTags.COPPER_INGOTS_TAG))
                 .unlockedBy("has_furnace", has(Items.FURNACE))
                 .save(recipeOutput, "caminite_smelter");
     }

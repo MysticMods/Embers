@@ -1,6 +1,6 @@
 package mysticmods.embers.machines.caminite_forge;
 
-import mysticmods.embers.init.EmbersBlockEntities;
+import mysticmods.embers.init.ModBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -24,7 +24,7 @@ public class CaminiteForgeBlock extends LodestoneEntityBlock<CaminiteForgeBlockE
     public CaminiteForgeBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(LIT, Boolean.FALSE));
-        this.setBlockEntity(EmbersBlockEntities.CAMINITE_FORGE);
+        this.setBlockEntity(ModBlockEntities.CAMINITE_FORGE);
     }
 
     @Override

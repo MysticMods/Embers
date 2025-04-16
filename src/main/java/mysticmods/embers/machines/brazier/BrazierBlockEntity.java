@@ -3,8 +3,8 @@ package mysticmods.embers.machines.brazier;
 import mysticmods.embers.base.IEmberEmitterEntity;
 import mysticmods.embers.capabilities.emberemitter.EmberEmitter;
 import mysticmods.embers.capabilities.emberlevel.EmberLevel;
-import mysticmods.embers.init.EmbersBlockEntities;
-import mysticmods.embers.init.EmbersParticles;
+import mysticmods.embers.init.ModBlockEntities;
+import mysticmods.embers.init.ModParticles;
 import mysticmods.embers.utils.SDUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
@@ -51,7 +51,7 @@ public class BrazierBlockEntity extends LodestoneBlockEntity implements IEmberEm
     public int ticksToBurn = 0;
 
     public BrazierBlockEntity(BlockPos pos, BlockState blockState) {
-        super(EmbersBlockEntities.BRAZIER.get(), pos, blockState);
+        super(ModBlockEntities.BRAZIER.get(), pos, blockState);
 
         itemHandler = new ItemStackHandler(1) {
             @Override
@@ -100,7 +100,7 @@ public class BrazierBlockEntity extends LodestoneBlockEntity implements IEmberEm
             if (level.getGameTime() % 40 == 0 && running) {
                 var random = this.level.getRandom();
                 int lifetime = RandomHelper.randomBetween(random, 60, 120);
-                var options = new WorldParticleOptions(EmbersParticles.PARTICLE_GLOW);
+                var options = new WorldParticleOptions(ModParticles.PARTICLE_GLOW);
                 final float scale = 0.2f;
                 WorldParticleBuilder.create(options)
                         .setTransparencyData(GenericParticleData.create(0.1f, 0.4f, 0).build())

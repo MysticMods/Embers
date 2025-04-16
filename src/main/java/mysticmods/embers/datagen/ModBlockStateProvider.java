@@ -1,7 +1,7 @@
 package mysticmods.embers.datagen;
 
 import mysticmods.embers.Embers;
-import mysticmods.embers.init.EmbersBlocks;
+import mysticmods.embers.init.ModBlocks;
 import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -17,44 +17,44 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
     @Override
     protected void registerStatesAndModels() {
-        simpleBlock(EmbersBlocks.CAMINITE_BRICK.get());
-        simpleBlock(EmbersBlocks.BUDDING_EMBER.get());
+        simpleBlock(ModBlocks.CAMINITE_BRICK.get());
+        simpleBlock(ModBlocks.BUDDING_EMBER.get());
 
-        getVariantBuilder(EmbersBlocks.EMBER_CLUSTER.get()).forAllStates(state ->
+        getVariantBuilder(ModBlocks.EMBER_CLUSTER.get()).forAllStates(state ->
                 ConfiguredModel.builder()
                     .modelFile(models().getExistingFile(modLoc("block/ember_cluster")))
                     .rotationX(getXRot(state.getValue(BlockStateProperties.FACING)))
                     .rotationY(getYRot(state.getValue(BlockStateProperties.FACING)))
                     .build());
 
-        getVariantBuilder(EmbersBlocks.LARGE_EMBER_BUD.get()).forAllStates(state ->
+        getVariantBuilder(ModBlocks.LARGE_EMBER_BUD.get()).forAllStates(state ->
                 ConfiguredModel.builder()
                     .modelFile(models().getExistingFile(modLoc("block/large_ember_bud")))
                     .rotationX(getXRot(state.getValue(BlockStateProperties.FACING)))
                     .rotationY(getYRot(state.getValue(BlockStateProperties.FACING)))
                     .build());
 
-        getVariantBuilder(EmbersBlocks.MEDIUM_EMBER_BUD.get()).forAllStates(state ->
+        getVariantBuilder(ModBlocks.MEDIUM_EMBER_BUD.get()).forAllStates(state ->
                 ConfiguredModel.builder()
                     .modelFile(models().getExistingFile(modLoc("block/medium_ember_bud")))
                     .rotationX(getXRot(state.getValue(BlockStateProperties.FACING)))
                     .rotationY(getYRot(state.getValue(BlockStateProperties.FACING)))
                     .build());
 
-        getVariantBuilder(EmbersBlocks.SMALL_EMBER_BUD.get()).forAllStates(state ->
+        getVariantBuilder(ModBlocks.SMALL_EMBER_BUD.get()).forAllStates(state ->
                 ConfiguredModel.builder()
                     .modelFile(models().getExistingFile(modLoc("block/small_ember_bud")))
                     .rotationX(getXRot(state.getValue(BlockStateProperties.FACING)))
                     .rotationY(getYRot(state.getValue(BlockStateProperties.FACING)))
                     .build());
 
-        getVariantBuilder(EmbersBlocks.BRAZIER.get()).forAllStates(state ->
+        getVariantBuilder(ModBlocks.BRAZIER.get()).forAllStates(state ->
                 ConfiguredModel.builder()
                         .modelFile(state.getValue(BlockStateProperties.LIT) ? models().getExistingFile(modLoc("block/brazier_on")) : models().getExistingFile(modLoc("block/brazier")))
                         .build()
         );
 
-        getVariantBuilder(EmbersBlocks.CAMINITE_SMELTER.get()).forAllStates(state -> {
+        getVariantBuilder(ModBlocks.CAMINITE_SMELTER.get()).forAllStates(state -> {
             var facing = state.getValue(BlockStateProperties.HORIZONTAL_FACING);
             return ConfiguredModel.builder()
                     .modelFile(models().getExistingFile(modLoc("block/caminite_smelter")))
@@ -62,31 +62,31 @@ public class ModBlockStateProvider extends BlockStateProvider {
                     .build();
         });
 
-        getVariantBuilder(EmbersBlocks.CAMINITE_FORGE.get()).forAllStates(state ->
+        getVariantBuilder(ModBlocks.CAMINITE_FORGE.get()).forAllStates(state ->
                 ConfiguredModel.builder()
                         .modelFile(state.getValue(BlockStateProperties.LIT) ? models().getExistingFile(modLoc("block/caminite_forge")) : models().getExistingFile(modLoc("block/caminite_forge")))
                         .build()
         );
 
-        getVariantBuilder(EmbersBlocks.CAMINITE_FORGE_COMPONENT.get()).forAllStates(state ->
+        getVariantBuilder(ModBlocks.CAMINITE_FORGE_COMPONENT.get()).forAllStates(state ->
                 ConfiguredModel.builder()
                         .modelFile(models().getExistingFile(modLoc("block/caminite_forge_component")))
                         .build()
         );
 
-        getVariantBuilder(EmbersBlocks.COPPER_ANVIL.get()).forAllStates(state ->
+        getVariantBuilder(ModBlocks.COPPER_ANVIL.get()).forAllStates(state ->
                 ConfiguredModel.builder()
                         .modelFile(models().getExistingFile(modLoc("block/copper_anvil")))
                         .build()
         );
 
-        getVariantBuilder(EmbersBlocks.CAMINITE_MOLD.get()).forAllStates(state ->
+        getVariantBuilder(ModBlocks.CAMINITE_MOLD.get()).forAllStates(state ->
                 ConfiguredModel.builder()
                         .modelFile(models().getExistingFile(modLoc("block/caminite_mold")))
                         .build()
         );
 
-        getVariantBuilder(EmbersBlocks.EMBER_CRYSTALLIZER.get()).forAllStates(state ->
+        getVariantBuilder(ModBlocks.EMBER_CRYSTALLIZER.get()).forAllStates(state ->
                 ConfiguredModel.builder()
                         .modelFile(models().getExistingFile(modLoc("block/ember_crystallizer")))
                         .build()

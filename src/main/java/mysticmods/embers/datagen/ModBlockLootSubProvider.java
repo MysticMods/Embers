@@ -1,7 +1,7 @@
 package mysticmods.embers.datagen;
 
-import mysticmods.embers.init.EmbersBlocks;
-import mysticmods.embers.init.EmbersItems;
+import mysticmods.embers.init.ModBlocks;
+import mysticmods.embers.init.ModItems;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.world.flag.FeatureFlags;
@@ -17,7 +17,7 @@ public class ModBlockLootSubProvider extends BlockLootSubProvider {
 
     @Override
     protected Iterable<Block> getKnownBlocks() {
-        return EmbersBlocks.BLOCKS.getEntries()
+        return ModBlocks.BLOCKS.getEntries()
                 .stream()
                 .map(e -> (Block) e.value())
                 .toList();
@@ -25,24 +25,24 @@ public class ModBlockLootSubProvider extends BlockLootSubProvider {
 
     @Override
     protected void generate() {
-        dropSelf(EmbersBlocks.BRAZIER.get());
-        dropSelf(EmbersBlocks.CAMINITE_BRICK.get());
-        dropSelf(EmbersBlocks.CAMINITE_FORGE.get());
-        dropSelf(EmbersBlocks.CAMINITE_MOLD.get());
-        dropSelf(EmbersBlocks.CAMINITE_SMELTER.get());
-        dropSelf(EmbersBlocks.COPPER_ANVIL.get());
-        dropSelf(EmbersBlocks.EMBER_CRYSTALLIZER.get());
+        dropSelf(ModBlocks.BRAZIER.get());
+        dropSelf(ModBlocks.CAMINITE_BRICK.get());
+        dropSelf(ModBlocks.CAMINITE_FORGE.get());
+        dropSelf(ModBlocks.CAMINITE_MOLD.get());
+        dropSelf(ModBlocks.CAMINITE_SMELTER.get());
+        dropSelf(ModBlocks.COPPER_ANVIL.get());
+        dropSelf(ModBlocks.EMBER_CRYSTALLIZER.get());
 
 
-        dropOther(EmbersBlocks.EMBER_CLUSTER.get(), EmbersItems.EMBER_CRYSTAL);
-        dropOther(EmbersBlocks.CAMINITE_FORGE_COMPONENT.get(), EmbersItems.CAMINITE_FORGE_BLOCK_ITEM);
+        dropOther(ModBlocks.EMBER_CLUSTER.get(), ModItems.EMBER_CRYSTAL);
+        dropOther(ModBlocks.CAMINITE_FORGE_COMPONENT.get(), ModItems.CAMINITE_FORGE_BLOCK_ITEM);
 
         //Silktouch
-        add(EmbersBlocks.BUDDING_EMBER.get(), createSilkTouchOnlyTable(EmbersBlocks.BUDDING_EMBER.get()));
+        add(ModBlocks.BUDDING_EMBER.get(), createSilkTouchOnlyTable(ModBlocks.BUDDING_EMBER.get()));
 
         //No drop
-        add(EmbersBlocks.SMALL_EMBER_BUD.get(), noDrop());
-        add(EmbersBlocks.MEDIUM_EMBER_BUD.get(), noDrop());
-        add(EmbersBlocks.LARGE_EMBER_BUD.get(), noDrop());
+        add(ModBlocks.SMALL_EMBER_BUD.get(), noDrop());
+        add(ModBlocks.MEDIUM_EMBER_BUD.get(), noDrop());
+        add(ModBlocks.LARGE_EMBER_BUD.get(), noDrop());
     }
 }

@@ -25,10 +25,6 @@ public class ForgeItemHandler extends ItemStackHandler {
 
     @Override
     public boolean isItemValid(int slot, @NotNull ItemStack stack) {
-        if(entity.isAlloyMode()){
-            return slot == 0 || slot == 1;
-        } else {
-            return slot == 0;
-        }
+        return slot == 0 || slot == 1;
     }
 }

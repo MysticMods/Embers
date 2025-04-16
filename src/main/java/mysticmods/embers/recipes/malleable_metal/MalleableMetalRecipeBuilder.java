@@ -1,7 +1,7 @@
 package mysticmods.embers.recipes.malleable_metal;
 
 import mysticmods.embers.Embers;
-import mysticmods.embers.init.EmbersItems;
+import mysticmods.embers.init.ModItems;
 import mysticmods.embers.registries.MalleableMetal;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementRequirements;
@@ -48,7 +48,7 @@ public class MalleableMetalRecipeBuilder implements RecipeBuilder {
 
     @Override
     public @NotNull Item getResult() {
-        return EmbersItems.HEATED_METAL.get();
+        return ModItems.HEATED_METAL.get();
     }
 
     @Override

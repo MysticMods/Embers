@@ -13,7 +13,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
-public class EmbersBlockEntities {
+public class ModBlockEntities {
 
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, Embers.MODID);
 
@@ -21,7 +21,7 @@ public class EmbersBlockEntities {
             "brazier_block_entity",
             () -> BlockEntityType.Builder.of(
                     BrazierBlockEntity::new,
-                    EmbersBlocks.BRAZIER.get()
+                    ModBlocks.BRAZIER.get()
             ).build(null)
     );
 
@@ -29,7 +29,7 @@ public class EmbersBlockEntities {
             "caminite_smelter_block_entity",
             () -> BlockEntityType.Builder.of(
                     CaminiteSmelterBlockEntity::new,
-                    EmbersBlocks.CAMINITE_SMELTER.get()
+                    ModBlocks.CAMINITE_SMELTER.get()
             ).build(null)
     );
 
@@ -37,7 +37,7 @@ public class EmbersBlockEntities {
             "caminite_forge_block_entity",
             () -> BlockEntityType.Builder.of(
                     CaminiteForgeBlockEntity::new,
-                    EmbersBlocks.CAMINITE_FORGE.get()
+                    ModBlocks.CAMINITE_FORGE.get()
             ).build(null)
     );
 
@@ -45,7 +45,7 @@ public class EmbersBlockEntities {
             "caminite_mold_block_entity",
             () -> BlockEntityType.Builder.of(
                     CaminiteMoldBlockEntity::new,
-                    EmbersBlocks.CAMINITE_MOLD.get()
+                    ModBlocks.CAMINITE_MOLD.get()
             ).build(null)
     );
 
@@ -53,7 +53,7 @@ public class EmbersBlockEntities {
             "copper_anvil_block_entity",
             () -> BlockEntityType.Builder.of(
                     CopperAnvilBlockEntity::new,
-                    EmbersBlocks.COPPER_ANVIL.get()
+                    ModBlocks.COPPER_ANVIL.get()
             ).build(null)
     );
 
@@ -61,7 +61,7 @@ public class EmbersBlockEntities {
             "ember_crystallizer_block_entity",
             () -> BlockEntityType.Builder.of(
                     EmberCrystallizerBlockEntity::new,
-                    EmbersBlocks.EMBER_CRYSTALLIZER.get()
+                    ModBlocks.EMBER_CRYSTALLIZER.get()
             ).build(null)
     );
 

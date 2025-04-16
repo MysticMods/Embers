@@ -9,7 +9,7 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import team.lodestar.lodestone.systems.particle.world.type.LodestoneWorldParticleType;
 
-public class EmbersParticles {
+public class ModParticles {
     public static final DeferredRegister<ParticleType<?>> PARTICLE_TYPES = DeferredRegister.create(BuiltInRegistries.PARTICLE_TYPE, Embers.MODID);
 
     public static DeferredHolder<ParticleType<?>, LodestoneWorldParticleType> PARTICLE_GLOW = PARTICLE_TYPES.register("particle_glow", LodestoneWorldParticleType::new);

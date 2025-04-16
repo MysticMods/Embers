@@ -1,8 +1,8 @@
 package mysticmods.embers.machines.caminite_mold;
 
 import mysticmods.embers.Embers;
-import mysticmods.embers.init.EmbersBlockEntities;
-import mysticmods.embers.init.EmbersParticles;
+import mysticmods.embers.init.ModBlockEntities;
+import mysticmods.embers.init.ModParticles;
 import mysticmods.embers.init.ModRecipeTypes;
 import mysticmods.embers.recipes.mold.MoldRecipe;
 import mysticmods.embers.recipes.mold.MoldRecipeInput;
@@ -48,7 +48,7 @@ public class CaminiteMoldBlockEntity extends LodestoneBlockEntity {
     private final int maxProgress = 15 * 20;
 
     public CaminiteMoldBlockEntity(BlockPos pos, BlockState state) {
-        super(EmbersBlockEntities.CAMINITE_MOLD.get(), pos, state);
+        super(ModBlockEntities.CAMINITE_MOLD.get(), pos, state);
 
         itemHandler = new ItemStackHandler(9) {
 
@@ -72,7 +72,7 @@ public class CaminiteMoldBlockEntity extends LodestoneBlockEntity {
                 //Spawn particles
                 var random = this.level.getRandom();
                 int lifetime = RandomHelper.randomBetween(random, 20, 40);
-                var options = new WorldParticleOptions(EmbersParticles.PARTICLE_GLOW);
+                var options = new WorldParticleOptions(ModParticles.PARTICLE_GLOW);
                 final float scale = 0.2f;
                 final double SPEED = 0.05f;
 

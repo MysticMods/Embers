@@ -1,8 +1,8 @@
 package mysticmods.embers.machines.crystallizer;
 
 import mysticmods.embers.Embers;
-import mysticmods.embers.init.EmbersBlockEntities;
-import mysticmods.embers.init.EmbersParticles;
+import mysticmods.embers.init.ModBlockEntities;
+import mysticmods.embers.init.ModParticles;
 import mysticmods.embers.init.ModRecipeTypes;
 import mysticmods.embers.recipes.crystallizer.CrystallizerRecipe;
 import mysticmods.embers.recipes.mold.MoldRecipe;
@@ -47,7 +47,7 @@ public class EmberCrystallizerBlockEntity extends LodestoneBlockEntity {
 
 
     public EmberCrystallizerBlockEntity(BlockPos pos, BlockState state) {
-        super(EmbersBlockEntities.EMBER_CRYSTALLIZER.get(), pos, state);
+        super(ModBlockEntities.EMBER_CRYSTALLIZER.get(), pos, state);
         itemHandler = new ItemStackHandler(1) {
 
             @Override
@@ -70,7 +70,7 @@ public class EmberCrystallizerBlockEntity extends LodestoneBlockEntity {
                 //Spawn particles
                 var random = this.level.getRandom();
                 int lifetime = RandomHelper.randomBetween(random, 20, 40);
-                var options = new WorldParticleOptions(EmbersParticles.PARTICLE_GLOW);
+                var options = new WorldParticleOptions(ModParticles.PARTICLE_GLOW);
                 final float scale = 0.2f;
                 final double SPEED = 0.05f;
 

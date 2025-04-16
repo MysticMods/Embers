@@ -1,7 +1,7 @@
 package mysticmods.embers.blocks;
 
 import com.mojang.serialization.MapCodec;
-import mysticmods.embers.init.EmbersBlocks;
+import mysticmods.embers.init.ModBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -35,13 +35,13 @@ public class BuddingEmberBlock extends AmethystBlock {
         BlockState blockstate = level.getBlockState(blockpos);
         Block block = null;
         if (canClusterGrowAtState(blockstate)) {
-            block = EmbersBlocks.SMALL_EMBER_BUD.get();
-        } else if (blockstate.is(Blocks.SMALL_AMETHYST_BUD) && blockstate.getValue(AmethystClusterBlock.FACING) == direction) {
-            block = EmbersBlocks.MEDIUM_EMBER_BUD.get();
-        } else if (blockstate.is(Blocks.MEDIUM_AMETHYST_BUD) && blockstate.getValue(AmethystClusterBlock.FACING) == direction) {
-            block = EmbersBlocks.LARGE_EMBER_BUD.get();
-        } else if (blockstate.is(Blocks.LARGE_AMETHYST_BUD) && blockstate.getValue(AmethystClusterBlock.FACING) == direction) {
-            block = EmbersBlocks.EMBER_CLUSTER.get();
+            block = ModBlocks.SMALL_EMBER_BUD.get();
+        } else if (blockstate.is(ModBlocks.SMALL_EMBER_BUD) && blockstate.getValue(AmethystClusterBlock.FACING) == direction) {
+            block = ModBlocks.MEDIUM_EMBER_BUD.get();
+        } else if (blockstate.is(ModBlocks.MEDIUM_EMBER_BUD) && blockstate.getValue(AmethystClusterBlock.FACING) == direction) {
+            block = ModBlocks.LARGE_EMBER_BUD.get();
+        } else if (blockstate.is(ModBlocks.LARGE_EMBER_BUD) && blockstate.getValue(AmethystClusterBlock.FACING) == direction) {
+            block = ModBlocks.EMBER_CLUSTER.get();
         }
 
         if (block != null) {

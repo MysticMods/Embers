@@ -1,6 +1,6 @@
 package mysticmods.embers.machines.brazier;
 
-import mysticmods.embers.init.EmbersBlockEntities;
+import mysticmods.embers.init.ModBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
@@ -21,7 +21,7 @@ public class BrazierBlock extends LodestoneEntityBlock<BrazierBlockEntity> {
 
     public BrazierBlock(Properties properties) {
         super(properties);
-        setBlockEntity(EmbersBlockEntities.BRAZIER);
+        setBlockEntity(ModBlockEntities.BRAZIER);
         registerDefaultState(getStateDefinition().any().setValue(LIT, false));
     }
 

@@ -1,6 +1,6 @@
 package mysticmods.embers.recipes.malleable_metal;
 
-import mysticmods.embers.init.EmbersItems;
+import mysticmods.embers.init.ModItems;
 import mysticmods.embers.init.ModRecipeTypes;
 import mysticmods.embers.init.ModSerializers;
 import mysticmods.embers.registries.MalleableMetal;
@@ -67,7 +67,7 @@ public class MalleableMetalRecipe implements Recipe<RecipeInput> {
 
     @Override
     public @NotNull ItemStack assemble(@NotNull RecipeInput input, HolderLookup.@NotNull Provider registries) {
-        return new ItemStack(EmbersItems.HEATED_METAL.get());
+        return new ItemStack(ModItems.HEATED_METAL.get());
     }
 
     @Override
@@ -77,7 +77,7 @@ public class MalleableMetalRecipe implements Recipe<RecipeInput> {
 
     @Override
     public @NotNull ItemStack getResultItem(HolderLookup.@NotNull Provider registries) {
-        return new ItemStack(EmbersItems.HEATED_METAL.get());
+        return new ItemStack(ModItems.HEATED_METAL.get());
     }
 
     @Override
