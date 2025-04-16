@@ -98,9 +98,9 @@ public class CaminiteSmelterBlockEntity extends LodestoneBlockEntity implements 
 
     public void serverTick() {
         if (this.isLit && this.intensity.hasEmberForOperation()) {
-            progress++;
+            this.progress++;
 
-            if (progress >= PROGRESS_PER_ITEM) {
+            if (this.progress >= PROGRESS_PER_ITEM) {
                 ItemStack hotMetalStack = this.itemHandler.getStackInSlot(2);
                 ItemStack inputStack = this.itemHandler.getStackInSlot(0);
                 RecipeManager recipes = level.getRecipeManager();
@@ -127,7 +127,8 @@ public class CaminiteSmelterBlockEntity extends LodestoneBlockEntity implements 
                     hotMetalStack.set(EmbersDataComponents.MALLEABLE_METAL, data);
 
                     inputStack.shrink(1);
-                    progress = 0;
+                    this.progress = 0;
+                    this.itemHandlerUpdate();
                 }
             }
 
