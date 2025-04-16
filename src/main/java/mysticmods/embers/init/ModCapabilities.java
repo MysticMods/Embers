@@ -61,10 +61,29 @@ public class ModCapabilities {
                 (myBlockEntity, side) -> myBlockEntity.getItemHandler()
         );
 
-        //Caminite Mold ItemHandler
+        //Caminite Mold
+        event.registerBlockEntity(
+                ModCapabilities.EMBER_INTENSITY,
+                ModBlockEntities.CAMINITE_MOLD.get(),
+                (myBlockEntity, side) -> myBlockEntity.getIntensity()
+        );
+
         event.registerBlockEntity(
                 Capabilities.ItemHandler.BLOCK,
                 ModBlockEntities.CAMINITE_MOLD.get(),
+                (myBlockEntity, side) -> myBlockEntity.getItemHandler()
+        );
+
+        //Crystallizer
+        event.registerBlockEntity(
+                ModCapabilities.EMBER_INTENSITY,
+                ModBlockEntities.EMBER_CRYSTALLIZER.get(),
+                (myBlockEntity, side) -> myBlockEntity.getIntensity()
+        );
+
+        event.registerBlockEntity(
+                Capabilities.ItemHandler.BLOCK,
+                ModBlockEntities.EMBER_CRYSTALLIZER.get(),
                 (myBlockEntity, side) -> myBlockEntity.getItemHandler()
         );
 

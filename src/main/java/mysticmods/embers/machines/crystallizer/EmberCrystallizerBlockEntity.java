@@ -220,13 +220,17 @@ public class EmberCrystallizerBlockEntity extends LodestoneBlockEntity {
         return this.itemHandler;
     }
 
+    public EmberIntensity getIntensity() {
+        return intensity;
+    }
+
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
         tag.put("itemHandler", itemHandler.serializeNBT(registries));
         tag.putInt("progress", this.progress);
         if(this.currentRecipe != null) {
-            MoldRecipe.CODEC.encodeStart(NbtOps.INSTANCE, this.currentRecipe)
+            CrystallizerRecipe.CODEC.encodeStart(NbtOps.INSTANCE, this.currentRecipe)
                     .resultOrPartial(error -> Embers.LOGGER.warn("Failed to save recipe: {}", error))
                     .ifPresent(recipeTag -> tag.put("currentRecipe", recipeTag));
         }
@@ -242,7 +246,7 @@ public class EmberCrystallizerBlockEntity extends LodestoneBlockEntity {
             this.progress = tag.getInt("progress");
         }
         if (tag.contains("currentRecipe")) {
-            MoldRecipe.CODEC.parse(NbtOps.INSTANCE, tag.get("currentRecipe"))
+            CrystallizerRecipe.CODEC.parse(NbtOps.INSTANCE, tag.get("currentRecipe"))
                     .resultOrPartial(error -> Embers.LOGGER.warn("Failed to load recipe: {}", error))
                     .ifPresent(recipe -> this.currentRecipe = (CrystallizerRecipe) recipe);
         }

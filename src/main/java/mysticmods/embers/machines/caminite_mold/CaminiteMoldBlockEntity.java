@@ -143,7 +143,7 @@ public class CaminiteMoldBlockEntity extends LodestoneBlockEntity {
                                 1);
             }
         } else {
-            if(this.currentRecipe != null) {
+            if(this.currentRecipe != null  && this.intensity.hasEmberForOperation()) {
                 if (this.progress < this.maxProgress) {
                     this.progress++;
                 } else {
@@ -240,6 +240,10 @@ public class CaminiteMoldBlockEntity extends LodestoneBlockEntity {
 
     public @Nullable IItemHandler getItemHandler() {
         return this.itemHandler;
+    }
+
+    public EmberIntensity getIntensity() {
+        return intensity;
     }
 
     @Override
