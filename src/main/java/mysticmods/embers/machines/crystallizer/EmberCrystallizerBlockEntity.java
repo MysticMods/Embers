@@ -1,6 +1,7 @@
 package mysticmods.embers.machines.crystallizer;
 
 import mysticmods.embers.Embers;
+import mysticmods.embers.api.base.block_entities.IntensityBlockEntity;
 import mysticmods.embers.capabilities.emberintensity.EmberIntensity;
 import mysticmods.embers.capabilities.emberlevel.EmberLevel;
 import mysticmods.embers.init.ModBlockEntities;
@@ -41,10 +42,8 @@ import java.util.function.Consumer;
 import static mysticmods.embers.utils.BEUtil.dropItemHandler;
 import static mysticmods.embers.utils.BEUtil.updateViaState;
 
-public class EmberCrystallizerBlockEntity extends LodestoneBlockEntity {
+public class EmberCrystallizerBlockEntity extends IntensityBlockEntity {
 
-    private final EmberIntensity intensity;
-    private EmberLevel emberLevel;
     private final ItemStackHandler itemHandler;
     private CrystallizerRecipe currentRecipe;
 
@@ -53,7 +52,7 @@ public class EmberCrystallizerBlockEntity extends LodestoneBlockEntity {
 
 
     public EmberCrystallizerBlockEntity(BlockPos pos, BlockState state) {
-        super(ModBlockEntities.EMBER_CRYSTALLIZER.get(), pos, state);
+        super(ModBlockEntities.EMBER_CRYSTALLIZER.get(), pos, state, 100, 100);
         itemHandler = new ItemStackHandler(1) {
 
             @Override
@@ -67,17 +66,6 @@ public class EmberCrystallizerBlockEntity extends LodestoneBlockEntity {
                 super.onContentsChanged(slot);
             }
         };
-        this.intensity = new EmberIntensity(100, 100, this::updateToClient);
-    }
-
-    @Override
-    public void onLoad() {
-        emberLevel = SDUtil.getLevelEmbersData(level);
-        if (emberLevel != null) {
-            emberLevel.addEmberListener(getBlockPos(), this.intensity);
-        }
-
-        updateViaState(this);
     }
 
     @Override
@@ -210,18 +198,8 @@ public class EmberCrystallizerBlockEntity extends LodestoneBlockEntity {
         updateViaState(this);
     }
 
-    public void updateToClient() {
-        if (!level.isClientSide()) {
-            updateViaState(this);
-        }
-    }
-
     public @Nullable IItemHandler getItemHandler() {
         return this.itemHandler;
-    }
-
-    public EmberIntensity getIntensity() {
-        return intensity;
     }
 
     @Override
@@ -255,10 +233,6 @@ public class EmberCrystallizerBlockEntity extends LodestoneBlockEntity {
     @Override
     public void onBreak(@Nullable Player player) {
         super.onBreak(player);
-        if (emberLevel != null) {
-            emberLevel.removeEmberListener(getBlockPos(), this.intensity);
-        }
-
         dropItemHandler(this, itemHandler);
     }
 }

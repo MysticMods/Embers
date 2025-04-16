@@ -1,6 +1,7 @@
 package mysticmods.embers.machines.caminite_smelter;
 
-import mysticmods.embers.base.IEmberIntesityEntity;
+import mysticmods.embers.api.base.IEmberIntesityEntity;
+import mysticmods.embers.api.base.block_entities.IntensityBlockEntity;
 import mysticmods.embers.capabilities.emberintensity.EmberIntensity;
 import mysticmods.embers.capabilities.emberlevel.EmberLevel;
 import mysticmods.embers.data.components.MalleableMetalDataComponent;
@@ -45,9 +46,8 @@ import java.util.Optional;
 import static mysticmods.embers.utils.BEUtil.dropItemHandler;
 import static mysticmods.embers.utils.BEUtil.updateViaState;
 
-public class CaminiteSmelterBlockEntity extends LodestoneBlockEntity implements IEmberIntesityEntity {
+public class CaminiteSmelterBlockEntity extends IntensityBlockEntity{
 
-    private final EmberIntensity intensity;
     private final ItemStackHandler itemHandler = new ItemStackHandler(3) {
         @Override
         protected int getStackLimit(int slot, @NotNull ItemStack stack) {
@@ -60,31 +60,13 @@ public class CaminiteSmelterBlockEntity extends LodestoneBlockEntity implements 
             CaminiteSmelterBlockEntity.this.itemHandlerUpdate();
         }
     };
-    private EmberLevel emberLevel;
 
     private float progress = 0;
     private boolean isLit = false;
     private static final int PROGRESS_PER_ITEM = 20 * 5;
 
     public CaminiteSmelterBlockEntity(BlockPos pos, BlockState state) {
-        super(ModBlockEntities.CAMINITE_SMELTER.get(), pos, state);
-        this.intensity = new EmberIntensity(100, 100, this::updateToClient);
-    }
-
-    @Override
-    public void onLoad() {
-        emberLevel = SDUtil.getLevelEmbersData(level);
-        if (emberLevel != null) {
-            emberLevel.addEmberListener(getBlockPos(), this.intensity);
-        }
-
-        updateViaState(this);
-    }
-
-    public void updateToClient() {
-        if (!level.isClientSide()) {
-            updateViaState(this);
-        }
+        super(ModBlockEntities.CAMINITE_SMELTER.get(), pos, state, 100, 100);
     }
 
     @Override
@@ -199,11 +181,6 @@ public class CaminiteSmelterBlockEntity extends LodestoneBlockEntity implements 
         return !this.itemHandler.getStackInSlot(2).isEmpty();
     }
 
-    @Override
-    public EmberIntensity getEmberIntensity() {
-        return intensity;
-    }
-
     public ItemStackHandler getItemHandler() {
         return itemHandler;
     }
@@ -259,9 +236,6 @@ public class CaminiteSmelterBlockEntity extends LodestoneBlockEntity implements 
     @Override
     public void onBreak(@Nullable Player player) {
         super.onBreak(player);
-        if (emberLevel != null) {
-            emberLevel.removeEmberListener(getBlockPos(), this.intensity);
-        }
 
         dropItemHandler(this, itemHandler);
     }

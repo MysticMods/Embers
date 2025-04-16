@@ -1,6 +1,6 @@
 package mysticmods.embers.machines.caminite_forge;
 
-import mysticmods.embers.base.IEmberIntesityEntity;
+import mysticmods.embers.api.base.IEmberIntesityEntity;
 import mysticmods.embers.capabilities.emberintensity.EmberIntensity;
 import mysticmods.embers.capabilities.emberlevel.EmberLevel;
 import mysticmods.embers.init.*;

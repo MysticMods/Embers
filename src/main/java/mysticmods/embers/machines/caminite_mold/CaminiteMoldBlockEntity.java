@@ -1,6 +1,7 @@
 package mysticmods.embers.machines.caminite_mold;
 
 import mysticmods.embers.Embers;
+import mysticmods.embers.api.base.block_entities.IntensityBlockEntity;
 import mysticmods.embers.capabilities.emberintensity.EmberIntensity;
 import mysticmods.embers.capabilities.emberlevel.EmberLevel;
 import mysticmods.embers.init.ModBlockEntities;
@@ -43,10 +44,7 @@ import java.util.function.Consumer;
 import static mysticmods.embers.utils.BEUtil.dropItemHandler;
 import static mysticmods.embers.utils.BEUtil.updateViaState;
 
-public class CaminiteMoldBlockEntity extends LodestoneBlockEntity {
-
-    private final EmberIntensity intensity;
-    private EmberLevel emberLevel;
+public class CaminiteMoldBlockEntity extends IntensityBlockEntity {
 
     private final ItemStackHandler itemHandler;
     private MoldRecipe currentRecipe;
@@ -55,7 +53,7 @@ public class CaminiteMoldBlockEntity extends LodestoneBlockEntity {
     private final int maxProgress = 15 * 20;
 
     public CaminiteMoldBlockEntity(BlockPos pos, BlockState state) {
-        super(ModBlockEntities.CAMINITE_MOLD.get(), pos, state);
+        super(ModBlockEntities.CAMINITE_MOLD.get(), pos, state, 100, 100);
 
         itemHandler = new ItemStackHandler(9) {
 
@@ -70,17 +68,6 @@ public class CaminiteMoldBlockEntity extends LodestoneBlockEntity {
                 super.onContentsChanged(slot);
             }
         };
-        this.intensity = new EmberIntensity(100, 100, this::updateToClient);
-    }
-
-    @Override
-    public void onLoad() {
-        emberLevel = SDUtil.getLevelEmbersData(level);
-        if (emberLevel != null) {
-            emberLevel.addEmberListener(getBlockPos(), this.intensity);
-        }
-
-        updateViaState(this);
     }
 
     @Override
@@ -231,19 +218,8 @@ public class CaminiteMoldBlockEntity extends LodestoneBlockEntity {
         updateViaState(this);
     }
 
-
-    public void updateToClient() {
-        if (!level.isClientSide()) {
-            updateViaState(this);
-        }
-    }
-
     public @Nullable IItemHandler getItemHandler() {
         return this.itemHandler;
-    }
-
-    public EmberIntensity getIntensity() {
-        return intensity;
     }
 
     @Override
@@ -277,9 +253,6 @@ public class CaminiteMoldBlockEntity extends LodestoneBlockEntity {
     @Override
     public void onBreak(@Nullable Player player) {
         super.onBreak(player);
-        if (emberLevel != null) {
-            emberLevel.removeEmberListener(getBlockPos(), this.intensity);
-        }
 
         dropItemHandler(this, itemHandler);
     }

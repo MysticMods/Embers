@@ -1,4 +1,4 @@
-package mysticmods.embers.base;
+package mysticmods.embers.api.base;
 
 import mysticmods.embers.capabilities.emberemitter.EmberEmitter;
 

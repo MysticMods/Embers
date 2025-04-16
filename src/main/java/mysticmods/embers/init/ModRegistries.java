@@ -1,7 +1,7 @@
 package mysticmods.embers.init;
 
 import mysticmods.embers.Embers;
-import mysticmods.embers.api.EmbersRegistries;
+import mysticmods.embers.api.registries.EmbersRegistries;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.registries.NewRegistryEvent;

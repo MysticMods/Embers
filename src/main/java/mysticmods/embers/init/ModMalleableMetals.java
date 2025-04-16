@@ -1,7 +1,7 @@
 package mysticmods.embers.init;
 
 import mysticmods.embers.Embers;
-import mysticmods.embers.api.EmbersRegistries;
+import mysticmods.embers.api.registries.EmbersRegistries;
 import mysticmods.embers.registries.MalleableMetal;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.neoforged.bus.api.IEventBus;

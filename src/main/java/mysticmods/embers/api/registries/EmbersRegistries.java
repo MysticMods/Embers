@@ -1,4 +1,4 @@
-package mysticmods.embers.api;
+package mysticmods.embers.api.registries;
 
 import mysticmods.embers.Embers;
 import mysticmods.embers.registries.MalleableMetal;

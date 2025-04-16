@@ -1,6 +1,6 @@
 package mysticmods.embers.machines.brazier;
 
-import mysticmods.embers.base.IEmberEmitterEntity;
+import mysticmods.embers.api.base.IEmberEmitterEntity;
 import mysticmods.embers.capabilities.emberemitter.EmberEmitter;
 import mysticmods.embers.capabilities.emberlevel.EmberLevel;
 import mysticmods.embers.init.ModBlockEntities;
