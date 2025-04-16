@@ -95,8 +95,8 @@ public class Embers {
 
         @SubscribeEvent
         private static void registerScreens(RegisterMenuScreensEvent event) {
-            event.register(ModMenuTypes.CAMINITE_FORGE.get(), CaminiteSmelterScreen::new);
-            event.register(ModMenuTypes.CAMINITE_FORGE_ALLOY.get(), CaminiteForgeAlloyScreen::new);
+            event.register(ModMenuTypes.CAMINITE_SMELTER.get(), CaminiteSmelterScreen::new);
+            event.register(ModMenuTypes.CAMINITE_FORGE.get(), CaminiteForgeAlloyScreen::new);
         }
 
         @SubscribeEvent

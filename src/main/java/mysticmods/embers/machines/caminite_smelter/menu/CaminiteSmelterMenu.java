@@ -24,7 +24,7 @@ public class CaminiteSmelterMenu extends AbstractContainerMenu {
 
     // Server constructor
     public CaminiteSmelterMenu(int windowId, Inventory playerInventory, CaminiteSmelterBlockEntity blockEntity) {
-        super(ModMenuTypes.CAMINITE_FORGE.get(), windowId);
+        super(ModMenuTypes.CAMINITE_SMELTER.get(), windowId);
         this.blockEntity = blockEntity;
         this.containerLevelAccess = ContainerLevelAccess.create(blockEntity.getLevel(), blockEntity.getBlockPos());
 

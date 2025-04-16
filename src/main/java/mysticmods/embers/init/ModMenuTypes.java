@@ -14,13 +14,13 @@ public class ModMenuTypes {
 
     public static final DeferredRegister<MenuType<?>> MENU_TYPES = DeferredRegister.create(Registries.MENU, Embers.MODID);
 
-    public static final DeferredHolder<MenuType<?>, MenuType<CaminiteSmelterMenu>> CAMINITE_FORGE = MENU_TYPES.register(
-            "caminite_forge",
+    public static final DeferredHolder<MenuType<?>, MenuType<CaminiteSmelterMenu>> CAMINITE_SMELTER = MENU_TYPES.register(
+            "caminite_smelter",
             () -> IMenuTypeExtension.create(CaminiteSmelterMenu::new)
     );
 
-    public static final DeferredHolder<MenuType<?>, MenuType<CaminiteForgeAlloyMenu>> CAMINITE_FORGE_ALLOY = MENU_TYPES.register(
-            "caminite_forge_alloy",
+    public static final DeferredHolder<MenuType<?>, MenuType<CaminiteForgeAlloyMenu>> CAMINITE_FORGE = MENU_TYPES.register(
+            "caminite_forge",
             () -> IMenuTypeExtension.create(CaminiteForgeAlloyMenu::new)
     );
 

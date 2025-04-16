@@ -23,7 +23,7 @@ public class CaminiteForgeAlloyMenu extends AbstractContainerMenu {
 
     // Server constructor
     public CaminiteForgeAlloyMenu(int windowId, Inventory playerInventory, CaminiteForgeBlockEntity blockEntity) {
-        super(ModMenuTypes.CAMINITE_FORGE_ALLOY.get(), windowId);
+        super(ModMenuTypes.CAMINITE_FORGE.get(), windowId);
         this.blockEntity = blockEntity;
         this.containerLevelAccess = ContainerLevelAccess.create(blockEntity.getLevel(), blockEntity.getBlockPos());
 

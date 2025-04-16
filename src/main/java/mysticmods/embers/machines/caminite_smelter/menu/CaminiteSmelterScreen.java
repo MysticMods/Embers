@@ -23,10 +23,6 @@ public class CaminiteSmelterScreen extends AbstractContainerScreen<CaminiteSmelt
         super.init();
         this.titleLabelY = 4;
         this.inventoryLabelY = this.imageHeight - 92;
-
-        // Add alloy mode button
-        int x = (this.width - this.imageWidth) / 2;
-        int y = (this.height - this.imageHeight) / 2;
     }
 
     @Override

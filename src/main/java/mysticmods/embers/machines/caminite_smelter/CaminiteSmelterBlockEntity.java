@@ -190,7 +190,7 @@ public class CaminiteSmelterBlockEntity extends IntensityBlockEntity{
             serverPlayer.openMenu(new MenuProvider() {
                 @Override
                 public @NotNull net.minecraft.network.chat.Component getDisplayName() {
-                    return Component.translatable("block.embers.caminite_forge");
+                    return Component.translatable("block.embers.caminite_smelter");
                 }
 
                 @Override

@@ -26,7 +26,6 @@
   "item.embers.vermillionite_chunk": "Vermillionite Chunk",
   "item.embers.copper_nugget": "Copper Nugget",
   "itemGroup.embers": "Embers",
-  "tooltip.embers.alloy_mode": "Alloy Mode",
   "tooltip.embers.heat": "Heat: %s / %s",
   "tooltip.embers.ingots": "Ingots: %s",
   "tooltip.embers.nuggets": "Nuggets: %s"
