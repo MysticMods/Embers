@@ -38,6 +38,12 @@ public class ModRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_iron_ingot", has(Items.IRON_INGOT))
                 .save(recipeOutput);
 
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.COPPER_INGOT)
+                .requires(Items.CLAY_BALL, 9)
+                .unlockedBy("has_copper_ingot", has(Items.COPPER_INGOT))
+                .unlockedBy("has_copper_nugget", has(ModItems.COPPER_NUGGET))
+                .save(recipeOutput);
+
         //Caminite Blend
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.CAMINITE_BLEND)
                 .requires(Items.CLAY_BALL)

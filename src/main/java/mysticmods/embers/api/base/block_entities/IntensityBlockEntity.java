@@ -23,6 +23,9 @@ public abstract class IntensityBlockEntity extends LodestoneBlockEntity {
         this.intensity = new EmberIntensity(minIntensity, maxIntensity, this::updateToClient);
     }
 
+    protected abstract void clientTick();
+    protected abstract void serverTick();
+
     @Override
     public void tick() {
         if (level.isClientSide) {
@@ -31,9 +34,6 @@ public abstract class IntensityBlockEntity extends LodestoneBlockEntity {
             serverTick();
         }
     }
-
-    protected abstract void clientTick();
-    protected abstract void serverTick();
 
     @Override
     public void onLoad() {

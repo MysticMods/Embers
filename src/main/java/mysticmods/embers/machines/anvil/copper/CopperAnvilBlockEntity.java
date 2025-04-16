@@ -7,6 +7,7 @@ import mysticmods.embers.init.ModDataComponents;
 import mysticmods.embers.init.ModItems;
 import mysticmods.embers.init.ModParticles;
 import mysticmods.embers.machines.anvil.AnvilItemHandler;
+import mysticmods.embers.utils.BEUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -17,6 +18,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import team.lodestar.lodestone.helpers.RandomHelper;
 import team.lodestar.lodestone.systems.blockentity.LodestoneBlockEntity;
 import team.lodestar.lodestone.systems.easing.Easing;
@@ -145,5 +147,11 @@ public class CopperAnvilBlockEntity extends LodestoneBlockEntity {
 
     public AnvilItemHandler getItemHandler() {
         return itemHandler;
+    }
+
+    @Override
+    public void onBreak(@Nullable Player player) {
+        super.onBreak(player);
+        BEUtil.dropItemHandler(this, itemHandler);
     }
 }
